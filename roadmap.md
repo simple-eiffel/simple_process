@@ -8,7 +8,7 @@
 
 ### Session Startup
 
-1. **Read Eiffel reference docs**: `D:/prod/reference_docs/eiffel/CLAUDE_CONTEXT.md`
+1. **Read Eiffel reference docs**: `D:/prod/reference_docs/eiffel/claude/CONTEXT.md`
 2. **Review this roadmap** for project-specific context
 3. **Ask**: "What would you like to work on this session?"
 
@@ -16,9 +16,9 @@
 
 | File | Purpose |
 |------|---------|
-| `D:/prod/reference_docs/eiffel/CLAUDE_CONTEXT.md` | Generic Eiffel knowledge |
-| `D:/prod/reference_docs/eiffel/gotchas.md` | Generic Eiffel gotchas |
-| `D:/prod/reference_docs/eiffel/patterns.md` | Verified code patterns |
+| `D:/prod/reference_docs/eiffel/claude/CONTEXT.md` | Generic Eiffel knowledge |
+| `D:/prod/reference_docs/eiffel/language/gotchas.md` | Generic Eiffel gotchas |
+| `D:/prod/reference_docs/eiffel/language/patterns.md` | Verified code patterns |
 
 ### Build & Test Commands
 
