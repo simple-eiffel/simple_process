@@ -1,0 +1,598 @@
+/* simple_* Documentation Stylesheet */
+/* Design inspired by Eiffel Tower + Circuit Board Logo */
+/* Supports light and dark mode with tech-forward aesthetic */
+
+:root {
+    /* Light Mode - Clean tech look */
+    --primary-color: #1e3a5f;          /* Deep blue - like the tower structure */
+    --secondary-color: #00d4aa;        /* Electric teal - circuit glow */
+    --accent-color: #ff6b6b;           /* Signal red */
+    --background-color: #f0f4f8;       /* Soft tech gray */
+    --surface-color: #ffffff;
+    --code-background: #1a1a2e;        /* Dark terminal */
+    --text-color: #2d3748;
+    --text-muted: #718096;
+    --border-color: #e2e8f0;
+    --success-color: #00d4aa;
+    --warning-color: #fbbf24;
+    --header-gradient-start: #0f172a;  /* Deep night sky */
+    --header-gradient-end: #1e3a5f;    /* Tower blue */
+    --table-hover: #f7fafc;
+    --feature-bg: #f7fafc;
+    --api-bg: #f0f4f8;
+    --require-bg: #fef3c7;
+    --require-border: #f59e0b;
+    --ensure-bg: #d1fae5;
+    --ensure-border: #10b981;
+    --inline-code-bg: #e2e8f0;
+    --glow-color: rgba(0, 212, 170, 0.3);
+    --circuit-line: #00d4aa;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* Dark Mode - Circuit board at night */
+        --primary-color: #e2e8f0;
+        --secondary-color: #00ffcc;     /* Bright circuit glow */
+        --accent-color: #ff6b6b;
+        --background-color: #0a0a1a;    /* Deep space black */
+        --surface-color: #12122a;       /* Dark panel */
+        --code-background: #080818;
+        --text-color: #e2e8f0;
+        --text-muted: #94a3b8;
+        --border-color: #2d3748;
+        --success-color: #00ffcc;
+        --warning-color: #fbbf24;
+        --header-gradient-start: #000010;
+        --header-gradient-end: #0f172a;
+        --table-hover: #1a1a3a;
+        --feature-bg: #1a1a3a;
+        --api-bg: #0f0f28;
+        --require-bg: #3d2e0a;
+        --require-border: #f59e0b;
+        --ensure-bg: #052e1c;
+        --ensure-border: #00ffcc;
+        --inline-code-bg: #1e293b;
+        --glow-color: rgba(0, 255, 204, 0.2);
+        --circuit-line: #00ffcc;
+    }
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.7;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Header - Tower silhouette with circuit glow */
+header {
+    background: linear-gradient(180deg, var(--header-gradient-start) 0%, var(--header-gradient-end) 100%);
+    color: white;
+    padding: 3rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Circuit pattern overlay */
+header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        linear-gradient(90deg, var(--circuit-line) 1px, transparent 1px),
+        linear-gradient(var(--circuit-line) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.03;
+    pointer-events: none;
+}
+
+header .logo-container {
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+header img.logo {
+    max-width: 200px;
+    height: auto;
+    filter: drop-shadow(0 0 20px var(--glow-color));
+    transition: filter 0.3s;
+}
+
+header img.logo:hover {
+    filter: drop-shadow(0 0 30px var(--glow-color)) brightness(1.1);
+}
+
+header h1 {
+    font-size: 2.8rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    position: relative;
+    z-index: 1;
+}
+
+header .tagline {
+    font-size: 1.2rem;
+    color: var(--secondary-color);
+    font-weight: 400;
+    position: relative;
+    z-index: 1;
+}
+
+header .badges {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+}
+
+/* Navigation - Sleek bar */
+nav {
+    background: var(--surface-color);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+@media (prefers-color-scheme: dark) {
+    nav {
+        background: rgba(18, 18, 42, 0.95);
+    }
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2.5rem;
+    justify-content: center;
+}
+
+nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+    position: relative;
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--secondary-color);
+    transition: width 0.2s;
+}
+
+nav a:hover {
+    color: var(--secondary-color);
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+/* Main Content */
+main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2.5rem;
+}
+
+section {
+    background: var(--surface-color);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border: 1px solid var(--border-color);
+    position: relative;
+}
+
+/* Subtle circuit accent on sections */
+section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--secondary-color) 0%, transparent 100%);
+    border-radius: 12px 0 0 12px;
+    opacity: 0.6;
+}
+
+h2 {
+    color: var(--primary-color);
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+h2::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: var(--secondary-color);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--secondary-color);
+}
+
+h3 {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+a:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+}
+
+/* Code Blocks - Terminal style */
+pre {
+    background: var(--code-background);
+    color: #e2e8f0;
+    padding: 1.5rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 1rem 0;
+    border: 1px solid var(--border-color);
+    position: relative;
+}
+
+pre::before {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    width: 12px;
+    height: 12px;
+    background: #ff5f56;
+    border-radius: 50%;
+    box-shadow: 20px 0 0 #ffbd2e, 40px 0 0 #27c93f;
+}
+
+pre code {
+    display: block;
+    padding-top: 1rem;
+}
+
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 0.875rem;
+}
+
+p code, li code, td code {
+    background: var(--inline-code-bg);
+    color: var(--secondary-color);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.85em;
+}
+
+/* Syntax Highlighting - Circuit colors */
+.keyword { color: #ff79c6; }
+.type { color: #8be9fd; }
+.string { color: #f1fa8c; }
+.comment { color: #6272a4; }
+.feature { color: #50fa7b; }
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+th {
+    background: var(--primary-color);
+    color: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+@media (prefers-color-scheme: dark) {
+    th {
+        background: linear-gradient(90deg, var(--header-gradient-end) 0%, #1e3a5f 100%);
+    }
+}
+
+tr:hover {
+    background: var(--table-hover);
+}
+
+/* Feature Cards - Circuit node style */
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.feature-card {
+    background: var(--feature-bg);
+    padding: 1.5rem;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 1.5rem;
+    left: -1px;
+    width: 8px;
+    height: 8px;
+    background: var(--secondary-color);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--secondary-color);
+}
+
+.feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 212, 170, 0.15);
+    border-color: var(--secondary-color);
+}
+
+.feature-card h4 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    padding-left: 1rem;
+}
+
+.feature-card p {
+    color: var(--text-muted);
+    margin-bottom: 0;
+    font-size: 0.95rem;
+    padding-left: 1rem;
+}
+
+/* API Reference - Technical documentation style */
+.api-section {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: var(--api-bg);
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+}
+
+.api-section h3 {
+    margin-top: 0;
+    color: var(--secondary-color);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.signature {
+    background: var(--code-background);
+    color: var(--secondary-color);
+    padding: 1rem 1.5rem;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    margin: 1rem 0;
+    overflow-x: auto;
+    border-left: 3px solid var(--secondary-color);
+}
+
+.contracts {
+    margin: 1rem 0;
+}
+
+.contracts h4 {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.contracts .require, .contracts .ensure {
+    padding: 0.75rem 1rem;
+    margin: 0.5rem 0;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+}
+
+.contracts .require {
+    background: var(--require-bg);
+    border-left: 3px solid var(--require-border);
+}
+
+.contracts .ensure {
+    background: var(--ensure-bg);
+    border-left: 3px solid var(--ensure-border);
+}
+
+/* Footer */
+footer {
+    background: linear-gradient(180deg, var(--header-gradient-end) 0%, var(--header-gradient-start) 100%);
+    color: #94a3b8;
+    text-align: center;
+    padding: 3rem 2rem;
+    margin-top: 2rem;
+    position: relative;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--secondary-color) 50%, transparent 100%);
+}
+
+footer a {
+    color: var(--secondary-color);
+}
+
+footer .copyright {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+/* Badges - Circuit chip style */
+.badge {
+    display: inline-block;
+    padding: 0.35rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.badge-rfc {
+    background: rgba(0, 212, 170, 0.2);
+    color: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
+}
+
+.badge-version {
+    background: rgba(16, 185, 129, 0.2);
+    color: #10b981;
+    border: 1px solid #10b981;
+}
+
+.badge-license {
+    background: rgba(251, 191, 36, 0.2);
+    color: #fbbf24;
+    border: 1px solid #fbbf24;
+}
+
+/* Quick Start Box */
+.quick-start {
+    background: var(--api-bg);
+    border: 2px solid var(--secondary-color);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    position: relative;
+}
+
+.quick-start::before {
+    content: 'QUICK START';
+    position: absolute;
+    top: -12px;
+    left: 1rem;
+    background: var(--surface-color);
+    padding: 0 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+    letter-spacing: 0.05em;
+}
+
+.quick-start h3 {
+    margin-top: 0;
+    color: var(--secondary-color);
+}
+
+/* Lists */
+ul, ol {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+}
+
+li {
+    margin-bottom: 0.5rem;
+    position: relative;
+}
+
+ul li::marker {
+    color: var(--secondary-color);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    header {
+        padding: 2rem 1rem;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    header img.logo {
+        max-width: 140px;
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    main {
+        padding: 1rem;
+    }
+
+    section {
+        padding: 1.25rem;
+    }
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    pre::before {
+        display: none;
+    }
+
+    pre code {
+        padding-top: 0;
+    }
+}

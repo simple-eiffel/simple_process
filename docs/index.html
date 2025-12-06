@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>simple_process - Lightweight Process Execution for Eiffel</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="images/logo.png">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="images/logo.png" alt="simple_* logo" class="logo">
+        </div>
+        <h1>simple_process</h1>
+        <p class="tagline">Lightweight Process Execution for Eiffel</p>
+        <div class="badges">
+            <span class="badge badge-rfc">Foundation Layer</span>
+            <span class="badge badge-version">v1.0.0</span>
+            <span class="badge badge-license">MIT</span>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#quick-start">Quick Start</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#api">API Reference</a></li>
+            <li><a href="https://github.com/ljr1981/simple_process">GitHub</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="overview">
+            <h2>Overview</h2>
+            <p>
+                <strong>simple_process</strong> provides a simple wrapper for executing shell commands
+                and capturing their output. It replaces heavier framework dependencies with a minimal,
+                focused implementation.
+            </p>
+            <p>
+                Part of the <strong>simple_*</strong> ecosystem of focused, single-purpose Eiffel libraries.
+            </p>
+        </section>
+
+        <section id="quick-start">
+            <h2>Quick Start</h2>
+            <h3>Installation</h3>
+            <pre><code>&lt;library name="simple_process" location="$SIMPLE_PROCESS\simple_process.ecf"/&gt;</code></pre>
+
+            <h3>Basic Usage</h3>
+            <pre><code>local
+    helper: SIMPLE_PROCESS_HELPER
+    output: STRING_32
+do
+    create helper
+
+    -- Execute command and capture output
+    output := helper.output_of_command ("cmd /c dir", Void)
+    print (output)
+
+    -- Check if executable exists in PATH
+    if helper.has_file_in_path ("git.exe") then
+        print ("Git is installed%N")
+    end
+end</code></pre>
+
+            <h3>Process Visibility</h3>
+            <pre><code>-- Hide process window (default)
+helper.set_show_process (False)
+
+-- Show process window
+helper.set_show_process (True)</code></pre>
+        </section>
+
+        <section id="features">
+            <h2>Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>Command Execution</h4>
+                    <p>Execute shell commands and capture output</p>
+                </div>
+                <div class="feature-card">
+                    <h4>PATH Checking</h4>
+                    <p>Check if executables exist in system PATH</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Process Visibility</h4>
+                    <p>Configure hidden or visible process windows</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Wait Modes</h4>
+                    <p>Wait or no-wait execution modes</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="api">
+            <h2>API Reference</h2>
+
+            <div class="api-section">
+                <h3>output_of_command (a_command_line, a_directory): STRING_32</h3>
+                <div class="signature">output := helper.output_of_command ("cmd /c dir", Void)</div>
+                <p>Execute command and return captured output. If directory is Void, uses current directory.</p>
+                <div class="contracts">
+                    <h4>Require</h4>
+                    <div class="require">cmd_not_empty: not a_command_line.is_empty</div>
+                </div>
+            </div>
+
+            <div class="api-section">
+                <h3>has_file_in_path (a_name: STRING): BOOLEAN</h3>
+                <div class="signature">if helper.has_file_in_path ("git.exe") then ...</div>
+                <p>Check if file exists in system PATH.</p>
+            </div>
+
+            <h3>Configuration</h3>
+            <table>
+                <tr><th>Feature</th><th>Description</th></tr>
+                <tr><td><code>show_process</code></td><td>Whether to show process window (default: False)</td></tr>
+                <tr><td><code>set_show_process (value)</code></td><td>Set process visibility</td></tr>
+                <tr><td><code>is_wait_for_exit</code></td><td>Whether to wait for process (default: True)</td></tr>
+                <tr><td><code>set_wait_for_exit</code></td><td>Enable waiting for process exit</td></tr>
+                <tr><td><code>set_do_not_wait_for_exit</code></td><td>Disable waiting for process exit</td></tr>
+            </table>
+
+            <h3>Error Handling</h3>
+            <table>
+                <tr><th>Feature</th><th>Description</th></tr>
+                <tr><td><code>last_error</code></td><td>Last error code from process execution</td></tr>
+                <tr><td><code>last_error_result</code></td><td>Last error message from process execution</td></tr>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>Part of the <a href="https://github.com/ljr1981">simple_*</a> library collection</p>
+        <p>Dependencies: base, encoding, process</p>
+        <p class="copyright">MIT License - Copyright (c) 2024-2025, Larry Rix</p>
+    </footer>
+</body>
+</html>
