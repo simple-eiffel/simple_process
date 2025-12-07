@@ -2,95 +2,288 @@
   <img src="https://raw.githubusercontent.com/ljr1981/claude_eiffel_op_docs/main/artwork/LOGO.png" alt="simple_ library logo" width="400">
 </p>
 
-# simple_process
+# SIMPLE_PROCESS
 
 **[Documentation](https://ljr1981.github.io/simple_process/)**
 
-Lightweight process execution library for Eiffel.
+### Process Execution Library for Eiffel
+
+[![Language](https://img.shields.io/badge/language-Eiffel-blue.svg)](https://www.eiffel.org/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/platform-Windows-blue.svg)]()
+[![SCOOP](https://img.shields.io/badge/SCOOP-compatible-orange.svg)]()
+[![Design by Contract](https://img.shields.io/badge/DbC-enforced-orange.svg)]()
+[![Tests](https://img.shields.io/badge/tests-9%20passing-brightgreen.svg)]()
+
+---
 
 ## Overview
 
-SIMPLE_PROCESS provides a simple wrapper for executing shell commands and capturing their output. It replaces heavier framework dependencies with a minimal, focused implementation.
+SIMPLE_PROCESS provides SCOOP-compatible process execution for Eiffel applications. It wraps Win32 Process APIs through a clean C interface, enabling command execution with output capture without threading complications.
+
+**Important:** This library has **no dependency on the EiffelStudio process library**. It uses direct Win32 API calls through a custom C wrapper, making it fully SCOOP-compatible and eliminating threading issues that existed with the previous Eiffel process library dependency.
+
+**Developed using AI-assisted methodology:** Built interactively with Claude Opus 4.5 following rigorous Design by Contract principles.
+
+---
 
 ## Features
 
-- **Command Execution** - Execute shell commands and capture output
-- **PATH Checking** - Check if executables exist in system PATH
-- **Process Visibility** - Configure hidden or visible process windows
-- **Wait Modes** - Wait or no-wait execution modes
-- **Design by Contract** - Full preconditions/postconditions
+### Process Operations
 
-## Installation
+- **Execute Commands** - Run shell commands and capture output
+- **Working Directory** - Execute in specific directories
+- **Output Capture** - Get stdout as STRING_32
+- **Exit Codes** - Access process exit codes
+- **Error Handling** - Detailed error messages on failure
+- **PATH Lookup** - Check if executables exist in PATH
+- **Window Visibility** - Show/hide process windows
 
-Add to your ECF:
+---
 
+## Quick Start
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/ljr1981/simple_process.git
+```
+
+2. Compile the C library:
+```bash
+cd simple_process/Clib
+compile.bat
+```
+
+3. Set the environment variable:
+```bash
+set SIMPLE_PROCESS=D:\path\to\simple_process
+```
+
+4. Add to your ECF file:
 ```xml
 <library name="simple_process" location="$SIMPLE_PROCESS\simple_process.ecf"/>
 ```
 
-Set environment variable:
-```powershell
-[System.Environment]::SetEnvironmentVariable('SIMPLE_PROCESS', 'D:\prod\simple_process', 'User')
-```
-
-## Usage
+### Basic Usage
 
 ```eiffel
-class MY_APP
+class
+    MY_APPLICATION
 
 feature
-    helper: SIMPLE_PROCESS_HELPER
 
-    run_command
+    process_example
         local
+            proc: SIMPLE_PROCESS
             output: STRING_32
         do
-            create helper
+            create proc.make
 
-            -- Execute command and capture output
-            output := helper.output_of_command ("cmd /c dir", Void)
+            -- Execute command and get output
+            output := proc.output_of_command ("cmd /c dir")
+            print (output)
+
+            -- Check result
+            if proc.was_successful then
+                print ("Exit code: " + proc.last_exit_code.out + "%N")
+            else
+                if attached proc.last_error as err then
+                    print ("Error: " + err + "%N")
+                end
+            end
+
+            -- Execute in specific directory
+            output := proc.output_of_command_in_directory ("cmd /c dir", "C:\Windows")
             print (output)
 
             -- Check if executable exists in PATH
-            if helper.has_file_in_path ("git.exe") then
+            if proc.file_exists_in_path ("git.exe") then
                 print ("Git is installed%N")
             end
+
+            -- Show process window (default is hidden)
+            proc.set_show_window (True)
+            proc.execute ("notepad.exe")
         end
+
 end
 ```
 
+---
+
 ## API Reference
 
-### SIMPLE_PROCESS_HELPER
+### SIMPLE_PROCESS Class
 
-| Feature | Description |
-|---------|-------------|
-| `output_of_command (cmd, dir)` | Execute command, return captured output |
-| `has_file_in_path (name)` | Check if file exists in system PATH |
-| `show_process` | Whether to show process window (default: False) |
-| `set_show_process (value)` | Set process visibility |
-| `is_wait_for_exit` | Whether to wait for process (default: True) |
-| `set_wait_for_exit` | Enable waiting for process exit |
-| `set_do_not_wait_for_exit` | Disable waiting for process exit |
+#### Creation
+
+```eiffel
+make
+    -- Initialize process executor.
+```
+
+#### Execution
+
+```eiffel
+execute (a_command: READABLE_STRING_GENERAL)
+    -- Execute `a_command' and capture output.
+
+execute_in_directory (a_command: READABLE_STRING_GENERAL; a_directory: detachable READABLE_STRING_GENERAL)
+    -- Execute `a_command' in `a_directory' and capture output.
+
+output_of_command (a_command: READABLE_STRING_GENERAL): STRING_32
+    -- Execute `a_command' and return output.
+
+output_of_command_in_directory (a_command: READABLE_STRING_GENERAL; a_directory: READABLE_STRING_GENERAL): STRING_32
+    -- Execute `a_command' in `a_directory' and return output.
+```
+
+#### Results
+
+```eiffel
+last_output: detachable STRING_32
+    -- Output from last command execution.
+
+last_exit_code: INTEGER
+    -- Exit code from last command execution.
+
+last_error: detachable STRING_32
+    -- Error message if execution failed.
+
+was_successful: BOOLEAN
+    -- Was last execution successful?
+```
+
+#### Settings
+
+```eiffel
+show_window: BOOLEAN
+    -- Show process window during execution?
+
+set_show_window (a_value: BOOLEAN)
+    -- Set whether to show process window.
+```
+
+#### Query
+
+```eiffel
+file_exists_in_path (a_filename: READABLE_STRING_GENERAL): BOOLEAN
+    -- Does `a_filename' exist in system PATH?
+```
+
+---
+
+## Building & Testing
+
+### Build Library
+
+```bash
+cd simple_process
+ec -config simple_process.ecf -target simple_process -c_compile
+```
+
+### Run Tests
+
+```bash
+ec -config simple_process.ecf -target simple_process_tests -c_compile
+./EIFGENs/simple_process_tests/W_code/simple_process.exe
+```
+
+**Test Results:** 9 tests passing
+
+Tests cover:
+- Command execution
+- Output capture
+- Exit code retrieval
+- Directory execution
+- PATH checking
+- Window visibility settings
+- Error handling
+
+---
+
+## Project Structure
+
+```
+simple_process/
+├── Clib/                       # C wrapper library
+│   ├── simple_process.h        # C header file
+│   ├── simple_process.c        # C implementation
+│   └── compile.bat             # Build script
+├── src/                        # Eiffel source
+│   ├── simple_process.e        # Main process class
+│   └── simple_process_helper.e # Legacy helper class
+├── testing/                    # Test suite
+│   ├── application.e           # Test runner
+│   └── test_simple_process.e   # Test cases
+├── simple_process.ecf          # Library configuration
+├── README.md                   # This file
+└── LICENSE                     # MIT License
+```
+
+---
+
+## Migration from Previous Version
+
+If you were using the previous version that depended on the EiffelStudio process library:
+
+### Old (Thread-dependent)
+```eiffel
+-- Required thread concurrency mode
+-- Used PROCESS_FACTORY and BASE_PROCESS
+```
+
+### New (SCOOP-compatible)
+```eiffel
+-- Uses direct Win32 API calls
+-- No thread dependencies
+-- Cleaner, simpler API
+local
+    proc: SIMPLE_PROCESS
+do
+    create proc.make
+    proc.execute ("my_command")
+end
+```
+
+---
 
 ## Dependencies
 
-- `base` - Eiffel standard library
-- `encoding` - Text encoding support
-- `process` - EiffelStudio process library
+- **Windows OS** - Process API is Windows-specific
+- **EiffelStudio 23.09+** - Development environment
+- **Visual Studio C++ Build Tools** - For compiling C wrapper
 
-## Concurrency
+**No EiffelStudio process library dependency** - This library uses its own C wrapper for all process operations.
 
-This library uses `thread` concurrency mode to maintain compatibility with the underlying ISE process library.
+---
 
-## Tests
+## SCOOP Compatibility
 
-9 tests covering command execution, PATH checking, and configuration toggles.
+SIMPLE_PROCESS is fully SCOOP-compatible. The C wrapper handles all Win32 API calls synchronously without threading dependencies, making it safe for use in concurrent Eiffel applications.
 
-```batch
-ec.exe -batch -config simple_process.ecf -target simple_process_tests -tests
-```
+This is a key improvement over the previous version which required thread concurrency mode due to its dependency on the EiffelStudio process library.
+
+---
 
 ## License
 
-MIT License - Copyright (c) 2024-2025, Larry Rix
+MIT License - see [LICENSE](LICENSE) file for details.
+
+---
+
+## Contact
+
+- **Author:** Larry Rix
+- **Repository:** https://github.com/ljr1981/simple_process
+- **Issues:** https://github.com/ljr1981/simple_process/issues
+
+---
+
+## Acknowledgments
+
+- Built with Claude Opus 4.5 (Anthropic)
+- Uses Win32 Process APIs (Microsoft)
+- Part of the simple_ library collection for Eiffel

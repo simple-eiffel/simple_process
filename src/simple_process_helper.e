@@ -2,7 +2,7 @@ note
 	description: "[
 		Simple process execution helper.
 		Provides features for executing shell commands and capturing output.
-		Replaces FW_PROCESS_HELPER from framework with minimal dependencies.
+		Uses SIMPLE_PROCESS for SCOOP-compatible execution.
 	]"
 	author: "Larry Rix"
 	date: "$Date$"
@@ -16,13 +16,10 @@ feature -- Status Report
 	has_file_in_path (a_name: STRING): BOOLEAN
 			-- Does `a_name' exist in the system PATH?
 		local
-			l_result: STRING_32
+			l_process: SIMPLE_PROCESS
 		do
-			l_result := output_of_command ({STRING_32} "cmd /c where " + a_name, Void)
-			-- When file is found, output contains the path to the file
-			-- When not found, output is empty (error goes to stderr) or contains "INFO:" message
-			-- So file is in path if output is not empty AND doesn't contain "INFO:"
-			Result := not l_result.is_empty and then not l_result.has_substring ("INFO:")
+			create l_process.make
+			Result := l_process.file_exists_in_path (a_name)
 		end
 
 feature -- Basic Operations
@@ -37,43 +34,27 @@ feature -- Basic Operations
 			cmd_not_empty: not a_command_line.is_empty
 			dir_not_empty: attached a_directory as al_dir implies not al_dir.is_empty
 		local
-			l_process: PROCESS
-			l_buffer: SPECIAL [NATURAL_8]
-			l_result: STRING_32
-			l_args: ARRAY [STRING_32]
-			l_cmd: STRING_32
-			l_list: LIST [READABLE_STRING_32]
+			l_process: SIMPLE_PROCESS
 		do
-			create Result.make_empty
-			l_list := a_command_line.split (' ')
-			l_cmd := l_list [1]
-			if l_list.count >= 2 then
-				create l_args.make_filled ({STRING_32} "", 1, l_list.count - 1)
-				across
-					2 |..| l_list.count as ic
-				loop
-					l_args.put (l_list [ic.item], ic.item - 1)
+			create l_process.make
+			l_process.set_show_window (show_process)
+
+			if attached a_directory as al_dir then
+				Result := l_process.output_of_command_in_directory (a_command_line, al_dir)
+			else
+				Result := l_process.output_of_command (a_command_line)
+			end
+
+			last_error := l_process.last_exit_code
+
+			if not l_process.was_successful then
+				if attached l_process.last_error as l_err then
+					last_error_result := l_err.to_string_8
 				end
 			end
-			l_process := (create {PROCESS_FACTORY}).process_launcher (l_cmd, l_args, a_directory)
-			l_process.set_hidden (show_process)
-			l_process.redirect_output_to_stream
-			l_process.redirect_error_to_same_as_output
-			l_process.launch
-			if l_process.launched then
-				from
-					create l_buffer.make_filled (0, 512)
-				until
-					l_process.has_output_stream_closed or else l_process.has_output_stream_error
-				loop
-					l_buffer := l_buffer.aliased_resized_area_with_default (0, l_buffer.capacity)
-					l_process.read_output_to_special (l_buffer)
-					l_result := converter.console_encoding_to_utf32 (console_encoding, create {STRING_8}.make_from_c_substring ($l_buffer, 1, l_buffer.count))
-					l_result.prune_all ({CHARACTER_32} '%R')
-					Result.append (l_result)
-				end
-				l_process.wait_for_exit
-			end
+
+			-- Remove carriage returns for consistency
+			Result.prune_all ('%R')
 		end
 
 	show_process: BOOLEAN
@@ -100,6 +81,7 @@ feature -- Status Report: Wait for Exit
 
 	is_not_wait_for_exit: BOOLEAN
 			-- Do not wait for process to exit?
+			-- Note: Current implementation always waits (synchronous).
 
 	is_wait_for_exit: BOOLEAN
 			-- Wait for process to exit?
@@ -109,6 +91,7 @@ feature -- Status Report: Wait for Exit
 
 	set_do_not_wait_for_exit
 			-- Set to not wait for process exit.
+			-- Note: This is kept for API compatibility but has no effect.
 		do
 			is_not_wait_for_exit := True
 		end
@@ -117,20 +100,6 @@ feature -- Status Report: Wait for Exit
 			-- Set to wait for process exit.
 		do
 			is_not_wait_for_exit := False
-		end
-
-feature {NONE} -- Code page conversion
-
-	converter: LOCALIZED_PRINTER
-			-- Converter of the input data into Unicode.
-		once
-			create Result
-		end
-
-	console_encoding: ENCODING
-			-- Current console encoding.
-		once
-			Result := (create {SYSTEM_ENCODINGS}).console_encoding
 		end
 
 feature -- Implementation: Constants
@@ -142,8 +111,8 @@ note
 	copyright: "Copyright (c) 2024-2025, Larry Rix"
 	license: "MIT License"
 	source: "[
-		SIMPLE_PROCESS - Lightweight process execution library
-		Provides simple wrapper for shell command execution
+		SIMPLE_PROCESS - SCOOP-compatible process execution library
+		Uses direct Win32 API calls without thread dependencies
 	]"
 
 end
