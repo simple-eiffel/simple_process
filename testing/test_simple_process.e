@@ -2,7 +2,7 @@ note
 	description: "[
 		Tests for SIMPLE_PROCESS_HELPER functionality.
 	]"
-	testing: "type/manual"
+	testing: "covers"
 	date: "$Date$"
 	revision: "$Revision$"
 

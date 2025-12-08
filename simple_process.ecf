@@ -32,6 +32,7 @@
 		</option>
 		<setting name="console_application" value="true"/>
 		<library name="simple_testing" location="$SIMPLE_TESTING\simple_testing.ecf"/>
+		<library name="testing" location="$ISE_LIBRARY\library\testing\testing.ecf"/>
 		<cluster name="tests" location=".\testing\" recursive="true"/>
 	</target>
 </system>
