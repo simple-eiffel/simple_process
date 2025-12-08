@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="description" content="Trees as active structures that may be traversed using a cursor"/>
+<meta name="library" content="Free implementation of ELKS library"/>
+<meta name="legal" content="See notice at end of class."/>
+<meta name="names" content="cursor_tree, tree"/>
+<meta name="access" content="cursor, membership"/>
+<meta name="contents" content="generic"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="copyright" content="Copyright (c) 1984-2017, Eiffel Software and others"/>
+<meta name="license" content="Eiffel Forum License v2 (see http://www.eiffel.com/licensing/forum.txt)"/>
+<meta name="source" content="Eiffel Software 5949 Hollister Ave., Goleta, CA 93117 USA Telephone 805-685-1006, Fax 805-685-6869 Website http://www.eiffel.com Customer support http://support.eiffel.com"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>cursor_tree Chart</title>
+<link rel="stylesheet" href="../default.css" type="text/css">
+<script type="text/javascript" src="../goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<span class="nav class selected">Chart</span>
+<a class="nav class" href="cursor_tree_links.html">Relations</a>
+<a class="nav class" href="cursor_tree_short.html">Contracts</a>
+<span class="nav class goto">Go to: <input name="c" value="cursor_tree"></span>
+</div></form><pre><span class="ekeyword">deferred</span> <span class="ekeyword">class</span>
+	<a class="eclass" href="../base/cursor_tree_chart.html">CURSOR_TREE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+
+<span class="ekeyword">General</span>
+	<span class="eitag">cluster</span><span class="esymbol">:</span> <span class="necluster">elks</span>
+	<span class="eitag">description</span><span class="esymbol">:</span> <span class="estring">&quot;Trees as active structures that may be traversed using a cursor&quot;</span>
+
+<span class="ekeyword">Ancestors</span>
+	<a class="eclass" href="../base/cursor_structure_chart.html">CURSOR_STRUCTURE</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/hierarchical_chart.html">HIERARCHICAL</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/linear_chart.html">LINEAR</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/linear_chart.html">LINEAR</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+
+<span class="ekeyword">Queries</span>
+	<span title="`above' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_above">above</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`after' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_after">after</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`arity' was declared in HIERARCHICAL as `successor_count'"><a class="efeature" href="../base/hierarchical_short.html#f_successor_count">arity</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_chart.html">INTEGER_32</a></span>
+	<span title="`before' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_before">before</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`below' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_below">below</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`breadth' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_breadth">breadth</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_chart.html">INTEGER_32</a></span>
+	<span title="`changeable_comparison_criterion' was declared in CONTAINER"><a class="efeature" href="../base/container_short.html#f_changeable_comparison_criterion">changeable_comparison_criterion</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`child_item' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_child_item">child_item</a> <span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_chart.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <span class="egeneric">G</span></span>
+	<span title="`child_tree' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_child_tree">child_tree</a> <span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_chart.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <span class="esymbol">[</span><span class="ekeyword">like</span> <span class="ekeyword">Current</span><span class="esymbol">]</span> <a class="eclass" href="../base/cursor_tree_chart.html">CURSOR_TREE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span></span>
+	<span title="`cursor' was declared in CURSOR_STRUCTURE"><a class="efeature" href="../base/cursor_structure_short.html#f_cursor">cursor</a><span class="esymbol">:</span> <a class="eclass" href="../base/cursor_chart.html">CURSOR</a></span>
+	<span title="`depth' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_depth">depth</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_chart.html">INTEGER_32</a></span>
+	<span title="`estimated_count_of' was declared in CONTAINER"><a class="efeature" href="../base/container_short.html#f_estimated_count_of">estimated_count_of</a> <span class="esymbol">(</span><span class="elocal">other</span><span class="esymbol">:</span> <a class="eclass" href="../base/iterable_chart.html">ITERABLE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_chart.html">INTEGER_32</a></span>
+	<span title="`exhausted' was declared in LINEAR"><a class="efeature" href="../base/linear_short.html#f_exhausted">exhausted</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`extendible' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_extendible">extendible</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`for_all' was declared in TRAVERSABLE"><a class="efeature" href="../base/traversable_short.html#f_for_all">for_all</a> <span class="esymbol">(</span><span class="elocal">test</span><span class="esymbol">:</span> <a class="eclass" href="../base/function_chart.html">FUNCTION</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">,</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a><span class="esymbol">]</span><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`has' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_has">has</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="egeneric">G</span><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`index' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_index">index</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_chart.html">INTEGER_32</a></span>
+	<span title="`index_of' was declared in LINEAR"><a class="efeature" href="../base/linear_short.html#f_index_of">index_of</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="esymbol">[</span><span class="ekeyword">like</span> <a class="efeature" href="../base/traversable_short.html#f_item">item</a><span class="esymbol">]</span> <span class="egeneric">G</span><span class="esymbol">;</span> <span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_chart.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_chart.html">INTEGER_32</a></span>
+	<span title="`is_empty' was declared in CONTAINER"><a class="efeature" href="../base/container_short.html#f_is_empty">is_empty</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`is_inserted' was declared in COLLECTION"><a class="efeature" href="../base/collection_short.html#f_is_inserted">is_inserted</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="egeneric">G</span><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`is_leaf' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_is_leaf">is_leaf</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`is_root' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_is_root">is_root</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`isfirst' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_isfirst">isfirst</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`islast' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_islast">islast</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`item' was declared in TRAVERSABLE"><a class="efeature" href="../base/traversable_short.html#f_item">item</a><span class="esymbol">:</span> <span class="egeneric">G</span></span>
+	<span title="`item_for_iteration' was declared in LINEAR"><a class="efeature" href="../base/linear_short.html#f_item_for_iteration">item_for_iteration</a><span class="esymbol">:</span> <span class="egeneric">G</span></span>
+	<span title="`level' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_level">level</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_chart.html">INTEGER_32</a></span>
+	<span title="`linear_for_all' was declared in LINEAR as `for_all'"><a class="efeature" href="../base/linear_short.html#f_for_all">linear_for_all</a> <span class="esymbol">(</span><span class="elocal">test</span><span class="esymbol">:</span> <a class="eclass" href="../base/function_chart.html">FUNCTION</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">,</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a><span class="esymbol">]</span><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`linear_has' was declared in LINEAR as `has'"><a class="efeature" href="../base/linear_short.html#f_has">linear_has</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="esymbol">[</span><span class="ekeyword">like</span> <a class="efeature" href="../base/traversable_short.html#f_item">item</a><span class="esymbol">]</span> <span class="egeneric">G</span><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`linear_occurrences' was declared in LINEAR as `occurrences'"><a class="efeature" href="../base/linear_short.html#f_occurrences">linear_occurrences</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="esymbol">[</span><span class="ekeyword">like</span> <a class="efeature" href="../base/traversable_short.html#f_item">item</a><span class="esymbol">]</span> <span class="egeneric">G</span><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_chart.html">INTEGER_32</a></span>
+	<span title="`linear_off' was declared in LINEAR as `off'"><a class="efeature" href="../base/linear_short.html#f_off">linear_off</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`linear_representation' was declared in LINEAR"><a class="efeature" href="../base/linear_short.html#f_linear_representation">linear_representation</a><span class="esymbol">:</span> <a class="eclass" href="../base/linear_chart.html">LINEAR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span></span>
+	<span title="`linear_there_exists' was declared in LINEAR as `there_exists'"><a class="efeature" href="../base/linear_short.html#f_there_exists">linear_there_exists</a> <span class="esymbol">(</span><span class="elocal">test</span><span class="esymbol">:</span> <a class="eclass" href="../base/function_chart.html">FUNCTION</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">,</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a><span class="esymbol">]</span><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`new_cursor' was declared in ITERABLE"><a class="efeature" href="../base/iterable_short.html#f_new_cursor">new_cursor</a><span class="esymbol">:</span> <a class="eclass" href="../base/iteration_cursor_chart.html">ITERATION_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span></span>
+	<span title="`object_comparison' was declared in CONTAINER"><a class="efeature" href="../base/container_short.html#f_object_comparison">object_comparison</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`occurrences' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_occurrences">occurrences</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="egeneric">G</span><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_chart.html">INTEGER_32</a></span>
+	<span title="`off' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_off">off</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`parent_item' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_parent_item">parent_item</a><span class="esymbol">:</span> <span class="egeneric">G</span></span>
+	<span title="`parent_tree' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_parent_tree">parent_tree</a><span class="esymbol">:</span> <span class="esymbol">[</span><span class="ekeyword">like</span> <span class="ekeyword">Current</span><span class="esymbol">]</span> <a class="eclass" href="../base/cursor_tree_chart.html">CURSOR_TREE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span></span>
+	<span title="`prunable' was declared in COLLECTION"><a class="efeature" href="../base/collection_short.html#f_prunable">prunable</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`readable' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_readable">readable</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`replaceable' was declared in ACTIVE"><a class="efeature" href="../base/active_short.html#f_replaceable">replaceable</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`subtree' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_subtree">subtree</a><span class="esymbol">:</span> <span class="esymbol">[</span><span class="ekeyword">like</span> <span class="ekeyword">Current</span><span class="esymbol">]</span> <a class="eclass" href="../base/cursor_tree_chart.html">CURSOR_TREE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span></span>
+	<span title="`there_exists' was declared in TRAVERSABLE"><a class="efeature" href="../base/traversable_short.html#f_there_exists">there_exists</a> <span class="esymbol">(</span><span class="elocal">test</span><span class="esymbol">:</span> <a class="eclass" href="../base/function_chart.html">FUNCTION</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">,</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a><span class="esymbol">]</span><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`valid_cursor' was declared in CURSOR_STRUCTURE"><a class="efeature" href="../base/cursor_structure_short.html#f_valid_cursor">valid_cursor</a> <span class="esymbol">(</span><span class="elocal">p</span><span class="esymbol">:</span> <a class="eclass" href="../base/cursor_chart.html">CURSOR</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`valid_cursor_index' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_valid_cursor_index">valid_cursor_index</a> <span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_chart.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`writable' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_writable">writable</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+
+<span class="ekeyword">Commands</span>
+	<span title="`back' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_back">back</a></span>
+	<span title="`breadth_forth' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_breadth_forth">breadth_forth</a></span>
+	<span title="`compare_objects' was declared in CONTAINER"><a class="efeature" href="../base/container_short.html#f_compare_objects">compare_objects</a></span>
+	<span title="`compare_references' was declared in CONTAINER"><a class="efeature" href="../base/container_short.html#f_compare_references">compare_references</a></span>
+	<span title="`container_fill' was declared in COLLECTION as `fill'"><a class="efeature" href="../base/collection_short.html#f_fill">container_fill</a> <span class="esymbol">(</span><span class="elocal">other</span><span class="esymbol">:</span> <a class="eclass" href="../base/container_chart.html">CONTAINER</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span><span class="esymbol">)</span></span>
+	<span title="`do_all' was declared in TRAVERSABLE"><a class="efeature" href="../base/traversable_short.html#f_do_all">do_all</a> <span class="esymbol">(</span><span class="elocal">action</span><span class="esymbol">:</span> <a class="eclass" href="../base/procedure_chart.html">PROCEDURE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span><span class="esymbol">)</span></span>
+	<span title="`do_if' was declared in TRAVERSABLE"><a class="efeature" href="../base/traversable_short.html#f_do_if">do_if</a> <span class="esymbol">(</span><span class="elocal">action</span><span class="esymbol">:</span> <a class="eclass" href="../base/procedure_chart.html">PROCEDURE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span><span class="esymbol">;</span> <span class="elocal">test</span><span class="esymbol">:</span> <a class="eclass" href="../base/function_chart.html">FUNCTION</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">,</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a><span class="esymbol">]</span><span class="esymbol">)</span></span>
+	<span title="`down' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_down">down</a> <span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_chart.html">INTEGER_32</a><span class="esymbol">)</span></span>
+	<span title="`extend' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_extend">extend</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="egeneric">G</span><span class="esymbol">)</span></span>
+	<span title="`fill' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_fill">fill</a> <span class="esymbol">(</span><span class="elocal">other</span><span class="esymbol">:</span> <a class="eclass" href="../base/cursor_tree_chart.html">CURSOR_TREE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span><span class="esymbol">)</span></span>
+	<span title="`fill_from_active' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_fill_from_active">fill_from_active</a> <span class="esymbol">(</span><span class="elocal">other</span><span class="esymbol">:</span> <a class="eclass" href="../base/cursor_tree_chart.html">CURSOR_TREE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span><span class="esymbol">)</span></span>
+	<span title="`forth' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_forth">forth</a></span>
+	<span title="`go_last_child' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_go_last_child">go_last_child</a></span>
+	<span title="`go_to' was declared in CURSOR_STRUCTURE"><a class="efeature" href="../base/cursor_structure_short.html#f_go_to">go_to</a> <span class="esymbol">(</span><span class="elocal">p</span><span class="esymbol">:</span> <a class="eclass" href="../base/cursor_chart.html">CURSOR</a><span class="esymbol">)</span></span>
+	<span title="`level_back' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_level_back">level_back</a></span>
+	<span title="`level_forth' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_level_forth">level_forth</a></span>
+	<span title="`linear_do_all' was declared in LINEAR as `do_all'"><a class="efeature" href="../base/linear_short.html#f_do_all">linear_do_all</a> <span class="esymbol">(</span><span class="elocal">action</span><span class="esymbol">:</span> <a class="eclass" href="../base/procedure_chart.html">PROCEDURE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span><span class="esymbol">)</span></span>
+	<span title="`linear_do_if' was declared in LINEAR as `do_if'"><a class="efeature" href="../base/linear_short.html#f_do_if">linear_do_if</a> <span class="esymbol">(</span><span class="elocal">action</span><span class="esymbol">:</span> <a class="eclass" href="../base/procedure_chart.html">PROCEDURE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span><span class="esymbol">;</span> <span class="elocal">test</span><span class="esymbol">:</span> <a class="eclass" href="../base/function_chart.html">FUNCTION</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">,</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a><span class="esymbol">]</span><span class="esymbol">)</span></span>
+	<span title="`merge_left' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_merge_left">merge_left</a> <span class="esymbol">(</span><span class="elocal">other</span><span class="esymbol">:</span> <a class="eclass" href="../base/cursor_tree_chart.html">CURSOR_TREE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span><span class="esymbol">)</span></span>
+	<span title="`merge_right' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_merge_right">merge_right</a> <span class="esymbol">(</span><span class="elocal">other</span><span class="esymbol">:</span> <a class="eclass" href="../base/cursor_tree_chart.html">CURSOR_TREE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span><span class="esymbol">)</span></span>
+	<span title="`postorder_forth' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_postorder_forth">postorder_forth</a></span>
+	<span title="`postorder_start' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_postorder_start">postorder_start</a></span>
+	<span title="`preorder_forth' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_preorder_forth">preorder_forth</a></span>
+	<span title="`prune' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_prune">prune</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="egeneric">G</span><span class="esymbol">)</span></span>
+	<span title="`prune_all' was declared in COLLECTION"><a class="efeature" href="../base/collection_short.html#f_prune_all">prune_all</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="egeneric">G</span><span class="esymbol">)</span></span>
+	<span title="`put' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_put">put</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="egeneric">G</span><span class="esymbol">)</span></span>
+	<span title="`put_left' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_put_left">put_left</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="egeneric">G</span><span class="esymbol">)</span></span>
+	<span title="`put_right' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_put_right">put_right</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="egeneric">G</span><span class="esymbol">)</span></span>
+	<span title="`remove' was declared in ACTIVE"><a class="efeature" href="../base/active_short.html#f_remove">remove</a></span>
+	<span title="`replace' was declared in ACTIVE"><a class="efeature" href="../base/active_short.html#f_replace">replace</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="egeneric">G</span><span class="esymbol">)</span></span>
+	<span title="`search' was declared in LINEAR"><a class="efeature" href="../base/linear_short.html#f_search">search</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="esymbol">[</span><span class="ekeyword">like</span> <a class="efeature" href="../base/traversable_short.html#f_item">item</a><span class="esymbol">]</span> <span class="egeneric">G</span><span class="esymbol">)</span></span>
+	<span title="`start' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_start">start</a></span>
+	<span title="`start_on_level' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_start_on_level">start_on_level</a> <span class="esymbol">(</span><span class="elocal">l</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_chart.html">INTEGER_32</a><span class="esymbol">)</span></span>
+	<span title="`up' is declared in `Current'"><a class="efeature" href="../base/cursor_tree_short.html#f_up">up</a></span>
+	<span title="`wipe_out' was declared in COLLECTION"><a class="efeature" href="../base/collection_short.html#f_wipe_out">wipe_out</a></span>
+
+<span class="ekeyword">Constraints</span>
+	<span class="etag">non negative depth</span>
+	<span class="etag">non negative breadth</span>
+	<span class="etag">is leaf definition</span>
+	<span class="etag">above property</span>
+	<span class="etag">on tree</span>
+	<span class="etag">off definition</span>
+	<span class="etag">below constraint</span>
+	<span class="etag">above constraint</span>
+	<span class="etag">after constraint</span>
+	<span class="etag">before constaint</span>
+	<span class="etag">empty below constraint</span>
+
+</pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<span class="nav class selected">Chart</span>
+<a class="nav class" href="cursor_tree_links.html">Relations</a>
+<a class="nav class" href="cursor_tree_short.html">Contracts</a>
+<span class="nav class goto">Go to: <input name="c" value="cursor_tree"></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>

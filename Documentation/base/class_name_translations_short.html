@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="description" content="Translations of class names between a storing and a retrieving system. Values in this table are names of classes in the retrieving system, indexed by names of generating classes in the storing system (i.e. with no generic arguments). Values may have generic arguments (e.g. MY_CLASS [REAL_64]), thus allowing a very simple conversion of a non-generic class into a generic class. The presence of entries in this table affects all retrieve operations for objects stored using `independent_store'."/>
+<meta name="library" content="Free implementation of ELKS library"/>
+<meta name="legal" content="See notice at end of class."/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="copyright" content="Copyright (c) 1984-2018, Eiffel Software and others"/>
+<meta name="license" content="Eiffel Forum License v2 (see http://www.eiffel.com/licensing/forum.txt)"/>
+<meta name="source" content="Eiffel Software 5949 Hollister Ave., Goleta, CA 93117 USA Telephone 805-685-1006, Fax 805-685-6869 Website http://www.eiffel.com Customer support http://support.eiffel.com"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>class_name_translations Contracts</title>
+<link rel="stylesheet" href="../default.css" type="text/css">
+<script type="text/javascript" src="../goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="class_name_translations_chart.html">Chart</a>
+<a class="nav class" href="class_name_translations_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="class_name_translations"></span>
+</div></form><pre><span class="ekeyword">note</span>
+	<span class="eitag">description</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">Translations of class names between a storing and a retrieving</span>
+		<span class="estring">system. Values in this table are names of classes in the retrieving</span>
+		<span class="estring">system, indexed by names of generating classes in the storing</span>
+		<span class="estring">system (i.e. with no generic arguments). Values may have generic</span>
+		<span class="estring">arguments (e.g. &quot;MY_CLASS </span><span class="estring">[REAL_64]</span><span class="estring">&quot;), thus allowing a very simple</span>
+		<span class="estring">conversion of a non-generic class into a generic class. The</span>
+		<span class="estring">presence of entries in this table affects all retrieve operations</span>
+		<span class="estring">for objects stored using </span><span class="estring">independent_store</span><span class="estring">.</span>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+	<span class="eitag">library</span><span class="esymbol">:</span> <span class="estring">&quot;Free implementation of ELKS library&quot;</span>
+	<span class="eitag">status</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">legal</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">date</span><span class="esymbol">:</span> <span class="estring">&quot;$Date$&quot;</span>
+	<span class="eitag">revision</span><span class="esymbol">:</span> <span class="estring">&quot;$Revision$&quot;</span>
+
+<span class="ekeyword">class</span> <span class="ekeyword">interface</span>
+	<a class="eclass" href="../base/class_name_translations_short.html">CLASS_NAME_TRANSLATIONS</a>
+
+<span class="ekeyword">create</span> 
+	<a class="efeature" href="../base/class_name_translations_short.html#f_default_create">default_create</a>
+
+
+<span class="ekeyword">create</span> <span class="esymbol">{</span><a class="eclass" href="../base/class_name_translations_short.html">CLASS_NAME_TRANSLATIONS</a><span class="esymbol">}</span>
+	<a class="efeature" href="../base/hash_table_short.html#f_make">make</a>
+
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Initialization</span>
+
+	<a name="f_default_create"></a><a class="efeature" href="../base/class_name_translations_short.html#f_default_create">default_create</a>
+			<span class="ecomment">--</span><span class="ecomment"> Make table with current translations</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Element change</span>
+
+	<a name="f_put"></a><a class="efeature" href="../base/class_name_translations_short.html#f_put">put</a> <span class="esymbol">(</span><span class="elocal">new</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a><span class="esymbol">;</span> <span class="elocal">key</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Insert </span><span class="equoted">new</span><span class="ecomment"> with </span><span class="equoted">key</span><span class="ecomment"> if there is no other item</span>
+			<span class="ecomment">--</span><span class="ecomment"> associated with the same key.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Set </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_inserted">inserted</a><span class="ecomment">`</span><span class="ecomment"> if and only if an insertion has</span>
+			<span class="ecomment">--</span><span class="ecomment"> been made (i.e. </span><span class="equoted">key</span><span class="ecomment"> was not present).</span>
+			<span class="ecomment">--</span><span class="ecomment"> If so, set </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_position">position</a><span class="ecomment">`</span><span class="ecomment"> to the insertion position.</span>
+			<span class="ecomment">--</span><span class="ecomment"> If not, set </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_conflict">conflict</a><span class="ecomment">`</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> In either case, set </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_found_item">found_item</a><span class="ecomment">`</span><span class="ecomment"> to the item</span>
+			<span class="ecomment">--</span><span class="ecomment"> now associated with </span><span class="equoted">key</span><span class="ecomment"> (previous item if</span>
+			<span class="ecomment">--</span><span class="ecomment"> there was one, </span><span class="equoted">new</span><span class="ecomment"> otherwise).</span>
+
+	<a name="f_force"></a><a class="efeature" href="../base/class_name_translations_short.html#f_force">force</a> <span class="esymbol">(</span><span class="elocal">new</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a><span class="esymbol">;</span> <span class="elocal">key</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Update table so that </span><span class="equoted">new</span><span class="ecomment"> will be the item associated</span>
+			<span class="ecomment">--</span><span class="ecomment"> with </span><span class="equoted">key</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> If there was an item for that key, set </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_found">found</a><span class="ecomment">`</span>
+			<span class="ecomment">--</span><span class="ecomment"> and set </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_found_item">found_item</a><span class="ecomment">`</span><span class="ecomment"> to that item.</span>
+			<span class="ecomment">--</span><span class="ecomment"> If there was none, set </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_not_found">not_found</a><span class="ecomment">`</span><span class="ecomment"> and set</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_found_item">found_item</a><span class="ecomment">`</span><span class="ecomment"> to the default value.</span>
+
+	<a name="f_extend"></a><a class="efeature" href="../base/class_name_translations_short.html#f_extend">extend</a> <span class="esymbol">(</span><span class="elocal">new</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a><span class="esymbol">;</span> <span class="elocal">key</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Assuming there is no item of key </span><span class="equoted">key</span><span class="ecomment">,</span>
+			<span class="ecomment">--</span><span class="ecomment"> insert </span><span class="equoted">new</span><span class="ecomment"> with </span><span class="equoted">key</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Set </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_inserted">inserted</a><span class="ecomment">`</span><span class="ecomment">.</span>
+
+	<a name="f_replace"></a><a class="efeature" href="../base/class_name_translations_short.html#f_replace">replace</a> <span class="esymbol">(</span><span class="elocal">new</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a><span class="esymbol">;</span> <span class="elocal">key</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Replace item at </span><span class="equoted">key</span><span class="ecomment">, if present,</span>
+			<span class="ecomment">--</span><span class="ecomment"> with </span><span class="equoted">new</span><span class="ecomment">; do not change associated key.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Set </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_replaced">replaced</a><span class="ecomment">`</span><span class="ecomment"> if and only if a replacement has been made</span>
+			<span class="ecomment">--</span><span class="ecomment"> (i.e. </span><span class="equoted">key</span><span class="ecomment"> was present); otherwise set </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_not_found">not_found</a><span class="ecomment">`</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Set </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_found_item">found_item</a><span class="ecomment">`</span><span class="ecomment"> to the item previously associated</span>
+			<span class="ecomment">--</span><span class="ecomment"> with </span><span class="equoted">key</span><span class="ecomment"> (default value if there was none).</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Removal</span>
+
+	<a name="f_wipe_out"></a><a class="efeature" href="../base/class_name_translations_short.html#f_wipe_out">wipe_out</a>
+			<span class="ecomment">--</span><span class="ecomment"> Reset all items to default values; reset status.</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Output</span>
+
+	<a name="f_out"></a><a class="efeature" href="../base/class_name_translations_short.html#f_out">out</a><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a>
+			<span class="ecomment">--</span><span class="ecomment"> Printable representation of translations</span>
+	
+<span class="ekeyword">note</span>
+	<span class="eitag">copyright</span><span class="esymbol">:</span> <span class="estring">&quot;Copyright (c) 1984-2018, Eiffel Software and others&quot;</span>
+	<span class="eitag">license</span><span class="esymbol">:</span> <span class="estring">&quot;Eiffel Forum License v2 (see </span><a class="estring" href="http://www.eiffel.com/licensing/forum.txt">http://www.eiffel.com/licensing/forum.txt</a><span class="estring">)&quot;</span>
+	<span class="eitag">source</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">Eiffel Software</span>
+		<span class="estring">5949 Hollister Ave., Goleta, CA 93117 USA</span>
+		<span class="estring">Telephone 805-685-1006, Fax 805-685-6869</span>
+		<span class="estring">Website </span><a class="estring" href="http://www.eiffel.com">http://www.eiffel.com</a>
+		<span class="estring">Customer support </span><a class="estring" href="http://support.eiffel.com">http://support.eiffel.com</a>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+
+<span class="ekeyword">end</span> <span class="ecomment">--</span> <span class="ecomment">class </span><a class="eclass" href="../base/class_name_translations_short.html">CLASS_NAME_TRANSLATIONS</a></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="class_name_translations_chart.html">Chart</a>
+<a class="nav class" href="class_name_translations_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="class_name_translations"></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>
+

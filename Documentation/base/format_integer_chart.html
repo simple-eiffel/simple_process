@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="description" content="Formatter for integral numbers"/>
+<meta name="library" content="Free implementation of ELKS library"/>
+<meta name="legal" content="See notice at end of class."/>
+<meta name="names" content="format_integer"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="copyright" content="Copyright (c) 1984-2012, Eiffel Software and others"/>
+<meta name="license" content="Eiffel Forum License v2 (see http://www.eiffel.com/licensing/forum.txt)"/>
+<meta name="source" content="Eiffel Software 5949 Hollister Ave., Goleta, CA 93117 USA Telephone 805-685-1006, Fax 805-685-6869 Website http://www.eiffel.com Customer support http://support.eiffel.com"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>format_integer Chart</title>
+<link rel="stylesheet" href="../default.css" type="text/css">
+<script type="text/javascript" src="../goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<span class="nav class selected">Chart</span>
+<a class="nav class" href="format_integer_links.html">Relations</a>
+<a class="nav class" href="format_integer_short.html">Contracts</a>
+<span class="nav class goto">Go to: <input name="c" value="format_integer"></span>
+</div></form><pre><span class="ekeyword">class</span>
+	<a class="eclass" href="../base/format_integer_chart.html">FORMAT_INTEGER</a>
+
+<span class="ekeyword">General</span>
+	<span class="eitag">cluster</span><span class="esymbol">:</span> <span class="necluster">elks</span>
+	<span class="eitag">description</span><span class="esymbol">:</span> <span class="estring">&quot;Formatter for integral numbers&quot;</span>
+	<span class="eitag">create</span><span class="esymbol">:</span> <a class="efeature" href="../base/format_integer_short.html#f_make">make</a>
+
+<span class="ekeyword">Ancestors</span>
+	<a class="eclass" href="../base/any_chart.html">ANY</a>
+
+<span class="ekeyword">Queries</span>
+	<span title="`bracketted_negative' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_bracketted_negative">bracketted_negative</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`centered' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_centered">centered</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`fill_character' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_fill_character">fill_character</a><span class="esymbol">:</span> <a class="eclass" href="../base/character_8_chart.html">CHARACTER_8</a></span>
+	<span title="`formatted' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_formatted">formatted</a> <span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_chart.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_chart.html">STRING_8</a></span>
+	<span title="`ignore_sign' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_ignore_sign">ignore_sign</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`justification' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_justification">justification</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_chart.html">INTEGER_32</a></span>
+	<span title="`leading_sign' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_leading_sign">leading_sign</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`left_justified' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_left_justified">left_justified</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`no_separator' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_no_separator">no_separator</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`not_justified' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_not_justified">not_justified</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`right_justified' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_right_justified">right_justified</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`separator' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_separator">separator</a><span class="esymbol">:</span> <a class="eclass" href="../base/character_8_chart.html">CHARACTER_8</a></span>
+	<span title="`show_sign' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_show_sign">show_sign</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`show_sign_negative' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_show_sign_negative">show_sign_negative</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`show_sign_positive' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_show_sign_positive">show_sign_positive</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`sign_format' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_sign_format">sign_format</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_chart.html">INTEGER_32</a></span>
+	<span title="`sign_string' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_sign_string">sign_string</a><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_chart.html">STRING_8</a></span>
+	<span title="`trailing_sign' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_trailing_sign">trailing_sign</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`width' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_width">width</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_chart.html">INTEGER_32</a></span>
+
+<span class="ekeyword">Commands</span>
+	<span title="`asterisk_fill' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_asterisk_fill">asterisk_fill</a></span>
+	<span title="`blank_fill' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_blank_fill">blank_fill</a></span>
+	<span title="`bracket_negative' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_bracket_negative">bracket_negative</a></span>
+	<span title="`center_justify' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_center_justify">center_justify</a></span>
+	<span title="`comma_separate' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_comma_separate">comma_separate</a></span>
+	<span title="`dollar_fill' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_dollar_fill">dollar_fill</a></span>
+	<span title="`dot_separate' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_dot_separate">dot_separate</a></span>
+	<span title="`left_justify' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_left_justify">left_justify</a></span>
+	<span title="`make' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_make">make</a> <span class="esymbol">(</span><span class="elocal">w</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_chart.html">INTEGER_32</a><span class="esymbol">)</span></span>
+	<span title="`no_justify' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_no_justify">no_justify</a></span>
+	<span title="`remove_separator' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_remove_separator">remove_separator</a></span>
+	<span title="`right_justify' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_right_justify">right_justify</a></span>
+	<span title="`set_fill' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_set_fill">set_fill</a> <span class="esymbol">(</span><span class="elocal">c</span><span class="esymbol">:</span> <a class="eclass" href="../base/character_8_chart.html">CHARACTER_8</a><span class="esymbol">)</span></span>
+	<span title="`set_separator' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_set_separator">set_separator</a> <span class="esymbol">(</span><span class="elocal">c</span><span class="esymbol">:</span> <a class="eclass" href="../base/character_8_chart.html">CHARACTER_8</a><span class="esymbol">)</span></span>
+	<span title="`set_sign' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_set_sign">set_sign</a> <span class="esymbol">(</span><span class="elocal">s</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_chart.html">STRING_8</a><span class="esymbol">)</span></span>
+	<span title="`set_width' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_set_width">set_width</a> <span class="esymbol">(</span><span class="elocal">w</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_chart.html">INTEGER_32</a><span class="esymbol">)</span></span>
+	<span title="`sign_cr_dr' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_sign_cr_dr">sign_cr_dr</a></span>
+	<span title="`sign_dr_cr' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_sign_dr_cr">sign_dr_cr</a></span>
+	<span title="`sign_floating_dollar' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_sign_floating_dollar">sign_floating_dollar</a></span>
+	<span title="`sign_floating_dollar_signed' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_sign_floating_dollar_signed">sign_floating_dollar_signed</a></span>
+	<span title="`sign_ignore' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_sign_ignore">sign_ignore</a></span>
+	<span title="`sign_leading' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_sign_leading">sign_leading</a></span>
+	<span title="`sign_negative_only' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_sign_negative_only">sign_negative_only</a></span>
+	<span title="`sign_normal' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_sign_normal">sign_normal</a></span>
+	<span title="`sign_positive_only' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_sign_positive_only">sign_positive_only</a></span>
+	<span title="`sign_show' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_sign_show">sign_show</a></span>
+	<span title="`sign_trailing' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_sign_trailing">sign_trailing</a></span>
+	<span title="`unbracket_negative' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_unbracket_negative">unbracket_negative</a></span>
+	<span title="`underscore_separate' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_underscore_separate">underscore_separate</a></span>
+	<span title="`zero_fill' is declared in `Current'"><a class="efeature" href="../base/format_integer_short.html#f_zero_fill">zero_fill</a></span>
+
+<span class="ekeyword">Constraints</span>
+	<span class="etag">sign string attached</span>
+	<span class="etag">sign string count</span>
+	<span class="etag">sign string equal parts</span>
+	<span class="etag">wide enough</span>
+	<span class="etag">wide enough</span>
+
+</pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<span class="nav class selected">Chart</span>
+<a class="nav class" href="format_integer_links.html">Relations</a>
+<a class="nav class" href="format_integer_short.html">Contracts</a>
+<span class="nav class goto">Go to: <input name="c" value="format_integer"></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>

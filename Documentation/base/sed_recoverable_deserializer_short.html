@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="description" content="Decoding of arbitrary objects graphs between sessions of programs containing the same types or potentially different types (which can be mapped to the new type system via a correction mechanism,). It also basically takes care of potential reordering of attributes from one system to the other."/>
+<meta name="legal" content="See notice at end of class."/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="library" content="EiffelBase: Library of reusable components for Eiffel."/>
+<meta name="copyright" content="Copyright (c) 1984-2020, Eiffel Software and others"/>
+<meta name="license" content="Eiffel Forum License v2 (see http://www.eiffel.com/licensing/forum.txt)"/>
+<meta name="source" content="Eiffel Software 5949 Hollister Ave., Goleta, CA 93117 USA Telephone 805-685-1006, Fax 805-685-6869 Website http://www.eiffel.com Customer support http://support.eiffel.com"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>sed_recoverable_deserializer Contracts</title>
+<link rel="stylesheet" href="../default.css" type="text/css">
+<script type="text/javascript" src="../goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="sed_recoverable_deserializer_chart.html">Chart</a>
+<a class="nav class" href="sed_recoverable_deserializer_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="sed_recoverable_deserializer"></span>
+</div></form><pre><span class="ekeyword">note</span>
+	<span class="eitag">description</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">Decoding of arbitrary objects graphs between sessions of programs</span>
+		<span class="estring">containing the same types or potentially different types (which can</span>
+		<span class="estring">be mapped to the new type system via a correction mechanism,). It</span>
+		<span class="estring">also basically takes care of potential reordering of attributes</span>
+		<span class="estring">from one system to the other.</span>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+	<span class="eitag">legal</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">status</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">date</span><span class="esymbol">:</span> <span class="estring">&quot;$Date$&quot;</span>
+	<span class="eitag">revision</span><span class="esymbol">:</span> <span class="estring">&quot;$Revision$&quot;</span>
+
+<span class="ekeyword">class</span> <span class="ekeyword">interface</span>
+	<a class="eclass" href="../base/sed_recoverable_deserializer_short.html">SED_RECOVERABLE_DESERIALIZER</a>
+
+<span class="ekeyword">create</span> 
+	<a class="efeature" href="../base/sed_recoverable_deserializer_short.html#f_make">make</a>
+
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Settings</span>
+
+	<a name="f_set_class_type_translator"></a><a class="efeature" href="../base/sed_recoverable_deserializer_short.html#f_set_class_type_translator">set_class_type_translator</a> <span class="esymbol">(</span><span class="elocal">a_translator</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <a class="efeature" href="../base/sed_recoverable_deserializer_short.html#f_class_type_translator">class_type_translator</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Set </span><span class="ecomment">`</span><a class="efeature" href="../base/sed_recoverable_deserializer_short.html#f_class_type_translator">class_type_translator</a><span class="ecomment">`</span><span class="ecomment"> with </span><span class="equoted">a_translator</span><span class="ecomment">.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">class_type_translator_set</span><span class="esymbol">:</span> <a class="efeature" href="../base/sed_recoverable_deserializer_short.html#f_class_type_translator">class_type_translator</a> <span class="esymbol">=</span> <span class="elocal">a_translator</span>
+
+	<a name="f_set_attribute_name_translator"></a><a class="efeature" href="../base/sed_recoverable_deserializer_short.html#f_set_attribute_name_translator">set_attribute_name_translator</a> <span class="esymbol">(</span><span class="elocal">a_translator</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <a class="efeature" href="../base/sed_recoverable_deserializer_short.html#f_attribute_name_translator">attribute_name_translator</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Set </span><span class="ecomment">`</span><a class="efeature" href="../base/sed_recoverable_deserializer_short.html#f_attribute_name_translator">attribute_name_translator</a><span class="ecomment">`</span><span class="ecomment"> with </span><span class="equoted">a_translator</span><span class="ecomment">.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">attribute_name_translator_set</span><span class="esymbol">:</span> <a class="efeature" href="../base/sed_recoverable_deserializer_short.html#f_attribute_name_translator">attribute_name_translator</a> <span class="esymbol">=</span> <span class="elocal">a_translator</span>
+
+	<a name="f_allow_conforming_mismatches"></a><a class="efeature" href="../base/sed_recoverable_deserializer_short.html#f_allow_conforming_mismatches">allow_conforming_mismatches</a>
+			<span class="ecomment">--</span><span class="ecomment"> Set </span><span class="ecomment">`</span><a class="efeature" href="../base/sed_recoverable_deserializer_short.html#f_is_conforming_mismatch_allowed">is_conforming_mismatch_allowed</a><span class="ecomment">`</span><span class="ecomment"> to True.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">is_conforming_mismatch_allowed_set</span><span class="esymbol">:</span> <a class="efeature" href="../base/sed_recoverable_deserializer_short.html#f_is_conforming_mismatch_allowed">is_conforming_mismatch_allowed</a>
+
+	<a name="f_disallow_conforming_mismatches"></a><a class="efeature" href="../base/sed_recoverable_deserializer_short.html#f_disallow_conforming_mismatches">disallow_conforming_mismatches</a>
+			<span class="ecomment">--</span><span class="ecomment"> Set </span><span class="ecomment">`</span><a class="efeature" href="../base/sed_recoverable_deserializer_short.html#f_is_conforming_mismatch_allowed">is_conforming_mismatch_allowed</a><span class="ecomment">`</span><span class="ecomment"> to False.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">is_conforming_mismatch_allowed_set</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/sed_recoverable_deserializer_short.html#f_is_conforming_mismatch_allowed">is_conforming_mismatch_allowed</a>
+
+	<a name="f_allow_attribute_removal"></a><a class="efeature" href="../base/sed_recoverable_deserializer_short.html#f_allow_attribute_removal">allow_attribute_removal</a>
+			<span class="ecomment">--</span><span class="ecomment"> Set </span><span class="ecomment">`</span><a class="efeature" href="../base/sed_recoverable_deserializer_short.html#f_is_attribute_removal_allowed">is_attribute_removal_allowed</a><span class="ecomment">`</span><span class="ecomment"> to True.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">is_attribute_removal_allowed_set</span><span class="esymbol">:</span> <a class="efeature" href="../base/sed_recoverable_deserializer_short.html#f_is_attribute_removal_allowed">is_attribute_removal_allowed</a>
+
+	<a name="f_disallow_attribute_removal"></a><a class="efeature" href="../base/sed_recoverable_deserializer_short.html#f_disallow_attribute_removal">disallow_attribute_removal</a>
+			<span class="ecomment">--</span><span class="ecomment"> Set </span><span class="ecomment">`</span><a class="efeature" href="../base/sed_recoverable_deserializer_short.html#f_is_attribute_removal_allowed">is_attribute_removal_allowed</a><span class="ecomment">`</span><span class="ecomment"> to False.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">is_attribute_removal_allowed_set</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/sed_recoverable_deserializer_short.html#f_is_attribute_removal_allowed">is_attribute_removal_allowed</a>
+
+	<a name="f_stop_on_data_retrieval_error"></a><a class="efeature" href="../base/sed_recoverable_deserializer_short.html#f_stop_on_data_retrieval_error">stop_on_data_retrieval_error</a>
+			<span class="ecomment">--</span><span class="ecomment"> Set </span><span class="ecomment">`</span><a class="efeature" href="../base/sed_recoverable_deserializer_short.html#f_is_stopping_on_data_retrieval_error">is_stopping_on_data_retrieval_error</a><span class="ecomment">`</span><span class="ecomment"> to False.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">is_stopping_on_data_retrieval_error_set</span><span class="esymbol">:</span> <a class="efeature" href="../base/sed_recoverable_deserializer_short.html#f_is_stopping_on_data_retrieval_error">is_stopping_on_data_retrieval_error</a>
+
+	<a name="f_continue_on_data_retrieval_error"></a><a class="efeature" href="../base/sed_recoverable_deserializer_short.html#f_continue_on_data_retrieval_error">continue_on_data_retrieval_error</a>
+			<span class="ecomment">--</span><span class="ecomment"> Set </span><span class="ecomment">`</span><a class="efeature" href="../base/sed_recoverable_deserializer_short.html#f_is_attribute_removal_allowed">is_attribute_removal_allowed</a><span class="ecomment">`</span><span class="ecomment"> to False.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">is_stopping_on_data_retrieval_error_set</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/sed_recoverable_deserializer_short.html#f_is_stopping_on_data_retrieval_error">is_stopping_on_data_retrieval_error</a>
+
+	<a name="f_set_is_checking_data_consistency"></a><a class="efeature" href="../base/sed_recoverable_deserializer_short.html#f_set_is_checking_data_consistency">set_is_checking_data_consistency</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <a class="efeature" href="../base/sed_recoverable_deserializer_short.html#f_is_checking_data_consistency">is_checking_data_consistency</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Set </span><span class="ecomment">`</span><a class="efeature" href="../base/sed_recoverable_deserializer_short.html#f_is_checking_data_consistency">is_checking_data_consistency</a><span class="ecomment">`</span><span class="ecomment"> with </span><span class="equoted">v</span><span class="ecomment">.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">is_checking_data_consistency_set</span><span class="esymbol">:</span> <a class="efeature" href="../base/sed_recoverable_deserializer_short.html#f_is_checking_data_consistency">is_checking_data_consistency</a> <span class="esymbol">=</span> <span class="elocal">v</span>
+	
+<span class="ekeyword">note</span>
+	<span class="eitag">library</span><span class="esymbol">:</span> <span class="estring">&quot;EiffelBase: Library of reusable components for Eiffel.&quot;</span>
+	<span class="eitag">copyright</span><span class="esymbol">:</span> <span class="estring">&quot;Copyright (c) 1984-2020, Eiffel Software and others&quot;</span>
+	<span class="eitag">license</span><span class="esymbol">:</span> <span class="estring">&quot;Eiffel Forum License v2 (see </span><a class="estring" href="http://www.eiffel.com/licensing/forum.txt">http://www.eiffel.com/licensing/forum.txt</a><span class="estring">)&quot;</span>
+	<span class="eitag">source</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">Eiffel Software</span>
+		<span class="estring">5949 Hollister Ave., Goleta, CA 93117 USA</span>
+		<span class="estring">Telephone 805-685-1006, Fax 805-685-6869</span>
+		<span class="estring">Website </span><a class="estring" href="http://www.eiffel.com">http://www.eiffel.com</a>
+		<span class="estring">Customer support </span><a class="estring" href="http://support.eiffel.com">http://support.eiffel.com</a>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+
+<span class="ekeyword">end</span> <span class="ecomment">--</span> <span class="ecomment">class </span><a class="eclass" href="../base/sed_recoverable_deserializer_short.html">SED_RECOVERABLE_DESERIALIZER</a></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="sed_recoverable_deserializer_chart.html">Chart</a>
+<a class="nav class" href="sed_recoverable_deserializer_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="sed_recoverable_deserializer"></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>
+

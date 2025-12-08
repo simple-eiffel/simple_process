@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="description" content="TTCondition variables allow threads to synchronize based on the content of a shared data, whereas TTmutexes only synchronize access to the data. In other words, a condition variable is a TTsynchronization object that enables threads to wait until a particular condition occurs. TT TTWhen a thread executes a `wait' call on a condition variable, it must hold an associated `mutex' TT(used for checking that condition). Then, it is immediately suspended and put into the waiting TTqueue. The thread is suspended and is waiting for the condition to occur.  TTEventually, when the condition has occurred, a thread will `signal' it. Two possible scenarios: TT- if there are threads waiting, then one of the waiting thread will resume its execution and TT  will get the `mutex' in a locked state. TT- if there are no threads waiting, nothing is done  TTFor the simple usage of a condition variable, it is very similar to using a semaphore. TT TTIn addition you have `broadcast' that will resume all waiting threads at once, and TT`wait_with_timeout' that will wait only a certain amount of time before abandonning the wait. TT TTThe `signal' and `broadcast' routines can be called by a thread whether or not it currently owns TTthe mutex that threads calling `wait' or `wait_with_timeout' have associated with the condition TTvariable during their waits. If, however, predictable scheduling behavior is required, then that TTmutex should be locked by the thread prior to calling `signal' or `broadcast'. TT TTAssuming `shared_data' an INTEGER initially set to zero, then a typical usage of condition variable TTto wait until `shared_data' becomes one, could be written as followed in thread A: TT TTTmutex.lock TTTfrom TTTuntil TTTTshared_data = 1 TTTloop TTTTcondition_variable.wait (mutex) TTTend TTTmutex.unlock TTT TTand in thread B: TT TTTmutex.lock TTTshared_data := 1 TTTcondition_variable.signal TTTmutex.unlock TTT TTThread A will be blocked until thread B signal that now `shared_data' is 1."/>
+<meta name="legal" content="See notice at end of class."/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="copyright" content="Copyright (c) 1984-2017, Eiffel Software and others"/>
+<meta name="license" content="Eiffel Forum License v2 (see http://www.eiffel.com/licensing/forum.txt)"/>
+<meta name="source" content="Eiffel Software 5949 Hollister Ave., Goleta, CA 93117 USA Telephone 805-685-1006, Fax 805-685-6869 Website http://www.eiffel.com Customer support http://support.eiffel.com"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>condition_variable Contracts</title>
+<link rel="stylesheet" href="../default.css" type="text/css">
+<script type="text/javascript" src="../goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="condition_variable_chart.html">Chart</a>
+<a class="nav class" href="condition_variable_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="condition_variable"></span>
+</div></form><pre><span class="ekeyword">note</span>
+	<span class="eitag">description</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">		Condition variables allow threads to synchronize based on the content of a shared data, whereas</span>
+		<span class="estring">		mutexes only synchronize access to the data. In other words, a condition variable is a</span>
+		<span class="estring">		synchronization object that enables threads to wait until a particular condition occurs.</span>
+		<span class="estring">		</span>
+		<span class="estring">		When a thread executes a </span><span class="estring">`</span><a class="efeature" href="../base/condition_variable_short.html#f_wait">wait</a><span class="estring">`</span><span class="estring"> call on a condition variable, it must hold an associated </span><span class="estring">mutex</span>
+		<span class="estring">		(used for checking that condition). Then, it is immediately suspended and put into the waiting</span>
+		<span class="estring">		queue. The thread is suspended and is waiting for the condition to occur.</span>
+		
+		<span class="estring">		Eventually, when the condition has occurred, a thread will </span><span class="estring">`</span><a class="efeature" href="../base/condition_variable_short.html#f_signal">signal</a><span class="estring">`</span><span class="estring"> it. Two possible scenarios:</span>
+		<span class="estring">		- if there are threads waiting, then one of the waiting thread will resume its execution and</span>
+		<span class="estring">		 &nbsp;will get the </span><span class="estring">mutex</span><span class="estring"> in a locked state.</span>
+		<span class="estring">		- if there are no threads waiting, nothing is done</span>
+		
+		<span class="estring">		For the simple usage of a condition variable, it is very similar to using a semaphore.</span>
+		<span class="estring">		</span>
+		<span class="estring">		In addition you have </span><span class="estring">`</span><a class="efeature" href="../base/condition_variable_short.html#f_broadcast">broadcast</a><span class="estring">`</span><span class="estring"> that will resume all waiting threads at once, and</span>
+		<span class="estring">		</span><span class="estring">`</span><a class="efeature" href="../base/condition_variable_short.html#f_wait_with_timeout">wait_with_timeout</a><span class="estring">`</span><span class="estring"> that will wait only a certain amount of time before abandonning the wait.</span>
+		<span class="estring">		</span>
+		<span class="estring">		The </span><span class="estring">`</span><a class="efeature" href="../base/condition_variable_short.html#f_signal">signal</a><span class="estring">`</span><span class="estring"> and </span><span class="estring">`</span><a class="efeature" href="../base/condition_variable_short.html#f_broadcast">broadcast</a><span class="estring">`</span><span class="estring"> routines can be called by a thread whether or not it currently owns</span>
+		<span class="estring">		the mutex that threads calling </span><span class="estring">`</span><a class="efeature" href="../base/condition_variable_short.html#f_wait">wait</a><span class="estring">`</span><span class="estring"> or </span><span class="estring">`</span><a class="efeature" href="../base/condition_variable_short.html#f_wait_with_timeout">wait_with_timeout</a><span class="estring">`</span><span class="estring"> have associated with the condition</span>
+		<span class="estring">		variable during their waits. If, however, predictable scheduling behavior is required, then that</span>
+		<span class="estring">		mutex should be locked by the thread prior to calling </span><span class="estring">`</span><a class="efeature" href="../base/condition_variable_short.html#f_signal">signal</a><span class="estring">`</span><span class="estring"> or </span><span class="estring">`</span><a class="efeature" href="../base/condition_variable_short.html#f_broadcast">broadcast</a><span class="estring">`</span><span class="estring">.</span>
+		<span class="estring">		</span>
+		<span class="estring">		Assuming </span><span class="estring">shared_data</span><span class="estring"> an INTEGER initially set to zero, then a typical usage of condition variable</span>
+		<span class="estring">		to wait until </span><span class="estring">shared_data</span><span class="estring"> becomes one, could be written as followed in thread A:</span>
+		<span class="estring">		</span>
+		<span class="estring">			mutex.lock</span>
+		<span class="estring">			from</span>
+		<span class="estring">			until</span>
+		<span class="estring">				shared_data = 1</span>
+		<span class="estring">			loop</span>
+		<span class="estring">				condition_variable.wait (mutex)</span>
+		<span class="estring">			end</span>
+		<span class="estring">			mutex.unlock</span>
+		<span class="estring">			</span>
+		<span class="estring">		and in thread B:</span>
+		<span class="estring">		</span>
+		<span class="estring">			mutex.lock</span>
+		<span class="estring">			shared_data := 1</span>
+		<span class="estring">			condition_variable.signal</span>
+		<span class="estring">			mutex.unlock</span>
+		<span class="estring">			</span>
+		<span class="estring">		Thread A will be blocked until thread B signal that now </span><span class="estring">shared_data</span><span class="estring"> is 1.</span>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+	<span class="eitag">legal</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">status</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">date</span><span class="esymbol">:</span> <span class="estring">&quot;$Date$&quot;</span>
+	<span class="eitag">revision</span><span class="esymbol">:</span> <span class="estring">&quot;$Revision$&quot;</span>
+
+<span class="ekeyword">class</span> <span class="ekeyword">interface</span>
+	<a class="eclass" href="../base/condition_variable_short.html">CONDITION_VARIABLE</a>
+
+<span class="ekeyword">create</span> 
+	<a class="efeature" href="../base/condition_variable_short.html#f_make">make</a>
+
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Access</span>
+
+	<a name="f_is_set"></a><a class="efeature" href="../base/condition_variable_short.html#f_is_set">is_set</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is condition variable initialized?</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Status setting</span>
+
+	<a name="f_signal"></a><a class="efeature" href="../base/condition_variable_short.html#f_signal">signal</a>
+			<span class="ecomment">--</span><span class="ecomment"> Unblock one thread blocked on the current condition variable.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">is_set</span><span class="esymbol">:</span> <a class="efeature" href="../base/condition_variable_short.html#f_is_set">is_set</a>
+
+	<a name="f_broadcast"></a><a class="efeature" href="../base/condition_variable_short.html#f_broadcast">broadcast</a>
+			<span class="ecomment">--</span><span class="ecomment"> Unblock all threads blocked on the current condition variable.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">is_set</span><span class="esymbol">:</span> <a class="efeature" href="../base/condition_variable_short.html#f_is_set">is_set</a>
+
+	<a name="f_wait"></a><a class="efeature" href="../base/condition_variable_short.html#f_wait">wait</a> <span class="esymbol">(</span><span class="elocal">a_mutex</span><span class="esymbol">:</span> <a class="eclass" href="../base/mutex_short.html">MUTEX</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Block calling thread on current condition variable.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">is_set</span><span class="esymbol">:</span> <a class="efeature" href="../base/condition_variable_short.html#f_is_set">is_set</a>
+			<span class="etag">a_mutex_not_void</span><span class="esymbol">:</span> <span class="elocal">a_mutex</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_wait_with_timeout"></a><a class="efeature" href="../base/condition_variable_short.html#f_wait_with_timeout">wait_with_timeout</a> <span class="esymbol">(</span><span class="elocal">a_mutex</span><span class="esymbol">:</span> <a class="eclass" href="../base/mutex_short.html">MUTEX</a><span class="esymbol">;</span> <span class="elocal">a_timeout_ms</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Block calling thread on current condition variable for at most </span><span class="equoted">a_timeout</span><span class="ecomment"> milliseconds.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Return </span><span class="equoted">True</span><span class="ecomment"> is we got the condition variable on time, otherwise return </span><span class="equoted">False</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">is_set</span><span class="esymbol">:</span> <a class="efeature" href="../base/condition_variable_short.html#f_is_set">is_set</a>
+			<span class="etag">a_mutex_not_void</span><span class="esymbol">:</span> <span class="elocal">a_mutex</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">timeout_positive</span><span class="esymbol">:</span> <span class="elocal">a_timeout_ms</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">0</span>
+
+	<a name="f_destroy"></a><a class="efeature" href="../base/condition_variable_short.html#f_destroy">destroy</a>
+			<span class="ecomment">--</span><span class="ecomment"> Destroy condition variable.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">is_set</span><span class="esymbol">:</span> <a class="efeature" href="../base/condition_variable_short.html#f_is_set">is_set</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">not_set</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/condition_variable_short.html#f_is_set">is_set</a>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Removal</span>
+
+	<a name="f_dispose"></a><a class="efeature" href="../base/condition_variable_short.html#f_dispose">dispose</a>
+			<span class="ecomment">--</span><span class="ecomment"> Called by the garbage collector when the condition</span>
+			<span class="ecomment">--</span><span class="ecomment"> variable is collected.</span>
+	
+<span class="ekeyword">note</span>
+	<span class="eitag">copyright</span><span class="esymbol">:</span> <span class="estring">&quot;Copyright (c) 1984-2017, Eiffel Software and others&quot;</span>
+	<span class="eitag">license</span><span class="esymbol">:</span> <span class="estring">&quot;Eiffel Forum License v2 (see </span><a class="estring" href="http://www.eiffel.com/licensing/forum.txt">http://www.eiffel.com/licensing/forum.txt</a><span class="estring">)&quot;</span>
+	<span class="eitag">source</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">Eiffel Software</span>
+		<span class="estring">5949 Hollister Ave., Goleta, CA 93117 USA</span>
+		<span class="estring">Telephone 805-685-1006, Fax 805-685-6869</span>
+		<span class="estring">Website </span><a class="estring" href="http://www.eiffel.com">http://www.eiffel.com</a>
+		<span class="estring">Customer support </span><a class="estring" href="http://support.eiffel.com">http://support.eiffel.com</a>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+
+<span class="ekeyword">end</span> <span class="ecomment">--</span> <span class="ecomment">class </span><a class="eclass" href="../base/condition_variable_short.html">CONDITION_VARIABLE</a></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="condition_variable_chart.html">Chart</a>
+<a class="nav class" href="condition_variable_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="condition_variable"></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>
+

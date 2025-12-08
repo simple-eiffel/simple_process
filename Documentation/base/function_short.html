@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="description" content="Objects representing delayed calls to a function, with some arguments possibly still open.  Note: Features are the same as those of ROUTINE, Twith `apply' made effective, and the addition Tof `last_result' and `item'."/>
+<meta name="library" content="Free implementation of ELKS library"/>
+<meta name="legal" content="See notice at end of class."/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="copyright" content="Copyright (c) 1984-2017, Eiffel Software and others"/>
+<meta name="license" content="Eiffel Forum License v2 (see http://www.eiffel.com/licensing/forum.txt)"/>
+<meta name="source" content="Eiffel Software 5949 Hollister Ave., Goleta, CA 93117 USA Telephone 805-685-1006, Fax 805-685-6869 Website http://www.eiffel.com Customer support http://support.eiffel.com"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>function Contracts</title>
+<link rel="stylesheet" href="../default.css" type="text/css">
+<script type="text/javascript" src="../goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="function_chart.html">Chart</a>
+<a class="nav class" href="function_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="function"></span>
+</div></form><pre><span class="ekeyword">note</span>
+	<span class="eitag">description</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">Objects representing delayed calls to a function,</span>
+		<span class="estring">with some arguments possibly still open.</span>
+		
+		<span class="estring">Note: Features are the same as those of ROUTINE,</span>
+		<span class="estring">	with </span><span class="estring">`</span><a class="efeature" href="../base/function_short.html#f_apply">apply</a><span class="estring">`</span><span class="estring"> made effective, and the addition</span>
+		<span class="estring">	of </span><span class="estring">`</span><a class="efeature" href="../base/function_short.html#f_last_result">last_result</a><span class="estring">`</span><span class="estring"> and </span><span class="estring">`</span><a class="efeature" href="../base/function_short.html#f_item">item</a><span class="estring">`</span><span class="estring">.</span>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+	<span class="eitag">library</span><span class="esymbol">:</span> <span class="estring">&quot;Free implementation of ELKS library&quot;</span>
+	<span class="eitag">status</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">legal</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">date</span><span class="esymbol">:</span> <span class="estring">&quot;$Date$&quot;</span>
+	<span class="eitag">revision</span><span class="esymbol">:</span> <span class="estring">&quot;$Revision$&quot;</span>
+
+<span class="ekeyword">class</span> <span class="ekeyword">interface</span>
+	<a class="eclass" href="../base/function_short.html">FUNCTION</a> <span class="esymbol">[</span><span class="egeneric">OPEN_ARGS</span> <span class="esymbol">-&gt;</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/tuple_short.html">TUPLE</a> <span class="ekeyword">create</span> <a class="efeature" href="../base/any_short.html#f_default_create">default_create</a> <span class="ekeyword">end</span><span class="esymbol">,</span> <span class="egeneric">RESULT_TYPE</span> <span class="esymbol">-&gt;</span> <span class="esymbol">]</span>
+
+<span class="ekeyword">create</span> <span class="esymbol">{</span>NONE<span class="esymbol">}</span>
+	<a class="efeature" href="../base/routine_short.html#f_set_rout_disp">set_rout_disp</a><span class="esymbol">,</span>
+	<a class="efeature" href="../base/routine_short.html#f_set_rout_disp_final">set_rout_disp_final</a>
+
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Access</span>
+
+	<a name="f_last_result"></a><a class="efeature" href="../base/function_short.html#f_last_result">last_result</a><span class="esymbol">:</span> <span class="ekeyword">detachable</span> <span class="egeneric">RESULT_TYPE</span>
+			<span class="ecomment">--</span><span class="ecomment"> Result of last call, if any</span>
+
+	<a name="f_call"></a><a class="efeature" href="../base/function_short.html#f_call">call</a> <span class="esymbol">(</span><span class="elocal">args</span><span class="esymbol">:</span> <span class="ekeyword">detachable</span> <span class="ekeyword">separate</span> <span class="egeneric">OPEN_ARGS</span><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Call routine with </span><span class="equoted">args</span><span class="ecomment">.</span>
+
+	<a name="f_item"></a><a class="efeature" href="../base/function_short.html#f_item">item</a> <span class="ekeyword">alias</span> <span class="esymbol">&quot;</span><a class="esymbol" href="../base/function_short.html#f_item">()</a><span class="esymbol">&quot;</span> <span class="esymbol">(</span><span class="elocal">args</span><span class="esymbol">:</span> <span class="ekeyword">detachable</span> <span class="ekeyword">separate</span> <span class="egeneric">OPEN_ARGS</span><span class="esymbol">)</span><span class="esymbol">:</span> <span class="egeneric">RESULT_TYPE</span>
+			<span class="ecomment">--</span><span class="ecomment"> Result of calling function with </span><span class="equoted">args</span><span class="ecomment"> as operands.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">valid_operands</span><span class="esymbol">:</span> <a class="efeature" href="../base/routine_short.html#f_valid_operands">valid_operands</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">args</span><span class="esymbol">)</span>
+
+	<a name="f_apply"></a><a class="efeature" href="../base/function_short.html#f_apply">apply</a>
+			<span class="ecomment">--</span><span class="ecomment"> Call function with </span><span class="ecomment">`</span><a class="efeature" href="../base/routine_short.html#f_operands">operands</a><span class="ecomment">`</span><span class="ecomment"> as last set.</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Comparison</span>
+
+	<a name="f_is_equal"></a><a class="efeature" href="../base/function_short.html#f_is_equal">is_equal</a> <span class="esymbol">(</span><span class="elocal">other</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <span class="ekeyword">Current</span><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is associated function the same as the one</span>
+			<span class="ecomment">--</span><span class="ecomment"> associated with </span><span class="equoted">other</span><span class="ecomment">?</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Duplication</span>
+
+	<a name="f_copy"></a><a class="efeature" href="../base/function_short.html#f_copy">copy</a> <span class="esymbol">(</span><span class="elocal">other</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <span class="ekeyword">Current</span><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Use same function as </span><span class="equoted">other</span><span class="ecomment">.</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Removal</span>
+
+	<a name="f_clear_last_result"></a><a class="efeature" href="../base/function_short.html#f_clear_last_result">clear_last_result</a>
+			<span class="ecomment">--</span><span class="ecomment"> Reset content of </span><span class="ecomment">`</span><a class="efeature" href="../base/function_short.html#f_last_result">last_result</a><span class="ecomment">`</span><span class="ecomment"> to its default value.</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Extended operations</span>
+
+	<a name="f_flexible_item"></a><a class="efeature" href="../base/function_short.html#f_flexible_item">flexible_item</a> <span class="esymbol">(</span><span class="elocal">a</span><span class="esymbol">:</span> <span class="ekeyword">detachable</span> <span class="ekeyword">separate</span> <a class="eclass" href="../base/tuple_short.html">TUPLE</a><span class="esymbol">)</span><span class="esymbol">:</span> <span class="egeneric">RESULT_TYPE</span>
+			<span class="ecomment">--</span><span class="ecomment"> Result of calling function with </span><span class="equoted">a</span><span class="ecomment"> as arguments.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Compared to </span><span class="ecomment">`</span><a class="efeature" href="../base/function_short.html#f_item">item</a><span class="ecomment">`</span><span class="ecomment"> the type of </span><span class="equoted">a</span><span class="ecomment"> may be different from </span><span class="ecomment">`</span><span class="ecomment">{</span><a class="eclass" href="../base/function_short.html">FUNCTION</a> <span class="esymbol">[</span>Generic #<span class="enumber">1</span><span class="esymbol">,</span> Generic #<span class="enumber">2</span><span class="esymbol">]</span><span class="ecomment">}</span><span class="ecomment">`</span><span class="ecomment">.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">valid_operands</span><span class="esymbol">:</span> <a class="efeature" href="../base/routine_short.html#f_valid_operands">valid_operands</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">a</span><span class="esymbol">)</span>
+	
+<span class="ekeyword">note</span>
+	<span class="eitag">copyright</span><span class="esymbol">:</span> <span class="estring">&quot;Copyright (c) 1984-2017, Eiffel Software and others&quot;</span>
+	<span class="eitag">license</span><span class="esymbol">:</span> <span class="estring">&quot;Eiffel Forum License v2 (see </span><a class="estring" href="http://www.eiffel.com/licensing/forum.txt">http://www.eiffel.com/licensing/forum.txt</a><span class="estring">)&quot;</span>
+	<span class="eitag">source</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">Eiffel Software</span>
+		<span class="estring">5949 Hollister Ave., Goleta, CA 93117 USA</span>
+		<span class="estring">Telephone 805-685-1006, Fax 805-685-6869</span>
+		<span class="estring">Website </span><a class="estring" href="http://www.eiffel.com">http://www.eiffel.com</a>
+		<span class="estring">Customer support </span><a class="estring" href="http://support.eiffel.com">http://support.eiffel.com</a>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+
+<span class="ekeyword">end</span> <span class="ecomment">--</span> <span class="ecomment">class </span><a class="eclass" href="../base/function_short.html">FUNCTION</a></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="function_chart.html">Chart</a>
+<a class="nav class" href="function_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="function"></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>
+

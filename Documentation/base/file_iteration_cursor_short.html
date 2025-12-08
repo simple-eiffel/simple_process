@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="description" content="External iteration cursor for a file."/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="author" content="Alexander Kogtenkov"/>
+<meta name="copyright" content="Copyright (c) 1984-2018, Eiffel Software and others"/>
+<meta name="license" content="Eiffel Forum License v2 (see http://www.eiffel.com/licensing/forum.txt)"/>
+<meta name="source" content="Eiffel Software 5949 Hollister Ave., Goleta, CA 93117 USA Telephone 805-685-1006, Fax 805-685-6869 Website http://www.eiffel.com Customer support http://support.eiffel.com"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>file_iteration_cursor Contracts</title>
+<link rel="stylesheet" href="../default.css" type="text/css">
+<script type="text/javascript" src="../goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="file_iteration_cursor_chart.html">Chart</a>
+<a class="nav class" href="file_iteration_cursor_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="file_iteration_cursor"></span>
+</div></form><pre><span class="ekeyword">note</span>
+	<span class="eitag">description</span><span class="esymbol">:</span> <span class="estring">&quot;External iteration cursor for a file.&quot;</span>
+
+<span class="ekeyword">class</span> <span class="ekeyword">interface</span>
+	<a class="eclass" href="../base/file_iteration_cursor_short.html">FILE_ITERATION_CURSOR</a>
+
+<span class="ekeyword">create</span> <span class="esymbol">{</span><a class="eclass" href="../base/file_short.html">FILE</a><span class="esymbol">}</span>
+	<a class="efeature" href="../base/file_iteration_cursor_short.html#f_make_empty">make_empty</a><span class="esymbol">,</span>
+	<a class="efeature" href="../base/file_iteration_cursor_short.html#f_make_open_read">make_open_read</a><span class="esymbol">,</span>
+	<a class="efeature" href="../base/file_iteration_cursor_short.html#f_make_open_stdin">make_open_stdin</a>
+
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Access</span>
+
+	<a name="f_character"></a><a class="efeature" href="../base/file_iteration_cursor_short.html#f_character">character</a><span class="esymbol">:</span> <a class="eclass" href="../base/character_8_short.html">CHARACTER_8</a>
+			<span class="ecomment">--</span><span class="ecomment"> Item at current cursor position.</span>
+			<span class="ecomment">--</span><span class="ecomment"> See also </span><span class="ecomment">`</span><a class="efeature" href="../base/file_iteration_cursor_short.html#f_byte">byte</a><span class="ecomment">`</span><span class="ecomment">.</span>
+
+	<a name="f_byte"></a><a class="efeature" href="../base/file_iteration_cursor_short.html#f_byte">byte</a><span class="esymbol">:</span> <a class="eclass" href="../base/natural_8_short.html">NATURAL_8</a>
+			<span class="ecomment">--</span><span class="ecomment"> See also </span><span class="ecomment">`</span><a class="efeature" href="../base/file_iteration_cursor_short.html#f_character">character</a><span class="ecomment">`</span><span class="ecomment">.</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Status report	</span>
+
+	<a name="f_after"></a><a class="efeature" href="../base/file_iteration_cursor_short.html#f_after">after</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Are there no more items to iterate over?</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Cursor movement</span>
+
+	<a name="f_forth"></a><a class="efeature" href="../base/file_iteration_cursor_short.html#f_forth">forth</a>
+			<span class="ecomment">--</span><span class="ecomment"> Move to next position.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Attempt to read a byte from the file and make it available in </span><span class="ecomment">`</span><a class="efeature" href="../base/file_iteration_cursor_short.html#f_byte">byte</a><span class="ecomment">`</span><span class="ecomment"> and </span><span class="ecomment">`</span><a class="efeature" href="../base/file_iteration_cursor_short.html#f_character">character</a><span class="ecomment">`</span><span class="ecomment">.</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Disposal</span>
+
+	<a name="f_close"></a><a class="efeature" href="../base/file_iteration_cursor_short.html#f_close">close</a>
+			<span class="ecomment">--</span><span class="ecomment"> Action to be executed just before garbage collection</span>
+			<span class="ecomment">--</span><span class="ecomment"> reclaims an object.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Effect it in descendants to perform specific dispose</span>
+			<span class="ecomment">--</span><span class="ecomment"> actions. Those actions should only take care of freeing</span>
+			<span class="ecomment">--</span><span class="ecomment"> external resources; they should not perform remote calls</span>
+			<span class="ecomment">--</span><span class="ecomment"> on other objects since these may also be dead and reclaimed.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Release resources associated with the file.</span>
+	
+<span class="ekeyword">invariant</span>
+	<span class="etag">consistent_item</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_iteration_cursor_short.html#f_byte">byte</a><span class="edot">.</span><a class="efeature" href="../base/natural_8_short.html#f_to_character_8">to_character_8</a> <span class="esymbol">=</span> <a class="efeature" href="../base/file_iteration_cursor_short.html#f_character">character</a>
+
+<span class="ekeyword">note</span>
+	<span class="eitag">date</span><span class="esymbol">:</span> <span class="estring">&quot;$Date$&quot;</span>
+	<span class="eitag">revision</span><span class="esymbol">:</span> <span class="estring">&quot;$Revision$&quot;</span>
+	<span class="eitag">author</span><span class="esymbol">:</span> <span class="estring">&quot;Alexander Kogtenkov&quot;</span>
+	<span class="eitag">copyright</span><span class="esymbol">:</span> <span class="estring">&quot;Copyright (c) 1984-2018, Eiffel Software and others&quot;</span>
+	<span class="eitag">license</span><span class="esymbol">:</span> <span class="estring">&quot;Eiffel Forum License v2 (see </span><a class="estring" href="http://www.eiffel.com/licensing/forum.txt">http://www.eiffel.com/licensing/forum.txt</a><span class="estring">)&quot;</span>
+	<span class="eitag">source</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">Eiffel Software</span>
+		<span class="estring">5949 Hollister Ave., Goleta, CA 93117 USA</span>
+		<span class="estring">Telephone 805-685-1006, Fax 805-685-6869</span>
+		<span class="estring">Website </span><a class="estring" href="http://www.eiffel.com">http://www.eiffel.com</a>
+		<span class="estring">Customer support </span><a class="estring" href="http://support.eiffel.com">http://support.eiffel.com</a>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+
+<span class="ekeyword">end</span> <span class="ecomment">--</span> <span class="ecomment">class </span><a class="eclass" href="../base/file_iteration_cursor_short.html">FILE_ITERATION_CURSOR</a></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="file_iteration_cursor_chart.html">Chart</a>
+<a class="nav class" href="file_iteration_cursor_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="file_iteration_cursor"></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>
+

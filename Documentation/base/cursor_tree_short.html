@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="description" content="Trees as active structures that may be traversed using a cursor"/>
+<meta name="library" content="Free implementation of ELKS library"/>
+<meta name="legal" content="See notice at end of class."/>
+<meta name="names" content="cursor_tree, tree"/>
+<meta name="access" content="cursor, membership"/>
+<meta name="contents" content="generic"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="copyright" content="Copyright (c) 1984-2017, Eiffel Software and others"/>
+<meta name="license" content="Eiffel Forum License v2 (see http://www.eiffel.com/licensing/forum.txt)"/>
+<meta name="source" content="Eiffel Software 5949 Hollister Ave., Goleta, CA 93117 USA Telephone 805-685-1006, Fax 805-685-6869 Website http://www.eiffel.com Customer support http://support.eiffel.com"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>cursor_tree Contracts</title>
+<link rel="stylesheet" href="../default.css" type="text/css">
+<script type="text/javascript" src="../goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="cursor_tree_chart.html">Chart</a>
+<a class="nav class" href="cursor_tree_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="cursor_tree"></span>
+</div></form><pre><span class="ekeyword">note</span>
+	<span class="eitag">description</span><span class="esymbol">:</span> <span class="estring">&quot;Trees as active structures that may be traversed using a cursor&quot;</span>
+	<span class="eitag">library</span><span class="esymbol">:</span> <span class="estring">&quot;Free implementation of ELKS library&quot;</span>
+	<span class="eitag">legal</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">status</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">names</span><span class="esymbol">:</span> cursor_tree<span class="esymbol">,</span> tree
+	<span class="eitag">access</span><span class="esymbol">:</span> cursor<span class="esymbol">,</span> membership
+	<span class="eitag">contents</span><span class="esymbol">:</span> generic
+	<span class="eitag">date</span><span class="esymbol">:</span> <span class="estring">&quot;$Date$&quot;</span>
+	<span class="eitag">revision</span><span class="esymbol">:</span> <span class="estring">&quot;$Revision$&quot;</span>
+
+<span class="ekeyword">deferred</span> <span class="ekeyword">class</span> <span class="ekeyword">interface</span>
+	<a class="eclass" href="../base/cursor_tree_short.html">CURSOR_TREE</a> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <span class="esymbol">]</span>
+
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Access</span>
+
+	<a name="f_parent_item"></a><a class="efeature" href="../base/cursor_tree_short.html#f_parent_item">parent_item</a><span class="esymbol">:</span> <span class="egeneric">G</span>
+			<span class="ecomment">--</span><span class="ecomment"> Item in parent.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">not_on_root</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/cursor_tree_short.html#f_is_root">is_root</a>
+
+	<a name="f_child_item"></a><a class="efeature" href="../base/cursor_tree_short.html#f_child_item">child_item</a> <span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <span class="egeneric">G</span>
+			<span class="ecomment">--</span><span class="ecomment"> Item in </span><span class="equoted">i</span><span class="ecomment">-th child</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">argument_within_bounds</span><span class="esymbol">:</span> <span class="elocal">i</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">1</span> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted_semistrict">and then</a> <span class="elocal">i</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <a class="efeature" href="../base/hierarchical_short.html#f_successor_count">arity</a>
+			<span class="etag">not_off</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/cursor_tree_short.html#f_off">off</a>
+
+	<a name="f_has"></a><a class="efeature" href="../base/cursor_tree_short.html#f_has">has</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="egeneric">G</span><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Does structure include an occurrence of </span><span class="equoted">v</span><span class="ecomment">?</span>
+			<span class="ecomment">--</span><span class="ecomment"> (Reference or object equality,</span>
+			<span class="ecomment">--</span><span class="ecomment"> based on </span><span class="ecomment">`</span><a class="efeature" href="../base/container_short.html#f_object_comparison">object_comparison</a><span class="ecomment">`</span><span class="ecomment">.)</span>
+
+	<a name="f_occurrences"></a><a class="efeature" href="../base/cursor_tree_short.html#f_occurrences">occurrences</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="egeneric">G</span><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Number of times </span><span class="equoted">v</span><span class="ecomment"> appears in structure</span>
+			<span class="ecomment">--</span><span class="ecomment"> (Reference or object equality,</span>
+			<span class="ecomment">--</span><span class="ecomment"> based on </span><span class="ecomment">`</span><a class="efeature" href="../base/container_short.html#f_object_comparison">object_comparison</a><span class="ecomment">`</span><span class="ecomment">.)</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Measurement</span>
+
+	<a name="f_depth"></a><a class="efeature" href="../base/cursor_tree_short.html#f_depth">depth</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Depth of the tree</span>
+
+	<a name="f_level"></a><a class="efeature" href="../base/cursor_tree_short.html#f_level">level</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Level of current node in tree</span>
+			<span class="ecomment">--</span><span class="ecomment"> (Root is on level 1)</span>
+
+	<a name="f_breadth"></a><a class="efeature" href="../base/cursor_tree_short.html#f_breadth">breadth</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Breadth of current level</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Status report</span>
+
+	<a name="f_readable"></a><a class="efeature" href="../base/cursor_tree_short.html#f_readable">readable</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is there a current item that may be read?</span>
+
+	<a name="f_writable"></a><a class="efeature" href="../base/cursor_tree_short.html#f_writable">writable</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is there a current item that may be modified?</span>
+
+	<a name="f_extendible"></a><a class="efeature" href="../base/cursor_tree_short.html#f_extendible">extendible</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> May new items be added?</span>
+
+	<a name="f_is_leaf"></a><a class="efeature" href="../base/cursor_tree_short.html#f_is_leaf">is_leaf</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is cursor on a leaf?</span>
+
+	<a name="f_off"></a><a class="efeature" href="../base/cursor_tree_short.html#f_off">off</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is there no current item?</span>
+			<span class="ecomment">--</span><span class="ecomment"> (True if </span><span class="ecomment">`</span><a class="efeature" href="../base/container_short.html#f_is_empty">is_empty</a><span class="ecomment">`</span><span class="ecomment">)</span>
+
+	<a name="f_after"></a><a class="efeature" href="../base/cursor_tree_short.html#f_after">after</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is there no valid cursor position to the right of cursor?</span>
+
+	<a name="f_before"></a><a class="efeature" href="../base/cursor_tree_short.html#f_before">before</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is there no valid cursor position to the left of cursor?</span>
+
+	<a name="f_above"></a><a class="efeature" href="../base/cursor_tree_short.html#f_above">above</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is there no valid cursor position above cursor?</span>
+
+	<a name="f_below"></a><a class="efeature" href="../base/cursor_tree_short.html#f_below">below</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is there no valid cursor position below cursor?</span>
+
+	<a name="f_isfirst"></a><a class="efeature" href="../base/cursor_tree_short.html#f_isfirst">isfirst</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is cursor on first sibling?</span>
+
+	<a name="f_islast"></a><a class="efeature" href="../base/cursor_tree_short.html#f_islast">islast</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is cursor on last sibling?</span>
+
+	<a name="f_is_root"></a><a class="efeature" href="../base/cursor_tree_short.html#f_is_root">is_root</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is cursor on root?</span>
+
+	<a name="f_valid_cursor_index"></a><a class="efeature" href="../base/cursor_tree_short.html#f_valid_cursor_index">valid_cursor_index</a> <span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Can cursor be moved to </span><span class="equoted">i</span><span class="ecomment">-th child?</span>
+			<span class="ecomment">--</span><span class="ecomment"> 0 is before and </span><span class="ecomment">`</span><a class="efeature" href="../base/hierarchical_short.html#f_successor_count">arity</a><span class="ecomment">`</span><span class="ecomment"> + 1 is after.</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Cursor movement</span>
+
+	<a name="f_start"></a><a class="efeature" href="../base/cursor_tree_short.html#f_start">start</a>
+			<span class="ecomment">--</span><span class="ecomment"> Move cursor to root.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Leave cursor </span><span class="ecomment">`</span><a class="efeature" href="../base/cursor_tree_short.html#f_off">off</a><span class="ecomment">`</span><span class="ecomment"> if </span><span class="ecomment">`</span><a class="efeature" href="../base/container_short.html#f_is_empty">is_empty</a><span class="ecomment">`</span><span class="ecomment">.</span>
+		<span class="ekeyword">ensure then</span>
+			<span class="etag">on_root_unless_empty</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/container_short.html#f_is_empty">is_empty</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <a class="efeature" href="../base/cursor_tree_short.html#f_is_root">is_root</a>
+
+	<a name="f_go_last_child"></a><a class="efeature" href="../base/cursor_tree_short.html#f_go_last_child">go_last_child</a>
+			<span class="ecomment">--</span><span class="ecomment"> Go to the last child of current parent.</span>
+			<span class="ecomment">--</span><span class="ecomment"> No effect if below</span>
+		<span class="ekeyword">require else</span>
+			<span class="etag">not_above</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/cursor_tree_short.html#f_above">above</a>
+
+	<a name="f_back"></a><a class="efeature" href="../base/cursor_tree_short.html#f_back">back</a>
+			<span class="ecomment">--</span><span class="ecomment"> Move cursor one position backward.</span>
+
+	<a name="f_forth"></a><a class="efeature" href="../base/cursor_tree_short.html#f_forth">forth</a>
+			<span class="ecomment">--</span><span class="ecomment"> Move cursor one position forward.</span>
+
+	<a name="f_up"></a><a class="efeature" href="../base/cursor_tree_short.html#f_up">up</a>
+			<span class="ecomment">--</span><span class="ecomment"> Move cursor one level upward to parent,</span>
+			<span class="ecomment">--</span><span class="ecomment"> or </span><span class="ecomment">`</span><a class="efeature" href="../base/cursor_tree_short.html#f_above">above</a><span class="ecomment">`</span><span class="ecomment"> if </span><span class="ecomment">`</span><a class="efeature" href="../base/cursor_tree_short.html#f_is_root">is_root</a><span class="ecomment">`</span><span class="ecomment"> holds.</span>
+		<span class="ekeyword">require else</span>
+			<span class="etag">not_above</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/cursor_tree_short.html#f_above">above</a>
+		<span class="ekeyword">ensure then</span>
+			<span class="etag">not_before</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/cursor_tree_short.html#f_before">before</a>
+			<span class="etag">not_after</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/cursor_tree_short.html#f_after">after</a>
+			<span class="etag">not_below</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/cursor_tree_short.html#f_below">below</a>
+			<span class="etag">coherency</span><span class="esymbol">:</span> <span class="esymbol">(</span><a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <span class="ekeyword">old</span> <a class="efeature" href="../base/cursor_tree_short.html#f_off">off</a> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <a class="efeature" href="../base/cursor_tree_short.html#f_above">above</a><span class="esymbol">)</span> <span class="esymbol">=</span> <span class="esymbol">(</span><span class="ekeyword">old</span> <a class="efeature" href="../base/cursor_tree_short.html#f_is_root">is_root</a><span class="esymbol">)</span>
+
+	<a name="f_down"></a><a class="efeature" href="../base/cursor_tree_short.html#f_down">down</a> <span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Move cursor one level downward:</span>
+			<span class="ecomment">--</span><span class="ecomment"> to </span><span class="equoted">i</span><span class="ecomment">-th child if there is one,</span>
+			<span class="ecomment">--</span><span class="ecomment"> or </span><span class="ecomment">`</span><a class="efeature" href="../base/cursor_tree_short.html#f_after">after</a><span class="ecomment">`</span><span class="ecomment"> if </span><span class="equoted">i</span><span class="ecomment"> = </span><span class="ecomment">`</span><a class="efeature" href="../base/hierarchical_short.html#f_successor_count">arity</a><span class="ecomment">`</span><span class="ecomment"> + 1,</span>
+			<span class="ecomment">--</span><span class="ecomment"> or </span><span class="ecomment">`</span><a class="efeature" href="../base/cursor_tree_short.html#f_before">before</a><span class="ecomment">`</span><span class="ecomment"> if </span><span class="equoted">i</span><span class="ecomment"> = 0.</span>
+		<span class="ekeyword">require else</span>
+			<span class="etag">not_before</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/cursor_tree_short.html#f_before">before</a>
+			<span class="etag">not_after</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/cursor_tree_short.html#f_after">after</a>
+			<span class="etag">not_below</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/cursor_tree_short.html#f_below">below</a>
+			<span class="etag">valid_cursor_index</span><span class="esymbol">:</span> <span class="esymbol">(</span><a class="efeature" href="../base/cursor_tree_short.html#f_above">above</a> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <span class="elocal">i</span> <span class="esymbol">=</span> <span class="enumber">0</span><span class="esymbol">)</span> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted_semistrict">or else</a> <a class="efeature" href="../base/cursor_tree_short.html#f_valid_cursor_index">valid_cursor_index</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">)</span>
+		<span class="ekeyword">ensure then</span>
+			<span class="etag">gone_before</span><span class="esymbol">:</span> <span class="esymbol">(</span><span class="elocal">i</span> <span class="esymbol">=</span> <span class="enumber">0</span><span class="esymbol">)</span> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <a class="efeature" href="../base/cursor_tree_short.html#f_before">before</a>
+
+	<a name="f_preorder_forth"></a><a class="efeature" href="../base/cursor_tree_short.html#f_preorder_forth">preorder_forth</a>
+			<span class="ecomment">--</span><span class="ecomment"> Move cursor to next position in preorder.</span>
+			<span class="ecomment">--</span><span class="ecomment"> If the active node is the last in</span>
+			<span class="ecomment">--</span><span class="ecomment"> preorder, the cursor ends up </span><span class="ecomment">`</span><a class="efeature" href="../base/cursor_tree_short.html#f_off">off</a><span class="ecomment">`</span><span class="ecomment">.</span>
+
+	<a name="f_postorder_forth"></a><a class="efeature" href="../base/cursor_tree_short.html#f_postorder_forth">postorder_forth</a>
+			<span class="ecomment">--</span><span class="ecomment"> Move cursor to next position in postorder.</span>
+			<span class="ecomment">--</span><span class="ecomment"> If the active node is the last in</span>
+			<span class="ecomment">--</span><span class="ecomment"> postorder, the cursor ends up </span><span class="ecomment">`</span><a class="efeature" href="../base/cursor_tree_short.html#f_off">off</a><span class="ecomment">`</span><span class="ecomment">.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">not_off</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/cursor_tree_short.html#f_off">off</a>
+
+	<a name="f_breadth_forth"></a><a class="efeature" href="../base/cursor_tree_short.html#f_breadth_forth">breadth_forth</a>
+			<span class="ecomment">--</span><span class="ecomment"> Move cursor to next position in breadth-first order.</span>
+			<span class="ecomment">--</span><span class="ecomment"> If the active node is the last in</span>
+			<span class="ecomment">--</span><span class="ecomment"> breadth-first order, the cursor ends up </span><span class="ecomment">`</span><a class="efeature" href="../base/cursor_tree_short.html#f_off">off</a><span class="ecomment">`</span><span class="ecomment">.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">not_off</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/cursor_tree_short.html#f_off">off</a>
+
+	<a name="f_start_on_level"></a><a class="efeature" href="../base/cursor_tree_short.html#f_start_on_level">start_on_level</a> <span class="esymbol">(</span><span class="elocal">l</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Move the cursor to the first position</span>
+			<span class="ecomment">--</span><span class="ecomment"> of the </span><span class="equoted">l</span><span class="ecomment">-th level counting from root.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">argument_within_bounds</span><span class="esymbol">:</span> <span class="elocal">l</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">1</span> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted_semistrict">and then</a> <a class="efeature" href="../base/cursor_tree_short.html#f_depth">depth</a> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="elocal">l</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">level_expected</span><span class="esymbol">:</span> <a class="efeature" href="../base/cursor_tree_short.html#f_level">level</a> <span class="esymbol">=</span> <span class="elocal">l</span>
+			<span class="etag">is_first</span><span class="esymbol">:</span> <a class="efeature" href="../base/cursor_tree_short.html#f_isfirst">isfirst</a>
+
+	<a name="f_level_forth"></a><a class="efeature" href="../base/cursor_tree_short.html#f_level_forth">level_forth</a>
+			<span class="ecomment">--</span><span class="ecomment"> Move cursor to next position of current level.</span>
+
+	<a name="f_level_back"></a><a class="efeature" href="../base/cursor_tree_short.html#f_level_back">level_back</a>
+			<span class="ecomment">--</span><span class="ecomment"> Move cursor to previous position of current level.</span>
+
+	<a name="f_postorder_start"></a><a class="efeature" href="../base/cursor_tree_short.html#f_postorder_start">postorder_start</a>
+			<span class="ecomment">--</span><span class="ecomment"> Move cursor to first position in postorder.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Leave cursor off if tree is empty.</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Element change</span>
+
+	<a name="f_put"></a><a class="efeature" href="../base/cursor_tree_short.html#f_put">put</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="egeneric">G</span><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Put </span><span class="equoted">v</span><span class="ecomment"> at cursor position.</span>
+			<span class="ecomment">--</span><span class="ecomment"> (Synonym for </span><span class="ecomment">`</span><a class="efeature" href="../base/active_short.html#f_replace">replace</a><span class="ecomment">`</span><span class="ecomment">)</span>
+
+	<a name="f_extend"></a><a class="efeature" href="../base/cursor_tree_short.html#f_extend">extend</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="egeneric">G</span><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Add </span><span class="equoted">v</span><span class="ecomment"> after last child.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Make </span><span class="equoted">v</span><span class="ecomment"> the </span><span class="equoted">first_child</span><span class="ecomment"> if </span><span class="ecomment">`</span><a class="efeature" href="../base/cursor_tree_short.html#f_below">below</a><span class="ecomment">`</span><span class="ecomment"> and place</span>
+			<span class="ecomment">--</span><span class="ecomment"> cursor </span><span class="ecomment">`</span><a class="efeature" href="../base/cursor_tree_short.html#f_before">before</a><span class="ecomment">`</span><span class="ecomment">.</span>
+
+	<a name="f_put_left"></a><a class="efeature" href="../base/cursor_tree_short.html#f_put_left">put_left</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="egeneric">G</span><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Add </span><span class="equoted">v</span><span class="ecomment"> to the left of cursor position.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">not_before</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/cursor_tree_short.html#f_before">before</a>
+			<span class="etag">not_above</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/cursor_tree_short.html#f_above">above</a>
+			<span class="etag">only_one_root</span><span class="esymbol">:</span> <span class="esymbol">(</span><a class="efeature" href="../base/cursor_tree_short.html#f_level">level</a> <span class="esymbol">=</span> <span class="enumber">1</span><span class="esymbol">)</span> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <a class="efeature" href="../base/container_short.html#f_is_empty">is_empty</a>
+
+	<a name="f_put_right"></a><a class="efeature" href="../base/cursor_tree_short.html#f_put_right">put_right</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="egeneric">G</span><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Add </span><span class="equoted">v</span><span class="ecomment"> to the right of cursor position.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">not_after</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/cursor_tree_short.html#f_after">after</a>
+			<span class="etag">not_above</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/cursor_tree_short.html#f_above">above</a>
+			<span class="etag">only_one_root</span><span class="esymbol">:</span> <span class="esymbol">(</span><a class="efeature" href="../base/cursor_tree_short.html#f_level">level</a> <span class="esymbol">=</span> <span class="enumber">1</span><span class="esymbol">)</span> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <a class="efeature" href="../base/container_short.html#f_is_empty">is_empty</a>
+
+	<a name="f_fill"></a><a class="efeature" href="../base/cursor_tree_short.html#f_fill">fill</a> <span class="esymbol">(</span><span class="elocal">other</span><span class="esymbol">:</span> <a class="eclass" href="../base/cursor_tree_short.html">CURSOR_TREE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Fill with as many items of </span><span class="equoted">other</span>
+			<span class="ecomment">--</span><span class="ecomment"> as possible.</span>
+			<span class="ecomment">--</span><span class="ecomment"> The representations of </span><span class="equoted">other</span><span class="ecomment"> and current structure</span>
+			<span class="ecomment">--</span><span class="ecomment"> need not be the same.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">is_empty</span><span class="esymbol">:</span> <a class="efeature" href="../base/container_short.html#f_is_empty">is_empty</a>
+
+	<a name="f_fill_from_active"></a><a class="efeature" href="../base/cursor_tree_short.html#f_fill_from_active">fill_from_active</a> <span class="esymbol">(</span><span class="elocal">other</span><span class="esymbol">:</span> <a class="eclass" href="../base/cursor_tree_short.html">CURSOR_TREE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Copy subtree of </span><span class="equoted">other</span><span class="ecomment">'s active node</span>
+			<span class="ecomment">--</span><span class="ecomment"> onto active node of current tree.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">cursor_on_leaf</span><span class="esymbol">:</span> <a class="efeature" href="../base/cursor_tree_short.html#f_is_leaf">is_leaf</a>
+
+	<a name="f_merge_right"></a><a class="efeature" href="../base/cursor_tree_short.html#f_merge_right">merge_right</a> <span class="esymbol">(</span><span class="elocal">other</span><span class="esymbol">:</span> <a class="eclass" href="../base/cursor_tree_short.html">CURSOR_TREE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Merge the items of </span><span class="equoted">other</span><span class="ecomment"> into current structure to</span>
+			<span class="ecomment">--</span><span class="ecomment"> the right of cursor position.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">other_exists</span><span class="esymbol">:</span> <span class="elocal">other</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">not_after</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/cursor_tree_short.html#f_after">after</a>
+			<span class="etag">not_above</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/cursor_tree_short.html#f_above">above</a>
+			<span class="etag">only_one_root</span><span class="esymbol">:</span> <span class="esymbol">(</span><a class="efeature" href="../base/cursor_tree_short.html#f_level">level</a> <span class="esymbol">=</span> <span class="enumber">1</span><span class="esymbol">)</span> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <a class="efeature" href="../base/container_short.html#f_is_empty">is_empty</a>
+
+	<a name="f_merge_left"></a><a class="efeature" href="../base/cursor_tree_short.html#f_merge_left">merge_left</a> <span class="esymbol">(</span><span class="elocal">other</span><span class="esymbol">:</span> <a class="eclass" href="../base/cursor_tree_short.html">CURSOR_TREE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Merge the items of </span><span class="equoted">other</span><span class="ecomment"> into current structure to</span>
+			<span class="ecomment">--</span><span class="ecomment"> the left of cursor position.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">other_exists</span><span class="esymbol">:</span> <span class="elocal">other</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">not_before</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/cursor_tree_short.html#f_before">before</a>
+			<span class="etag">not_above</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/cursor_tree_short.html#f_above">above</a>
+			<span class="etag">only_one_root</span><span class="esymbol">:</span> <span class="esymbol">(</span><a class="efeature" href="../base/cursor_tree_short.html#f_level">level</a> <span class="esymbol">=</span> <span class="enumber">1</span><span class="esymbol">)</span> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <a class="efeature" href="../base/container_short.html#f_is_empty">is_empty</a>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Duplication</span>
+
+	<a name="f_subtree"></a><a class="efeature" href="../base/cursor_tree_short.html#f_subtree">subtree</a><span class="esymbol">:</span> <span class="ekeyword">like</span> <span class="ekeyword">Current</span>
+			<span class="ecomment">--</span><span class="ecomment"> Subtree rooted at current node</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">not_off</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/cursor_tree_short.html#f_off">off</a>
+
+	<a name="f_parent_tree"></a><a class="efeature" href="../base/cursor_tree_short.html#f_parent_tree">parent_tree</a><span class="esymbol">:</span> <span class="ekeyword">like</span> <span class="ekeyword">Current</span>
+			<span class="ecomment">--</span><span class="ecomment"> Subtree rooted at parent</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">not_on_root</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/cursor_tree_short.html#f_is_root">is_root</a>
+			<span class="etag">not_off</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/cursor_tree_short.html#f_off">off</a>
+
+	<a name="f_child_tree"></a><a class="efeature" href="../base/cursor_tree_short.html#f_child_tree">child_tree</a> <span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <span class="ekeyword">Current</span>
+			<span class="ecomment">--</span><span class="ecomment"> Subtree rooted at </span><span class="equoted">i</span><span class="ecomment">-th child</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">argument_within_bounds</span><span class="esymbol">:</span> <span class="elocal">i</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">1</span> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted_semistrict">and then</a> <span class="elocal">i</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <a class="efeature" href="../base/hierarchical_short.html#f_successor_count">arity</a>
+			<span class="etag">not_off</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/cursor_tree_short.html#f_off">off</a>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Inapplicable</span>
+
+	<a name="f_prune"></a><a class="efeature" href="../base/cursor_tree_short.html#f_prune">prune</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="egeneric">G</span><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Remove item </span><span class="equoted">v</span><span class="ecomment">.</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Not applicable</span>
+
+	<a name="f_index"></a><a class="efeature" href="../base/cursor_tree_short.html#f_index">index</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Index of current position</span>
+	
+<span class="ekeyword">invariant</span>
+	<span class="etag">non_negative_depth</span><span class="esymbol">:</span> <a class="efeature" href="../base/cursor_tree_short.html#f_depth">depth</a> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">0</span>
+	<span class="etag">non_negative_breadth</span><span class="esymbol">:</span> <a class="efeature" href="../base/cursor_tree_short.html#f_breadth">breadth</a> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">0</span>
+	<span class="etag">is_leaf_definition</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/cursor_tree_short.html#f_off">off</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <a class="efeature" href="../base/cursor_tree_short.html#f_is_leaf">is_leaf</a> <span class="esymbol">=</span> <span class="esymbol">(</span><a class="efeature" href="../base/hierarchical_short.html#f_successor_count">arity</a> <span class="esymbol">=</span> <span class="enumber">0</span><span class="esymbol">)</span>
+	<span class="etag">above_property</span><span class="esymbol">:</span> <a class="efeature" href="../base/cursor_tree_short.html#f_above">above</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <span class="esymbol">(</span><a class="efeature" href="../base/hierarchical_short.html#f_successor_count">arity</a> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <span class="enumber">1</span><span class="esymbol">)</span>
+	<span class="etag">on_tree</span><span class="esymbol">:</span> <span class="esymbol">(</span><a class="efeature" href="../base/cursor_tree_short.html#f_isfirst">isfirst</a> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <a class="efeature" href="../base/cursor_tree_short.html#f_islast">islast</a> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <a class="efeature" href="../base/cursor_tree_short.html#f_is_leaf">is_leaf</a> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <a class="efeature" href="../base/cursor_tree_short.html#f_is_root">is_root</a><span class="esymbol">)</span> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/cursor_tree_short.html#f_off">off</a>
+	<span class="etag">off_definition</span><span class="esymbol">:</span> <a class="efeature" href="../base/cursor_tree_short.html#f_off">off</a> <span class="esymbol">=</span> <a class="efeature" href="../base/cursor_tree_short.html#f_after">after</a> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <a class="efeature" href="../base/cursor_tree_short.html#f_before">before</a> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <a class="efeature" href="../base/cursor_tree_short.html#f_above">above</a> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <a class="efeature" href="../base/cursor_tree_short.html#f_below">below</a>
+	<span class="etag">below_constraint</span><span class="esymbol">:</span> <a class="efeature" href="../base/cursor_tree_short.html#f_below">below</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <span class="esymbol">(</span><span class="esymbol">(</span><a class="efeature" href="../base/cursor_tree_short.html#f_after">after</a> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <a class="efeature" href="../base/cursor_tree_short.html#f_before">before</a><span class="esymbol">)</span> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/cursor_tree_short.html#f_above">above</a><span class="esymbol">)</span>
+	<span class="etag">above_constraint</span><span class="esymbol">:</span> <a class="efeature" href="../base/cursor_tree_short.html#f_above">above</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <span class="esymbol">(</span><a class="efeature" href="../base/cursor_tree_short.html#f_before">before</a> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <a class="efeature" href="../base/cursor_tree_short.html#f_after">after</a> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <a class="efeature" href="../base/cursor_tree_short.html#f_below">below</a><span class="esymbol">)</span>
+	<span class="etag">after_constraint</span><span class="esymbol">:</span> <a class="efeature" href="../base/cursor_tree_short.html#f_after">after</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <span class="esymbol">(</span><a class="efeature" href="../base/cursor_tree_short.html#f_before">before</a> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <a class="efeature" href="../base/cursor_tree_short.html#f_above">above</a><span class="esymbol">)</span>
+	<span class="etag">before_constaint</span><span class="esymbol">:</span> <a class="efeature" href="../base/cursor_tree_short.html#f_before">before</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <span class="esymbol">(</span><a class="efeature" href="../base/cursor_tree_short.html#f_after">after</a> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <a class="efeature" href="../base/cursor_tree_short.html#f_above">above</a><span class="esymbol">)</span>
+	<span class="etag">empty_below_constraint</span><span class="esymbol">:</span> <span class="esymbol">(</span><a class="efeature" href="../base/container_short.html#f_is_empty">is_empty</a> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <span class="esymbol">(</span><a class="efeature" href="../base/cursor_tree_short.html#f_after">after</a> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <a class="efeature" href="../base/cursor_tree_short.html#f_before">before</a><span class="esymbol">)</span><span class="esymbol">)</span> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <a class="efeature" href="../base/cursor_tree_short.html#f_below">below</a>
+
+<span class="ekeyword">note</span>
+	<span class="eitag">copyright</span><span class="esymbol">:</span> <span class="estring">&quot;Copyright (c) 1984-2017, Eiffel Software and others&quot;</span>
+	<span class="eitag">license</span><span class="esymbol">:</span> <span class="estring">&quot;Eiffel Forum License v2 (see </span><a class="estring" href="http://www.eiffel.com/licensing/forum.txt">http://www.eiffel.com/licensing/forum.txt</a><span class="estring">)&quot;</span>
+	<span class="eitag">source</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">Eiffel Software</span>
+		<span class="estring">5949 Hollister Ave., Goleta, CA 93117 USA</span>
+		<span class="estring">Telephone 805-685-1006, Fax 805-685-6869</span>
+		<span class="estring">Website </span><a class="estring" href="http://www.eiffel.com">http://www.eiffel.com</a>
+		<span class="estring">Customer support </span><a class="estring" href="http://support.eiffel.com">http://support.eiffel.com</a>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+
+<span class="ekeyword">end</span> <span class="ecomment">--</span> <span class="ecomment">class </span><a class="eclass" href="../base/cursor_tree_short.html">CURSOR_TREE</a></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="cursor_tree_chart.html">Chart</a>
+<a class="nav class" href="cursor_tree_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="cursor_tree"></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>
+

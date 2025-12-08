@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="description" content="Packed boolean strings"/>
+<meta name="library" content="Free implementation of ELKS library"/>
+<meta name="legal" content="See notice at end of class."/>
+<meta name="names" content="packed_booleans"/>
+<meta name="access" content="index"/>
+<meta name="representation" content="array"/>
+<meta name="size" content="fixed"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="copyright" content="Copyright (c) 1984-2021, Eiffel Software and others"/>
+<meta name="license" content="Eiffel Forum License v2 (see http://www.eiffel.com/licensing/forum.txt)"/>
+<meta name="source" content="Eiffel Software 5949 Hollister Ave., Goleta, CA 93117 USA Telephone 805-685-1006, Fax 805-685-6869 Website http://www.eiffel.com Customer support http://support.eiffel.com"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>bool_string Contracts</title>
+<link rel="stylesheet" href="../default.css" type="text/css">
+<script type="text/javascript" src="../goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="bool_string_chart.html">Chart</a>
+<a class="nav class" href="bool_string_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="bool_string"></span>
+</div></form><pre><span class="ekeyword">note</span>
+	<span class="eitag">description</span><span class="esymbol">:</span> <span class="estring">&quot;Packed boolean strings&quot;</span>
+	<span class="eitag">library</span><span class="esymbol">:</span> <span class="estring">&quot;Free implementation of ELKS library&quot;</span>
+	<span class="eitag">status</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">legal</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">names</span><span class="esymbol">:</span> packed_booleans
+	<span class="eitag">access</span><span class="esymbol">:</span> index
+	<span class="eitag">representation</span><span class="esymbol">:</span> array
+	<span class="eitag">size</span><span class="esymbol">:</span> fixed
+	<span class="eitag">date</span><span class="esymbol">:</span> <span class="estring">&quot;$Date$&quot;</span>
+	<span class="eitag">revision</span><span class="esymbol">:</span> <span class="estring">&quot;$Revision$&quot;</span>
+
+<span class="ekeyword">class</span> <span class="ekeyword">interface</span>
+	<a class="eclass" href="../base/bool_string_short.html">BOOL_STRING</a>
+
+<span class="ekeyword">create</span> 
+	<a class="efeature" href="../base/bool_string_short.html#f_make">make</a>
+
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Initialization</span>
+
+	<a name="f_make"></a><a class="efeature" href="../base/bool_string_short.html#f_make">make</a> <span class="esymbol">(</span><span class="elocal">n</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Allocate area of </span><span class="equoted">n</span><span class="ecomment"> booleans.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">non_negative_size</span><span class="esymbol">:</span> <span class="elocal">n</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">0</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">correct_allocation</span><span class="esymbol">:</span> <a class="efeature" href="../base/bool_string_short.html#f_count">count</a> <span class="esymbol">=</span> <span class="elocal">n</span>
+			<span class="etag">all_false</span><span class="esymbol">:</span> <span class="ekeyword">∀</span> i<span class="esymbol">:</span> <span class="enumber">1</span> <a class="esymbol" href="../base/integer_32_ref_short.html#f_interval">|..|</a> <span class="elocal">n</span> <span class="ekeyword">¦</span>
+					<a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/bool_string_short.html#f_item">item</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">)</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Access</span>
+
+	<a name="f_item"></a><a class="efeature" href="../base/bool_string_short.html#f_item">item</a> <span class="ekeyword">alias</span> <span class="esymbol">&quot;</span><a class="esymbol" href="../base/bool_string_short.html#f_item">[]</a><span class="esymbol">&quot;</span> <span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a> <span class="ekeyword">assign</span> <a class="efeature" href="../base/bool_string_short.html#f_put">put</a>
+			<span class="ecomment">--</span><span class="ecomment"> Boolean at </span><span class="equoted">i</span><span class="ecomment">-th position,</span>
+			<span class="ecomment">--</span><span class="ecomment"> beginning at left, 1 origin</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/bool_string_short.html">BOOL_STRING</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/bool_string_short.html#f_at">at</a><span class="ecomment">`</span><span class="ecomment">.</span>
+
+	<a name="f_at"></a><a class="efeature" href="../base/bool_string_short.html#f_at">at</a> <span class="ekeyword">alias</span> <span class="esymbol">&quot;</span><a class="esymbol" href="../base/bool_string_short.html#f_at">@</a><span class="esymbol">&quot;</span> <span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a> <span class="ekeyword">assign</span> <a class="efeature" href="../base/bool_string_short.html#f_put">put</a>
+			<span class="ecomment">--</span><span class="ecomment"> Boolean at </span><span class="equoted">i</span><span class="ecomment">-th position,</span>
+			<span class="ecomment">--</span><span class="ecomment"> beginning at left, 1 origin</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/bool_string_short.html">BOOL_STRING</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/bool_string_short.html#f_item">item</a><span class="ecomment">`</span><span class="ecomment">.</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Comparison</span>
+
+	<a name="f_is_equal"></a><a class="efeature" href="../base/bool_string_short.html#f_is_equal">is_equal</a> <span class="esymbol">(</span><span class="elocal">other</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <span class="ekeyword">Current</span><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is </span><span class="equoted">other</span><span class="ecomment"> attached to an object considered</span>
+			<span class="ecomment">--</span><span class="ecomment"> equal to current object?</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Duplication</span>
+
+	<a name="f_copy"></a><a class="efeature" href="../base/bool_string_short.html#f_copy">copy</a> <span class="esymbol">(</span><span class="elocal">other</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <span class="ekeyword">Current</span><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Update current object using fields of object attached</span>
+			<span class="ecomment">--</span><span class="ecomment"> to </span><span class="equoted">other</span><span class="ecomment">, so as to yield equal objects.</span>
+		<span class="ekeyword">ensure then</span>
+			<span class="etag">not_shared_if_different</span><span class="esymbol">:</span> <span class="elocal">other</span> <span class="esymbol">/=</span> <span class="ekeyword">Current</span> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <a class="efeature" href="../base/to_special_short.html#f_area">area</a> <span class="esymbol">/=</span> <span class="elocal">other</span><span class="edot">.</span><a class="efeature" href="../base/to_special_short.html#f_area">area</a>
+			<span class="etag">equal_areas</span><span class="esymbol">:</span> <a class="efeature" href="../base/to_special_short.html#f_area">area</a> <span class="esymbol">~</span> <span class="elocal">other</span><span class="edot">.</span><a class="efeature" href="../base/to_special_short.html#f_area">area</a>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Status report</span>
+
+	<a name="f_valid_index"></a><a class="efeature" href="../base/bool_string_short.html#f_valid_index">valid_index</a> <span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is </span><span class="equoted">i</span><span class="ecomment"> within the bounds of Current?</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Measurement</span>
+
+	<a name="f_count"></a><a class="efeature" href="../base/bool_string_short.html#f_count">count</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Number of boolean in the area.</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Element change</span>
+
+	<a name="f_put"></a><a class="efeature" href="../base/bool_string_short.html#f_put">put</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <a class="efeature" href="../base/bool_string_short.html#f_item">item</a><span class="esymbol">;</span> <span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Put boolean </span><span class="equoted">v</span><span class="ecomment"> at </span><span class="equoted">i</span><span class="ecomment">-th position</span>
+			<span class="ecomment">--</span><span class="ecomment"> beginning at left, 1 origin.</span>
+
+	<a name="f_all_true"></a><a class="efeature" href="../base/bool_string_short.html#f_all_true">all_true</a>
+			<span class="ecomment">--</span><span class="ecomment"> Set all booleans to true.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">all_true</span><span class="esymbol">:</span> <span class="ekeyword">∀</span> i<span class="esymbol">:</span> <span class="enumber">1</span> <a class="esymbol" href="../base/integer_32_ref_short.html#f_interval">|..|</a> <a class="efeature" href="../base/bool_string_short.html#f_count">count</a> <span class="ekeyword">¦</span>
+					<a class="efeature" href="../base/bool_string_short.html#f_item">item</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">)</span>
+
+	<a name="f_all_false"></a><a class="efeature" href="../base/bool_string_short.html#f_all_false">all_false</a>
+			<span class="ecomment">--</span><span class="ecomment"> Set all booleans to false.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">all_false</span><span class="esymbol">:</span> <span class="ekeyword">∀</span> i<span class="esymbol">:</span> <span class="enumber">1</span> <a class="esymbol" href="../base/integer_32_ref_short.html#f_interval">|..|</a> <a class="efeature" href="../base/bool_string_short.html#f_count">count</a> <span class="ekeyword">¦</span>
+					<a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/bool_string_short.html#f_item">item</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">)</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Basic operations</span>
+
+	<a name="f_conjuncted"></a><a class="efeature" href="../base/bool_string_short.html#f_conjuncted">conjuncted</a> <span class="ekeyword">alias</span> <span class="esymbol">&quot;</span><a class="ekeyword" href="../base/bool_string_short.html#f_conjuncted">and</a><span class="esymbol">&quot;</span> <span class="esymbol">(</span><span class="elocal">other</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <span class="ekeyword">Current</span><span class="esymbol">)</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <span class="ekeyword">Current</span>
+			<span class="ecomment">--</span><span class="ecomment"> Logical and of 'Current' and </span><span class="equoted">other</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">other_not_void</span><span class="esymbol">:</span> <span class="elocal">other</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">same_size</span><span class="esymbol">:</span> <span class="elocal">other</span><span class="edot">.</span><a class="efeature" href="../base/bool_string_short.html#f_count">count</a> <span class="esymbol">=</span> <a class="efeature" href="../base/bool_string_short.html#f_count">count</a>
+
+	<a name="f_disjuncted"></a><a class="efeature" href="../base/bool_string_short.html#f_disjuncted">disjuncted</a> <span class="ekeyword">alias</span> <span class="esymbol">&quot;</span><a class="ekeyword" href="../base/bool_string_short.html#f_disjuncted">or</a><span class="esymbol">&quot;</span> <span class="esymbol">(</span><span class="elocal">other</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <span class="ekeyword">Current</span><span class="esymbol">)</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <span class="ekeyword">Current</span>
+			<span class="ecomment">--</span><span class="ecomment"> Logical or of 'Current' and </span><span class="equoted">other</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">other_not_void</span><span class="esymbol">:</span> <span class="elocal">other</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">same_size</span><span class="esymbol">:</span> <span class="elocal">other</span><span class="edot">.</span><a class="efeature" href="../base/bool_string_short.html#f_count">count</a> <span class="esymbol">=</span> <a class="efeature" href="../base/bool_string_short.html#f_count">count</a>
+
+	<a name="f_disjuncted_exclusive"></a><a class="efeature" href="../base/bool_string_short.html#f_disjuncted_exclusive">disjuncted_exclusive</a> <span class="ekeyword">alias</span> <span class="esymbol">&quot;</span><a class="ekeyword" href="../base/bool_string_short.html#f_disjuncted_exclusive">xor</a><span class="esymbol">&quot;</span> <span class="esymbol">(</span><span class="elocal">other</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <span class="ekeyword">Current</span><span class="esymbol">)</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <span class="ekeyword">Current</span>
+			<span class="ecomment">--</span><span class="ecomment"> Logical exclusive or of 'Current' and </span><span class="equoted">other</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">other_not_void</span><span class="esymbol">:</span> <span class="elocal">other</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">same_size</span><span class="esymbol">:</span> <span class="elocal">other</span><span class="edot">.</span><a class="efeature" href="../base/bool_string_short.html#f_count">count</a> <span class="esymbol">=</span> <a class="efeature" href="../base/bool_string_short.html#f_count">count</a>
+
+	<a name="f_negated"></a><a class="efeature" href="../base/bool_string_short.html#f_negated">negated</a> <span class="ekeyword">alias</span> <span class="esymbol">&quot;</span><a class="ekeyword" href="../base/bool_string_short.html#f_negated">not</a><span class="esymbol">&quot;</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <span class="ekeyword">Current</span>
+			<span class="ecomment">--</span><span class="ecomment"> Negation of 'Current'</span>
+
+	<a name="f_right_shifted"></a><a class="efeature" href="../base/bool_string_short.html#f_right_shifted">right_shifted</a> <span class="esymbol">(</span><span class="elocal">n</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <span class="ekeyword">Current</span>
+			<span class="ecomment">--</span><span class="ecomment"> Right shifted 'Current' set, by </span><span class="equoted">n</span><span class="ecomment"> positions</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">non_negative_shift</span><span class="esymbol">:</span> <span class="elocal">n</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">0</span>
+
+	<a name="f_left_shifted"></a><a class="efeature" href="../base/bool_string_short.html#f_left_shifted">left_shifted</a> <span class="esymbol">(</span><span class="elocal">n</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <span class="ekeyword">Current</span>
+			<span class="ecomment">--</span><span class="ecomment"> Left shifted 'Current' set, by </span><span class="equoted">n</span><span class="ecomment"> positions</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">non_negative_shift</span><span class="esymbol">:</span> <span class="elocal">n</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">0</span>
+	
+<span class="ekeyword">note</span>
+	<span class="eitag">copyright</span><span class="esymbol">:</span> <span class="estring">&quot;Copyright (c) 1984-2021, Eiffel Software and others&quot;</span>
+	<span class="eitag">license</span><span class="esymbol">:</span> <span class="estring">&quot;Eiffel Forum License v2 (see </span><a class="estring" href="http://www.eiffel.com/licensing/forum.txt">http://www.eiffel.com/licensing/forum.txt</a><span class="estring">)&quot;</span>
+	<span class="eitag">source</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">Eiffel Software</span>
+		<span class="estring">5949 Hollister Ave., Goleta, CA 93117 USA</span>
+		<span class="estring">Telephone 805-685-1006, Fax 805-685-6869</span>
+		<span class="estring">Website </span><a class="estring" href="http://www.eiffel.com">http://www.eiffel.com</a>
+		<span class="estring">Customer support </span><a class="estring" href="http://support.eiffel.com">http://support.eiffel.com</a>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+
+<span class="ekeyword">end</span> <span class="ecomment">--</span> <span class="ecomment">class </span><a class="eclass" href="../base/bool_string_short.html">BOOL_STRING</a></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="bool_string_chart.html">Chart</a>
+<a class="nav class" href="bool_string_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="bool_string"></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>
+

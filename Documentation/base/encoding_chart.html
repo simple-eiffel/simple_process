@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="description" content="Objects that represent encodings and that provide conversion methods."/>
+<meta name="legal" content="See notice at end of class."/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="library" content="Base: Library of reusable components for Eiffel."/>
+<meta name="copyright" content="Copyright (c) 1984-2020, Eiffel Software and others"/>
+<meta name="license" content="Eiffel Forum License v2 (see http://www.eiffel.com/licensing/forum.txt)"/>
+<meta name="source" content="Eiffel Software 5949 Hollister Ave., Goleta, CA 93117 USA Telephone 805-685-1006, Fax 805-685-6869 Website http://www.eiffel.com Customer support http://support.eiffel.com"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>encoding Chart</title>
+<link rel="stylesheet" href="../default.css" type="text/css">
+<script type="text/javascript" src="../goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<span class="nav class selected">Chart</span>
+<a class="nav class" href="encoding_links.html">Relations</a>
+<a class="nav class" href="encoding_short.html">Contracts</a>
+<span class="nav class goto">Go to: <input name="c" value="encoding"></span>
+</div></form><pre><span class="ekeyword">class</span>
+	<a class="eclass" href="../base/encoding_chart.html">ENCODING</a>
+
+<span class="ekeyword">General</span>
+	<span class="eitag">cluster</span><span class="esymbol">:</span> <span class="necluster">encoding</span>
+	<span class="eitag">description</span><span class="esymbol">:</span> <span class="estring">&quot;Objects that represent encodings and that provide conversion methods.&quot;</span>
+	<span class="eitag">create</span><span class="esymbol">:</span> <a class="efeature" href="../base/encoding_short.html#f_make">make</a>
+
+<span class="ekeyword">Ancestors</span>
+	<a class="eclass" href="../base/any_chart.html">ANY</a>
+
+<span class="ekeyword">Queries</span>
+	<span title="`code_page' is declared in `Current'"><a class="efeature" href="../base/encoding_short.html#f_code_page">code_page</a><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_8_chart.html">READABLE_STRING_8</a></span>
+	<span title="`last_conversion_lost_data' is declared in `Current'"><a class="efeature" href="../base/encoding_short.html#f_last_conversion_lost_data">last_conversion_lost_data</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`last_conversion_successful' is declared in `Current'"><a class="efeature" href="../base/encoding_short.html#f_last_conversion_successful">last_conversion_successful</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`last_converted_stream' is declared in `Current'"><a class="efeature" href="../base/encoding_short.html#f_last_converted_stream">last_converted_stream</a><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_chart.html">STRING_8</a></span>
+	<span title="`last_converted_string' is declared in `Current'"><a class="efeature" href="../base/encoding_short.html#f_last_converted_string">last_converted_string</a><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_chart.html">READABLE_STRING_GENERAL</a></span>
+	<span title="`last_converted_string_32' is declared in `Current'"><a class="efeature" href="../base/encoding_short.html#f_last_converted_string_32">last_converted_string_32</a><span class="esymbol">:</span> <a class="eclass" href="../base/string_32_chart.html">STRING_32</a></span>
+	<span title="`last_converted_string_8' is declared in `Current'"><a class="efeature" href="../base/encoding_short.html#f_last_converted_string_8">last_converted_string_8</a><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_chart.html">STRING_8</a></span>
+	<span title="`same_as' is declared in `Current'"><a class="efeature" href="../base/encoding_short.html#f_same_as">same_as</a> <span class="esymbol">(</span><span class="elocal">other</span><span class="esymbol">:</span> <a class="eclass" href="../base/encoding_chart.html">ENCODING</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+
+<span class="ekeyword">Commands</span>
+	<span title="`convert_to' is declared in `Current'"><a class="efeature" href="../base/encoding_short.html#f_convert_to">convert_to</a> <span class="esymbol">(</span><span class="elocal">a_to_encoding</span><span class="esymbol">:</span> <a class="eclass" href="../base/encoding_chart.html">ENCODING</a><span class="esymbol">;</span> <span class="elocal">a_string</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_chart.html">READABLE_STRING_GENERAL</a><span class="esymbol">)</span></span>
+
+<span class="ekeyword">Constraints</span>
+	<span class="etag">code page not void</span>
+	<span class="etag">encoding i not void</span>
+
+</pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<span class="nav class selected">Chart</span>
+<a class="nav class" href="encoding_links.html">Relations</a>
+<a class="nav class" href="encoding_short.html">Contracts</a>
+<span class="nav class goto">Go to: <input name="c" value="encoding"></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>

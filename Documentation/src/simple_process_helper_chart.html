@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="description" content="Simple process execution helper. Provides features for executing shell commands and capturing output. Uses SIMPLE_PROCESS for SCOOP-compatible execution."/>
+<meta name="author" content="Larry Rix"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="copyright" content="Copyright (c) 2024-2025, Larry Rix"/>
+<meta name="license" content="MIT License"/>
+<meta name="source" content="SIMPLE_PROCESS - SCOOP-compatible process execution library Uses direct Win32 API calls without thread dependencies"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>simple_process_helper Chart</title>
+<link rel="stylesheet" href="../default.css" type="text/css">
+<script type="text/javascript" src="../goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<span class="nav class selected">Chart</span>
+<a class="nav class" href="simple_process_helper_links.html">Relations</a>
+<a class="nav class" href="simple_process_helper_short.html">Contracts</a>
+<span class="nav class goto">Go to: <input name="c" value="simple_process_helper"></span>
+</div></form><pre><span class="ekeyword">class</span>
+	<a class="eclass" href="../src/simple_process_helper_chart.html">SIMPLE_PROCESS_HELPER</a>
+
+<span class="ekeyword">General</span>
+	<span class="eitag">cluster</span><span class="esymbol">:</span> <a class="ecluster" href="../src/index.html">src</a>
+	<span class="eitag">description</span><span class="esymbol">:</span> 
+		<span class="estring">&quot;Simple process execution helper.</span>
+		<span class="estring">Provides features for executing shell commands and capturing output.</span>
+		<span class="estring">Uses SIMPLE_PROCESS for SCOOP-compatible execution.&quot;</span>
+
+<span class="ekeyword">Ancestors</span>
+	<a class="eclass" href="../base/any_chart.html">ANY</a>
+
+<span class="ekeyword">Queries</span>
+	<span title="`dos_where_not_found_message' is declared in `Current'"><a class="efeature" href="../src/simple_process_helper_short.html#f_dos_where_not_found_message">Dos_where_not_found_message</a><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_chart.html">STRING_8</a></span>
+	<span title="`has_file_in_path' is declared in `Current'"><a class="efeature" href="../src/simple_process_helper_short.html#f_has_file_in_path">has_file_in_path</a> <span class="esymbol">(</span><span class="elocal">a_name</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_chart.html">STRING_8</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`is_not_wait_for_exit' is declared in `Current'"><a class="efeature" href="../src/simple_process_helper_short.html#f_is_not_wait_for_exit">is_not_wait_for_exit</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`is_wait_for_exit' is declared in `Current'"><a class="efeature" href="../src/simple_process_helper_short.html#f_is_wait_for_exit">is_wait_for_exit</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`last_error' is declared in `Current'"><a class="efeature" href="../src/simple_process_helper_short.html#f_last_error">last_error</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_chart.html">INTEGER_32</a></span>
+	<span title="`last_error_result' is declared in `Current'"><a class="efeature" href="../src/simple_process_helper_short.html#f_last_error_result">last_error_result</a><span class="esymbol">:</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/string_8_chart.html">STRING_8</a></span>
+	<span title="`output_of_command' is declared in `Current'"><a class="efeature" href="../src/simple_process_helper_short.html#f_output_of_command">output_of_command</a> <span class="esymbol">(</span><span class="elocal">a_command_line</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_32_chart.html">READABLE_STRING_32</a><span class="esymbol">;</span> <span class="elocal">a_directory</span><span class="esymbol">:</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/readable_string_32_chart.html">READABLE_STRING_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_32_chart.html">STRING_32</a></span>
+	<span title="`show_process' is declared in `Current'"><a class="efeature" href="../src/simple_process_helper_short.html#f_show_process">show_process</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+
+<span class="ekeyword">Commands</span>
+	<span title="`launch_fail_handler' is declared in `Current'"><a class="efeature" href="../src/simple_process_helper_short.html#f_launch_fail_handler">launch_fail_handler</a> <span class="esymbol">(</span><span class="elocal">a_result</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_chart.html">STRING_8</a><span class="esymbol">)</span></span>
+	<span title="`set_do_not_wait_for_exit' is declared in `Current'"><a class="efeature" href="../src/simple_process_helper_short.html#f_set_do_not_wait_for_exit">set_do_not_wait_for_exit</a></span>
+	<span title="`set_show_process' is declared in `Current'"><a class="efeature" href="../src/simple_process_helper_short.html#f_set_show_process">set_show_process</a> <span class="esymbol">(</span><span class="elocal">a_value</span><span class="esymbol">:</span> <span class="esymbol">[</span><span class="ekeyword">like</span> <a class="efeature" href="../src/simple_process_helper_short.html#f_show_process">show_process</a><span class="esymbol">]</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a><span class="esymbol">)</span></span>
+	<span title="`set_wait_for_exit' is declared in `Current'"><a class="efeature" href="../src/simple_process_helper_short.html#f_set_wait_for_exit">set_wait_for_exit</a></span>
+
+</pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<span class="nav class selected">Chart</span>
+<a class="nav class" href="simple_process_helper_links.html">Relations</a>
+<a class="nav class" href="simple_process_helper_short.html">Contracts</a>
+<span class="nav class goto">Go to: <input name="c" value="simple_process_helper"></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>

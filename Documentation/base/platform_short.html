@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="description" content="Platform-dependent properties."/>
+<meta name="library" content="Free implementation of ELKS library"/>
+<meta name="legal" content="See notice at end of class."/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="copyright" content="Copyright (c) 1984-2020, Eiffel Software and others"/>
+<meta name="license" content="Eiffel Forum License v2 (see http://www.eiffel.com/licensing/forum.txt)"/>
+<meta name="source" content="Eiffel Software 5949 Hollister Ave., Goleta, CA 93117 USA Telephone 805-685-1006, Fax 805-685-6869 Website http://www.eiffel.com Customer support http://support.eiffel.com"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>platform Contracts</title>
+<link rel="stylesheet" href="../default.css" type="text/css">
+<script type="text/javascript" src="../goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="platform_chart.html">Chart</a>
+<a class="nav class" href="platform_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="platform"></span>
+</div></form><pre><span class="ekeyword">note</span>
+	<span class="eitag">description</span><span class="esymbol">:</span> <span class="estring">&quot;Platform-dependent properties.&quot;</span>
+	<span class="eitag">library</span><span class="esymbol">:</span> <span class="estring">&quot;Free implementation of ELKS library&quot;</span>
+	<span class="eitag">status</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">legal</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">date</span><span class="esymbol">:</span> <span class="estring">&quot;$Date$&quot;</span>
+	<span class="eitag">revision</span><span class="esymbol">:</span> <span class="estring">&quot;$Revision$&quot;</span>
+
+<span class="ekeyword">class</span> <span class="ekeyword">interface</span>
+	<a class="eclass" href="../base/platform_short.html">PLATFORM</a>
+
+<span class="ekeyword">create</span> 
+	<a class="efeature" href="../base/any_short.html#f_default_create">default_create</a>
+
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Platform</span>
+
+	<a name="f_is_thread_capable"></a><a class="efeature" href="../base/platform_short.html#f_is_thread_capable">is_thread_capable</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is current platform capable of multi-threading?</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">instance_free</span><span class="esymbol">:</span> <span class="ekeyword">class</span>
+
+	<a name="f_is_scoop_capable"></a><a class="efeature" href="../base/platform_short.html#f_is_scoop_capable">is_scoop_capable</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is current platform capable of SCOOP?</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">instance_free</span><span class="esymbol">:</span> <span class="ekeyword">class</span>
+
+	<a name="f_is_dotnet"></a><a class="efeature" href="../base/platform_short.html#f_is_dotnet">is_dotnet</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Are we targetting .NET?</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">instance_free</span><span class="esymbol">:</span> <span class="ekeyword">class</span>
+
+	<a name="f_is_windows"></a><a class="efeature" href="../base/platform_short.html#f_is_windows">is_windows</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Are we running on Windows platform?</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">instance_free</span><span class="esymbol">:</span> <span class="ekeyword">class</span>
+
+	<a name="f_is_unix"></a><a class="efeature" href="../base/platform_short.html#f_is_unix">is_unix</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Are we running on a Unix like platform?</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">instance_free</span><span class="esymbol">:</span> <span class="ekeyword">class</span>
+
+	<a name="f_is_vms"></a><a class="efeature" href="../base/platform_short.html#f_is_vms">is_vms</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Are we running on VMS?</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">instance_free</span><span class="esymbol">:</span> <span class="ekeyword">class</span>
+
+	<a name="f_is_mac"></a><a class="efeature" href="../base/platform_short.html#f_is_mac">is_mac</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Are we running on Mac OS?</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">instance_free</span><span class="esymbol">:</span> <span class="ekeyword">class</span>
+
+	<a name="f_is_vxworks"></a><a class="efeature" href="../base/platform_short.html#f_is_vxworks">is_vxworks</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Are we running on VxWorks?</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">instance_free</span><span class="esymbol">:</span> <span class="ekeyword">class</span>
+
+	<a name="f_is_little_endian"></a><a class="efeature" href="../base/platform_short.html#f_is_little_endian">Is_little_endian</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is current platform a little endian one?</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">instance_free</span><span class="esymbol">:</span> <span class="ekeyword">class</span>
+
+	<a name="f_is_64_bits"></a><a class="efeature" href="../base/platform_short.html#f_is_64_bits">is_64_bits</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is the current process runing in 64-bit mode</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">instance_free</span><span class="esymbol">:</span> <span class="ekeyword">class</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Access bytes size</span>
+
+	<a name="f_boolean_bytes"></a><a class="efeature" href="../base/platform_short.html#f_boolean_bytes">boolean_bytes</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Number of bytes in a value of type </span><span class="equoted">BOOLEAN</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">instance_free</span><span class="esymbol">:</span> <span class="ekeyword">class</span>
+
+	<a name="f_character_8_bytes"></a><a class="efeature" href="../base/platform_short.html#f_character_8_bytes">Character_8_bytes</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">1</span>
+			<span class="ecomment">--</span><span class="ecomment"> Number of bytes in a value of type </span><span class="equoted">CHARACTER_8</span>
+
+	<a name="f_character_32_bytes"></a><a class="efeature" href="../base/platform_short.html#f_character_32_bytes">Character_32_bytes</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">4</span>
+			<span class="ecomment">--</span><span class="ecomment"> Number of bytes in a value of type </span><span class="equoted">CHARACTER_32</span>
+
+	<a name="f_natural_8_bytes"></a><a class="efeature" href="../base/platform_short.html#f_natural_8_bytes">Natural_8_bytes</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">1</span>
+			<span class="ecomment">--</span><span class="ecomment"> Number of bytes in a value of type </span><span class="equoted">NATURAL_8</span>
+
+	<a name="f_natural_16_bytes"></a><a class="efeature" href="../base/platform_short.html#f_natural_16_bytes">Natural_16_bytes</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">2</span>
+			<span class="ecomment">--</span><span class="ecomment"> Number of bytes in a value of type </span><span class="equoted">NATURAL_16</span>
+
+	<a name="f_natural_32_bytes"></a><a class="efeature" href="../base/platform_short.html#f_natural_32_bytes">Natural_32_bytes</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">4</span>
+			<span class="ecomment">--</span><span class="ecomment"> Number of bytes in a value of type </span><span class="equoted">NATURAL_32</span>
+
+	<a name="f_natural_64_bytes"></a><a class="efeature" href="../base/platform_short.html#f_natural_64_bytes">Natural_64_bytes</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">8</span>
+			<span class="ecomment">--</span><span class="ecomment"> Number of bytes in a value of type </span><span class="equoted">NATURAL_64</span>
+
+	<a name="f_integer_8_bytes"></a><a class="efeature" href="../base/platform_short.html#f_integer_8_bytes">Integer_8_bytes</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">1</span>
+			<span class="ecomment">--</span><span class="ecomment"> Number of bytes in a value of type </span><span class="equoted">INTEGER_8</span>
+
+	<a name="f_integer_16_bytes"></a><a class="efeature" href="../base/platform_short.html#f_integer_16_bytes">Integer_16_bytes</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">2</span>
+			<span class="ecomment">--</span><span class="ecomment"> Number of bytes in a value of type </span><span class="equoted">INTEGER_16</span>
+
+	<a name="f_integer_32_bytes"></a><a class="efeature" href="../base/platform_short.html#f_integer_32_bytes">Integer_32_bytes</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">4</span>
+			<span class="ecomment">--</span><span class="ecomment"> Number of bytes in a value of type </span><span class="equoted">INTEGER_32</span>
+
+	<a name="f_integer_64_bytes"></a><a class="efeature" href="../base/platform_short.html#f_integer_64_bytes">Integer_64_bytes</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">8</span>
+			<span class="ecomment">--</span><span class="ecomment"> Number of bytes in a value of type </span><span class="equoted">INTEGER_64</span>
+
+	<a name="f_real_32_bytes"></a><a class="efeature" href="../base/platform_short.html#f_real_32_bytes">Real_32_bytes</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">4</span>
+			<span class="ecomment">--</span><span class="ecomment"> Number of bytes in a value of type </span><span class="equoted">REAL_32</span>
+
+	<a name="f_real_64_bytes"></a><a class="efeature" href="../base/platform_short.html#f_real_64_bytes">Real_64_bytes</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">8</span>
+			<span class="ecomment">--</span><span class="ecomment"> Number of bytes in a value of type </span><span class="equoted">REAL_64</span>
+
+	<a name="f_pointer_bytes"></a><a class="efeature" href="../base/platform_short.html#f_pointer_bytes">pointer_bytes</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Number of bytes in a value of type </span><span class="equoted">POINTER</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">instance_free</span><span class="esymbol">:</span> <span class="ekeyword">class</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Access bits size</span>
+
+	<a name="f_boolean_bits"></a><a class="efeature" href="../base/platform_short.html#f_boolean_bits">boolean_bits</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Number of bits in a value of type </span><span class="equoted">BOOLEAN</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">instance_free</span><span class="esymbol">:</span> <span class="ekeyword">class</span>
+
+	<a name="f_character_8_bits"></a><a class="efeature" href="../base/platform_short.html#f_character_8_bits">Character_8_bits</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">8</span>
+			<span class="ecomment">--</span><span class="ecomment"> Number of bits in a value of type </span><span class="equoted">CHARACTER_8</span>
+
+	<a name="f_character_32_bits"></a><a class="efeature" href="../base/platform_short.html#f_character_32_bits">Character_32_bits</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">32</span>
+			<span class="ecomment">--</span><span class="ecomment"> Number of bits in a value of type </span><span class="equoted">CHARACTER_32</span>
+
+	<a name="f_natural_8_bits"></a><a class="efeature" href="../base/platform_short.html#f_natural_8_bits">Natural_8_bits</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">8</span>
+			<span class="ecomment">--</span><span class="ecomment"> Number of bits in a value of type </span><span class="equoted">NATURAL_8</span>
+
+	<a name="f_natural_16_bits"></a><a class="efeature" href="../base/platform_short.html#f_natural_16_bits">Natural_16_bits</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">16</span>
+			<span class="ecomment">--</span><span class="ecomment"> Number of bits in a value of type </span><span class="equoted">NATURAL_16</span>
+
+	<a name="f_natural_32_bits"></a><a class="efeature" href="../base/platform_short.html#f_natural_32_bits">Natural_32_bits</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">32</span>
+			<span class="ecomment">--</span><span class="ecomment"> Number of bits in a value of type </span><span class="equoted">NATURAL_32</span>
+
+	<a name="f_natural_64_bits"></a><a class="efeature" href="../base/platform_short.html#f_natural_64_bits">Natural_64_bits</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">64</span>
+			<span class="ecomment">--</span><span class="ecomment"> Number of bits in a value of type </span><span class="equoted">NATURAL_64</span>
+
+	<a name="f_integer_8_bits"></a><a class="efeature" href="../base/platform_short.html#f_integer_8_bits">Integer_8_bits</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">8</span>
+			<span class="ecomment">--</span><span class="ecomment"> Number of bits in a value of type </span><span class="equoted">INTEGER_8</span>
+
+	<a name="f_integer_16_bits"></a><a class="efeature" href="../base/platform_short.html#f_integer_16_bits">Integer_16_bits</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">16</span>
+			<span class="ecomment">--</span><span class="ecomment"> Number of bits in a value of type </span><span class="equoted">INTEGER_16</span>
+
+	<a name="f_integer_32_bits"></a><a class="efeature" href="../base/platform_short.html#f_integer_32_bits">Integer_32_bits</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">32</span>
+			<span class="ecomment">--</span><span class="ecomment"> Number of bits in a value of type </span><span class="equoted">INTEGER_32</span>
+
+	<a name="f_integer_64_bits"></a><a class="efeature" href="../base/platform_short.html#f_integer_64_bits">Integer_64_bits</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">64</span>
+			<span class="ecomment">--</span><span class="ecomment"> Number of bits in a value of type </span><span class="equoted">INTEGER_64</span>
+
+	<a name="f_real_32_bits"></a><a class="efeature" href="../base/platform_short.html#f_real_32_bits">Real_32_bits</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">32</span>
+			<span class="ecomment">--</span><span class="ecomment"> Number of bits in a value of type </span><span class="equoted">REAL_32</span>
+
+	<a name="f_real_64_bits"></a><a class="efeature" href="../base/platform_short.html#f_real_64_bits">Real_64_bits</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">64</span>
+			<span class="ecomment">--</span><span class="ecomment"> Number of bits in a value of type </span><span class="equoted">REAL_64</span>
+
+	<a name="f_pointer_bits"></a><a class="efeature" href="../base/platform_short.html#f_pointer_bits">pointer_bits</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Number of bits in a value of type </span><span class="equoted">POINTER</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">instance_free</span><span class="esymbol">:</span> <span class="ekeyword">class</span>
+	
+<span class="ekeyword">note</span>
+	<span class="eitag">copyright</span><span class="esymbol">:</span> <span class="estring">&quot;Copyright (c) 1984-2020, Eiffel Software and others&quot;</span>
+	<span class="eitag">license</span><span class="esymbol">:</span> <span class="estring">&quot;Eiffel Forum License v2 (see </span><a class="estring" href="http://www.eiffel.com/licensing/forum.txt">http://www.eiffel.com/licensing/forum.txt</a><span class="estring">)&quot;</span>
+	<span class="eitag">source</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">Eiffel Software</span>
+		<span class="estring">5949 Hollister Ave., Goleta, CA 93117 USA</span>
+		<span class="estring">Telephone 805-685-1006, Fax 805-685-6869</span>
+		<span class="estring">Website </span><a class="estring" href="http://www.eiffel.com">http://www.eiffel.com</a>
+		<span class="estring">Customer support </span><a class="estring" href="http://support.eiffel.com">http://support.eiffel.com</a>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+
+<span class="ekeyword">end</span> <span class="ecomment">--</span> <span class="ecomment">class </span><a class="eclass" href="../base/platform_short.html">PLATFORM</a></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="platform_chart.html">Chart</a>
+<a class="nav class" href="platform_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="platform"></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>
+

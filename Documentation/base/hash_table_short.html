@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="description" content="Hash tables, used to store items identified by hashable keys"/>
+<meta name="library" content="Free implementation of ELKS library"/>
+<meta name="instructions" content="See instructions at the end of the class."/>
+<meta name="warning" content="Modifying an object used as a key by an item present in a table will cause incorrect behavior. If you will be modifying key objects, pass a clone, not the object itself, as key argument to `put' and `replace_key'."/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="instruction" content="TTSeveral procedures are provided for inserting an item TTwith a given key.  TTHere is how to choose between them:  TTT- Use `put' if you want to do an insertion only if TTT  there was no item with the given key, doing nothing TTT  otherwise. (You can find out on return if there was one, TTT  and what it was.)  TTT- Use `force' if you always want to insert the item; TTT  if there was one for the given key it will be removed, TTT  (and you can find out on return what it was).  TTT- Use `extend' if you are sure there is no item with TTT  the given key, enabling faster insertion (but TTT  unpredictable behavior if this assumption is not true).  TTT- Use `replace' if you want to replace an already present TTT  item with the given key, and do nothing if there is none.  TTIn addition you can use `replace_key' to change the key of an TTalready present item, identified by its previous key, or TTdo nothing if there is nothing for that previous key. TTYou can find out on return.  TTTo find out whether a key appears in the table, use `has'. TTTo find out the item, if any, associated with a certain key, TTuse `item'.  TTBoth of these routines perform a search. If you need TTboth pieces of information (does a key appear? And, if so, TTwhat is the associated item?), you can avoid performing TTtwo redundant traversals by using instead the combination TTof `search', `found' and `found_item' as follows:  TTTyour_table.search (your_key) TTTif your_table.found then TTTTwhat_you_where_looking_for := your_table.found_item TTTT... Do whatever is needed to `what_you_were_looking_for' ... TTTelse TTTT... No item was present for `your_key' ... TTTend"/>
+<meta name="copyright" content="Copyright (c) 1984-2021, Eiffel Software and others"/>
+<meta name="license" content="Eiffel Forum License v2 (see http://www.eiffel.com/licensing/forum.txt)"/>
+<meta name="source" content="Eiffel Software 5949 Hollister Ave., Goleta, CA 93117 USA Telephone 805-685-1006, Fax 805-685-6869 Website http://www.eiffel.com Customer support http://support.eiffel.com"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>hash_table Contracts</title>
+<link rel="stylesheet" href="../default.css" type="text/css">
+<script type="text/javascript" src="../goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="hash_table_chart.html">Chart</a>
+<a class="nav class" href="hash_table_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="hash_table"></span>
+</div></form><pre><span class="ekeyword">note</span>
+	<span class="eitag">description</span><span class="esymbol">:</span> <span class="estring">&quot;Hash tables, used to store items identified by hashable keys&quot;</span>
+	<span class="eitag">library</span><span class="esymbol">:</span> <span class="estring">&quot;Free implementation of ELKS library&quot;</span>
+	<span class="eitag">instructions</span><span class="esymbol">:</span> <span class="estring">&quot;See instructions at the end of the class.&quot;</span>
+	<span class="eitag">warning</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">Modifying an object used as a key by an item present in a table will</span>
+		<span class="estring">cause incorrect behavior. If you will be modifying key objects,</span>
+		<span class="estring">pass a clone, not the object itself, as key argument to</span>
+		<span class="estring">`</span><a class="efeature" href="../base/hash_table_short.html#f_put">put</a><span class="estring">`</span><span class="estring"> and </span><span class="estring">`</span><a class="efeature" href="../base/hash_table_short.html#f_replace_key">replace_key</a><span class="estring">`</span><span class="estring">.</span>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+
+<span class="ekeyword">class</span> <span class="ekeyword">interface</span>
+	<a class="eclass" href="../base/hash_table_short.html">HASH_TABLE</a> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <span class="esymbol">,</span> <span class="egeneric">K</span> <span class="esymbol">-&gt;</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/hashable_short.html">HASHABLE</a><span class="esymbol">]</span>
+
+<span class="ekeyword">create</span> 
+	<a class="efeature" href="../base/hash_table_short.html#f_make">make</a><span class="esymbol">,</span>
+	<a class="efeature" href="../base/hash_table_short.html#f_make_equal">make_equal</a><span class="esymbol">,</span>
+	<a class="efeature" href="../base/hash_table_short.html#f_make_from_iterable_tuples">make_from_iterable_tuples</a>
+
+<span class="ekeyword">convert</span>
+	<a class="efeature" href="../base/hash_table_short.html#f_make_from_iterable_tuples">make_from_iterable_tuples</a> <span class="esymbol">(</span><span class="esymbol">{</span><a class="eclass" href="../base/array_short.html">ARRAY</a> <span class="esymbol">[</span><a class="eclass" href="../base/tuple_short.html">TUPLE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">,</span> <span class="egeneric">K</span><span class="esymbol">]</span><span class="esymbol">]</span><span class="esymbol">}</span><span class="esymbol">)</span>
+
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Initialization</span>
+
+	<a name="f_make"></a><a class="efeature" href="../base/hash_table_short.html#f_make">make</a> <span class="esymbol">(</span><span class="elocal">n</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Allocate hash table for at least </span><span class="equoted">n</span><span class="ecomment"> items.</span>
+			<span class="ecomment">--</span><span class="ecomment"> The table will be resized automatically</span>
+			<span class="ecomment">--</span><span class="ecomment"> if more than </span><span class="equoted">n</span><span class="ecomment"> items are inserted.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">n_non_negative</span><span class="esymbol">:</span> <span class="elocal">n</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">0</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">breathing_space</span><span class="esymbol">:</span> <span class="elocal">n</span> <a class="esymbol" href="../base/integer_32_short.html#f_is_less">&lt;</a> <a class="efeature" href="../base/hash_table_short.html#f_capacity">capacity</a>
+			<span class="etag">more_than_minimum</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_capacity">capacity</a> <a class="esymbol" href="../base/comparable_short.html#f_is_greater">&gt;</a> <a class="efeature" href="../base/hash_table_short.html#f_minimum_capacity">Minimum_capacity</a>
+			<span class="etag">no_status</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/hash_table_short.html#f_special_status">special_status</a>
+
+	<a name="f_make_equal"></a><a class="efeature" href="../base/hash_table_short.html#f_make_equal">make_equal</a> <span class="esymbol">(</span><span class="elocal">n</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Allocate hash table for at least </span><span class="equoted">n</span><span class="ecomment"> items.</span>
+			<span class="ecomment">--</span><span class="ecomment"> The table will be resized automatically</span>
+			<span class="ecomment">--</span><span class="ecomment"> if more than </span><span class="equoted">n</span><span class="ecomment"> items are inserted.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Use </span><span class="equoted">~</span><span class="ecomment"> to compare items.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">n_non_negative</span><span class="esymbol">:</span> <span class="elocal">n</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">0</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">breathing_space</span><span class="esymbol">:</span> <span class="elocal">n</span> <a class="esymbol" href="../base/integer_32_short.html#f_is_less">&lt;</a> <a class="efeature" href="../base/hash_table_short.html#f_capacity">capacity</a>
+			<span class="etag">more_than_minimum</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_capacity">capacity</a> <a class="esymbol" href="../base/comparable_short.html#f_is_greater">&gt;</a> <a class="efeature" href="../base/hash_table_short.html#f_minimum_capacity">Minimum_capacity</a>
+			<span class="etag">no_status</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/hash_table_short.html#f_special_status">special_status</a>
+			<span class="etag">compare_objects</span><span class="esymbol">:</span> <a class="efeature" href="../base/container_short.html#f_object_comparison">object_comparison</a>
+
+	<a name="f_make_from_iterable_tuples"></a><a class="efeature" href="../base/hash_table_short.html#f_make_from_iterable_tuples">make_from_iterable_tuples</a> <span class="esymbol">(</span><span class="elocal">other</span><span class="esymbol">:</span> <a class="eclass" href="../base/iterable_short.html">ITERABLE</a> <span class="esymbol">[</span><a class="eclass" href="../base/tuple_short.html">TUPLE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">,</span> <span class="egeneric">K</span><span class="esymbol">]</span><span class="esymbol">]</span><span class="esymbol">)</span>
+
+	<a name="f_accommodate"></a><a class="efeature" href="../base/hash_table_short.html#f_accommodate">accommodate</a> <span class="esymbol">(</span><span class="elocal">n</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Reallocate table with enough space for </span><span class="equoted">n</span><span class="ecomment"> items;</span>
+			<span class="ecomment">--</span><span class="ecomment"> keep all current items.</span>
+		<span class="ekeyword">require</span>
+			<span class="elocal">n</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">0</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">count_not_changed</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_count">count</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/hash_table_short.html#f_count">count</a>
+			<span class="etag">breathing_space</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_count">count</a> <a class="esymbol" href="../base/integer_32_short.html#f_is_less">&lt;</a> <a class="efeature" href="../base/hash_table_short.html#f_capacity">capacity</a>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Access</span>
+
+	<a name="f_found_item"></a><a class="efeature" href="../base/hash_table_short.html#f_found_item">found_item</a><span class="esymbol">:</span> <span class="ekeyword">detachable</span> <span class="egeneric">G</span>
+			<span class="ecomment">--</span><span class="ecomment"> Item, if any, yielded by last search operation</span>
+
+	<a name="f_definite_item"></a><a class="efeature" href="../base/hash_table_short.html#f_definite_item">definite_item</a> <span class="esymbol">(</span><span class="elocal">key</span><span class="esymbol">:</span> <span class="egeneric">K</span><span class="esymbol">)</span><span class="esymbol">:</span> <span class="egeneric">G</span>
+			<span class="ecomment">--</span><span class="ecomment"> Entry of key </span><span class="equoted">k</span><span class="ecomment">.</span>
+
+	<a name="f_item"></a><a class="efeature" href="../base/hash_table_short.html#f_item">item</a> <span class="ekeyword">alias</span> <span class="esymbol">&quot;</span><a class="esymbol" href="../base/hash_table_short.html#f_item">[]</a><span class="esymbol">&quot;</span> <span class="esymbol">(</span><span class="elocal">key</span><span class="esymbol">:</span> <span class="egeneric">K</span><span class="esymbol">)</span><span class="esymbol">:</span> <span class="ekeyword">detachable</span> <span class="egeneric">G</span> <span class="ekeyword">assign</span> <a class="efeature" href="../base/hash_table_short.html#f_force">force</a>
+			<span class="ecomment">--</span><span class="ecomment"> Item associated with </span><span class="equoted">key</span><span class="ecomment">, if present</span>
+			<span class="ecomment">--</span><span class="ecomment"> otherwise default value of type </span><span class="equoted">G</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/hash_table_short.html">HASH_TABLE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_at">at</a><span class="ecomment">`</span><span class="ecomment">.</span>
+		<span class="ekeyword">note</span>
+			<span class="eitag">option</span><span class="esymbol">:</span> stable
+		<span class="ekeyword">ensure then</span>
+			<span class="etag">default_value_if_not_present</span><span class="esymbol">:</span> <span class="esymbol">(</span><a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/hash_table_short.html#f_has">has</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">key</span><span class="esymbol">)</span><span class="esymbol">)</span> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <span class="esymbol">(</span><span class="ekeyword">Result</span> <span class="esymbol">=</span> <a class="efeature" href="../base/hash_table_short.html#f_computed_default_value">computed_default_value</a><span class="esymbol">)</span>
+
+	<a name="f_at"></a><a class="efeature" href="../base/hash_table_short.html#f_at">at</a> <span class="ekeyword">alias</span> <span class="esymbol">&quot;</span><a class="esymbol" href="../base/hash_table_short.html#f_at">@</a><span class="esymbol">&quot;</span> <span class="esymbol">(</span><span class="elocal">key</span><span class="esymbol">:</span> <span class="egeneric">K</span><span class="esymbol">)</span><span class="esymbol">:</span> <span class="ekeyword">detachable</span> <span class="egeneric">G</span> <span class="ekeyword">assign</span> <a class="efeature" href="../base/hash_table_short.html#f_force">force</a>
+			<span class="ecomment">--</span><span class="ecomment"> Item associated with </span><span class="equoted">key</span><span class="ecomment">, if present</span>
+			<span class="ecomment">--</span><span class="ecomment"> otherwise default value of type </span><span class="equoted">G</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/hash_table_short.html">HASH_TABLE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_item">item</a><span class="ecomment">`</span><span class="ecomment">.</span>
+		<span class="ekeyword">note</span>
+			<span class="eitag">option</span><span class="esymbol">:</span> stable
+		<span class="ekeyword">ensure then</span>
+			<span class="etag">default_value_if_not_present</span><span class="esymbol">:</span> <span class="esymbol">(</span><a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/hash_table_short.html#f_has">has</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">key</span><span class="esymbol">)</span><span class="esymbol">)</span> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <span class="esymbol">(</span><span class="ekeyword">Result</span> <span class="esymbol">=</span> <a class="efeature" href="../base/hash_table_short.html#f_computed_default_value">computed_default_value</a><span class="esymbol">)</span>
+
+	<a name="f_has"></a><a class="efeature" href="../base/hash_table_short.html#f_has">has</a> <span class="esymbol">(</span><span class="elocal">key</span><span class="esymbol">:</span> <span class="egeneric">K</span><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is there an item in the table with key </span><span class="equoted">key</span><span class="ecomment">?</span>
+		<span class="ekeyword">ensure then</span>
+			<span class="etag">default_case</span><span class="esymbol">:</span> <span class="esymbol">(</span><span class="elocal">key</span> <span class="esymbol">=</span> <a class="efeature" href="../base/hash_table_short.html#f_computed_default_key">computed_default_key</a><span class="esymbol">)</span> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <span class="esymbol">(</span><span class="ekeyword">Result</span> <span class="esymbol">=</span> <a class="efeature" href="../base/hash_table_short.html#f_has_default">has_default</a><span class="esymbol">)</span>
+
+	<a name="f_has_key"></a><a class="efeature" href="../base/hash_table_short.html#f_has_key">has_key</a> <span class="esymbol">(</span><span class="elocal">key</span><span class="esymbol">:</span> <span class="egeneric">K</span><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is there an item in the table with key </span><span class="equoted">key</span><span class="ecomment">?</span>
+			<span class="ecomment">--</span><span class="ecomment"> Set </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_found_item">found_item</a><span class="ecomment">`</span><span class="ecomment"> to the found item.</span>
+		<span class="ekeyword">ensure then</span>
+			<span class="etag">default_case</span><span class="esymbol">:</span> <span class="esymbol">(</span><span class="elocal">key</span> <span class="esymbol">=</span> <a class="efeature" href="../base/hash_table_short.html#f_computed_default_key">computed_default_key</a><span class="esymbol">)</span> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <span class="esymbol">(</span><span class="ekeyword">Result</span> <span class="esymbol">=</span> <a class="efeature" href="../base/hash_table_short.html#f_has_default">has_default</a><span class="esymbol">)</span>
+			<span class="etag">found</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">=</span> <a class="efeature" href="../base/hash_table_short.html#f_found">found</a>
+			<span class="etag">item_if_found</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_found">found</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <span class="esymbol">(</span><a class="efeature" href="../base/hash_table_short.html#f_found_item">found_item</a> <span class="esymbol">=</span> <a class="efeature" href="../base/hash_table_short.html#f_item">item</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">key</span><span class="esymbol">)</span><span class="esymbol">)</span>
+
+	<a name="f_has_item"></a><a class="efeature" href="../base/hash_table_short.html#f_has_item">has_item</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="egeneric">G</span><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Does structure include </span><span class="equoted">v</span><span class="ecomment">?</span>
+			<span class="ecomment">--</span><span class="ecomment"> (Reference or object equality, based on </span><span class="ecomment">`</span><a class="efeature" href="../base/container_short.html#f_object_comparison">object_comparison</a><span class="ecomment">`</span><span class="ecomment">.)</span>
+
+	<a name="f_current_keys"></a><a class="efeature" href="../base/hash_table_short.html#f_current_keys">current_keys</a><span class="esymbol">:</span> <a class="eclass" href="../base/array_short.html">ARRAY</a> <span class="esymbol">[</span><span class="egeneric">K</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> New array containing actually used keys, from 1 to </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_count">count</a><span class="ecomment">`</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">good_count</span><span class="esymbol">:</span> <span class="ekeyword">Result</span><span class="edot">.</span><a class="efeature" href="../base/array_short.html#f_count">count</a> <span class="esymbol">=</span> <a class="efeature" href="../base/hash_table_short.html#f_count">count</a>
+
+	<a name="f_item_for_iteration"></a><a class="efeature" href="../base/hash_table_short.html#f_item_for_iteration">item_for_iteration</a><span class="esymbol">:</span> <span class="egeneric">G</span>
+			<span class="ecomment">--</span><span class="ecomment"> Element at current iteration position</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">not_off</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/hash_table_short.html#f_off">off</a>
+
+	<a name="f_key_for_iteration"></a><a class="efeature" href="../base/hash_table_short.html#f_key_for_iteration">key_for_iteration</a><span class="esymbol">:</span> <span class="egeneric">K</span>
+			<span class="ecomment">--</span><span class="ecomment"> Key at current iteration position</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">not_off</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/hash_table_short.html#f_off">off</a>
+
+	<a name="f_cursor"></a><a class="efeature" href="../base/hash_table_short.html#f_cursor">cursor</a><span class="esymbol">:</span> <a class="eclass" href="../base/cursor_short.html">CURSOR</a>
+			<span class="ecomment">--</span><span class="ecomment"> Current cursor position</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">cursor_not_void</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_new_cursor"></a><a class="efeature" href="../base/hash_table_short.html#f_new_cursor">new_cursor</a><span class="esymbol">:</span> <a class="eclass" href="../base/hash_table_iteration_cursor_short.html">HASH_TABLE_ITERATION_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">,</span> <span class="egeneric">K</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Fresh cursor associated with current structure</span>
+
+	<a name="f_iteration_item"></a><a class="efeature" href="../base/hash_table_short.html#f_iteration_item">iteration_item</a> <span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <span class="egeneric">G</span>
+			<span class="ecomment">--</span><span class="ecomment"> Entry at position </span><span class="equoted">i</span><span class="ecomment">.</span>
+
+	<a name="f_hash_code_of"></a><a class="efeature" href="../base/hash_table_short.html#f_hash_code_of">hash_code_of</a> <span class="esymbol">(</span><span class="elocal">a_key</span><span class="esymbol">:</span> <span class="ekeyword">attached</span> <span class="egeneric">K</span><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Hash_code value associated to </span><span class="equoted">a_key</span><span class="ecomment">.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">non_negative</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">0</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Measurement</span>
+
+	<a name="f_count"></a><a class="efeature" href="../base/hash_table_short.html#f_count">count</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Number of items in table</span>
+
+	<a name="f_capacity"></a><a class="efeature" href="../base/hash_table_short.html#f_capacity">capacity</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Number of items that may be stored.</span>
+
+	<a name="f_occurrences"></a><a class="efeature" href="../base/hash_table_short.html#f_occurrences">occurrences</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="egeneric">G</span><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Number of table items equal to </span><span class="equoted">v</span><span class="ecomment">.</span>
+
+	<a name="f_iteration_lower"></a><a class="efeature" href="../base/hash_table_short.html#f_iteration_lower">iteration_lower</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Minimum index.</span>
+
+	<a name="f_iteration_upper"></a><a class="efeature" href="../base/hash_table_short.html#f_iteration_upper">iteration_upper</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Maximum index.</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Comparison</span>
+
+	<a name="f_is_equal"></a><a class="efeature" href="../base/hash_table_short.html#f_is_equal">is_equal</a> <span class="esymbol">(</span><span class="elocal">other</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <span class="ekeyword">Current</span><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Does table contain the same information as </span><span class="equoted">other</span><span class="ecomment">?</span>
+
+	<a name="f_same_keys"></a><a class="efeature" href="../base/hash_table_short.html#f_same_keys">same_keys</a> <span class="esymbol">(</span><span class="elocal">a_search_key</span><span class="esymbol">,</span> <span class="elocal">a_key</span><span class="esymbol">:</span> <span class="egeneric">K</span><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Does </span><span class="equoted">a_search_key</span><span class="ecomment"> equal to </span><span class="equoted">a_key</span><span class="ecomment">?</span>
+
+	<a name="f_disjoint"></a><a class="efeature" href="../base/hash_table_short.html#f_disjoint">disjoint</a> <span class="esymbol">(</span><span class="elocal">other</span><span class="esymbol">:</span> <a class="eclass" href="../base/hash_table_short.html">HASH_TABLE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">,</span> <span class="egeneric">K</span><span class="esymbol">]</span><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is </span><span class="equoted">Current</span><span class="ecomment"> and </span><span class="equoted">other</span><span class="ecomment"> disjoint on their keys?</span>
+			<span class="ecomment">--</span><span class="ecomment"> Use </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_same_keys">same_keys</a><span class="ecomment">`</span><span class="ecomment"> for comparison.</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Status report</span>
+
+	<a name="f_full"></a><a class="efeature" href="../base/hash_table_short.html#f_full">Full</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a> <span class="esymbol">=</span> <span class="ekeyword">False</span>
+			<span class="ecomment">--</span><span class="ecomment"> Is structure filled to capacity?</span>
+
+	<a name="f_extendible"></a><a class="efeature" href="../base/hash_table_short.html#f_extendible">Extendible</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a> <span class="esymbol">=</span> <span class="ekeyword">False</span>
+			<span class="ecomment">--</span><span class="ecomment"> May new items be added?</span>
+
+	<a name="f_conflict"></a><a class="efeature" href="../base/hash_table_short.html#f_conflict">conflict</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Did last operation cause a conflict?</span>
+
+	<a name="f_inserted"></a><a class="efeature" href="../base/hash_table_short.html#f_inserted">inserted</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Did last operation insert an item?</span>
+
+	<a name="f_replaced"></a><a class="efeature" href="../base/hash_table_short.html#f_replaced">replaced</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Did last operation replace an item?</span>
+
+	<a name="f_removed"></a><a class="efeature" href="../base/hash_table_short.html#f_removed">removed</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Did last operation remove an item?</span>
+
+	<a name="f_found"></a><a class="efeature" href="../base/hash_table_short.html#f_found">found</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Did last operation find the item sought?</span>
+
+	<a name="f_not_found"></a><a class="efeature" href="../base/hash_table_short.html#f_not_found">not_found</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Did last operation fail to find the item sought?</span>
+
+	<a name="f_after"></a><a class="efeature" href="../base/hash_table_short.html#f_after">after</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is cursor past last item?</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/hash_table_short.html">HASH_TABLE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_off">off</a><span class="ecomment">`</span><span class="ecomment">.</span>
+
+	<a name="f_off"></a><a class="efeature" href="../base/hash_table_short.html#f_off">off</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is cursor past last item?</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/hash_table_short.html">HASH_TABLE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_after">after</a><span class="ecomment">`</span><span class="ecomment">.</span>
+
+	<a name="f_valid_cursor"></a><a class="efeature" href="../base/hash_table_short.html#f_valid_cursor">valid_cursor</a> <span class="esymbol">(</span><span class="elocal">c</span><span class="esymbol">:</span> <a class="eclass" href="../base/cursor_short.html">CURSOR</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Can cursor be moved to position </span><span class="equoted">c</span><span class="ecomment">?</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">c_not_void</span><span class="esymbol">:</span> <span class="elocal">c</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_valid_iteration_index"></a><a class="efeature" href="../base/hash_table_short.html#f_valid_iteration_index">valid_iteration_index</a> <span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is </span><span class="equoted">i</span><span class="ecomment"> a valid index?</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Cursor movement</span>
+
+	<a name="f_start"></a><a class="efeature" href="../base/hash_table_short.html#f_start">start</a>
+			<span class="ecomment">--</span><span class="ecomment"> Bring cursor to first position.</span>
+
+	<a name="f_forth"></a><a class="efeature" href="../base/hash_table_short.html#f_forth">forth</a>
+			<span class="ecomment">--</span><span class="ecomment"> Advance cursor to next occupied position,</span>
+			<span class="ecomment">--</span><span class="ecomment"> or </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_off">off</a><span class="ecomment">`</span><span class="ecomment"> if no such position remains.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">not_off</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/hash_table_short.html#f_off">off</a>
+
+	<a name="f_go_to"></a><a class="efeature" href="../base/hash_table_short.html#f_go_to">go_to</a> <span class="esymbol">(</span><span class="elocal">c</span><span class="esymbol">:</span> <a class="eclass" href="../base/cursor_short.html">CURSOR</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Move to position </span><span class="equoted">c</span><span class="ecomment">.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">c_not_void</span><span class="esymbol">:</span> <span class="elocal">c</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">valid_cursor</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_valid_cursor">valid_cursor</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">c</span><span class="esymbol">)</span>
+
+	<a name="f_search"></a><a class="efeature" href="../base/hash_table_short.html#f_search">search</a> <span class="esymbol">(</span><span class="elocal">key</span><span class="esymbol">:</span> <span class="egeneric">K</span><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Search for item of key </span><span class="equoted">key</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> If found, set </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_found">found</a><span class="ecomment">`</span><span class="ecomment"> to true, and set</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_found_item">found_item</a><span class="ecomment">`</span><span class="ecomment"> to item associated with </span><span class="equoted">key</span><span class="ecomment">.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">found_or_not_found</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_found">found</a> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <a class="efeature" href="../base/hash_table_short.html#f_not_found">not_found</a>
+			<span class="etag">item_if_found</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_found">found</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <span class="esymbol">(</span><a class="efeature" href="../base/hash_table_short.html#f_found_item">found_item</a> <span class="esymbol">=</span> <a class="efeature" href="../base/hash_table_short.html#f_item">item</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">key</span><span class="esymbol">)</span><span class="esymbol">)</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Element change</span>
+
+	<a name="f_put"></a><a class="efeature" href="../base/hash_table_short.html#f_put">put</a> <span class="esymbol">(</span><span class="elocal">new</span><span class="esymbol">:</span> <span class="egeneric">G</span><span class="esymbol">;</span> <span class="elocal">key</span><span class="esymbol">:</span> <span class="egeneric">K</span><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Insert </span><span class="equoted">new</span><span class="ecomment"> with </span><span class="equoted">key</span><span class="ecomment"> if there is no other item</span>
+			<span class="ecomment">--</span><span class="ecomment"> associated with the same key.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Set </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_inserted">inserted</a><span class="ecomment">`</span><span class="ecomment"> if and only if an insertion has</span>
+			<span class="ecomment">--</span><span class="ecomment"> been made (i.e. </span><span class="equoted">key</span><span class="ecomment"> was not present).</span>
+			<span class="ecomment">--</span><span class="ecomment"> If so, set </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_position">position</a><span class="ecomment">`</span><span class="ecomment"> to the insertion position.</span>
+			<span class="ecomment">--</span><span class="ecomment"> If not, set </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_conflict">conflict</a><span class="ecomment">`</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> In either case, set </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_found_item">found_item</a><span class="ecomment">`</span><span class="ecomment"> to the item</span>
+			<span class="ecomment">--</span><span class="ecomment"> now associated with </span><span class="equoted">key</span><span class="ecomment"> (previous item if</span>
+			<span class="ecomment">--</span><span class="ecomment"> there was one, </span><span class="equoted">new</span><span class="ecomment"> otherwise).</span>
+			<span class="ecomment">--</span>
+			<span class="ecomment">--</span><span class="ecomment"> To choose between various insert/replace procedures,</span>
+			<span class="ecomment">--</span><span class="ecomment"> see usage instructions at end of class.</span>
+		<span class="ekeyword">require else</span>
+			<span class="ekeyword">True</span>
+		<span class="ekeyword">ensure then</span>
+			<span class="etag">conflict_or_inserted</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_conflict">conflict</a> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <a class="efeature" href="../base/hash_table_short.html#f_inserted">inserted</a>
+			<span class="etag">insertion_done</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_inserted">inserted</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <a class="efeature" href="../base/hash_table_short.html#f_item">item</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">key</span><span class="esymbol">)</span> <span class="esymbol">=</span> <span class="elocal">new</span>
+			<span class="etag">now_present</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_inserted">inserted</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <a class="efeature" href="../base/hash_table_short.html#f_has">has</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">key</span><span class="esymbol">)</span>
+			<span class="etag">one_more_if_inserted</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_inserted">inserted</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <span class="esymbol">(</span><a class="efeature" href="../base/hash_table_short.html#f_count">count</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/hash_table_short.html#f_count">count</a> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="enumber">1</span><span class="esymbol">)</span>
+			<span class="etag">unchanged_if_conflict</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_conflict">conflict</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <span class="esymbol">(</span><a class="efeature" href="../base/hash_table_short.html#f_count">count</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/hash_table_short.html#f_count">count</a><span class="esymbol">)</span>
+			<span class="etag">same_item_if_conflict</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_conflict">conflict</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <span class="esymbol">(</span><a class="efeature" href="../base/hash_table_short.html#f_item">item</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">key</span><span class="esymbol">)</span> <span class="esymbol">=</span> <span class="ekeyword">old</span> <span class="esymbol">(</span><a class="efeature" href="../base/hash_table_short.html#f_item">item</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">key</span><span class="esymbol">)</span><span class="esymbol">)</span><span class="esymbol">)</span>
+			<span class="etag">found_item_associated_with_key</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_found_item">found_item</a> <span class="esymbol">=</span> <a class="efeature" href="../base/hash_table_short.html#f_item">item</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">key</span><span class="esymbol">)</span>
+			<span class="etag">new_item_if_inserted</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_inserted">inserted</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <span class="esymbol">(</span><a class="efeature" href="../base/hash_table_short.html#f_found_item">found_item</a> <span class="esymbol">=</span> <span class="elocal">new</span><span class="esymbol">)</span>
+			<span class="etag">old_item_if_conflict</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_conflict">conflict</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <span class="esymbol">(</span><a class="efeature" href="../base/hash_table_short.html#f_found_item">found_item</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <span class="esymbol">(</span><a class="efeature" href="../base/hash_table_short.html#f_item">item</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">key</span><span class="esymbol">)</span><span class="esymbol">)</span><span class="esymbol">)</span>
+			<span class="etag">default_property</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_has_default">has_default</a> <span class="esymbol">=</span> <span class="esymbol">(</span><span class="esymbol">(</span><a class="efeature" href="../base/hash_table_short.html#f_inserted">inserted</a> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <span class="esymbol">(</span><span class="elocal">key</span> <span class="esymbol">=</span> <a class="efeature" href="../base/hash_table_short.html#f_computed_default_key">computed_default_key</a><span class="esymbol">)</span><span class="esymbol">)</span> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <span class="esymbol">(</span><span class="esymbol">(</span><a class="efeature" href="../base/hash_table_short.html#f_conflict">conflict</a> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <span class="esymbol">(</span><span class="elocal">key</span> <span class="esymbol">/=</span> <a class="efeature" href="../base/hash_table_short.html#f_computed_default_key">computed_default_key</a><span class="esymbol">)</span><span class="esymbol">)</span> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <span class="esymbol">(</span><span class="ekeyword">old</span> <a class="efeature" href="../base/hash_table_short.html#f_has_default">has_default</a><span class="esymbol">)</span><span class="esymbol">)</span><span class="esymbol">)</span>
+
+	<a name="f_force"></a><a class="efeature" href="../base/hash_table_short.html#f_force">force</a> <span class="esymbol">(</span><span class="elocal">new</span><span class="esymbol">:</span> <span class="egeneric">G</span><span class="esymbol">;</span> <span class="elocal">key</span><span class="esymbol">:</span> <span class="egeneric">K</span><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Update table so that </span><span class="equoted">new</span><span class="ecomment"> will be the item associated</span>
+			<span class="ecomment">--</span><span class="ecomment"> with </span><span class="equoted">key</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> If there was an item for that key, set </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_found">found</a><span class="ecomment">`</span>
+			<span class="ecomment">--</span><span class="ecomment"> and set </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_found_item">found_item</a><span class="ecomment">`</span><span class="ecomment"> to that item.</span>
+			<span class="ecomment">--</span><span class="ecomment"> If there was none, set </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_not_found">not_found</a><span class="ecomment">`</span><span class="ecomment"> and set</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_found_item">found_item</a><span class="ecomment">`</span><span class="ecomment"> to the default value.</span>
+			<span class="ecomment">--</span>
+			<span class="ecomment">--</span><span class="ecomment"> To choose between various insert/replace procedures,</span>
+			<span class="ecomment">--</span><span class="ecomment"> see usage instructions at end of class.</span>
+		<span class="ekeyword">require else</span>
+			<span class="ekeyword">True</span>
+		<span class="ekeyword">ensure then</span>
+			<span class="etag">insertion_done</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_item">item</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">key</span><span class="esymbol">)</span> <span class="esymbol">=</span> <span class="elocal">new</span>
+			<span class="etag">now_present</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_has">has</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">key</span><span class="esymbol">)</span>
+			<span class="etag">found_or_not_found</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_found">found</a> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <a class="efeature" href="../base/hash_table_short.html#f_not_found">not_found</a>
+			<span class="etag">not_found_if_was_not_present</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_not_found">not_found</a> <span class="esymbol">=</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <span class="esymbol">(</span><span class="ekeyword">old</span> <a class="efeature" href="../base/hash_table_short.html#f_has">has</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">key</span><span class="esymbol">)</span><span class="esymbol">)</span>
+			<span class="etag">same_count_or_one_more</span><span class="esymbol">:</span> <span class="esymbol">(</span><a class="efeature" href="../base/hash_table_short.html#f_count">count</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/hash_table_short.html#f_count">count</a><span class="esymbol">)</span> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <span class="esymbol">(</span><a class="efeature" href="../base/hash_table_short.html#f_count">count</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/hash_table_short.html#f_count">count</a> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="enumber">1</span><span class="esymbol">)</span>
+			<span class="etag">found_item_is_old_item</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_found">found</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <span class="esymbol">(</span><a class="efeature" href="../base/hash_table_short.html#f_found_item">found_item</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <span class="esymbol">(</span><a class="efeature" href="../base/hash_table_short.html#f_item">item</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">key</span><span class="esymbol">)</span><span class="esymbol">)</span><span class="esymbol">)</span>
+			<span class="etag">default_value_if_not_found</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_not_found">not_found</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <span class="esymbol">(</span><a class="efeature" href="../base/hash_table_short.html#f_found_item">found_item</a> <span class="esymbol">=</span> <a class="efeature" href="../base/hash_table_short.html#f_computed_default_value">computed_default_value</a><span class="esymbol">)</span>
+			<span class="etag">default_property</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_has_default">has_default</a> <span class="esymbol">=</span> <span class="esymbol">(</span><span class="esymbol">(</span><span class="elocal">key</span> <span class="esymbol">=</span> <a class="efeature" href="../base/hash_table_short.html#f_computed_default_key">computed_default_key</a><span class="esymbol">)</span> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <span class="esymbol">(</span><span class="esymbol">(</span><span class="elocal">key</span> <span class="esymbol">/=</span> <a class="efeature" href="../base/hash_table_short.html#f_computed_default_key">computed_default_key</a><span class="esymbol">)</span> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <span class="esymbol">(</span><span class="ekeyword">old</span> <a class="efeature" href="../base/hash_table_short.html#f_has_default">has_default</a><span class="esymbol">)</span><span class="esymbol">)</span><span class="esymbol">)</span>
+
+	<a name="f_extend"></a><a class="efeature" href="../base/hash_table_short.html#f_extend">extend</a> <span class="esymbol">(</span><span class="elocal">new</span><span class="esymbol">:</span> <span class="egeneric">G</span><span class="esymbol">;</span> <span class="elocal">key</span><span class="esymbol">:</span> <span class="egeneric">K</span><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Assuming there is no item of key </span><span class="equoted">key</span><span class="ecomment">,</span>
+			<span class="ecomment">--</span><span class="ecomment"> insert </span><span class="equoted">new</span><span class="ecomment"> with </span><span class="equoted">key</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Set </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_inserted">inserted</a><span class="ecomment">`</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span>
+			<span class="ecomment">--</span><span class="ecomment"> To choose between various insert/replace procedures,</span>
+			<span class="ecomment">--</span><span class="ecomment"> see usage instructions at end of class.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">not_present</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/hash_table_short.html#f_has">has</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">key</span><span class="esymbol">)</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">inserted</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_inserted">inserted</a>
+			<span class="etag">insertion_done</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_item">item</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">key</span><span class="esymbol">)</span> <span class="esymbol">=</span> <span class="elocal">new</span>
+			<span class="etag">one_more</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_count">count</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/hash_table_short.html#f_count">count</a> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="enumber">1</span>
+			<span class="etag">default_property</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_has_default">has_default</a> <span class="esymbol">=</span> <span class="esymbol">(</span><span class="esymbol">(</span><span class="elocal">key</span> <span class="esymbol">=</span> <a class="efeature" href="../base/hash_table_short.html#f_computed_default_key">computed_default_key</a><span class="esymbol">)</span> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <span class="esymbol">(</span><span class="ekeyword">old</span> <a class="efeature" href="../base/hash_table_short.html#f_has_default">has_default</a><span class="esymbol">)</span><span class="esymbol">)</span>
+
+	<a name="f_replace"></a><a class="efeature" href="../base/hash_table_short.html#f_replace">replace</a> <span class="esymbol">(</span><span class="elocal">new</span><span class="esymbol">:</span> <span class="egeneric">G</span><span class="esymbol">;</span> <span class="elocal">key</span><span class="esymbol">:</span> <span class="egeneric">K</span><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Replace item at </span><span class="equoted">key</span><span class="ecomment">, if present,</span>
+			<span class="ecomment">--</span><span class="ecomment"> with </span><span class="equoted">new</span><span class="ecomment">; do not change associated key.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Set </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_replaced">replaced</a><span class="ecomment">`</span><span class="ecomment"> if and only if a replacement has been made</span>
+			<span class="ecomment">--</span><span class="ecomment"> (i.e. </span><span class="equoted">key</span><span class="ecomment"> was present); otherwise set </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_not_found">not_found</a><span class="ecomment">`</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Set </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_found_item">found_item</a><span class="ecomment">`</span><span class="ecomment"> to the item previously associated</span>
+			<span class="ecomment">--</span><span class="ecomment"> with </span><span class="equoted">key</span><span class="ecomment"> (default value if there was none).</span>
+			<span class="ecomment">--</span>
+			<span class="ecomment">--</span><span class="ecomment"> To choose between various insert/replace procedures,</span>
+			<span class="ecomment">--</span><span class="ecomment"> see usage instructions at end of class.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">replaced_or_not_found</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_replaced">replaced</a> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <a class="efeature" href="../base/hash_table_short.html#f_not_found">not_found</a>
+			<span class="etag">insertion_done</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_replaced">replaced</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <a class="efeature" href="../base/hash_table_short.html#f_item">item</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">key</span><span class="esymbol">)</span> <span class="esymbol">=</span> <span class="elocal">new</span>
+			<span class="etag">no_change_if_not_found</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_not_found">not_found</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <a class="efeature" href="../base/hash_table_short.html#f_item">item</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">key</span><span class="esymbol">)</span> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/hash_table_short.html#f_item">item</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">key</span><span class="esymbol">)</span>
+			<span class="etag">found_item_is_old_item</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_found_item">found_item</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/hash_table_short.html#f_item">item</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">key</span><span class="esymbol">)</span>
+
+	<a name="f_replace_key"></a><a class="efeature" href="../base/hash_table_short.html#f_replace_key">replace_key</a> <span class="esymbol">(</span><span class="elocal">new_key</span><span class="esymbol">:</span> <span class="egeneric">K</span><span class="esymbol">;</span> <span class="elocal">old_key</span><span class="esymbol">:</span> <span class="egeneric">K</span><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> If there is an item of key </span><span class="equoted">old_key</span><span class="ecomment"> and no item of key</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span><span class="equoted">new_key</span><span class="ecomment">, replace the former's key by </span><span class="equoted">new_key</span><span class="ecomment">,</span>
+			<span class="ecomment">--</span><span class="ecomment"> set </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_replaced">replaced</a><span class="ecomment">`</span><span class="ecomment">, and set </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_found_item">found_item</a><span class="ecomment">`</span><span class="ecomment"> to the item</span>
+			<span class="ecomment">--</span><span class="ecomment"> previously associated with </span><span class="equoted">old_key</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Otherwise set </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_not_found">not_found</a><span class="ecomment">`</span><span class="ecomment"> or </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_conflict">conflict</a><span class="ecomment">`</span><span class="ecomment"> respectively.</span>
+			<span class="ecomment">--</span><span class="ecomment"> If </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_conflict">conflict</a><span class="ecomment">`</span><span class="ecomment">, set </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_found_item">found_item</a><span class="ecomment">`</span><span class="ecomment"> to the item previously</span>
+			<span class="ecomment">--</span><span class="ecomment"> associated with </span><span class="equoted">new_key</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span>
+			<span class="ecomment">--</span><span class="ecomment"> To choose between various insert/replace procedures,</span>
+			<span class="ecomment">--</span><span class="ecomment"> see usage instructions at end of class.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">same_count</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_count">count</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/hash_table_short.html#f_count">count</a>
+			<span class="etag">replaced_or_conflict_or_not_found</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_replaced">replaced</a> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <a class="efeature" href="../base/hash_table_short.html#f_conflict">conflict</a> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <a class="efeature" href="../base/hash_table_short.html#f_not_found">not_found</a>
+			<span class="etag">old_absent</span><span class="esymbol">:</span> <span class="esymbol">(</span><a class="efeature" href="../base/hash_table_short.html#f_replaced">replaced</a> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/hash_table_short.html#f_same_keys">same_keys</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">new_key</span><span class="esymbol">,</span> <span class="elocal">old_key</span><span class="esymbol">)</span><span class="esymbol">)</span> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <span class="esymbol">(</span><a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/hash_table_short.html#f_has">has</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">old_key</span><span class="esymbol">)</span><span class="esymbol">)</span>
+			<span class="etag">new_present</span><span class="esymbol">:</span> <span class="esymbol">(</span><a class="efeature" href="../base/hash_table_short.html#f_replaced">replaced</a> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <a class="efeature" href="../base/hash_table_short.html#f_conflict">conflict</a><span class="esymbol">)</span> <span class="esymbol">=</span> <a class="efeature" href="../base/hash_table_short.html#f_has">has</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">new_key</span><span class="esymbol">)</span>
+			<span class="etag">new_item</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_replaced">replaced</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <span class="esymbol">(</span><a class="efeature" href="../base/hash_table_short.html#f_item">item</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">new_key</span><span class="esymbol">)</span> <span class="esymbol">=</span> <span class="ekeyword">old</span> <span class="esymbol">(</span><a class="efeature" href="../base/hash_table_short.html#f_item">item</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">old_key</span><span class="esymbol">)</span><span class="esymbol">)</span><span class="esymbol">)</span>
+			<span class="etag">not_found_implies_no_old_key</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_not_found">not_found</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <span class="ekeyword">old</span> <span class="esymbol">(</span><a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/hash_table_short.html#f_has">has</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">old_key</span><span class="esymbol">)</span><span class="esymbol">)</span>
+			<span class="etag">conflict_iff_already_present</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_conflict">conflict</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/hash_table_short.html#f_has">has</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">new_key</span><span class="esymbol">)</span>
+			<span class="etag">not_inserted_if_conflict</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_conflict">conflict</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <span class="esymbol">(</span><a class="efeature" href="../base/hash_table_short.html#f_item">item</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">new_key</span><span class="esymbol">)</span> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/hash_table_short.html#f_item">item</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">new_key</span><span class="esymbol">)</span><span class="esymbol">)</span>
+
+	<a name="f_merge"></a><a class="efeature" href="../base/hash_table_short.html#f_merge">merge</a> <span class="esymbol">(</span><span class="elocal">other</span><span class="esymbol">:</span> <a class="eclass" href="../base/hash_table_short.html">HASH_TABLE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">,</span> <span class="egeneric">K</span><span class="esymbol">]</span><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Merge </span><span class="equoted">other</span><span class="ecomment"> into Current. If </span><span class="equoted">other</span><span class="ecomment"> has some elements</span>
+			<span class="ecomment">--</span><span class="ecomment"> with same key as in </span><span class="equoted">Current</span><span class="ecomment">, replace them by one from</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span><span class="equoted">other</span><span class="ecomment">.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">other_not_void</span><span class="esymbol">:</span> <span class="elocal">other</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">inserted</span><span class="esymbol">:</span> <span class="ekeyword">∀</span> o<span class="esymbol">:</span> <span class="elocal">other</span> <span class="ekeyword">¦</span>
+					<a class="efeature" href="../base/hash_table_short.html#f_item">item</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="esymbol">@</span><span class="elocal">o</span><span class="edot">.</span><span class="elocal">key</span><span class="esymbol">)</span> <span class="esymbol">=</span> <span class="elocal">o</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Removal</span>
+
+	<a name="f_remove"></a><a class="efeature" href="../base/hash_table_short.html#f_remove">remove</a> <span class="esymbol">(</span><span class="elocal">key</span><span class="esymbol">:</span> <span class="egeneric">K</span><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Remove item associated with </span><span class="equoted">key</span><span class="ecomment">, if present.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Set </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_removed">removed</a><span class="ecomment">`</span><span class="ecomment"> if and only if an item has been</span>
+			<span class="ecomment">--</span><span class="ecomment"> removed (i.e. </span><span class="equoted">key</span><span class="ecomment"> was present);</span>
+			<span class="ecomment">--</span><span class="ecomment"> if so, set </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_position">position</a><span class="ecomment">`</span><span class="ecomment"> to index of removed element.</span>
+			<span class="ecomment">--</span><span class="ecomment"> If not, set </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_not_found">not_found</a><span class="ecomment">`</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Reset </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_found_item">found_item</a><span class="ecomment">`</span><span class="ecomment"> to its default value if </span><span class="ecomment">`</span><a class="efeature" href="../base/hash_table_short.html#f_removed">removed</a><span class="ecomment">`</span><span class="ecomment">.</span>
+		<span class="ekeyword">require else</span>
+			<a class="efeature" href="../base/dynamic_table_short.html#f_prunable">prunable</a>
+		<span class="ekeyword">ensure then</span>
+			<span class="etag">removed_or_not_found</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_removed">removed</a> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <a class="efeature" href="../base/hash_table_short.html#f_not_found">not_found</a>
+			<span class="etag">not_present</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/hash_table_short.html#f_has">has</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">key</span><span class="esymbol">)</span>
+			<span class="etag">one_less</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_found">found</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <span class="esymbol">(</span><a class="efeature" href="../base/hash_table_short.html#f_count">count</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/hash_table_short.html#f_count">count</a> <a class="esymbol" href="../base/integer_32_short.html#f_minus">-</a> <span class="enumber">1</span><span class="esymbol">)</span>
+			<span class="etag">default_case</span><span class="esymbol">:</span> <span class="esymbol">(</span><span class="elocal">key</span> <span class="esymbol">=</span> <a class="efeature" href="../base/hash_table_short.html#f_computed_default_key">computed_default_key</a><span class="esymbol">)</span> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <span class="esymbol">(</span><a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/hash_table_short.html#f_has_default">has_default</a><span class="esymbol">)</span>
+			<span class="etag">non_default_case</span><span class="esymbol">:</span> <span class="esymbol">(</span><span class="elocal">key</span> <span class="esymbol">/=</span> <a class="efeature" href="../base/hash_table_short.html#f_computed_default_key">computed_default_key</a><span class="esymbol">)</span> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <span class="esymbol">(</span><a class="efeature" href="../base/hash_table_short.html#f_has_default">has_default</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/hash_table_short.html#f_has_default">has_default</a><span class="esymbol">)</span>
+
+	<a name="f_prune"></a><a class="efeature" href="../base/hash_table_short.html#f_prune">prune</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="egeneric">G</span><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Remove first occurrence of </span><span class="equoted">v</span><span class="ecomment">, if any,</span>
+			<span class="ecomment">--</span><span class="ecomment"> after cursor position.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Move cursor to right neighbor.</span>
+			<span class="ecomment">--</span><span class="ecomment"> (or after if no right neighbor or </span><span class="equoted">v</span><span class="ecomment"> does not occur)</span>
+
+	<a name="f_wipe_out"></a><a class="efeature" href="../base/hash_table_short.html#f_wipe_out">wipe_out</a>
+			<span class="ecomment">--</span><span class="ecomment"> Reset all items to default values; reset status.</span>
+		<span class="ekeyword">ensure then</span>
+			<span class="etag">position_equal_to_zero</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_item_position">item_position</a> <span class="esymbol">=</span> <span class="enumber">0</span>
+			<span class="etag">count_equal_to_zero</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_count">count</a> <span class="esymbol">=</span> <span class="enumber">0</span>
+			<span class="etag">has_default_set</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/hash_table_short.html#f_has_default">has_default</a>
+			<span class="etag">no_status</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/hash_table_short.html#f_special_status">special_status</a>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Conversion</span>
+
+	<a name="f_linear_representation"></a><a class="efeature" href="../base/hash_table_short.html#f_linear_representation">linear_representation</a><span class="esymbol">:</span> <a class="eclass" href="../base/arrayed_list_short.html">ARRAYED_LIST</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Representation as a linear structure</span>
+		<span class="ekeyword">ensure then</span>
+			<span class="etag">result_exists</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">good_count</span><span class="esymbol">:</span> <span class="ekeyword">Result</span><span class="edot">.</span><a class="efeature" href="../base/arrayed_list_short.html#f_count">count</a> <span class="esymbol">=</span> <a class="efeature" href="../base/hash_table_short.html#f_count">count</a>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Duplication</span>
+
+	<a name="f_copy"></a><a class="efeature" href="../base/hash_table_short.html#f_copy">copy</a> <span class="esymbol">(</span><span class="elocal">other</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <span class="ekeyword">Current</span><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Re-initialize from </span><span class="equoted">other</span><span class="ecomment">.</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Transformation</span>
+
+	<a name="f_correct_mismatch"></a><a class="efeature" href="../base/hash_table_short.html#f_correct_mismatch">correct_mismatch</a>
+			<span class="ecomment">--</span><span class="ecomment"> Attempt to correct object mismatch during retrieve using </span><span class="ecomment">`</span><a class="efeature" href="../base/mismatch_corrector_short.html#f_mismatch_information">mismatch_information</a><span class="ecomment">`</span><span class="ecomment">.</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Inapplicable</span>
+
+	<a name="f_collection_extend"></a><a class="efeature" href="../base/hash_table_short.html#f_collection_extend">collection_extend</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="egeneric">G</span><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Insert a new occurrence of </span><span class="equoted">v</span><span class="ecomment">.</span>
+	
+<span class="ekeyword">invariant</span>
+	<span class="etag">keys_not_void</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_keys">keys</a> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+	<span class="etag">content_not_void</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_content">content</a> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+	<span class="etag">keys_enough_capacity</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_keys">keys</a><span class="edot">.</span><a class="efeature" href="../base/special_short.html#f_count">count</a> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <a class="efeature" href="../base/hash_table_short.html#f_capacity">capacity</a> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="enumber">1</span>
+	<span class="etag">content_enough_capacity</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_content">content</a><span class="edot">.</span><a class="efeature" href="../base/special_short.html#f_count">count</a> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <a class="efeature" href="../base/hash_table_short.html#f_capacity">capacity</a> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="enumber">1</span>
+	<span class="etag">valid_iteration_position</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_off">off</a> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <a class="efeature" href="../base/hash_table_short.html#f_truly_occupied">truly_occupied</a><span class="esymbol"> </span><span class="esymbol">(</span><a class="efeature" href="../base/hash_table_short.html#f_iteration_position">iteration_position</a><span class="esymbol">)</span>
+	<span class="etag">control_non_negative</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_control">control</a> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">0</span>
+	<span class="etag">special_status</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_special_status">special_status</a> <span class="esymbol">=</span> <span class="esymbol">(</span><a class="efeature" href="../base/hash_table_short.html#f_conflict">conflict</a> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <a class="efeature" href="../base/hash_table_short.html#f_inserted">inserted</a> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <a class="efeature" href="../base/hash_table_short.html#f_replaced">replaced</a> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <a class="efeature" href="../base/hash_table_short.html#f_removed">removed</a> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <a class="efeature" href="../base/hash_table_short.html#f_found">found</a> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <a class="efeature" href="../base/hash_table_short.html#f_not_found">not_found</a><span class="esymbol">)</span>
+	<span class="etag">count_big_enough</span><span class="esymbol">:</span> <span class="enumber">0</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <a class="efeature" href="../base/hash_table_short.html#f_count">count</a>
+	<span class="etag">count_small_enough</span><span class="esymbol">:</span> <a class="efeature" href="../base/hash_table_short.html#f_count">count</a> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <a class="efeature" href="../base/hash_table_short.html#f_capacity">capacity</a>
+	<span class="etag">slot_count_big_enough</span><span class="esymbol">:</span> <span class="enumber">0</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <a class="efeature" href="../base/hash_table_short.html#f_count">count</a>
+
+<span class="ekeyword">note</span>
+	<span class="eitag">instruction</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">		Several procedures are provided for inserting an item</span>
+		<span class="estring">		with a given key.</span>
+		
+		<span class="estring">		Here is how to choose between them:</span>
+		
+		<span class="estring">			- Use </span><span class="estring">`</span><a class="efeature" href="../base/hash_table_short.html#f_put">put</a><span class="estring">`</span><span class="estring"> if you want to do an insertion only if</span>
+		<span class="estring">			 &nbsp;there was no item with the given key, doing nothing</span>
+		<span class="estring">			 &nbsp;otherwise. (You can find out on return if there was one,</span>
+		<span class="estring">			 &nbsp;and what it was.)</span>
+		
+		<span class="estring">			- Use </span><span class="estring">`</span><a class="efeature" href="../base/hash_table_short.html#f_force">force</a><span class="estring">`</span><span class="estring"> if you always want to insert the item;</span>
+		<span class="estring">			 &nbsp;if there was one for the given key it will be removed,</span>
+		<span class="estring">			 &nbsp;(and you can find out on return what it was).</span>
+		
+		<span class="estring">			- Use </span><span class="estring">`</span><a class="efeature" href="../base/hash_table_short.html#f_extend">extend</a><span class="estring">`</span><span class="estring"> if you are sure there is no item with</span>
+		<span class="estring">			 &nbsp;the given key, enabling faster insertion (but</span>
+		<span class="estring">			 &nbsp;unpredictable behavior if this assumption is not true).</span>
+		
+		<span class="estring">			- Use </span><span class="estring">`</span><a class="efeature" href="../base/hash_table_short.html#f_replace">replace</a><span class="estring">`</span><span class="estring"> if you want to replace an already present</span>
+		<span class="estring">			 &nbsp;item with the given key, and do nothing if there is none.</span>
+		
+		<span class="estring">		In addition you can use </span><span class="estring">`</span><a class="efeature" href="../base/hash_table_short.html#f_replace_key">replace_key</a><span class="estring">`</span><span class="estring"> to change the key of an</span>
+		<span class="estring">		already present item, identified by its previous key, or</span>
+		<span class="estring">		do nothing if there is nothing for that previous key.</span>
+		<span class="estring">		You can find out on return.</span>
+		
+		<span class="estring">		To find out whether a key appears in the table, use </span><span class="estring">`</span><a class="efeature" href="../base/hash_table_short.html#f_has">has</a><span class="estring">`</span><span class="estring">.</span>
+		<span class="estring">		To find out the item, if any, associated with a certain key,</span>
+		<span class="estring">		use </span><span class="estring">`</span><a class="efeature" href="../base/hash_table_short.html#f_item">item</a><span class="estring">`</span><span class="estring">.</span>
+		
+		<span class="estring">		Both of these routines perform a search. If you need</span>
+		<span class="estring">		both pieces of information (does a key appear? And, if so,</span>
+		<span class="estring">		what is the associated item?), you can avoid performing</span>
+		<span class="estring">		two redundant traversals by using instead the combination</span>
+		<span class="estring">		of </span><span class="estring">`</span><a class="efeature" href="../base/hash_table_short.html#f_search">search</a><span class="estring">`</span><span class="estring">, </span><span class="estring">`</span><a class="efeature" href="../base/hash_table_short.html#f_found">found</a><span class="estring">`</span><span class="estring"> and </span><span class="estring">`</span><a class="efeature" href="../base/hash_table_short.html#f_found_item">found_item</a><span class="estring">`</span><span class="estring"> as follows:</span>
+		
+		<span class="estring">			your_table.search (your_key)</span>
+		<span class="estring">			if your_table.found then</span>
+		<span class="estring">				what_you_where_looking_for := your_table.found_item</span>
+		<span class="estring">				... Do whatever is needed to </span><span class="estring">what_you_were_looking_for</span><span class="estring"> ...</span>
+		<span class="estring">			else</span>
+		<span class="estring">				... No item was present for </span><span class="estring">your_key</span><span class="estring"> ...</span>
+		<span class="estring">			end</span>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+	<span class="eitag">date</span><span class="esymbol">:</span> <span class="estring">&quot;$Date$&quot;</span>
+	<span class="eitag">revision</span><span class="esymbol">:</span> <span class="estring">&quot;$Revision$&quot;</span>
+	<span class="eitag">copyright</span><span class="esymbol">:</span> <span class="estring">&quot;Copyright (c) 1984-2021, Eiffel Software and others&quot;</span>
+	<span class="eitag">license</span><span class="esymbol">:</span> <span class="estring">&quot;Eiffel Forum License v2 (see </span><a class="estring" href="http://www.eiffel.com/licensing/forum.txt">http://www.eiffel.com/licensing/forum.txt</a><span class="estring">)&quot;</span>
+	<span class="eitag">source</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">Eiffel Software</span>
+		<span class="estring">5949 Hollister Ave., Goleta, CA 93117 USA</span>
+		<span class="estring">Telephone 805-685-1006, Fax 805-685-6869</span>
+		<span class="estring">Website </span><a class="estring" href="http://www.eiffel.com">http://www.eiffel.com</a>
+		<span class="estring">Customer support </span><a class="estring" href="http://support.eiffel.com">http://support.eiffel.com</a>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+
+<span class="ekeyword">end</span> <span class="ecomment">--</span> <span class="ecomment">class </span><a class="eclass" href="../base/hash_table_short.html">HASH_TABLE</a></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="hash_table_chart.html">Chart</a>
+<a class="nav class" href="hash_table_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="hash_table"></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>
+

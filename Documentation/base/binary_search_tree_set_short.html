@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="description" content="Sorted sets implemented as binary search trees"/>
+<meta name="library" content="Free implementation of ELKS library"/>
+<meta name="legal" content="See notice at end of class."/>
+<meta name="names" content="binary_search_tree_set, set, binary_search_tree"/>
+<meta name="representation" content="recursive, array"/>
+<meta name="access" content="membership, min, max"/>
+<meta name="contents" content="generic"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="copyright" content="Copyright (c) 1984-2021, Eiffel Software and others"/>
+<meta name="license" content="Eiffel Forum License v2 (see http://www.eiffel.com/licensing/forum.txt)"/>
+<meta name="source" content="Eiffel Software 5949 Hollister Ave., Goleta, CA 93117 USA Telephone 805-685-1006, Fax 805-685-6869 Website http://www.eiffel.com Customer support http://support.eiffel.com"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>binary_search_tree_set Contracts</title>
+<link rel="stylesheet" href="../default.css" type="text/css">
+<script type="text/javascript" src="../goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="binary_search_tree_set_chart.html">Chart</a>
+<a class="nav class" href="binary_search_tree_set_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="binary_search_tree_set"></span>
+</div></form><pre><span class="ekeyword">note</span>
+	<span class="eitag">description</span><span class="esymbol">:</span> <span class="estring">&quot;Sorted sets implemented as binary search trees&quot;</span>
+	<span class="eitag">library</span><span class="esymbol">:</span> <span class="estring">&quot;Free implementation of ELKS library&quot;</span>
+	<span class="eitag">legal</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">status</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">names</span><span class="esymbol">:</span> binary_search_tree_set<span class="esymbol">,</span> set<span class="esymbol">,</span> binary_search_tree
+	<span class="eitag">representation</span><span class="esymbol">:</span> recursive<span class="esymbol">,</span> array
+	<span class="eitag">access</span><span class="esymbol">:</span> membership<span class="esymbol">,</span> min<span class="esymbol">,</span> max
+	<span class="eitag">contents</span><span class="esymbol">:</span> generic
+	<span class="eitag">date</span><span class="esymbol">:</span> <span class="estring">&quot;$Date$&quot;</span>
+	<span class="eitag">revision</span><span class="esymbol">:</span> <span class="estring">&quot;$Revision$&quot;</span>
+
+<span class="ekeyword">class</span> <span class="ekeyword">interface</span>
+	<a class="eclass" href="../base/binary_search_tree_set_short.html">BINARY_SEARCH_TREE_SET</a> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <a class="eclass" href="../base/comparable_short.html">COMPARABLE</a><span class="esymbol">]</span>
+
+<span class="ekeyword">create</span> 
+	<a class="efeature" href="../base/binary_search_tree_set_short.html#f_make">make</a><span class="esymbol">,</span>
+	<a class="efeature" href="../base/binary_search_tree_set_short.html#f_make_from_iterable">make_from_iterable</a>
+
+<span class="ekeyword">convert</span>
+	<a class="efeature" href="../base/binary_search_tree_set_short.html#f_make_from_iterable">make_from_iterable</a> <span class="esymbol">(</span><span class="esymbol">{</span><a class="eclass" href="../base/array_short.html">ARRAY</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span><span class="esymbol">}</span><span class="esymbol">)</span>
+
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Measurement</span>
+
+	<a name="f_count"></a><a class="efeature" href="../base/binary_search_tree_set_short.html#f_count">count</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Number of items in tree</span>
+
+	<a name="f_min"></a><a class="efeature" href="../base/binary_search_tree_set_short.html#f_min">min</a><span class="esymbol">:</span> <span class="ekeyword">like</span> <a class="efeature" href="../base/binary_search_tree_set_short.html#f_item">item</a>
+			<span class="ecomment">--</span><span class="ecomment"> Minimum item in tree</span>
+
+	<a name="f_max"></a><a class="efeature" href="../base/binary_search_tree_set_short.html#f_max">max</a><span class="esymbol">:</span> <span class="ekeyword">like</span> <a class="efeature" href="../base/binary_search_tree_set_short.html#f_item">item</a>
+			<span class="ecomment">--</span><span class="ecomment"> Maximum item in tree</span>
+
+	<a name="f_item"></a><a class="efeature" href="../base/binary_search_tree_set_short.html#f_item">item</a><span class="esymbol">:</span> <span class="egeneric">G</span>
+			<span class="ecomment">--</span><span class="ecomment"> Current item</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Status report</span>
+
+	<a name="f_is_empty"></a><a class="efeature" href="../base/binary_search_tree_set_short.html#f_is_empty">is_empty</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is set empty?</span>
+
+	<a name="f_extendible"></a><a class="efeature" href="../base/binary_search_tree_set_short.html#f_extendible">Extendible</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a> <span class="esymbol">=</span> <span class="ekeyword">True</span>
+			<span class="ecomment">--</span><span class="ecomment"> Can new items be added? (Answer: yes.)</span>
+
+	<a name="f_prunable"></a><a class="efeature" href="../base/binary_search_tree_set_short.html#f_prunable">Prunable</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a> <span class="esymbol">=</span> <span class="ekeyword">True</span>
+			<span class="ecomment">--</span><span class="ecomment"> Can items be removed? (Answer: yes.)</span>
+
+	<a name="f_after"></a><a class="efeature" href="../base/binary_search_tree_set_short.html#f_after">after</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is there no valid cursor position to the right of cursor?</span>
+
+	<a name="f_before"></a><a class="efeature" href="../base/binary_search_tree_set_short.html#f_before">before</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is there no valid cursor position to the left of cursor?</span>
+
+	<a name="f_has"></a><a class="efeature" href="../base/binary_search_tree_set_short.html#f_has">has</a> <span class="ekeyword">alias</span> <span class="esymbol">&quot;</span><a class="esymbol" href="../base/binary_search_tree_set_short.html#f_has">∋</a><span class="esymbol">&quot;</span> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <a class="efeature" href="../base/binary_search_tree_set_short.html#f_item">item</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is there a node with item </span><span class="equoted">v</span><span class="ecomment"> in tree?</span>
+			<span class="ecomment">--</span><span class="ecomment"> (Reference or object equality,</span>
+			<span class="ecomment">--</span><span class="ecomment"> based on </span><span class="ecomment">`</span><a class="efeature" href="../base/container_short.html#f_object_comparison">object_comparison</a><span class="ecomment">`</span><span class="ecomment">.)</span>
+
+	<a name="f_off"></a><a class="efeature" href="../base/binary_search_tree_set_short.html#f_off">off</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is there no current item?</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span><span class="ecomment">`</span><a class="efeature" href="../base/binary_search_tree_set_short.html#f_off">off</a><span class="ecomment">`</span><span class="ecomment"> only if tree </span><span class="ecomment">`</span><a class="efeature" href="../base/binary_search_tree_set_short.html#f_is_empty">is_empty</a><span class="ecomment">`</span><span class="ecomment"> or if</span>
+			<span class="ecomment">--</span><span class="ecomment"> it is </span><span class="ecomment">`</span><a class="efeature" href="../base/binary_search_tree_set_short.html#f_before">before</a><span class="ecomment">`</span><span class="ecomment"> or </span><span class="ecomment">`</span><a class="efeature" href="../base/binary_search_tree_set_short.html#f_after">after</a><span class="ecomment">`</span><span class="ecomment">.</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Iteration</span>
+
+	<a name="f_new_cursor"></a><a class="efeature" href="../base/binary_search_tree_set_short.html#f_new_cursor">new_cursor</a><span class="esymbol">:</span> <a class="eclass" href="../base/iteration_cursor_short.html">ITERATION_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Fresh cursor associated with current structure</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Cursor movement</span>
+
+	<a name="f_start"></a><a class="efeature" href="../base/binary_search_tree_set_short.html#f_start">start</a>
+			<span class="ecomment">--</span><span class="ecomment"> Move cursor to first node.</span>
+
+	<a name="f_finish"></a><a class="efeature" href="../base/binary_search_tree_set_short.html#f_finish">finish</a>
+			<span class="ecomment">--</span><span class="ecomment"> Move cursor to last node.</span>
+
+	<a name="f_forth"></a><a class="efeature" href="../base/binary_search_tree_set_short.html#f_forth">forth</a>
+			<span class="ecomment">--</span><span class="ecomment"> Move cursor to next node.</span>
+
+	<a name="f_back"></a><a class="efeature" href="../base/binary_search_tree_set_short.html#f_back">back</a>
+			<span class="ecomment">--</span><span class="ecomment"> Move cursor to previous node.</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Element change</span>
+
+	<a name="f_put"></a><a class="efeature" href="../base/binary_search_tree_set_short.html#f_put">put</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <a class="efeature" href="../base/binary_search_tree_set_short.html#f_item">item</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Put </span><span class="equoted">v</span><span class="ecomment"> at proper position in set</span>
+			<span class="ecomment">--</span><span class="ecomment"> (unless one already exists).</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/binary_search_tree_set_short.html">BINARY_SEARCH_TREE_SET</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/binary_search_tree_set_short.html#f_extend">extend</a><span class="ecomment">`</span><span class="ecomment">.</span>
+		<span class="ekeyword">require else</span>
+			<span class="etag">item_exists</span><span class="esymbol">:</span> <span class="elocal">v</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_extend"></a><a class="efeature" href="../base/binary_search_tree_set_short.html#f_extend">extend</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <a class="efeature" href="../base/binary_search_tree_set_short.html#f_item">item</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Put </span><span class="equoted">v</span><span class="ecomment"> at proper position in set</span>
+			<span class="ecomment">--</span><span class="ecomment"> (unless one already exists).</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/binary_search_tree_set_short.html">BINARY_SEARCH_TREE_SET</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/binary_search_tree_set_short.html#f_put">put</a><span class="ecomment">`</span><span class="ecomment">.</span>
+		<span class="ekeyword">require else</span>
+			<span class="etag">item_exists</span><span class="esymbol">:</span> <span class="elocal">v</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Removal</span>
+
+	<a name="f_wipe_out"></a><a class="efeature" href="../base/binary_search_tree_set_short.html#f_wipe_out">wipe_out</a>
+			<span class="ecomment">--</span><span class="ecomment"> Remove all items.</span>
+
+	<a name="f_prune"></a><a class="efeature" href="../base/binary_search_tree_set_short.html#f_prune">prune</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <a class="efeature" href="../base/binary_search_tree_set_short.html#f_item">item</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Remove </span><span class="equoted">v</span><span class="ecomment">.</span>
+
+	<a name="f_remove"></a><a class="efeature" href="../base/binary_search_tree_set_short.html#f_remove">remove</a>
+			<span class="ecomment">--</span><span class="ecomment"> Remove current item.</span>
+	
+<span class="ekeyword">invariant</span>
+	<span class="etag">comparison_mode_equal</span><span class="esymbol">:</span> <span class="ekeyword">attached</span> <a class="efeature" href="../base/binary_search_tree_set_short.html#f_tree">tree</a> <span class="ekeyword">as</span> t <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <a class="efeature" href="../base/container_short.html#f_object_comparison">object_comparison</a> <span class="esymbol">=</span> <span class="elocal">t</span><span class="edot">.</span><a class="efeature" href="../base/container_short.html#f_object_comparison">object_comparison</a>
+
+<span class="ekeyword">note</span>
+	<span class="eitag">copyright</span><span class="esymbol">:</span> <span class="estring">&quot;Copyright (c) 1984-2021, Eiffel Software and others&quot;</span>
+	<span class="eitag">license</span><span class="esymbol">:</span> <span class="estring">&quot;Eiffel Forum License v2 (see </span><a class="estring" href="http://www.eiffel.com/licensing/forum.txt">http://www.eiffel.com/licensing/forum.txt</a><span class="estring">)&quot;</span>
+	<span class="eitag">source</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">Eiffel Software</span>
+		<span class="estring">5949 Hollister Ave., Goleta, CA 93117 USA</span>
+		<span class="estring">Telephone 805-685-1006, Fax 805-685-6869</span>
+		<span class="estring">Website </span><a class="estring" href="http://www.eiffel.com">http://www.eiffel.com</a>
+		<span class="estring">Customer support </span><a class="estring" href="http://support.eiffel.com">http://support.eiffel.com</a>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+
+<span class="ekeyword">end</span> <span class="ecomment">--</span> <span class="ecomment">class </span><a class="eclass" href="../base/binary_search_tree_set_short.html">BINARY_SEARCH_TREE_SET</a></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="binary_search_tree_set_chart.html">Chart</a>
+<a class="nav class" href="binary_search_tree_set_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="binary_search_tree_set"></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>
+

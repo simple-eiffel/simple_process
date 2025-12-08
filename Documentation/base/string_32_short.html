@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="description" content="Sequences of 32-bit characters, accessible through integer indices in a contiguous range."/>
+<meta name="library" content="Free implementation of ELKS library"/>
+<meta name="legal" content="See notice at end of class."/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="copyright" content="Copyright (c) 1984-2021, Eiffel Software and others"/>
+<meta name="license" content="Eiffel Forum License v2 (see http://www.eiffel.com/licensing/forum.txt)"/>
+<meta name="source" content="Eiffel Software 5949 Hollister Ave., Goleta, CA 93117 USA Telephone 805-685-1006, Fax 805-685-6869 Website http://www.eiffel.com Customer support http://support.eiffel.com"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>string_32 Contracts</title>
+<link rel="stylesheet" href="../default.css" type="text/css">
+<script type="text/javascript" src="../goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="string_32_chart.html">Chart</a>
+<a class="nav class" href="string_32_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="string_32"></span>
+</div></form><pre><span class="ekeyword">note</span>
+	<span class="eitag">description</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">Sequences of 32-bit characters, accessible through integer indices</span>
+		<span class="estring">in a contiguous range.</span>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+	<span class="eitag">library</span><span class="esymbol">:</span> <span class="estring">&quot;Free implementation of ELKS library&quot;</span>
+	<span class="eitag">status</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">legal</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">date</span><span class="esymbol">:</span> <span class="estring">&quot;$Date$&quot;</span>
+	<span class="eitag">revision</span><span class="esymbol">:</span> <span class="estring">&quot;$Revision$&quot;</span>
+
+<span class="ekeyword">class</span> <span class="ekeyword">interface</span>
+	<a class="eclass" href="../base/string_32_short.html">STRING_32</a>
+
+<span class="ekeyword">create</span> 
+	<a class="efeature" href="../base/readable_string_32_short.html#f_make">make</a><span class="esymbol">,</span>
+	<a class="efeature" href="../base/readable_string_general_short.html#f_make_empty">make_empty</a><span class="esymbol">,</span>
+	<a class="efeature" href="../base/readable_string_32_short.html#f_make_filled">make_filled</a><span class="esymbol">,</span>
+	<a class="efeature" href="../base/readable_string_32_short.html#f_make_from_string">make_from_string</a><span class="esymbol">,</span>
+	<a class="efeature" href="../base/string_32_short.html#f_make_from_string_general">make_from_string_general</a><span class="esymbol">,</span>
+	<a class="efeature" href="../base/readable_string_32_short.html#f_make_from_c">make_from_c</a><span class="esymbol">,</span>
+	<a class="efeature" href="../base/readable_string_32_short.html#f_make_from_c_pointer">make_from_c_pointer</a><span class="esymbol">,</span>
+	<a class="efeature" href="../base/readable_string_32_short.html#f_make_from_c_byte_array">make_from_c_byte_array</a><span class="esymbol">,</span>
+	<a class="efeature" href="../base/string_32_short.html#f_make_from_cil">make_from_cil</a><span class="esymbol">,</span>
+	<a class="efeature" href="../base/readable_string_32_short.html#f_make_from_separate">make_from_separate</a>
+
+<span class="ekeyword">convert</span>
+	<a class="efeature" href="../base/readable_string_general_short.html#f_to_cil">to_cil</a><span class="esymbol">:</span> <span class="esymbol">{</span><a class="eclass" href="../base/system_string_short.html">SYSTEM_STRING</a><span class="esymbol">}</span><span class="esymbol">,</span>
+	<a class="efeature" href="../base/string_32_short.html#f_make_from_cil">make_from_cil</a> <span class="esymbol">(</span><span class="esymbol">{</span><a class="eclass" href="../base/system_string_short.html">SYSTEM_STRING</a><span class="esymbol">}</span><span class="esymbol">)</span><span class="esymbol">,</span>
+	<a class="efeature" href="../base/readable_string_general_short.html#f_as_string_8">as_string_8</a><span class="esymbol">:</span> <span class="esymbol">{</span><a class="eclass" href="../base/readable_string_8_short.html">READABLE_STRING_8</a><span class="esymbol">,</span>
+		<a class="eclass" href="../base/string_8_short.html">STRING_8</a><span class="esymbol">}</span>
+
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Initialization</span>
+
+	<a name="f_make_from_string_general"></a><a class="efeature" href="../base/string_32_short.html#f_make_from_string_general">make_from_string_general</a> <span class="esymbol">(</span><span class="elocal">s</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_short.html">READABLE_STRING_GENERAL</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Initialize from the characters of </span><span class="equoted">s</span><span class="ecomment">.</span>
+
+	<a name="f_make_from_cil"></a><a class="efeature" href="../base/string_32_short.html#f_make_from_cil">make_from_cil</a> <span class="esymbol">(</span><span class="elocal">a_system_string</span><span class="esymbol">:</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/system_string_short.html">SYSTEM_STRING</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Initialize Current with </span><span class="equoted">a_system_string</span><span class="ecomment">.</span>
+
+	<a name="f_from_c"></a><a class="efeature" href="../base/string_32_short.html#f_from_c">from_c</a> <span class="esymbol">(</span><span class="elocal">c_string</span><span class="esymbol">:</span> <a class="eclass" href="../base/pointer_short.html">POINTER</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Reset contents of string from contents of </span><span class="equoted">c_string</span><span class="ecomment">,</span>
+			<span class="ecomment">--</span><span class="ecomment"> a string created by some C function.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">c_string_exists</span><span class="esymbol">:</span> <span class="elocal">c_string</span> <span class="esymbol">/=</span> <a class="efeature" href="../base/any_short.html#f_default_pointer">default_pointer</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">no_zero_byte</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/readable_string_32_short.html#f_has">has</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="echar">'%U'</span><span class="edot">.</span><a class="efeature" href="../base/character_8_short.html#f_to_character_32">to_character_32</a><span class="esymbol">)</span>
+
+	<a name="f_from_c_substring"></a><a class="efeature" href="../base/string_32_short.html#f_from_c_substring">from_c_substring</a> <span class="esymbol">(</span><span class="elocal">c_string</span><span class="esymbol">:</span> <a class="eclass" href="../base/pointer_short.html">POINTER</a><span class="esymbol">;</span> <span class="elocal">start_pos</span><span class="esymbol">,</span> <span class="elocal">end_pos</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Reset contents of string from substring of </span><span class="equoted">c_string</span><span class="ecomment">,</span>
+			<span class="ecomment">--</span><span class="ecomment"> a string created by some C function.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">c_string_exists</span><span class="esymbol">:</span> <span class="elocal">c_string</span> <span class="esymbol">/=</span> <a class="efeature" href="../base/any_short.html#f_default_pointer">default_pointer</a>
+			<span class="etag">start_position_big_enough</span><span class="esymbol">:</span> <span class="elocal">start_pos</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">1</span>
+			<span class="etag">end_position_big_enough</span><span class="esymbol">:</span> <span class="elocal">start_pos</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <span class="elocal">end_pos</span> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="enumber">1</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">valid_count</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <span class="esymbol">=</span> <span class="elocal">end_pos</span> <a class="esymbol" href="../base/integer_32_short.html#f_minus">-</a> <span class="elocal">start_pos</span> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="enumber">1</span>
+
+	<a name="f_adapt"></a><a class="efeature" href="../base/string_32_short.html#f_adapt">adapt</a> <span class="esymbol">(</span><span class="elocal">s</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_32_short.html">STRING_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <span class="ekeyword">Current</span>
+			<span class="ecomment">--</span><span class="ecomment"> Object of a type conforming to the type of </span><span class="equoted">s</span><span class="ecomment">,</span>
+			<span class="ecomment">--</span><span class="ecomment"> initialized with attributes from </span><span class="equoted">s</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">adapt_not_void</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">shared_implementation</span><span class="esymbol">:</span> <span class="ekeyword">Result</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_32_short.html#f_shared_with">shared_with</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">s</span><span class="esymbol">)</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Access</span>
+
+	<a name="f_item"></a><a class="efeature" href="../base/string_32_short.html#f_item">item</a> <span class="ekeyword">alias</span> <span class="esymbol">&quot;</span><a class="esymbol" href="../base/string_32_short.html#f_item">[]</a><span class="esymbol">&quot;</span> <span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/character_32_short.html">CHARACTER_32</a> <span class="ekeyword">assign</span> <a class="efeature" href="../base/string_32_short.html#f_put">put</a>
+			<span class="ecomment">--</span><span class="ecomment"> Character at position </span><span class="equoted">i</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/string_32_short.html">STRING_32</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/string_32_short.html#f_at">at</a><span class="ecomment">`</span><span class="ecomment">.</span>
+
+	<a name="f_at"></a><a class="efeature" href="../base/string_32_short.html#f_at">at</a> <span class="ekeyword">alias</span> <span class="esymbol">&quot;</span><a class="esymbol" href="../base/string_32_short.html#f_at">@</a><span class="esymbol">&quot;</span> <span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/character_32_short.html">CHARACTER_32</a> <span class="ekeyword">assign</span> <a class="efeature" href="../base/string_32_short.html#f_put">put</a>
+			<span class="ecomment">--</span><span class="ecomment"> Character at position </span><span class="equoted">i</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/string_32_short.html">STRING_32</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/string_32_short.html#f_item">item</a><span class="ecomment">`</span><span class="ecomment">.</span>
+
+	<a name="f_code"></a><a class="efeature" href="../base/string_32_short.html#f_code">code</a> <span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/natural_32_short.html">NATURAL_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Character at position </span><span class="equoted">i</span>
+
+	<a name="f_area"></a><a class="efeature" href="../base/string_32_short.html#f_area">area</a><span class="esymbol">:</span> <a class="eclass" href="../base/special_short.html">SPECIAL</a> <span class="esymbol">[</span><a class="eclass" href="../base/character_32_short.html">CHARACTER_32</a><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Storage for characters</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Status report</span>
+
+	<a name="f_extendible"></a><a class="efeature" href="../base/string_32_short.html#f_extendible">Extendible</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a> <span class="esymbol">=</span> <span class="ekeyword">True</span>
+			<span class="ecomment">--</span><span class="ecomment"> May new items be added? (Answer: yes.)</span>
+
+	<a name="f_changeable_comparison_criterion"></a><a class="efeature" href="../base/string_32_short.html#f_changeable_comparison_criterion">Changeable_comparison_criterion</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a> <span class="esymbol">=</span> <span class="ekeyword">False</span>
+			<span class="ecomment">--</span><span class="ecomment"> May </span><span class="ecomment">`</span><a class="efeature" href="../base/container_short.html#f_object_comparison">object_comparison</a><span class="ecomment">`</span><span class="ecomment"> be changed?</span>
+			<span class="ecomment">--</span><span class="ecomment"> (Answer: yes by default.)</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Element change</span>
+
+	<a name="f_set"></a><a class="efeature" href="../base/string_32_short.html#f_set">set</a> <span class="esymbol">(</span><span class="elocal">t</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_32_short.html">READABLE_STRING_32</a><span class="esymbol">;</span> <span class="elocal">n1</span><span class="esymbol">,</span> <span class="elocal">n2</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Set current string to substring of </span><span class="equoted">t</span><span class="ecomment"> from indices </span><span class="equoted">n1</span>
+			<span class="ecomment">--</span><span class="ecomment"> to </span><span class="equoted">n2</span><span class="ecomment">, or to empty string if no such substring.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">argument_not_void</span><span class="esymbol">:</span> <span class="elocal">t</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">is_substring</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_32_short.html#f_same_string">same_string</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">t</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_32_short.html#f_substring">substring</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">n1</span><span class="esymbol">,</span> <span class="elocal">n2</span><span class="esymbol">)</span><span class="esymbol">)</span>
+
+	<a name="f_subcopy"></a><a class="efeature" href="../base/string_32_short.html#f_subcopy">subcopy</a> <span class="esymbol">(</span><span class="elocal">other</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_32_short.html">READABLE_STRING_32</a><span class="esymbol">;</span> <span class="elocal">start_pos</span><span class="esymbol">,</span> <span class="elocal">end_pos</span><span class="esymbol">,</span> <span class="elocal">index_pos</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Copy characters of </span><span class="equoted">other</span><span class="ecomment"> within bounds </span><span class="equoted">start_pos</span><span class="ecomment"> and</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span><span class="equoted">end_pos</span><span class="ecomment"> to current string starting at index </span><span class="equoted">index_pos</span><span class="ecomment">.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">other_not_void</span><span class="esymbol">:</span> <span class="elocal">other</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">valid_start_pos</span><span class="esymbol">:</span> <span class="elocal">other</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_general_short.html#f_valid_index">valid_index</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">start_pos</span><span class="esymbol">)</span>
+			<span class="etag">valid_end_pos</span><span class="esymbol">:</span> <span class="elocal">other</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_general_short.html#f_valid_index">valid_index</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">end_pos</span><span class="esymbol">)</span>
+			<span class="etag">valid_bounds</span><span class="esymbol">:</span> <span class="elocal">start_pos</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <span class="elocal">end_pos</span> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <span class="elocal">start_pos</span> <span class="esymbol">=</span> <span class="elocal">end_pos</span> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="enumber">1</span>
+			<span class="etag">valid_index_pos</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_general_short.html#f_valid_index">valid_index</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">index_pos</span><span class="esymbol">)</span>
+			<span class="etag">enough_space</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <a class="esymbol" href="../base/integer_32_short.html#f_minus">-</a> <span class="elocal">index_pos</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="elocal">end_pos</span> <a class="esymbol" href="../base/integer_32_short.html#f_minus">-</a> <span class="elocal">start_pos</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">same_count</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a>
+			<span class="etag">copied</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_general_short.html#f_elks_checking">Elks_checking</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <span class="esymbol">(</span><span class="ekeyword">Current</span> <span class="esymbol">~</span> <span class="esymbol">(</span><span class="ekeyword">old</span> <a class="efeature" href="../base/string_32_short.html#f_substring">substring</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="enumber">1</span><span class="esymbol">,</span> <span class="elocal">index_pos</span> <a class="esymbol" href="../base/integer_32_short.html#f_minus">-</a> <span class="enumber">1</span><span class="esymbol">)</span> <a class="esymbol" href="../base/string_32_short.html#f_plus">+</a> <span class="ekeyword">old</span> <span class="elocal">other</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_32_short.html#f_substring">substring</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">start_pos</span><span class="esymbol">,</span> <span class="elocal">end_pos</span><span class="esymbol">)</span> <a class="esymbol" href="../base/string_32_short.html#f_plus">+</a> <span class="ekeyword">old</span> <a class="efeature" href="../base/string_32_short.html#f_substring">substring</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">index_pos</span> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="esymbol">(</span><span class="elocal">end_pos</span> <a class="esymbol" href="../base/integer_32_short.html#f_minus">-</a> <span class="elocal">start_pos</span> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="enumber">1</span><span class="esymbol">)</span><span class="esymbol">,</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a><span class="esymbol">)</span><span class="esymbol">)</span><span class="esymbol">)</span>
+
+	<a name="f_replace_substring"></a><a class="efeature" href="../base/string_32_short.html#f_replace_substring">replace_substring</a> <span class="esymbol">(</span><span class="elocal">s</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_32_short.html">READABLE_STRING_32</a><span class="esymbol">;</span> <span class="elocal">start_index</span><span class="esymbol">,</span> <span class="elocal">end_index</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Replace characters from </span><span class="equoted">start_index</span><span class="ecomment"> to </span><span class="equoted">end_index</span><span class="ecomment"> with </span><span class="equoted">s</span><span class="ecomment">.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">string_not_void</span><span class="esymbol">:</span> <span class="elocal">s</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">valid_start_index</span><span class="esymbol">:</span> <span class="enumber">1</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <span class="elocal">start_index</span>
+			<span class="etag">valid_end_index</span><span class="esymbol">:</span> <span class="elocal">end_index</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a>
+			<span class="etag">meaningfull_interval</span><span class="esymbol">:</span> <span class="elocal">start_index</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <span class="elocal">end_index</span> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="enumber">1</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">new_count</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="ekeyword">old</span> <span class="elocal">s</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <a class="esymbol" href="../base/integer_32_short.html#f_minus">-</a> <span class="elocal">end_index</span> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="elocal">start_index</span> <a class="esymbol" href="../base/integer_32_short.html#f_minus">-</a> <span class="enumber">1</span>
+			<span class="etag">replaced</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_general_short.html#f_elks_checking">Elks_checking</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <span class="esymbol">(</span><span class="ekeyword">Current</span> <span class="esymbol">~</span> <span class="esymbol">(</span><span class="ekeyword">old</span> <span class="esymbol">(</span><a class="efeature" href="../base/string_32_short.html#f_substring">substring</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="enumber">1</span><span class="esymbol">,</span> <span class="elocal">start_index</span> <a class="esymbol" href="../base/integer_32_short.html#f_minus">-</a> <span class="enumber">1</span><span class="esymbol">)</span> <a class="esymbol" href="../base/string_32_short.html#f_plus">+</a> <span class="elocal">s</span> <a class="esymbol" href="../base/string_32_short.html#f_plus">+</a> <a class="efeature" href="../base/string_32_short.html#f_substring">substring</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">end_index</span> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="enumber">1</span><span class="esymbol">,</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a><span class="esymbol">)</span><span class="esymbol">)</span><span class="esymbol">)</span><span class="esymbol">)</span>
+
+	<a name="f_replace_substring_all"></a><a class="efeature" href="../base/string_32_short.html#f_replace_substring_all">replace_substring_all</a> <span class="esymbol">(</span><span class="elocal">original</span><span class="esymbol">,</span> <span class="elocal">new</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_32_short.html">READABLE_STRING_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Replace every occurrence of </span><span class="equoted">original</span><span class="ecomment"> with </span><span class="equoted">new</span><span class="ecomment">.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">original_exists</span><span class="esymbol">:</span> <span class="elocal">original</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">new_exists</span><span class="esymbol">:</span> <span class="elocal">new</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">original_not_empty</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <span class="elocal">original</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_general_short.html#f_is_empty">is_empty</a>
+
+	<a name="f_replace_blank"></a><a class="efeature" href="../base/string_32_short.html#f_replace_blank">replace_blank</a>
+			<span class="ecomment">--</span><span class="ecomment"> Replace all current characters with blanks.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">same_size</span><span class="esymbol">:</span> <span class="esymbol">(</span><a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a><span class="esymbol">)</span> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <span class="esymbol">(</span><a class="efeature" href="../base/readable_string_32_short.html#f_capacity">capacity</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/readable_string_32_short.html#f_capacity">capacity</a><span class="esymbol">)</span>
+			<span class="etag">all_blank</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_general_short.html#f_elks_checking">Elks_checking</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <a class="efeature" href="../base/readable_string_32_short.html#f_occurrences">occurrences</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="echar">' '</span><span class="edot">.</span><a class="efeature" href="../base/character_8_short.html#f_to_character_32">to_character_32</a><span class="esymbol">)</span> <span class="esymbol">=</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a>
+
+	<a name="f_fill_blank"></a><a class="efeature" href="../base/string_32_short.html#f_fill_blank">fill_blank</a>
+			<span class="ecomment">--</span><span class="ecomment"> Fill with </span><span class="ecomment">`</span><a class="efeature" href="../base/readable_string_32_short.html#f_capacity">capacity</a><span class="ecomment">`</span><span class="ecomment"> blank characters.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">filled</span><span class="esymbol">:</span> <a class="efeature" href="../base/bounded_short.html#f_full">full</a>
+			<span class="etag">same_size</span><span class="esymbol">:</span> <span class="esymbol">(</span><a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <span class="esymbol">=</span> <a class="efeature" href="../base/readable_string_32_short.html#f_capacity">capacity</a><span class="esymbol">)</span> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <span class="esymbol">(</span><a class="efeature" href="../base/readable_string_32_short.html#f_capacity">capacity</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/readable_string_32_short.html#f_capacity">capacity</a><span class="esymbol">)</span>
+
+	<a name="f_fill_with"></a><a class="efeature" href="../base/string_32_short.html#f_fill_with">fill_with</a> <span class="esymbol">(</span><span class="elocal">c</span><span class="esymbol">:</span> <a class="eclass" href="../base/character_32_short.html">CHARACTER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Replace every character with </span><span class="equoted">c</span><span class="ecomment">.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">same_count</span><span class="esymbol">:</span> <span class="esymbol">(</span><a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a><span class="esymbol">)</span> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <span class="esymbol">(</span><a class="efeature" href="../base/readable_string_32_short.html#f_capacity">capacity</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/readable_string_32_short.html#f_capacity">capacity</a><span class="esymbol">)</span>
+			<span class="etag">filled</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_general_short.html#f_elks_checking">Elks_checking</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <a class="efeature" href="../base/readable_string_32_short.html#f_occurrences">occurrences</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">c</span><span class="esymbol">)</span> <span class="esymbol">=</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a>
+
+	<a name="f_keep_head"></a><a class="efeature" href="../base/string_32_short.html#f_keep_head">keep_head</a> <span class="esymbol">(</span><span class="elocal">n</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Remove all characters except for the first </span><span class="equoted">n</span><span class="ecomment">;</span>
+			<span class="ecomment">--</span><span class="ecomment"> do nothing if </span><span class="equoted">n</span><span class="ecomment"> &gt;= </span><span class="ecomment">`</span><a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a><span class="ecomment">`</span><span class="ecomment">.</span>
+
+	<a name="f_keep_tail"></a><a class="efeature" href="../base/string_32_short.html#f_keep_tail">keep_tail</a> <span class="esymbol">(</span><span class="elocal">n</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Remove all characters except for the last </span><span class="equoted">n</span><span class="ecomment">;</span>
+			<span class="ecomment">--</span><span class="ecomment"> do nothing if </span><span class="equoted">n</span><span class="ecomment"> &gt;= </span><span class="ecomment">`</span><a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a><span class="ecomment">`</span><span class="ecomment">.</span>
+
+	<a name="f_left_adjust"></a><a class="efeature" href="../base/string_32_short.html#f_left_adjust">left_adjust</a>
+			<span class="ecomment">--</span><span class="ecomment"> Remove leading whitespace.</span>
+
+	<a name="f_right_adjust"></a><a class="efeature" href="../base/string_32_short.html#f_right_adjust">right_adjust</a>
+			<span class="ecomment">--</span><span class="ecomment"> Remove trailing whitespace.</span>
+
+	<a name="f_share"></a><a class="efeature" href="../base/string_32_short.html#f_share">share</a> <span class="esymbol">(</span><span class="elocal">other</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_32_short.html">STRING_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Make current string share the text of </span><span class="equoted">other</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Subsequent changes to the characters of current string</span>
+			<span class="ecomment">--</span><span class="ecomment"> will also affect </span><span class="equoted">other</span><span class="ecomment">, and conversely.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">argument_not_void</span><span class="esymbol">:</span> <span class="elocal">other</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">shared_count</span><span class="esymbol">:</span> <span class="elocal">other</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <span class="esymbol">=</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a>
+			<span class="etag">shared_area</span><span class="esymbol">:</span> <span class="elocal">other</span><span class="edot">.</span><a class="efeature" href="../base/string_32_short.html#f_area">area</a> <span class="esymbol">=</span> <a class="efeature" href="../base/string_32_short.html#f_area">area</a>
+
+	<a name="f_put"></a><a class="efeature" href="../base/string_32_short.html#f_put">put</a> <span class="esymbol">(</span><span class="elocal">c</span><span class="esymbol">:</span> <a class="eclass" href="../base/character_32_short.html">CHARACTER_32</a><span class="esymbol">;</span> <span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Replace character at position </span><span class="equoted">i</span><span class="ecomment"> by </span><span class="equoted">c</span><span class="ecomment">.</span>
+		<span class="ekeyword">ensure then</span>
+			<span class="etag">stable_count</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a>
+			<span class="etag">stable_before_i</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_general_short.html#f_elks_checking">Elks_checking</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <a class="efeature" href="../base/string_32_short.html#f_substring">substring</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="enumber">1</span><span class="esymbol">,</span> <span class="elocal">i</span> <a class="esymbol" href="../base/integer_32_short.html#f_minus">-</a> <span class="enumber">1</span><span class="esymbol">)</span> <span class="esymbol">~</span> <span class="esymbol">(</span><span class="ekeyword">old</span> <a class="efeature" href="../base/string_32_short.html#f_substring">substring</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="enumber">1</span><span class="esymbol">,</span> <span class="elocal">i</span> <a class="esymbol" href="../base/integer_32_short.html#f_minus">-</a> <span class="enumber">1</span><span class="esymbol">)</span><span class="esymbol">)</span>
+			<span class="etag">stable_after_i</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_general_short.html#f_elks_checking">Elks_checking</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <a class="efeature" href="../base/string_32_short.html#f_substring">substring</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">i</span> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="enumber">1</span><span class="esymbol">,</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a><span class="esymbol">)</span> <span class="esymbol">~</span> <span class="esymbol">(</span><span class="ekeyword">old</span> <a class="efeature" href="../base/string_32_short.html#f_substring">substring</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">i</span> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="enumber">1</span><span class="esymbol">,</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a><span class="esymbol">)</span><span class="esymbol">)</span>
+
+	<a name="f_put_code"></a><a class="efeature" href="../base/string_32_short.html#f_put_code">put_code</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <a class="eclass" href="../base/natural_32_short.html">NATURAL_32</a><span class="esymbol">;</span> <span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Replace character at position </span><span class="equoted">i</span><span class="ecomment"> by character of code </span><span class="equoted">v</span><span class="ecomment">.</span>
+
+	<a name="f_prepend_string_general"></a><a class="efeature" href="../base/string_32_short.html#f_prepend_string_general">prepend_string_general</a> <span class="esymbol">(</span><span class="elocal">s</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_short.html">READABLE_STRING_GENERAL</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Prepend characters of </span><span class="equoted">s</span><span class="ecomment"> at front.</span>
+
+	<a name="f_precede"></a><a class="efeature" href="../base/string_32_short.html#f_precede">precede</a> <span class="esymbol">(</span><span class="elocal">c</span><span class="esymbol">:</span> <a class="eclass" href="../base/character_32_short.html">CHARACTER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Add </span><span class="equoted">c</span><span class="ecomment"> at front.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/string_32_short.html">STRING_32</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/string_32_short.html#f_prepend_character">prepend_character</a><span class="ecomment">`</span><span class="ecomment">.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">new_count</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="enumber">1</span>
+
+	<a name="f_prepend_character"></a><a class="efeature" href="../base/string_32_short.html#f_prepend_character">prepend_character</a> <span class="esymbol">(</span><span class="elocal">c</span><span class="esymbol">:</span> <a class="eclass" href="../base/character_32_short.html">CHARACTER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Add </span><span class="equoted">c</span><span class="ecomment"> at front.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/string_32_short.html">STRING_32</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/string_32_short.html#f_precede">precede</a><span class="ecomment">`</span><span class="ecomment">.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">new_count</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="enumber">1</span>
+
+	<a name="f_prepend"></a><a class="efeature" href="../base/string_32_short.html#f_prepend">prepend</a> <span class="esymbol">(</span><span class="elocal">s</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_32_short.html">READABLE_STRING_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Prepend characters of </span><span class="equoted">s</span><span class="ecomment"> at front.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">argument_not_void</span><span class="esymbol">:</span> <span class="elocal">s</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">new_count</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <span class="esymbol">(</span><a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="elocal">s</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a><span class="esymbol">)</span>
+			<span class="etag">inserted</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_general_short.html#f_elks_checking">Elks_checking</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <a class="efeature" href="../base/readable_string_32_short.html#f_same_string">same_string</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="ekeyword">old</span> <span class="esymbol">(</span><span class="elocal">s</span> <a class="esymbol" href="../base/readable_string_32_short.html#f_plus">+</a> <span class="ekeyword">Current</span><span class="esymbol">)</span><span class="esymbol">)</span>
+
+	<a name="f_prepend_substring"></a><a class="efeature" href="../base/string_32_short.html#f_prepend_substring">prepend_substring</a> <span class="esymbol">(</span><span class="elocal">s</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_32_short.html">READABLE_STRING_32</a><span class="esymbol">;</span> <span class="elocal">start_index</span><span class="esymbol">,</span> <span class="elocal">end_index</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Prepend characters of </span><span class="equoted">s.substring (start_index, end_index)</span><span class="ecomment"> at front.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">argument_not_void</span><span class="esymbol">:</span> <span class="elocal">s</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">start_index_valid</span><span class="esymbol">:</span> <span class="elocal">start_index</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">1</span>
+			<span class="etag">end_index_valid</span><span class="esymbol">:</span> <span class="elocal">end_index</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <span class="elocal">s</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a>
+			<span class="etag">valid_bounds</span><span class="esymbol">:</span> <span class="elocal">start_index</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <span class="elocal">end_index</span> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="enumber">1</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">new_count</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="elocal">end_index</span> <a class="esymbol" href="../base/integer_32_short.html#f_minus">-</a> <span class="elocal">start_index</span> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="enumber">1</span>
+			<span class="etag">inserted</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_general_short.html#f_elks_checking">Elks_checking</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <a class="efeature" href="../base/readable_string_32_short.html#f_same_string">same_string</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="ekeyword">old</span> <span class="esymbol">(</span><span class="elocal">s</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_32_short.html#f_substring">substring</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">start_index</span><span class="esymbol">,</span> <span class="elocal">end_index</span><span class="esymbol">)</span> <a class="esymbol" href="../base/readable_string_32_short.html#f_plus">+</a> <span class="ekeyword">Current</span><span class="esymbol">)</span><span class="esymbol">)</span>
+
+	<a name="f_prepend_boolean"></a><a class="efeature" href="../base/string_32_short.html#f_prepend_boolean">prepend_boolean</a> <span class="esymbol">(</span><span class="elocal">b</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Prepend the string representation of </span><span class="equoted">b</span><span class="ecomment"> at front.</span>
+
+	<a name="f_prepend_double"></a><a class="efeature" href="../base/string_32_short.html#f_prepend_double">prepend_double</a> <span class="esymbol">(</span><span class="elocal">d</span><span class="esymbol">:</span> <a class="eclass" href="../base/real_64_short.html">REAL_64</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Prepend the string representation of </span><span class="equoted">d</span><span class="ecomment"> at front.</span>
+
+	<a name="f_prepend_integer"></a><a class="efeature" href="../base/string_32_short.html#f_prepend_integer">prepend_integer</a> <span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Prepend the string representation of </span><span class="equoted">i</span><span class="ecomment"> at front.</span>
+
+	<a name="f_prepend_real"></a><a class="efeature" href="../base/string_32_short.html#f_prepend_real">prepend_real</a> <span class="esymbol">(</span><span class="elocal">r</span><span class="esymbol">:</span> <a class="eclass" href="../base/real_32_short.html">REAL_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Prepend the string representation of </span><span class="equoted">r</span><span class="ecomment"> at front.</span>
+
+	<a name="f_prepend_string"></a><a class="efeature" href="../base/string_32_short.html#f_prepend_string">prepend_string</a> <span class="esymbol">(</span><span class="elocal">s</span><span class="esymbol">:</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/readable_string_32_short.html">READABLE_STRING_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Prepend characters of </span><span class="equoted">s</span><span class="ecomment">, if not void, at front.</span>
+
+	<a name="f_append_string_general"></a><a class="efeature" href="../base/string_32_short.html#f_append_string_general">append_string_general</a> <span class="esymbol">(</span><span class="elocal">s</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_short.html">READABLE_STRING_GENERAL</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Append characters of </span><span class="equoted">s</span><span class="ecomment"> at end.</span>
+
+	<a name="f_append"></a><a class="efeature" href="../base/string_32_short.html#f_append">append</a> <span class="esymbol">(</span><span class="elocal">s</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_32_short.html">READABLE_STRING_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Append characters of </span><span class="equoted">s</span><span class="ecomment"> at end.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">argument_not_void</span><span class="esymbol">:</span> <span class="elocal">s</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">new_count</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="ekeyword">old</span> <span class="elocal">s</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a>
+			<span class="etag">appended</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_general_short.html#f_elks_checking">Elks_checking</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <a class="efeature" href="../base/readable_string_32_short.html#f_same_string">same_string</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="ekeyword">old</span> <span class="esymbol">(</span><span class="ekeyword">Current</span> <a class="esymbol" href="../base/string_32_short.html#f_plus">+</a> <span class="elocal">s</span><span class="esymbol">)</span><span class="esymbol">)</span>
+
+	<a name="f_append_substring"></a><a class="efeature" href="../base/string_32_short.html#f_append_substring">append_substring</a> <span class="esymbol">(</span><span class="elocal">s</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_32_short.html">READABLE_STRING_32</a><span class="esymbol">;</span> <span class="elocal">start_index</span><span class="esymbol">,</span> <span class="elocal">end_index</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Append characters of </span><span class="equoted">s.substring (start_index, end_index)</span><span class="ecomment"> at end.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">argument_not_void</span><span class="esymbol">:</span> <span class="elocal">s</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">start_index_valid</span><span class="esymbol">:</span> <span class="elocal">start_index</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">1</span>
+			<span class="etag">end_index_valid</span><span class="esymbol">:</span> <span class="elocal">end_index</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <span class="elocal">s</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a>
+			<span class="etag">valid_bounds</span><span class="esymbol">:</span> <span class="elocal">start_index</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <span class="elocal">end_index</span> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="enumber">1</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">new_count</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="esymbol">(</span><span class="elocal">end_index</span> <a class="esymbol" href="../base/integer_32_short.html#f_minus">-</a> <span class="elocal">start_index</span> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="enumber">1</span><span class="esymbol">)</span>
+			<span class="etag">appended</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_general_short.html#f_elks_checking">Elks_checking</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <a class="efeature" href="../base/readable_string_32_short.html#f_same_string">same_string</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="ekeyword">old</span> <span class="esymbol">(</span><span class="ekeyword">Current</span> <a class="esymbol" href="../base/string_32_short.html#f_plus">+</a> <span class="elocal">s</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_32_short.html#f_substring">substring</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">start_index</span><span class="esymbol">,</span> <span class="elocal">end_index</span><span class="esymbol">)</span><span class="esymbol">)</span><span class="esymbol">)</span>
+
+	<a name="f_append_string"></a><a class="efeature" href="../base/string_32_short.html#f_append_string">append_string</a> <span class="esymbol">(</span><span class="elocal">s</span><span class="esymbol">:</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/readable_string_32_short.html">READABLE_STRING_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Append a copy of </span><span class="equoted">s</span><span class="ecomment">, if not void, at end.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">appended</span><span class="esymbol">:</span> <span class="elocal">s</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <span class="esymbol">(</span><a class="efeature" href="../base/readable_string_general_short.html#f_elks_checking">Elks_checking</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <span class="ekeyword">Current</span> <span class="esymbol">~</span> <span class="esymbol">(</span><span class="ekeyword">old</span> <a class="efeature" href="../base/any_short.html#f_twin">twin</a> <a class="esymbol" href="../base/string_32_short.html#f_plus">+</a> <span class="ekeyword">old</span> <span class="elocal">s</span><span class="edot">.</span><a class="efeature" href="../base/any_short.html#f_twin">twin</a><span class="esymbol">)</span><span class="esymbol">)</span>
+
+	<a name="f_append_integer"></a><a class="efeature" href="../base/string_32_short.html#f_append_integer">append_integer</a> <span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Append the string representation of </span><span class="equoted">i</span><span class="ecomment"> at end.</span>
+
+	<a name="f_append_integer_8"></a><a class="efeature" href="../base/string_32_short.html#f_append_integer_8">append_integer_8</a> <span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_8_short.html">INTEGER_8</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Append the string representation of </span><span class="equoted">i</span><span class="ecomment"> at end.</span>
+
+	<a name="f_append_integer_16"></a><a class="efeature" href="../base/string_32_short.html#f_append_integer_16">append_integer_16</a> <span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_16_short.html">INTEGER_16</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Append the string representation of </span><span class="equoted">i</span><span class="ecomment"> at end.</span>
+
+	<a name="f_append_integer_64"></a><a class="efeature" href="../base/string_32_short.html#f_append_integer_64">append_integer_64</a> <span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_64_short.html">INTEGER_64</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Append the string representation of </span><span class="equoted">i</span><span class="ecomment"> at end.</span>
+
+	<a name="f_append_natural_8"></a><a class="efeature" href="../base/string_32_short.html#f_append_natural_8">append_natural_8</a> <span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/natural_8_short.html">NATURAL_8</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Append the string representation of </span><span class="equoted">i</span><span class="ecomment"> at end.</span>
+
+	<a name="f_append_natural_16"></a><a class="efeature" href="../base/string_32_short.html#f_append_natural_16">append_natural_16</a> <span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/natural_16_short.html">NATURAL_16</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Append the string representation of </span><span class="equoted">i</span><span class="ecomment"> at end.</span>
+
+	<a name="f_append_natural_32"></a><a class="efeature" href="../base/string_32_short.html#f_append_natural_32">append_natural_32</a> <span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/natural_32_short.html">NATURAL_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Append the string representation of </span><span class="equoted">i</span><span class="ecomment"> at end.</span>
+
+	<a name="f_append_natural_64"></a><a class="efeature" href="../base/string_32_short.html#f_append_natural_64">append_natural_64</a> <span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/natural_64_short.html">NATURAL_64</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Append the string representation of </span><span class="equoted">i</span><span class="ecomment"> at end.</span>
+
+	<a name="f_append_real"></a><a class="efeature" href="../base/string_32_short.html#f_append_real">append_real</a> <span class="esymbol">(</span><span class="elocal">r</span><span class="esymbol">:</span> <a class="eclass" href="../base/real_32_short.html">REAL_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Append the string representation of </span><span class="equoted">r</span><span class="ecomment"> at end.</span>
+
+	<a name="f_append_double"></a><a class="efeature" href="../base/string_32_short.html#f_append_double">append_double</a> <span class="esymbol">(</span><span class="elocal">d</span><span class="esymbol">:</span> <a class="eclass" href="../base/real_64_short.html">REAL_64</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Append the string representation of </span><span class="equoted">d</span><span class="ecomment"> at end.</span>
+
+	<a name="f_append_character"></a><a class="efeature" href="../base/string_32_short.html#f_append_character">append_character</a> <span class="esymbol">(</span><span class="elocal">c</span><span class="esymbol">:</span> <a class="eclass" href="../base/character_32_short.html">CHARACTER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Append </span><span class="equoted">c</span><span class="ecomment"> at end.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/string_32_short.html">STRING_32</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/string_32_short.html#f_extend">extend</a><span class="ecomment">`</span><span class="ecomment">.</span>
+		<span class="ekeyword">ensure then</span>
+			<span class="etag">item_inserted</span><span class="esymbol">:</span> <a class="efeature" href="../base/string_32_short.html#f_item">item</a><span class="esymbol"> </span><span class="esymbol">(</span><a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a><span class="esymbol">)</span> <span class="esymbol">=</span> <span class="elocal">c</span>
+			<span class="etag">new_count</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="enumber">1</span>
+			<span class="etag">stable_before</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_general_short.html#f_elks_checking">Elks_checking</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <a class="efeature" href="../base/string_32_short.html#f_substring">substring</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="enumber">1</span><span class="esymbol">,</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <a class="esymbol" href="../base/integer_32_short.html#f_minus">-</a> <span class="enumber">1</span><span class="esymbol">)</span> <span class="esymbol">~</span> <span class="esymbol">(</span><span class="ekeyword">old</span> <a class="efeature" href="../base/any_short.html#f_twin">twin</a><span class="esymbol">)</span>
+
+	<a name="f_extend"></a><a class="efeature" href="../base/string_32_short.html#f_extend">extend</a> <span class="esymbol">(</span><span class="elocal">c</span><span class="esymbol">:</span> <a class="eclass" href="../base/character_32_short.html">CHARACTER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Append </span><span class="equoted">c</span><span class="ecomment"> at end.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/string_32_short.html">STRING_32</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/string_32_short.html#f_append_character">append_character</a><span class="ecomment">`</span><span class="ecomment">.</span>
+		<span class="ekeyword">ensure then</span>
+			<span class="etag">item_inserted</span><span class="esymbol">:</span> <a class="efeature" href="../base/string_32_short.html#f_item">item</a><span class="esymbol"> </span><span class="esymbol">(</span><a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a><span class="esymbol">)</span> <span class="esymbol">=</span> <span class="elocal">c</span>
+			<span class="etag">new_count</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="enumber">1</span>
+			<span class="etag">stable_before</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_general_short.html#f_elks_checking">Elks_checking</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <a class="efeature" href="../base/string_32_short.html#f_substring">substring</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="enumber">1</span><span class="esymbol">,</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <a class="esymbol" href="../base/integer_32_short.html#f_minus">-</a> <span class="enumber">1</span><span class="esymbol">)</span> <span class="esymbol">~</span> <span class="esymbol">(</span><span class="ekeyword">old</span> <a class="efeature" href="../base/any_short.html#f_twin">twin</a><span class="esymbol">)</span>
+
+	<a name="f_append_boolean"></a><a class="efeature" href="../base/string_32_short.html#f_append_boolean">append_boolean</a> <span class="esymbol">(</span><span class="elocal">b</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Append the string representation of </span><span class="equoted">b</span><span class="ecomment"> at end.</span>
+
+	<a name="f_insert_string"></a><a class="efeature" href="../base/string_32_short.html#f_insert_string">insert_string</a> <span class="esymbol">(</span><span class="elocal">s</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_32_short.html">READABLE_STRING_32</a><span class="esymbol">;</span> <span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Insert </span><span class="equoted">s</span><span class="ecomment"> at index </span><span class="equoted">i</span><span class="ecomment">, shifting characters between ranks</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span><span class="equoted">i</span><span class="ecomment"> and </span><span class="ecomment">`</span><a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a><span class="ecomment">`</span><span class="ecomment"> rightwards.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">string_exists</span><span class="esymbol">:</span> <span class="elocal">s</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">valid_insertion_index</span><span class="esymbol">:</span> <span class="enumber">1</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <span class="elocal">i</span> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <span class="elocal">i</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="enumber">1</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">inserted</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_general_short.html#f_elks_checking">Elks_checking</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <span class="esymbol">(</span><span class="ekeyword">Current</span> <span class="esymbol">~</span> <span class="esymbol">(</span><span class="ekeyword">old</span> <a class="efeature" href="../base/string_32_short.html#f_substring">substring</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="enumber">1</span><span class="esymbol">,</span> <span class="elocal">i</span> <a class="esymbol" href="../base/integer_32_short.html#f_minus">-</a> <span class="enumber">1</span><span class="esymbol">)</span> <a class="esymbol" href="../base/string_32_short.html#f_plus">+</a> <span class="ekeyword">old</span> <span class="esymbol">(</span><span class="elocal">s</span><span class="edot">.</span><a class="efeature" href="../base/any_short.html#f_twin">twin</a><span class="esymbol">)</span> <a class="esymbol" href="../base/string_32_short.html#f_plus">+</a> <span class="ekeyword">old</span> <a class="efeature" href="../base/string_32_short.html#f_substring">substring</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">,</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a><span class="esymbol">)</span><span class="esymbol">)</span><span class="esymbol">)</span>
+
+	<a name="f_insert_character"></a><a class="efeature" href="../base/string_32_short.html#f_insert_character">insert_character</a> <span class="esymbol">(</span><span class="elocal">c</span><span class="esymbol">:</span> <a class="eclass" href="../base/character_32_short.html">CHARACTER_32</a><span class="esymbol">;</span> <span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Insert </span><span class="equoted">c</span><span class="ecomment"> at index </span><span class="equoted">i</span><span class="ecomment">, shifting characters between ranks</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span><span class="equoted">i</span><span class="ecomment"> and </span><span class="ecomment">`</span><a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a><span class="ecomment">`</span><span class="ecomment"> rightwards.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">valid_insertion_index</span><span class="esymbol">:</span> <span class="enumber">1</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <span class="elocal">i</span> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <span class="elocal">i</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="enumber">1</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">one_more_character</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="enumber">1</span>
+			<span class="etag">inserted</span><span class="esymbol">:</span> <a class="efeature" href="../base/string_32_short.html#f_item">item</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">)</span> <span class="esymbol">=</span> <span class="elocal">c</span>
+			<span class="etag">stable_before_i</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_general_short.html#f_elks_checking">Elks_checking</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <a class="efeature" href="../base/string_32_short.html#f_substring">substring</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="enumber">1</span><span class="esymbol">,</span> <span class="elocal">i</span> <a class="esymbol" href="../base/integer_32_short.html#f_minus">-</a> <span class="enumber">1</span><span class="esymbol">)</span> <span class="esymbol">~</span> <span class="esymbol">(</span><span class="ekeyword">old</span> <a class="efeature" href="../base/string_32_short.html#f_substring">substring</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="enumber">1</span><span class="esymbol">,</span> <span class="elocal">i</span> <a class="esymbol" href="../base/integer_32_short.html#f_minus">-</a> <span class="enumber">1</span><span class="esymbol">)</span><span class="esymbol">)</span>
+			<span class="etag">stable_after_i</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_general_short.html#f_elks_checking">Elks_checking</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <a class="efeature" href="../base/string_32_short.html#f_substring">substring</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">i</span> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="enumber">1</span><span class="esymbol">,</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a><span class="esymbol">)</span> <span class="esymbol">~</span> <span class="esymbol">(</span><span class="ekeyword">old</span> <a class="efeature" href="../base/string_32_short.html#f_substring">substring</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">,</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a><span class="esymbol">)</span><span class="esymbol">)</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Basic operations</span>
+
+	<a name="f_plus"></a><a class="efeature" href="../base/string_32_short.html#f_plus">plus</a> <span class="ekeyword">alias</span> <span class="esymbol">&quot;</span><a class="esymbol" href="../base/string_32_short.html#f_plus">+</a><span class="esymbol">&quot;</span> <span class="esymbol">(</span><span class="elocal">s</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_32_short.html">READABLE_STRING_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <span class="ekeyword">Current</span>
+			<span class="ecomment">--</span><span class="ecomment"> Concatenation with </span><span class="equoted">s</span><span class="ecomment">.</span>
+
+	<a name="f_plus_general"></a><a class="efeature" href="../base/string_32_short.html#f_plus_general">plus_general</a> <span class="esymbol">(</span><span class="elocal">s</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_short.html">READABLE_STRING_GENERAL</a><span class="esymbol">)</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <span class="ekeyword">Current</span>
+			<span class="ecomment">--</span><span class="ecomment"> Concatenation of the current string with </span><span class="equoted">s</span><span class="ecomment">.</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Removal</span>
+
+	<a name="f_remove"></a><a class="efeature" href="../base/string_32_short.html#f_remove">remove</a> <span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Remove </span><span class="equoted">i</span><span class="ecomment">-th character.</span>
+
+	<a name="f_remove_head"></a><a class="efeature" href="../base/string_32_short.html#f_remove_head">remove_head</a> <span class="esymbol">(</span><span class="elocal">n</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Remove first </span><span class="equoted">n</span><span class="ecomment"> characters;</span>
+			<span class="ecomment">--</span><span class="ecomment"> if </span><span class="equoted">n</span><span class="ecomment"> &gt; </span><span class="ecomment">`</span><a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a><span class="ecomment">`</span><span class="ecomment">, remove all.</span>
+
+	<a name="f_remove_substring"></a><a class="efeature" href="../base/string_32_short.html#f_remove_substring">remove_substring</a> <span class="esymbol">(</span><span class="elocal">start_index</span><span class="esymbol">,</span> <span class="elocal">end_index</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Remove all characters from </span><span class="equoted">start_index</span>
+			<span class="ecomment">--</span><span class="ecomment"> to </span><span class="equoted">end_index</span><span class="ecomment"> inclusive.</span>
+
+	<a name="f_remove_tail"></a><a class="efeature" href="../base/string_32_short.html#f_remove_tail">remove_tail</a> <span class="esymbol">(</span><span class="elocal">n</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Remove last </span><span class="equoted">n</span><span class="ecomment"> characters;</span>
+			<span class="ecomment">--</span><span class="ecomment"> if </span><span class="equoted">n</span><span class="ecomment"> &gt; </span><span class="ecomment">`</span><a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a><span class="ecomment">`</span><span class="ecomment">, remove all.</span>
+
+	<a name="f_prune"></a><a class="efeature" href="../base/string_32_short.html#f_prune">prune</a> <span class="esymbol">(</span><span class="elocal">c</span><span class="esymbol">:</span> <a class="eclass" href="../base/character_32_short.html">CHARACTER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Remove first occurrence of </span><span class="equoted">c</span><span class="ecomment">, if any.</span>
+		<span class="ekeyword">require else</span>
+			<span class="ekeyword">True</span>
+
+	<a name="f_prune_all"></a><a class="efeature" href="../base/string_32_short.html#f_prune_all">prune_all</a> <span class="esymbol">(</span><span class="elocal">c</span><span class="esymbol">:</span> <a class="eclass" href="../base/character_32_short.html">CHARACTER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Remove all occurrences of </span><span class="equoted">c</span><span class="ecomment">.</span>
+		<span class="ekeyword">require else</span>
+			<span class="ekeyword">True</span>
+		<span class="ekeyword">ensure then</span>
+			<span class="etag">changed_count</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <span class="esymbol">=</span> <span class="esymbol">(</span><span class="ekeyword">old</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a><span class="esymbol">)</span> <a class="esymbol" href="../base/integer_32_short.html#f_minus">-</a> <span class="esymbol">(</span><span class="ekeyword">old</span> <a class="efeature" href="../base/readable_string_32_short.html#f_occurrences">occurrences</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">c</span><span class="esymbol">)</span><span class="esymbol">)</span>
+
+	<a name="f_prune_all_leading"></a><a class="efeature" href="../base/string_32_short.html#f_prune_all_leading">prune_all_leading</a> <span class="esymbol">(</span><span class="elocal">c</span><span class="esymbol">:</span> <a class="eclass" href="../base/character_32_short.html">CHARACTER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Remove all leading occurrences of </span><span class="equoted">c</span><span class="ecomment">.</span>
+
+	<a name="f_prune_all_trailing"></a><a class="efeature" href="../base/string_32_short.html#f_prune_all_trailing">prune_all_trailing</a> <span class="esymbol">(</span><span class="elocal">c</span><span class="esymbol">:</span> <a class="eclass" href="../base/character_32_short.html">CHARACTER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Remove all trailing occurrences of </span><span class="equoted">c</span><span class="ecomment">.</span>
+
+	<a name="f_wipe_out"></a><a class="efeature" href="../base/string_32_short.html#f_wipe_out">wipe_out</a>
+			<span class="ecomment">--</span><span class="ecomment"> Remove all characters.</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Resizing</span>
+
+	<a name="f_adapt_size"></a><a class="efeature" href="../base/string_32_short.html#f_adapt_size">adapt_size</a>
+			<span class="ecomment">--</span><span class="ecomment"> Adapt the size to accommodate </span><span class="ecomment">`</span><a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a><span class="ecomment">`</span><span class="ecomment"> characters.</span>
+
+	<a name="f_resize"></a><a class="efeature" href="../base/string_32_short.html#f_resize">resize</a> <span class="esymbol">(</span><span class="elocal">newsize</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Rearrange string so that it can accommodate</span>
+			<span class="ecomment">--</span><span class="ecomment"> at least </span><span class="equoted">newsize</span><span class="ecomment"> characters.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Do not lose any previously entered character.</span>
+
+	<a name="f_grow"></a><a class="efeature" href="../base/string_32_short.html#f_grow">grow</a> <span class="esymbol">(</span><span class="elocal">newsize</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Ensure that the capacity is at least </span><span class="equoted">newsize</span><span class="ecomment">.</span>
+
+	<a name="f_trim"></a><a class="efeature" href="../base/string_32_short.html#f_trim">trim</a>
+			<span class="ecomment">--</span><span class="ecomment"> Decrease </span><span class="ecomment">`</span><a class="efeature" href="../base/readable_string_32_short.html#f_capacity">capacity</a><span class="ecomment">`</span><span class="ecomment"> to the minimum value.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Apply to reduce allocated storage.</span>
+		<span class="ekeyword">ensure then</span>
+			<span class="etag">same_string</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_32_short.html#f_same_string">same_string</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="ekeyword">old</span> <a class="efeature" href="../base/any_short.html#f_twin">twin</a><span class="esymbol">)</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Conversion</span>
+
+	<a name="f_as_lower"></a><a class="efeature" href="../base/string_32_short.html#f_as_lower">as_lower</a><span class="esymbol">:</span> <span class="ekeyword">like</span> <span class="ekeyword">Current</span>
+			<span class="ecomment">--</span><span class="ecomment"> New object with all letters in lower case.</span>
+
+	<a name="f_as_upper"></a><a class="efeature" href="../base/string_32_short.html#f_as_upper">as_upper</a><span class="esymbol">:</span> <span class="ekeyword">like</span> <span class="ekeyword">Current</span>
+			<span class="ecomment">--</span><span class="ecomment"> New object with all letters in upper case</span>
+
+	<a name="f_left_justify"></a><a class="efeature" href="../base/string_32_short.html#f_left_justify">left_justify</a>
+			<span class="ecomment">--</span><span class="ecomment"> Left justify Current using </span><span class="ecomment">`</span><a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a><span class="ecomment">`</span><span class="ecomment"> as width.</span>
+
+	<a name="f_center_justify"></a><a class="efeature" href="../base/string_32_short.html#f_center_justify">center_justify</a>
+			<span class="ecomment">--</span><span class="ecomment"> Center justify Current using </span><span class="ecomment">`</span><a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a><span class="ecomment">`</span><span class="ecomment"> as width.</span>
+
+	<a name="f_right_justify"></a><a class="efeature" href="../base/string_32_short.html#f_right_justify">right_justify</a>
+			<span class="ecomment">--</span><span class="ecomment"> Right justify Current using </span><span class="ecomment">`</span><a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a><span class="ecomment">`</span><span class="ecomment"> as width.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">same_count</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a>
+
+	<a name="f_character_justify"></a><a class="efeature" href="../base/string_32_short.html#f_character_justify">character_justify</a> <span class="esymbol">(</span><span class="elocal">pivot</span><span class="esymbol">:</span> <a class="eclass" href="../base/character_32_short.html">CHARACTER_32</a><span class="esymbol">;</span> <span class="elocal">position</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Justify a string based on a </span><span class="equoted">pivot</span>
+			<span class="ecomment">--</span><span class="ecomment"> and the </span><span class="equoted">position</span><span class="ecomment"> it needs to be in</span>
+			<span class="ecomment">--</span><span class="ecomment"> the final string.</span>
+			<span class="ecomment">--</span><span class="ecomment"> This will grow the string if necessary</span>
+			<span class="ecomment">--</span><span class="ecomment"> to get the pivot in the correct place.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">valid_position</span><span class="esymbol">:</span> <span class="elocal">position</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <a class="efeature" href="../base/readable_string_32_short.html#f_capacity">capacity</a>
+			<span class="etag">positive_position</span><span class="esymbol">:</span> <span class="elocal">position</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">1</span>
+			<span class="etag">pivot_not_space</span><span class="esymbol">:</span> <span class="elocal">pivot</span> <span class="esymbol">/=</span> <span class="echar">' '</span><span class="edot">.</span><a class="efeature" href="../base/character_8_short.html#f_to_character_32">to_character_32</a>
+			<span class="etag">not_empty</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/finite_short.html#f_is_empty">is_empty</a>
+
+	<a name="f_to_lower"></a><a class="efeature" href="../base/string_32_short.html#f_to_lower">to_lower</a>
+			<span class="ecomment">--</span><span class="ecomment"> Convert to lower case.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">length_and_content</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_general_short.html#f_elks_checking">Elks_checking</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <span class="ekeyword">Current</span> <span class="esymbol">~</span> <span class="esymbol">(</span><span class="ekeyword">old</span> <a class="efeature" href="../base/string_32_short.html#f_as_lower">as_lower</a><span class="esymbol">)</span>
+
+	<a name="f_to_upper"></a><a class="efeature" href="../base/string_32_short.html#f_to_upper">to_upper</a>
+			<span class="ecomment">--</span><span class="ecomment"> Convert to upper case.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">length_and_content</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_general_short.html#f_elks_checking">Elks_checking</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <span class="ekeyword">Current</span> <span class="esymbol">~</span> <span class="esymbol">(</span><span class="ekeyword">old</span> <a class="efeature" href="../base/string_32_short.html#f_as_upper">as_upper</a><span class="esymbol">)</span>
+
+	<a name="f_linear_representation"></a><a class="efeature" href="../base/string_32_short.html#f_linear_representation">linear_representation</a><span class="esymbol">:</span> <a class="eclass" href="../base/linear_short.html">LINEAR</a> <span class="esymbol">[</span><a class="eclass" href="../base/character_32_short.html">CHARACTER_32</a><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Representation as a linear structure</span>
+
+	<a name="f_to_c"></a><span class="ekeyword">frozen</span> <a class="efeature" href="../base/string_32_short.html#f_to_c">to_c</a><span class="esymbol">:</span> <a class="eclass" href="../base/any_short.html">ANY</a>
+			<span class="ecomment">--</span><span class="ecomment"> A reference to a C form of current string.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Useful only for interfacing with C software.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">not_is_dotnet</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <span class="esymbol">{</span><a class="eclass" href="../base/platform_short.html">PLATFORM</a><span class="esymbol">}</span><span class="edot">.</span><a class="efeature" href="../base/platform_short.html#f_is_dotnet">is_dotnet</a>
+
+	<a name="f_mirrored"></a><a class="efeature" href="../base/string_32_short.html#f_mirrored">mirrored</a><span class="esymbol">:</span> <span class="ekeyword">like</span> <span class="ekeyword">Current</span>
+			<span class="ecomment">--</span><span class="ecomment"> Mirror image of string;</span>
+			<span class="ecomment">--</span><span class="ecomment"> Result for &quot;Hello world&quot; is &quot;dlrow olleH&quot;.</span>
+
+	<a name="f_mirror"></a><a class="efeature" href="../base/string_32_short.html#f_mirror">mirror</a>
+			<span class="ecomment">--</span><span class="ecomment"> Reverse the order of characters.</span>
+			<span class="ecomment">--</span><span class="ecomment"> &quot;Hello world&quot; -&gt; &quot;dlrow olleH&quot;.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">same_count</span><span class="esymbol">:</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/readable_string_32_short.html#f_count">count</a>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Duplication</span>
+
+	<a name="f_substring"></a><a class="efeature" href="../base/string_32_short.html#f_substring">substring</a> <span class="esymbol">(</span><span class="elocal">start_index</span><span class="esymbol">,</span> <span class="elocal">end_index</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <span class="ekeyword">Current</span>
+			<span class="ecomment">--</span><span class="ecomment"> Copy of substring containing all characters at indices</span>
+			<span class="ecomment">--</span><span class="ecomment"> between </span><span class="equoted">start_index</span><span class="ecomment"> and </span><span class="equoted">end_index</span>
+
+	<a name="f_multiply"></a><a class="efeature" href="../base/string_32_short.html#f_multiply">multiply</a> <span class="esymbol">(</span><span class="elocal">n</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Duplicate a string within itself</span>
+			<span class="ecomment">--</span><span class="ecomment"> (&quot;hello&quot;).multiply(3) =&gt; &quot;hellohellohello&quot;</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">meaningful_multiplier</span><span class="esymbol">:</span> <span class="elocal">n</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">1</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Transformation</span>
+
+	<a name="f_correct_mismatch"></a><a class="efeature" href="../base/string_32_short.html#f_correct_mismatch">correct_mismatch</a>
+			<span class="ecomment">--</span><span class="ecomment"> Attempt to correct object mismatch during retrieve using </span><span class="ecomment">`</span><a class="efeature" href="../base/mismatch_corrector_short.html#f_mismatch_information">mismatch_information</a><span class="ecomment">`</span><span class="ecomment">.</span>
+	
+<span class="ekeyword">invariant</span>
+	<span class="etag">extendible</span><span class="esymbol">:</span> <a class="efeature" href="../base/string_32_short.html#f_extendible">Extendible</a>
+	<span class="etag">compare_character</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/container_short.html#f_object_comparison">object_comparison</a>
+
+<span class="ekeyword">note</span>
+	<span class="eitag">copyright</span><span class="esymbol">:</span> <span class="estring">&quot;Copyright (c) 1984-2021, Eiffel Software and others&quot;</span>
+	<span class="eitag">license</span><span class="esymbol">:</span> <span class="estring">&quot;Eiffel Forum License v2 (see </span><a class="estring" href="http://www.eiffel.com/licensing/forum.txt">http://www.eiffel.com/licensing/forum.txt</a><span class="estring">)&quot;</span>
+	<span class="eitag">source</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">Eiffel Software</span>
+		<span class="estring">5949 Hollister Ave., Goleta, CA 93117 USA</span>
+		<span class="estring">Telephone 805-685-1006, Fax 805-685-6869</span>
+		<span class="estring">Website </span><a class="estring" href="http://www.eiffel.com">http://www.eiffel.com</a>
+		<span class="estring">Customer support </span><a class="estring" href="http://support.eiffel.com">http://support.eiffel.com</a>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+
+<span class="ekeyword">end</span> <span class="ecomment">--</span> <span class="ecomment">class </span><a class="eclass" href="../base/string_32_short.html">STRING_32</a></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="string_32_chart.html">Chart</a>
+<a class="nav class" href="string_32_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="string_32"></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>
+

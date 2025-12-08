@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="description" content="A sequence of actions to be performed on `call`."/>
+<meta name="legal" content="See notice at end of class."/>
+<meta name="instructions" content="Use features inherited from LIST to add/remove actions. An action is a procedure of ANY class that takes EVENT_DATA. When `call' is called the actions in the list will be executed in order stating at `first'. An action may call `abort' which will cause `call' to stop executing actions in the sequence. (Until the next call to `call'). Descendants may redefine `initialize' to arrange for `call' to be called by an event source. Use `block', `pause', `flush' and `resume' to change the behavior of `call'. eg.  birthday_data: TUPLE [INTEGER, STRING] -- (age, name)  birthday_actions: ACTION_SEQUENCE [like birthday_data]  create birthday_actions.make (birthday, <<age,name>>)  send_card (age: INTEGER, name, from: STRING) is ...  buy_gift (age: INTEGER, name, gift, from: STRING) is ...  birthday_actions.extend (agent send_card (?, ?, Sam)  birthday_actions.extend (agent buy_gift (?, ?, Wine, Sam)  birthday_actions.call ([35, Julia])  causes call to: send_card (35, Julia, Sam)                  buy_gift (35, Julia, Wine, Sam)"/>
+<meta name="keywords" content="Eiffel class, event, action"/>
+<meta name="library" content="EiffelBase: Library of reusable components for Eiffel."/>
+<meta name="copyright" content="Copyright (c) 1984-2021, Eiffel Software and others"/>
+<meta name="license" content="Eiffel Forum License v2 (see http://www.eiffel.com/licensing/forum.txt)"/>
+<meta name="source" content="Eiffel Software 5949 Hollister Ave., Goleta, CA 93117 USA Telephone 805-685-1006, Fax 805-685-6869 Website http://www.eiffel.com Customer support http://support.eiffel.com"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>action_sequence Relations</title>
+<link rel="stylesheet" href="../default.css" type="text/css">
+<script type="text/javascript" src="../goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="action_sequence_chart.html">Chart</a>
+<span class="nav class selected">Relations</span>
+<a class="nav class" href="action_sequence_short.html">Contracts</a>
+<span class="nav class goto">Go to: <input name="c" value="action_sequence"></span>
+</div></form><pre><span class="ekeyword">class</span>
+	<a class="eclass" href="../base/action_sequence_links.html">ACTION_SEQUENCE</a> <span class="esymbol">[</span><span class="egeneric">EVENT_DATA</span> <span class="esymbol">-&gt;</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/tuple_links.html">TUPLE</a> <span class="ekeyword">create</span> <a class="efeature" href="../base/any_short.html#f_default_create">default_create</a> <span class="ekeyword">end</span><span class="esymbol">]</span>
+
+<span class="ekeyword">Ancestors</span>
+	<a class="eclass" href="../base/interactive_list_links.html">INTERACTIVE_LIST</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+
+<span class="ekeyword">Clients</span>
+	<a class="eclass" href="../base/action_sequence_links.html">ACTION_SEQUENCE</a> <span class="esymbol">[</span><span class="egeneric">EVENT_DATA</span> <span class="esymbol">-&gt;</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/tuple_links.html">TUPLE</a> <span class="ekeyword">create</span> <a class="efeature" href="../base/any_short.html#f_default_create">default_create</a> <span class="ekeyword">end</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/active_integer_interval_links.html">ACTIVE_INTEGER_INTERVAL</a>
+	<a class="eclass" href="../base/active_list_links.html">ACTIVE_LIST</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+
+<span class="ekeyword">Suppliers</span>
+	<a class="eclass" href="../base/action_sequence_links.html">ACTION_SEQUENCE</a> <span class="esymbol">[</span><span class="egeneric">EVENT_DATA</span> <span class="esymbol">-&gt;</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/tuple_links.html">TUPLE</a> <span class="ekeyword">create</span> <a class="efeature" href="../base/any_short.html#f_default_create">default_create</a> <span class="ekeyword">end</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/array_links.html">ARRAY</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/arrayed_list_links.html">ARRAYED_LIST</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/arrayed_list_iteration_cursor_links.html">ARRAYED_LIST_ITERATION_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/boolean_links.html">BOOLEAN</a>
+	<a class="eclass" href="../base/integer_32_links.html">INTEGER_32</a>
+	<a class="eclass" href="../base/iteration_cursor_links.html">ITERATION_CURSOR</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/linked_queue_links.html">LINKED_QUEUE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/linked_stack_links.html">LINKED_STACK</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/procedure_links.html">PROCEDURE</a> <span class="esymbol">[</span><span class="egeneric">OPEN_ARGS</span> <span class="esymbol">-&gt;</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/tuple_links.html">TUPLE</a> <span class="ekeyword">create</span> <a class="efeature" href="../base/any_short.html#f_default_create">default_create</a> <span class="ekeyword">end</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/special_links.html">SPECIAL</a> <span class="esymbol">[</span><span class="egeneric">T</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/string_8_links.html">STRING_8</a>
+
+</pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="action_sequence_chart.html">Chart</a>
+<span class="nav class selected">Relations</span>
+<a class="nav class" href="action_sequence_short.html">Contracts</a>
+<span class="nav class goto">Go to: <input name="c" value="action_sequence"></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>

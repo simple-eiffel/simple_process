@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="description" content="Eiffel implementations for Unicode encoding conversion."/>
+<meta name="legal" content="See notice at end of class."/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="library" content="Encoding: Library of reusable components for Eiffel."/>
+<meta name="copyright" content="Copyright (c) 1984-2020, Eiffel Software and others"/>
+<meta name="license" content="Eiffel Forum License v2 (see http://www.eiffel.com/licensing/forum.txt)"/>
+<meta name="source" content="Eiffel Software 5949 Hollister Ave., Goleta, CA 93117 USA Telephone 805-685-1006, Fax 805-685-6869 Website http://www.eiffel.com Customer support http://support.eiffel.com"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>unicode_conversion Chart</title>
+<link rel="stylesheet" href="../default.css" type="text/css">
+<script type="text/javascript" src="../goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<span class="nav class selected">Chart</span>
+<a class="nav class" href="unicode_conversion_links.html">Relations</a>
+<a class="nav class" href="unicode_conversion_short.html">Contracts</a>
+<span class="nav class goto">Go to: <input name="c" value="unicode_conversion"></span>
+</div></form><pre><span class="ekeyword">class</span>
+	<a class="eclass" href="../base/unicode_conversion_chart.html">UNICODE_CONVERSION</a>
+
+<span class="ekeyword">General</span>
+	<span class="eitag">cluster</span><span class="esymbol">:</span> <span class="necluster">encoding</span>
+	<span class="eitag">description</span><span class="esymbol">:</span> <span class="estring">&quot;Eiffel implementations for Unicode encoding conversion.&quot;</span>
+	<span class="eitag">create</span><span class="esymbol">:</span> <a class="efeature" href="../base/any_short.html#f_default_create">default_create</a>
+
+<span class="ekeyword">Ancestors</span>
+	<span class="neclass">ENCODING_I</span><span class="echar">*</span>
+
+<span class="ekeyword">Queries</span>
+	<span title="`is_code_page_convertible' is declared in `Current'"><a class="efeature" href="../base/unicode_conversion_short.html#f_is_code_page_convertible">is_code_page_convertible</a> <span class="esymbol">(</span><span class="elocal">a_from_code_page</span><span class="esymbol">,</span> <span class="elocal">a_to_code_page</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_8_chart.html">READABLE_STRING_8</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`is_code_page_valid' is declared in `Current'"><a class="efeature" href="../base/unicode_conversion_short.html#f_is_code_page_valid">is_code_page_valid</a> <span class="esymbol">(</span><span class="elocal">a_code_page</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_8_chart.html">READABLE_STRING_8</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`is_valid_as_string_16' is declared in `Current'"><a class="efeature" href="../base/unicode_conversion_short.html#f_is_valid_as_string_16">is_valid_as_string_16</a> <span class="esymbol">(</span><span class="elocal">a_string</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_chart.html">READABLE_STRING_GENERAL</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`is_valid_utf8' is declared in `Current'"><a class="efeature" href="../base/unicode_conversion_short.html#f_is_valid_utf8">is_valid_utf8</a> <span class="esymbol">(</span><span class="elocal">a_string</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_8_chart.html">READABLE_STRING_8</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`last_conversion_lost_data' is declared in `Current'"><a class="efeature" href="../base/unicode_conversion_short.html#f_last_conversion_lost_data">Last_conversion_lost_data</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a></span>
+	<span title="`read_character_from_utf8' is declared in `Current'"><a class="efeature" href="../base/unicode_conversion_short.html#f_read_character_from_utf8">read_character_from_utf8</a> <span class="esymbol">(</span><span class="elocal">a_position</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_chart.html">INTEGER_32</a><span class="esymbol">;</span> <span class="elocal">a_read_bytes</span><span class="esymbol">:</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/integer_32_ref_chart.html">INTEGER_32_REF</a><span class="esymbol">;</span> <span class="elocal">a_string</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_8_chart.html">READABLE_STRING_8</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/character_32_chart.html">CHARACTER_32</a></span>
+	<span title="`utf16_to_utf32' is declared in `Current'"><a class="efeature" href="../base/unicode_conversion_short.html#f_utf16_to_utf32">utf16_to_utf32</a> <span class="esymbol">(</span><span class="elocal">a_str</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_32_chart.html">READABLE_STRING_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_32_chart.html">STRING_32</a></span>
+	<span title="`utf32_to_utf16' is declared in `Current'"><a class="efeature" href="../base/unicode_conversion_short.html#f_utf32_to_utf16">utf32_to_utf16</a> <span class="esymbol">(</span><span class="elocal">a_str</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_32_chart.html">READABLE_STRING_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_32_chart.html">STRING_32</a></span>
+	<span title="`utf32_to_utf8' is declared in `Current'"><a class="efeature" href="../base/unicode_conversion_short.html#f_utf32_to_utf8">utf32_to_utf8</a> <span class="esymbol">(</span><span class="elocal">a_string</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_32_chart.html">READABLE_STRING_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_chart.html">STRING_8</a></span>
+	<span title="`utf8_to_utf32' is declared in `Current'"><a class="efeature" href="../base/unicode_conversion_short.html#f_utf8_to_utf32">utf8_to_utf32</a> <span class="esymbol">(</span><span class="elocal">a_string</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_8_chart.html">READABLE_STRING_8</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_32_chart.html">STRING_32</a></span>
+
+<span class="ekeyword">Commands</span>
+	<span title="`append_code_point_to_utf8' is declared in `Current'"><a class="efeature" href="../base/unicode_conversion_short.html#f_append_code_point_to_utf8">append_code_point_to_utf8</a> <span class="esymbol">(</span><span class="elocal">a_code</span><span class="esymbol">:</span> <a class="eclass" href="../base/natural_32_chart.html">NATURAL_32</a><span class="esymbol">;</span> <span class="elocal">a_string</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_chart.html">STRING_8</a><span class="esymbol">)</span></span>
+	<span title="`convert_to' is declared in `Current'"><a class="efeature" href="../base/unicode_conversion_short.html#f_convert_to">convert_to</a> <span class="esymbol">(</span><span class="elocal">a_from_code_page</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_8_chart.html">READABLE_STRING_8</a><span class="esymbol">;</span> <span class="elocal">a_from_string</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_chart.html">READABLE_STRING_GENERAL</a><span class="esymbol">;</span> <span class="elocal">a_to_code_page</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_8_chart.html">READABLE_STRING_8</a><span class="esymbol">)</span></span>
+
+</pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<span class="nav class selected">Chart</span>
+<a class="nav class" href="unicode_conversion_links.html">Relations</a>
+<a class="nav class" href="unicode_conversion_short.html">Contracts</a>
+<span class="nav class goto">Go to: <input name="c" value="unicode_conversion"></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>

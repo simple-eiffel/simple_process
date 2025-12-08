@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="description" content="The objects available from the environment at time of execution"/>
+<meta name="library" content="Free implementation of ELKS library"/>
+<meta name="legal" content="See notice at end of class."/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="copyright" content="Copyright (c) 1984-2020, Eiffel Software and others"/>
+<meta name="license" content="Eiffel Forum License v2 (see http://www.eiffel.com/licensing/forum.txt)"/>
+<meta name="source" content="Eiffel Software 5949 Hollister Ave., Goleta, CA 93117 USA Telephone 805-685-1006, Fax 805-685-6869 Website http://www.eiffel.com Customer support http://support.eiffel.com"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>execution_environment Contracts</title>
+<link rel="stylesheet" href="../default.css" type="text/css">
+<script type="text/javascript" src="../goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="execution_environment_chart.html">Chart</a>
+<a class="nav class" href="execution_environment_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="execution_environment"></span>
+</div></form><pre><span class="ekeyword">note</span>
+	<span class="eitag">description</span><span class="esymbol">:</span> <span class="estring">&quot;The objects available from the environment at time of execution&quot;</span>
+	<span class="eitag">library</span><span class="esymbol">:</span> <span class="estring">&quot;Free implementation of ELKS library&quot;</span>
+	<span class="eitag">status</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">legal</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">date</span><span class="esymbol">:</span> <span class="estring">&quot;$Date$&quot;</span>
+	<span class="eitag">revision</span><span class="esymbol">:</span> <span class="estring">&quot;$Revision$&quot;</span>
+
+<span class="ekeyword">class</span> <span class="ekeyword">interface</span>
+	<a class="eclass" href="../base/execution_environment_short.html">EXECUTION_ENVIRONMENT</a>
+
+<span class="ekeyword">create</span> 
+	<a class="efeature" href="../base/any_short.html#f_default_create">default_create</a>
+
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Access</span>
+
+	<a name="f_arguments"></a><a class="efeature" href="../base/execution_environment_short.html#f_arguments">Arguments</a><span class="esymbol">:</span> <a class="eclass" href="../base/arguments_32_short.html">ARGUMENTS_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Arguments that were used to start current execution.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">instance_free</span><span class="esymbol">:</span> <span class="ekeyword">class</span>
+
+	<a name="f_current_working_path"></a><a class="efeature" href="../base/execution_environment_short.html#f_current_working_path">current_working_path</a><span class="esymbol">:</span> <a class="eclass" href="../base/path_short.html">PATH</a>
+			<span class="ecomment">--</span><span class="ecomment"> Directory of current execution.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">instance_free</span><span class="esymbol">:</span> <span class="ekeyword">class</span>
+			<span class="etag">result_not_void</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_default_shell"></a><a class="efeature" href="../base/execution_environment_short.html#f_default_shell">Default_shell</a><span class="esymbol">:</span> <a class="eclass" href="../base/string_32_short.html">STRING_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Default shell</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">instance_free</span><span class="esymbol">:</span> <span class="ekeyword">class</span>
+
+	<a name="f_item"></a><a class="efeature" href="../base/execution_environment_short.html#f_item">item</a> <span class="esymbol">(</span><span class="elocal">s</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_short.html">READABLE_STRING_GENERAL</a><span class="esymbol">)</span><span class="esymbol">:</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/string_32_short.html">STRING_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Value of </span><span class="equoted">s</span><span class="ecomment"> if it is an environment variable and has been set;</span>
+			<span class="ecomment">--</span><span class="ecomment"> void otherwise.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">s_exists</span><span class="esymbol">:</span> <span class="elocal">s</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">not_has_null_character</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <span class="elocal">s</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_general_short.html#f_has">has</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="echar">'%U'</span><span class="edot">.</span><a class="efeature" href="../base/character_8_short.html#f_to_character_32">to_character_32</a><span class="esymbol">)</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">instance_free</span><span class="esymbol">:</span> <span class="ekeyword">class</span>
+
+	<a name="f_home_directory_path"></a><a class="efeature" href="../base/execution_environment_short.html#f_home_directory_path">Home_directory_path</a><span class="esymbol">:</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/path_short.html">PATH</a>
+			<span class="ecomment">--</span><span class="ecomment"> Directory name corresponding to the home directory.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">home_directory_supported</span><span class="esymbol">:</span> <a class="efeature" href="../base/any_short.html#f_operating_environment">Operating_environment</a><span class="edot">.</span><a class="efeature" href="../base/operating_environment_short.html#f_home_directory_supported">home_directory_supported</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">instance_free</span><span class="esymbol">:</span> <span class="ekeyword">class</span>
+
+	<a name="f_user_directory_path"></a><a class="efeature" href="../base/execution_environment_short.html#f_user_directory_path">User_directory_path</a><span class="esymbol">:</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/path_short.html">PATH</a>
+			<span class="ecomment">--</span><span class="ecomment"> Directory name corresponding to the user directory</span>
+			<span class="ecomment">--</span><span class="ecomment"> On Windows: C:\Users\manus\Documents</span>
+			<span class="ecomment">--</span><span class="ecomment"> On Unix &#38; Mac: $HOME</span>
+			<span class="ecomment">--</span><span class="ecomment"> Otherwise Void</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">instance_free</span><span class="esymbol">:</span> <span class="ekeyword">class</span>
+
+	<a name="f_temporary_directory_path"></a><a class="efeature" href="../base/execution_environment_short.html#f_temporary_directory_path">Temporary_directory_path</a><span class="esymbol">:</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/path_short.html">PATH</a>
+			<span class="ecomment">--</span><span class="ecomment"> Temporary directory name.</span>
+			<span class="ecomment">--</span><span class="ecomment"> On Windows: &nbsp;%SystemDrive%\Users\%USERNAME%\AppData\Local\Temp (%USERPROFILE%\AppData\Local\Temp).</span>
+			<span class="ecomment">--</span><span class="ecomment"> On Unix: /tmp and /var/tmp.</span>
+			<span class="ecomment">--</span><span class="ecomment"> On VMS: /sys$scratch	</span>
+			<span class="ecomment">--</span><span class="ecomment"> Otherwise Void	</span>
+		<span class="ekeyword">note</span>
+			<span class="eitag">eis</span><span class="esymbol">:</span> <span class="estring">&quot;name=temporary path&quot;</span><span class="esymbol">,</span> <span class="estring">&quot;src=</span><a class="estring" href="https://en.wikipedia.org/wiki/Temporary_folder">https://en.wikipedia.org/wiki/Temporary_folder</a><span class="estring">&quot;</span><span class="esymbol">,</span> <span class="estring">&quot;protocol=Uri&quot;</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">instance_free</span><span class="esymbol">:</span> <span class="ekeyword">class</span>
+
+	<a name="f_root_directory_name"></a><a class="efeature" href="../base/execution_environment_short.html#f_root_directory_name">Root_directory_name</a><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a>
+			<span class="ecomment">--</span><span class="ecomment"> Directory name corresponding to the root directory.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">root_directory_supported</span><span class="esymbol">:</span> <a class="efeature" href="../base/any_short.html#f_operating_environment">Operating_environment</a><span class="edot">.</span><a class="efeature" href="../base/operating_environment_short.html#f_root_directory_supported">root_directory_supported</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">instance_free</span><span class="esymbol">:</span> <span class="ekeyword">class</span>
+			<span class="etag">result_not_void</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_starting_environment"></a><a class="efeature" href="../base/execution_environment_short.html#f_starting_environment">starting_environment</a><span class="esymbol">:</span> <a class="eclass" href="../base/hash_table_short.html">HASH_TABLE</a> <span class="esymbol">[</span><a class="eclass" href="../base/string_32_short.html">STRING_32</a><span class="esymbol">,</span> <a class="eclass" href="../base/string_32_short.html">STRING_32</a><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Table of environment variables when current process starts,</span>
+			<span class="ecomment">--</span><span class="ecomment"> indexed by variable name</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">instance_free</span><span class="esymbol">:</span> <span class="ekeyword">class</span>
+			<span class="etag">result_attached</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_available_cpu_count"></a><a class="efeature" href="../base/execution_environment_short.html#f_available_cpu_count">available_cpu_count</a><span class="esymbol">:</span> <a class="eclass" href="../base/natural_32_short.html">NATURAL_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Number of available CPUs.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">instance_free</span><span class="esymbol">:</span> <span class="ekeyword">class</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Status</span>
+
+	<a name="f_return_code"></a><a class="efeature" href="../base/execution_environment_short.html#f_return_code">return_code</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Status code set by last call to </span><span class="ecomment">`</span><a class="efeature" href="../base/execution_environment_short.html#f_system">system</a><span class="ecomment">`</span><span class="ecomment"> or </span><span class="ecomment">`</span><a class="efeature" href="../base/execution_environment_short.html#f_put">put</a><span class="ecomment">`</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Status setting</span>
+
+	<a name="f_change_working_path"></a><a class="efeature" href="../base/execution_environment_short.html#f_change_working_path">change_working_path</a> <span class="esymbol">(</span><span class="elocal">path</span><span class="esymbol">:</span> <a class="eclass" href="../base/path_short.html">PATH</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Set the current directory to </span><span class="equoted">path</span>
+
+	<a name="f_put"></a><a class="efeature" href="../base/execution_environment_short.html#f_put">put</a> <span class="esymbol">(</span><span class="elocal">value</span><span class="esymbol">,</span> <span class="elocal">key</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_short.html">READABLE_STRING_GENERAL</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Set the environment variable </span><span class="equoted">key</span><span class="ecomment"> to </span><span class="equoted">value</span><span class="ecomment"> treating both</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span><span class="equoted">value</span><span class="ecomment"> and </span><span class="equoted">key</span><span class="ecomment"> as Unicode characters.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">key_exists</span><span class="esymbol">:</span> <span class="elocal">key</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">key_meaningful</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <span class="elocal">key</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_general_short.html#f_is_empty">is_empty</a>
+			<span class="etag">not_key_has_null_character</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <span class="elocal">key</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_general_short.html#f_has">has</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="echar">'%U'</span><span class="edot">.</span><a class="efeature" href="../base/character_8_short.html#f_to_character_32">to_character_32</a><span class="esymbol">)</span>
+			<span class="etag">value_exists</span><span class="esymbol">:</span> <span class="elocal">value</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">not_value_has_null_character</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <span class="elocal">value</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_general_short.html#f_has">has</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="echar">'%U'</span><span class="edot">.</span><a class="efeature" href="../base/character_8_short.html#f_to_character_32">to_character_32</a><span class="esymbol">)</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">variable_set</span><span class="esymbol">:</span> <a class="efeature" href="../base/execution_environment_short.html#f_return_code">return_code</a> <span class="esymbol">=</span> <span class="enumber">0</span> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <span class="esymbol">(</span><span class="esymbol">(</span><span class="elocal">value</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_general_short.html#f_is_empty">is_empty</a> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted_semistrict">and then</a> <a class="efeature" href="../base/execution_environment_short.html#f_item">item</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">key</span><span class="esymbol">)</span> <span class="esymbol">=</span> <span class="ekeyword">Void</span><span class="esymbol">)</span> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted_semistrict">or else</a> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <span class="elocal">value</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_general_short.html#f_is_empty">is_empty</a> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted_semistrict">and then</a> <span class="ekeyword">attached</span> <a class="efeature" href="../base/execution_environment_short.html#f_item">item</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">key</span><span class="esymbol">)</span> <span class="ekeyword">as</span> k <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted_semistrict">and then</a> <span class="elocal">k</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_general_short.html#f_same_string">same_string_general</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">value</span><span class="esymbol">)</span><span class="esymbol">)</span>
+
+	<a name="f_system"></a><a class="efeature" href="../base/execution_environment_short.html#f_system">system</a> <span class="esymbol">(</span><span class="elocal">s</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_short.html">READABLE_STRING_GENERAL</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Pass to the operating system a request to execute </span><span class="equoted">s</span><span class="ecomment"> interpreted as a Unicode string.</span>
+			<span class="ecomment">--</span><span class="ecomment"> If </span><span class="equoted">s</span><span class="ecomment"> is empty, use the default shell as command.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">s_exists</span><span class="esymbol">:</span> <span class="elocal">s</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_launch"></a><a class="efeature" href="../base/execution_environment_short.html#f_launch">launch</a> <span class="esymbol">(</span><span class="elocal">s</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_short.html">READABLE_STRING_GENERAL</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Pass to the operating system an asynchronous request to</span>
+			<span class="ecomment">--</span><span class="ecomment"> execute </span><span class="equoted">s</span><span class="ecomment"> interpreted as a Unicode string.</span>
+			<span class="ecomment">--</span><span class="ecomment"> If </span><span class="equoted">s</span><span class="ecomment"> is empty, use the default shell as command.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">s_not_void</span><span class="esymbol">:</span> <span class="elocal">s</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">instance_free</span><span class="esymbol">:</span> <span class="ekeyword">class</span>
+
+	<a name="f_sleep"></a><a class="efeature" href="../base/execution_environment_short.html#f_sleep">sleep</a> <span class="esymbol">(</span><span class="elocal">nanoseconds</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_64_short.html">INTEGER_64</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Suspend thread execution for interval specified in</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span><span class="equoted">nanoseconds</span><span class="ecomment"> (1 nanosecond = 10^(-9) second).</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">non_negative_nanoseconds</span><span class="esymbol">:</span> <span class="elocal">nanoseconds</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">0</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">instance_free</span><span class="esymbol">:</span> <span class="ekeyword">class</span>
+	
+<span class="ekeyword">note</span>
+	<span class="eitag">copyright</span><span class="esymbol">:</span> <span class="estring">&quot;Copyright (c) 1984-2020, Eiffel Software and others&quot;</span>
+	<span class="eitag">license</span><span class="esymbol">:</span> <span class="estring">&quot;Eiffel Forum License v2 (see </span><a class="estring" href="http://www.eiffel.com/licensing/forum.txt">http://www.eiffel.com/licensing/forum.txt</a><span class="estring">)&quot;</span>
+	<span class="eitag">source</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">Eiffel Software</span>
+		<span class="estring">5949 Hollister Ave., Goleta, CA 93117 USA</span>
+		<span class="estring">Telephone 805-685-1006, Fax 805-685-6869</span>
+		<span class="estring">Website </span><a class="estring" href="http://www.eiffel.com">http://www.eiffel.com</a>
+		<span class="estring">Customer support </span><a class="estring" href="http://support.eiffel.com">http://support.eiffel.com</a>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+
+<span class="ekeyword">end</span> <span class="ecomment">--</span> <span class="ecomment">class </span><a class="eclass" href="../base/execution_environment_short.html">EXECUTION_ENVIRONMENT</a></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="execution_environment_chart.html">Chart</a>
+<a class="nav class" href="execution_environment_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="execution_environment"></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>
+

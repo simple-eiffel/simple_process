@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="description" content="Sequential, one-way linked lists that call an action sequence when an item is removed or added."/>
+<meta name="legal" content="See notice at end of class."/>
+<meta name="keywords" content="Eiffel class, event, action, linked, list"/>
+<meta name="library" content="EiffelBase: Library of reusable components for Eiffel."/>
+<meta name="copyright" content="Copyright (c) 1984-2018, Eiffel Software and others"/>
+<meta name="license" content="Eiffel Forum License v2 (see http://www.eiffel.com/licensing/forum.txt)"/>
+<meta name="source" content="Eiffel Software 5949 Hollister Ave., Goleta, CA 93117 USA Telephone 805-685-1006, Fax 805-685-6869 Website http://www.eiffel.com Customer support http://support.eiffel.com"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>active_list Contracts</title>
+<link rel="stylesheet" href="../default.css" type="text/css">
+<script type="text/javascript" src="../goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="active_list_chart.html">Chart</a>
+<a class="nav class" href="active_list_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="active_list"></span>
+</div></form><pre><span class="ekeyword">note</span>
+	<span class="eitag">description</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">Sequential, one-way linked lists that call an action</span>
+		<span class="estring">sequence when an item is removed or added.</span>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+	<span class="eitag">legal</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">status</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">keywords</span><span class="esymbol">:</span> <span class="estring">&quot;event, action, linked, list&quot;</span>
+	<span class="eitag">date</span><span class="esymbol">:</span> <span class="estring">&quot;$Date$&quot;</span>
+	<span class="eitag">revision</span><span class="esymbol">:</span> <span class="estring">&quot;$Revision$&quot;</span>
+
+<span class="ekeyword">class</span> <span class="ekeyword">interface</span>
+	<a class="eclass" href="../base/active_list_short.html">ACTIVE_LIST</a> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <span class="esymbol">]</span>
+
+<span class="ekeyword">create</span> 
+	<a class="efeature" href="../base/active_list_short.html#f_default_create">default_create</a>
+
+
+<span class="ekeyword">create</span> <span class="esymbol">{</span><a class="eclass" href="../base/active_list_short.html">ACTIVE_LIST</a><span class="esymbol">}</span>
+	<a class="efeature" href="../base/active_list_short.html#f_make_filled">make_filled</a>
+
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Initialization</span>
+
+	<a name="f_make_filled"></a><a class="efeature" href="../base/active_list_short.html#f_make_filled">make_filled</a> <span class="esymbol">(</span><span class="elocal">n</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Allocate list with </span><span class="equoted">n</span><span class="ecomment"> items.</span>
+			<span class="ecomment">--</span><span class="ecomment"> (</span><span class="equoted">n</span><span class="ecomment"> may be zero for empty list.)</span>
+			<span class="ecomment">--</span><span class="ecomment"> This list will be full.</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Access</span>
+
+	<a name="f_add_actions"></a><a class="efeature" href="../base/active_list_short.html#f_add_actions">add_actions</a><span class="esymbol">:</span> <a class="eclass" href="../base/action_sequence_short.html">ACTION_SEQUENCE</a> <span class="esymbol">[</span><span class="ekeyword">like</span> <a class="efeature" href="../base/arrayed_list_short.html#f_item">item</a><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Actions performed when an item has just been added.</span>
+
+	<a name="f_remove_actions"></a><a class="efeature" href="../base/active_list_short.html#f_remove_actions">remove_actions</a><span class="esymbol">:</span> <a class="eclass" href="../base/action_sequence_short.html">ACTION_SEQUENCE</a> <span class="esymbol">[</span><span class="ekeyword">like</span> <a class="efeature" href="../base/arrayed_list_short.html#f_item">item</a><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Actions performed when an item has just been removed.</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Miscellaneous</span>
+
+	<a name="f_on_item_added_at"></a><a class="efeature" href="../base/active_list_short.html#f_on_item_added_at">on_item_added_at</a> <span class="esymbol">(</span><span class="elocal">an_item</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <a class="efeature" href="../base/arrayed_list_short.html#f_item">item</a><span class="esymbol">;</span> <span class="elocal">item_index</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span><span class="equoted">an_item</span><span class="ecomment"> has just been added at index </span><span class="equoted">item_index</span><span class="ecomment">.</span>
+
+	<a name="f_on_item_removed_at"></a><a class="efeature" href="../base/active_list_short.html#f_on_item_removed_at">on_item_removed_at</a> <span class="esymbol">(</span><span class="elocal">an_item</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <a class="efeature" href="../base/arrayed_list_short.html#f_item">item</a><span class="esymbol">;</span> <span class="elocal">item_index</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span><span class="equoted">an_item</span><span class="ecomment"> has just been removed at index </span><span class="equoted">item_index</span><span class="ecomment">.</span>
+	
+<span class="ekeyword">invariant</span>
+	<span class="etag">add_actions_not_void</span><span class="esymbol">:</span> <a class="efeature" href="../base/active_list_short.html#f_add_actions">add_actions</a> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+	<span class="etag">remove_actions_not_void</span><span class="esymbol">:</span> <a class="efeature" href="../base/active_list_short.html#f_remove_actions">remove_actions</a> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+<span class="ekeyword">note</span>
+	<span class="eitag">library</span><span class="esymbol">:</span> <span class="estring">&quot;EiffelBase: Library of reusable components for Eiffel.&quot;</span>
+	<span class="eitag">copyright</span><span class="esymbol">:</span> <span class="estring">&quot;Copyright (c) 1984-2018, Eiffel Software and others&quot;</span>
+	<span class="eitag">license</span><span class="esymbol">:</span> <span class="estring">&quot;Eiffel Forum License v2 (see </span><a class="estring" href="http://www.eiffel.com/licensing/forum.txt">http://www.eiffel.com/licensing/forum.txt</a><span class="estring">)&quot;</span>
+	<span class="eitag">source</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">Eiffel Software</span>
+		<span class="estring">5949 Hollister Ave., Goleta, CA 93117 USA</span>
+		<span class="estring">Telephone 805-685-1006, Fax 805-685-6869</span>
+		<span class="estring">Website </span><a class="estring" href="http://www.eiffel.com">http://www.eiffel.com</a>
+		<span class="estring">Customer support </span><a class="estring" href="http://support.eiffel.com">http://support.eiffel.com</a>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+
+<span class="ekeyword">end</span> <span class="ecomment">--</span> <span class="ecomment">class </span><a class="eclass" href="../base/active_list_short.html">ACTIVE_LIST</a></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="active_list_chart.html">Chart</a>
+<a class="nav class" href="active_list_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="active_list"></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>
+

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="description" content="Truth values, with the boolean operations."/>
+<meta name="external_name" content="System.Boolean"/>
+<meta name="assembly" content="mscorlib"/>
+<meta name="library" content="Free implementation of ELKS library"/>
+<meta name="legal" content="See notice at end of class."/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="copyright" content="Copyright (c) 1984-2020, Eiffel Software and others"/>
+<meta name="license" content="Eiffel Forum License v2 (see http://www.eiffel.com/licensing/forum.txt)"/>
+<meta name="source" content="Eiffel Software 5949 Hollister Ave., Goleta, CA 93117 USA Telephone 805-685-1006, Fax 805-685-6869 Website http://www.eiffel.com Customer support http://support.eiffel.com"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>boolean Relations</title>
+<link rel="stylesheet" href="../default.css" type="text/css">
+<script type="text/javascript" src="../goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="boolean_chart.html">Chart</a>
+<span class="nav class selected">Relations</span>
+<a class="nav class" href="boolean_short.html">Contracts</a>
+<span class="nav class goto">Go to: <input name="c" value="boolean"></span>
+</div></form><pre><span class="ekeyword">expanded</span> <span class="ekeyword">class</span>
+	<a class="eclass" href="../base/boolean_links.html">BOOLEAN</a>
+
+<span class="ekeyword">Ancestors</span>
+	<a class="eclass" href="../base/boolean_ref_links.html">BOOLEAN_REF</a>
+
+<span class="ekeyword">Clients</span>
+	<a class="eclass" href="../base/action_sequence_links.html">ACTION_SEQUENCE</a> <span class="esymbol">[</span><span class="egeneric">EVENT_DATA</span> <span class="esymbol">-&gt;</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/tuple_links.html">TUPLE</a> <span class="ekeyword">create</span> <a class="efeature" href="../base/any_short.html#f_default_create">default_create</a> <span class="ekeyword">end</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/active_links.html">ACTIVE</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/active_integer_interval_links.html">ACTIVE_INTEGER_INTERVAL</a>
+	<a class="eclass" href="../base/any_links.html">ANY</a>
+	<a class="eclass" href="../base/arguments_links.html">ARGUMENTS</a>
+	<a class="eclass" href="../base/arguments_32_links.html">ARGUMENTS_32</a>
+	<a class="eclass" href="../base/array_links.html">ARRAY</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/array2_links.html">ARRAY2</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/arrayed_circular_links.html">ARRAYED_CIRCULAR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/arrayed_list_links.html">ARRAYED_LIST</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/arrayed_list_iteration_cursor_links.html">ARRAYED_LIST_ITERATION_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/arrayed_queue_links.html">ARRAYED_QUEUE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/arrayed_set_links.html">ARRAYED_SET</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/arrayed_tree_links.html">ARRAYED_TREE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/array_iteration_cursor_links.html">ARRAY_ITERATION_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/basic_routines_links.html">BASIC_ROUTINES</a>
+	<a class="eclass" href="../base/bilinear_links.html">BILINEAR</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/binary_search_tree_links.html">BINARY_SEARCH_TREE</a> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <a class="eclass" href="../base/comparable_links.html">COMPARABLE</a><span class="esymbol">]</span>
+	<a class="eclass" href="../base/binary_search_tree_set_links.html">BINARY_SEARCH_TREE_SET</a> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <a class="eclass" href="../base/comparable_links.html">COMPARABLE</a><span class="esymbol">]</span>
+	<a class="eclass" href="../base/binary_tree_links.html">BINARY_TREE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/bi_linkable_links.html">BI_LINKABLE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/boolean_links.html">BOOLEAN</a>
+	<a class="eclass" href="../base/boolean_ref_links.html">BOOLEAN_REF</a>
+	<a class="eclass" href="../base/bool_string_links.html">BOOL_STRING</a>
+	<a class="eclass" href="../base/bounded_queue_links.html">BOUNDED_QUEUE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/bounded_stack_links.html">BOUNDED_STACK</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/chain_links.html">CHAIN</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/character_32_ref_links.html">CHARACTER_32_REF</a>
+	<a class="eclass" href="../base/character_8_ref_links.html">CHARACTER_8_REF</a>
+	<a class="eclass" href="../base/character_property_links.html">CHARACTER_PROPERTY</a>
+	<a class="eclass" href="../base/circular_links.html">CIRCULAR</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/class_name_translations_links.html">CLASS_NAME_TRANSLATIONS</a>
+	<a class="eclass" href="../base/collection_links.html">COLLECTION</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/comparable_links.html">COMPARABLE</a><span class="echar">*</span>
+	<a class="eclass" href="../base/comparable_set_links.html">COMPARABLE_SET</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <a class="eclass" href="../base/comparable_links.html">COMPARABLE</a><span class="esymbol">]</span>
+	<a class="eclass" href="../base/comparable_struct_links.html">COMPARABLE_STRUCT</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <a class="eclass" href="../base/comparable_links.html">COMPARABLE</a><span class="esymbol">]</span>
+	<a class="eclass" href="../base/com_failure_links.html">COM_FAILURE</a>
+	<a class="eclass" href="../base/condition_variable_links.html">CONDITION_VARIABLE</a>
+	<a class="eclass" href="../base/console_links.html">CONSOLE</a>
+	<a class="eclass" href="../base/container_links.html">CONTAINER</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/cursor_tree_links.html">CURSOR_TREE</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/c_string_links.html">C_STRING</a>
+	<a class="eclass" href="../base/directory_links.html">DIRECTORY</a>
+	<a class="eclass" href="../base/dispenser_links.html">DISPENSER</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/dynamic_chain_links.html">DYNAMIC_CHAIN</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/dynamic_list_links.html">DYNAMIC_LIST</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/dynamic_tree_links.html">DYNAMIC_TREE</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/encoding_links.html">ENCODING</a>
+	<span class="neclass">ENCODING_I</span><span class="echar">*</span>
+	<span class="neclass">ENCODING_IMP</span>
+	<a class="eclass" href="../base/exception_links.html">EXCEPTION</a>
+	<a class="eclass" href="../base/exceptions_links.html">EXCEPTIONS</a>
+	<a class="eclass" href="../base/exception_manager_links.html">EXCEPTION_MANAGER</a>
+	<a class="eclass" href="../base/excep_const_links.html">EXCEP_CONST</a>
+	<a class="eclass" href="../base/execution_environment_links.html">EXECUTION_ENVIRONMENT</a>
+	<a class="eclass" href="../base/file_links.html">FILE</a><span class="echar">*</span>
+	<a class="eclass" href="../base/file_comparer_links.html">FILE_COMPARER</a>
+	<a class="eclass" href="../base/file_info_links.html">FILE_INFO</a>
+	<a class="eclass" href="../base/file_name_links.html">FILE_NAME</a>
+	<a class="eclass" href="../base/file_utilities_links.html">FILE_UTILITIES</a>
+	<a class="eclass" href="../base/fixed_links.html">FIXED</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/fixed_list_links.html">FIXED_LIST</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/fixed_tree_links.html">FIXED_TREE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/format_double_links.html">FORMAT_DOUBLE</a>
+	<a class="eclass" href="../base/format_integer_links.html">FORMAT_INTEGER</a>
+	<a class="eclass" href="../base/function_links.html">FUNCTION</a> <span class="esymbol">[</span><span class="egeneric">OPEN_ARGS</span> <span class="esymbol">-&gt;</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/tuple_links.html">TUPLE</a> <span class="ekeyword">create</span> <a class="efeature" href="../base/any_short.html#f_default_create">default_create</a> <span class="ekeyword">end</span><span class="esymbol">,</span> <span class="egeneric">RESULT_TYPE</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/gc_info_links.html">GC_INFO</a>
+	<a class="eclass" href="../base/hash_table_links.html">HASH_TABLE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">,</span> <span class="egeneric">K</span> <span class="esymbol">-&gt;</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/hashable_links.html">HASHABLE</a><span class="esymbol">]</span>
+	<a class="eclass" href="../base/hash_table_iteration_cursor_links.html">HASH_TABLE_ITERATION_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">,</span> <span class="egeneric">K</span> <span class="esymbol">-&gt;</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/hashable_links.html">HASHABLE</a><span class="esymbol">]</span>
+	<a class="eclass" href="../base/heap_priority_queue_links.html">HEAP_PRIORITY_QUEUE</a> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <a class="eclass" href="../base/comparable_links.html">COMPARABLE</a><span class="esymbol">]</span>
+	<a class="eclass" href="../base/hexadecimal_string_to_integer_converter_links.html">HEXADECIMAL_STRING_TO_INTEGER_CONVERTER</a>
+	<a class="eclass" href="../base/hierarchical_links.html">HIERARCHICAL</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/identified_links.html">IDENTIFIED</a>
+	<a class="eclass" href="../base/immutable_string_32_links.html">IMMUTABLE_STRING_32</a>
+	<a class="eclass" href="../base/immutable_string_8_links.html">IMMUTABLE_STRING_8</a>
+	<a class="eclass" href="../base/indexable_iteration_cursor_links.html">INDEXABLE_ITERATION_CURSOR</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/infinite_links.html">INFINITE</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/integer_16_ref_links.html">INTEGER_16_REF</a>
+	<a class="eclass" href="../base/integer_32_ref_links.html">INTEGER_32_REF</a>
+	<a class="eclass" href="../base/integer_64_ref_links.html">INTEGER_64_REF</a>
+	<a class="eclass" href="../base/integer_8_ref_links.html">INTEGER_8_REF</a>
+	<a class="eclass" href="../base/integer_interval_links.html">INTEGER_INTERVAL</a>
+	<a class="eclass" href="../base/integer_overflow_checker_links.html">INTEGER_OVERFLOW_CHECKER</a>
+	<a class="eclass" href="../base/interactive_list_links.html">INTERACTIVE_LIST</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/internal_links.html">INTERNAL</a>
+	<a class="eclass" href="../base/io_medium_links.html">IO_MEDIUM</a><span class="echar">*</span>
+	<a class="eclass" href="../base/ise_exception_manager_links.html">ISE_EXCEPTION_MANAGER</a>
+	<a class="eclass" href="../base/iteration_cursor_links.html">ITERATION_CURSOR</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/linear_links.html">LINEAR</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/linear_iterator_links.html">LINEAR_ITERATOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/linear_subset_links.html">LINEAR_SUBSET</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/linked_circular_links.html">LINKED_CIRCULAR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/linked_list_links.html">LINKED_LIST</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/linked_list_cursor_links.html">LINKED_LIST_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/linked_list_iteration_cursor_links.html">LINKED_LIST_ITERATION_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/linked_queue_links.html">LINKED_QUEUE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/linked_set_links.html">LINKED_SET</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/linked_stack_links.html">LINKED_STACK</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/linked_tree_links.html">LINKED_TREE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/linked_tree_iteration_cursor_links.html">LINKED_TREE_ITERATION_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/list_links.html">LIST</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/managed_pointer_links.html">MANAGED_POINTER</a>
+	<a class="eclass" href="../base/memory_links.html">MEMORY</a>
+	<a class="eclass" href="../base/memory_stream_links.html">MEMORY_STREAM</a>
+	<a class="eclass" href="../base/memory_structure_links.html">MEMORY_STRUCTURE</a><span class="echar">*</span>
+	<a class="eclass" href="../base/mem_info_links.html">MEM_INFO</a>
+	<a class="eclass" href="../base/multi_array_list_links.html">MULTI_ARRAY_LIST</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/mutex_links.html">MUTEX</a>
+	<a class="eclass" href="../base/native_string_links.html">NATIVE_STRING</a>
+	<a class="eclass" href="../base/natural_16_ref_links.html">NATURAL_16_REF</a>
+	<a class="eclass" href="../base/natural_32_ref_links.html">NATURAL_32_REF</a>
+	<a class="eclass" href="../base/natural_64_ref_links.html">NATURAL_64_REF</a>
+	<a class="eclass" href="../base/natural_8_ref_links.html">NATURAL_8_REF</a>
+	<a class="eclass" href="../base/numeric_information_links.html">NUMERIC_INFORMATION</a>
+	<a class="eclass" href="../base/object_graph_marker_links.html">OBJECT_GRAPH_MARKER</a>
+	<a class="eclass" href="../base/object_graph_traversable_links.html">OBJECT_GRAPH_TRAVERSABLE</a><span class="echar">*</span>
+	<a class="eclass" href="../base/part_comparable_links.html">PART_COMPARABLE</a><span class="echar">*</span>
+	<a class="eclass" href="../base/part_sorted_list_links.html">PART_SORTED_LIST</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <a class="eclass" href="../base/part_comparable_links.html">PART_COMPARABLE</a><span class="esymbol">]</span>
+	<a class="eclass" href="../base/part_sorted_set_links.html">PART_SORTED_SET</a> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <a class="eclass" href="../base/part_comparable_links.html">PART_COMPARABLE</a><span class="esymbol">]</span>
+	<a class="eclass" href="../base/part_sorted_two_way_list_links.html">PART_SORTED_TWO_WAY_LIST</a> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <a class="eclass" href="../base/part_comparable_links.html">PART_COMPARABLE</a><span class="esymbol">]</span>
+	<a class="eclass" href="../base/path_links.html">PATH</a>
+	<a class="eclass" href="../base/path_name_links.html">PATH_NAME</a><span class="echar">*</span>
+	<a class="eclass" href="../base/plain_text_file_links.html">PLAIN_TEXT_FILE</a>
+	<a class="eclass" href="../base/primes_links.html">PRIMES</a>
+	<a class="eclass" href="../base/profiling_setting_links.html">PROFILING_SETTING</a>
+	<a class="eclass" href="../base/random_links.html">RANDOM</a>
+	<a class="eclass" href="../base/raw_file_links.html">RAW_FILE</a>
+	<a class="eclass" href="../base/readable_indexable_links.html">READABLE_INDEXABLE</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/readable_indexable_iteration_cursor_links.html">READABLE_INDEXABLE_ITERATION_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/readable_string_32_links.html">READABLE_STRING_32</a><span class="echar">*</span>
+	<a class="eclass" href="../base/readable_string_8_links.html">READABLE_STRING_8</a><span class="echar">*</span>
+	<a class="eclass" href="../base/readable_string_general_links.html">READABLE_STRING_GENERAL</a><span class="echar">*</span>
+	<a class="eclass" href="../base/read_write_lock_links.html">READ_WRITE_LOCK</a>
+	<a class="eclass" href="../base/real_32_ref_links.html">REAL_32_REF</a>
+	<a class="eclass" href="../base/real_64_ref_links.html">REAL_64_REF</a>
+	<a class="eclass" href="../base/recursive_cursor_tree_links.html">RECURSIVE_CURSOR_TREE</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/reflected_copy_semantics_object_links.html">REFLECTED_COPY_SEMANTICS_OBJECT</a>
+	<a class="eclass" href="../base/reflected_object_links.html">REFLECTED_OBJECT</a><span class="echar">*</span>
+	<a class="eclass" href="../base/reflected_reference_object_links.html">REFLECTED_REFERENCE_OBJECT</a>
+	<a class="eclass" href="../base/reflector_links.html">REFLECTOR</a>
+	<a class="eclass" href="../base/reflector_helper_links.html">REFLECTOR_HELPER</a>
+	<a class="eclass" href="../base/repeatable_links.html">REPEATABLE</a><span class="echar">*</span>
+	<a class="eclass" href="../base/routine_links.html">ROUTINE</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">OPEN_ARGS</span> <span class="esymbol">-&gt;</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/tuple_links.html">TUPLE</a> <span class="ekeyword">create</span> <a class="efeature" href="../base/any_short.html#f_default_create">default_create</a> <span class="ekeyword">end</span><span class="esymbol">]</span>
+	<span class="neclass">RT_DBG_ATTRIBUTE_RECORD</span> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/any_links.html">ANY</a><span class="esymbol">]</span>
+	<span class="neclass">RT_DBG_CALL_RECORD</span>
+	<span class="neclass">RT_DBG_COMMON</span><span class="echar">*</span>
+	<span class="neclass">RT_DBG_EXECUTION_RECORDER</span>
+	<span class="neclass">RT_DBG_FIELD_RECORD</span> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/any_links.html">ANY</a><span class="esymbol">]</span>
+	<span class="neclass">RT_DBG_INTERNAL</span><span class="echar">*</span>
+	<span class="neclass">RT_DBG_LOCAL_RECORD</span> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/any_links.html">ANY</a><span class="esymbol">]</span>
+	<span class="neclass">RT_DBG_VALUE_RECORD</span><span class="echar">*</span>
+	<span class="neclass">RT_EXTENSION</span>
+	<span class="neclass">RT_EXTENSION_GENERAL</span><span class="echar">*</span>
+	<a class="eclass" href="../base/sed_basic_deserializer_links.html">SED_BASIC_DESERIALIZER</a>
+	<a class="eclass" href="../base/sed_binary_reader_writer_links.html">SED_BINARY_READER_WRITER</a><span class="echar">*</span>
+	<a class="eclass" href="../base/sed_independent_deserializer_links.html">SED_INDEPENDENT_DESERIALIZER</a>
+	<a class="eclass" href="../base/sed_independent_serializer_links.html">SED_INDEPENDENT_SERIALIZER</a>
+	<a class="eclass" href="../base/sed_medium_reader_writer_links.html">SED_MEDIUM_READER_WRITER</a>
+	<a class="eclass" href="../base/sed_medium_reader_writer_1_links.html">SED_MEDIUM_READER_WRITER_1</a>
+	<a class="eclass" href="../base/sed_multi_object_serialization_links.html">SED_MULTI_OBJECT_SERIALIZATION</a>
+	<a class="eclass" href="../base/sed_objects_table_links.html">SED_OBJECTS_TABLE</a>
+	<a class="eclass" href="../base/sed_recoverable_deserializer_links.html">SED_RECOVERABLE_DESERIALIZER</a>
+	<a class="eclass" href="../base/sed_recoverable_serializer_links.html">SED_RECOVERABLE_SERIALIZER</a>
+	<a class="eclass" href="../base/sed_session_deserializer_links.html">SED_SESSION_DESERIALIZER</a>
+	<a class="eclass" href="../base/sed_session_serializer_links.html">SED_SESSION_SERIALIZER</a>
+	<a class="eclass" href="../base/sed_storable_facilities_links.html">SED_STORABLE_FACILITIES</a>
+	<a class="eclass" href="../base/sed_type_mismatch_links.html">SED_TYPE_MISMATCH</a>
+	<a class="eclass" href="../base/semaphore_links.html">SEMAPHORE</a>
+	<a class="eclass" href="../base/sequence_links.html">SEQUENCE</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/seq_string_links.html">SEQ_STRING</a>
+	<a class="eclass" href="../base/set_links.html">SET</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../src/simple_process_links.html">SIMPLE_PROCESS</a>
+	<a class="eclass" href="../src/simple_process_helper_links.html">SIMPLE_PROCESS_HELPER</a>
+	<a class="eclass" href="../base/sorted_list_links.html">SORTED_LIST</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <a class="eclass" href="../base/comparable_links.html">COMPARABLE</a><span class="esymbol">]</span>
+	<a class="eclass" href="../base/sorted_struct_links.html">SORTED_STRUCT</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <a class="eclass" href="../base/comparable_links.html">COMPARABLE</a><span class="esymbol">]</span>
+	<a class="eclass" href="../base/sorted_two_way_list_links.html">SORTED_TWO_WAY_LIST</a> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <a class="eclass" href="../base/comparable_links.html">COMPARABLE</a><span class="esymbol">]</span>
+	<a class="eclass" href="../base/special_links.html">SPECIAL</a> <span class="esymbol">[</span><span class="egeneric">T</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/special_iteration_cursor_links.html">SPECIAL_ITERATION_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/stack_links.html">STACK</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/storable_links.html">STORABLE</a>
+	<a class="eclass" href="../base/string_32_links.html">STRING_32</a>
+	<a class="eclass" href="../base/string_32_iteration_cursor_links.html">STRING_32_ITERATION_CURSOR</a>
+	<a class="eclass" href="../base/string_8_links.html">STRING_8</a>
+	<a class="eclass" href="../base/string_8_iteration_cursor_links.html">STRING_8_ITERATION_CURSOR</a>
+	<a class="eclass" href="../base/string_general_links.html">STRING_GENERAL</a><span class="echar">*</span>
+	<a class="eclass" href="../base/string_searcher_links.html">STRING_SEARCHER</a><span class="echar">*</span>
+	<a class="eclass" href="../base/string_table_links.html">STRING_TABLE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/string_to_integer_convertor_links.html">STRING_TO_INTEGER_CONVERTOR</a>
+	<a class="eclass" href="../base/string_to_numeric_convertor_links.html">STRING_TO_NUMERIC_CONVERTOR</a><span class="echar">*</span>
+	<a class="eclass" href="../base/string_to_real_convertor_links.html">STRING_TO_REAL_CONVERTOR</a>
+	<a class="eclass" href="../base/string_tracing_handler_links.html">STRING_TRACING_HANDLER</a><span class="echar">*</span>
+	<a class="eclass" href="../base/subset_links.html">SUBSET</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/subset_strategy_links.html">SUBSET_STRATEGY</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/subset_strategy_generic_links.html">SUBSET_STRATEGY_GENERIC</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/subset_strategy_hashable_links.html">SUBSET_STRATEGY_HASHABLE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/subset_strategy_tree_links.html">SUBSET_STRATEGY_TREE</a> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <a class="eclass" href="../base/comparable_links.html">COMPARABLE</a><span class="esymbol">]</span>
+	<a class="eclass" href="../base/table_iteration_cursor_links.html">TABLE_ITERATION_CURSOR</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">,</span> <span class="egeneric">K</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/tracing_handler_links.html">TRACING_HANDLER</a><span class="echar">*</span>
+	<a class="eclass" href="../base/tracing_setting_links.html">TRACING_SETTING</a>
+	<a class="eclass" href="../base/traversable_links.html">TRAVERSABLE</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/traversable_subset_links.html">TRAVERSABLE_SUBSET</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/tree_links.html">TREE</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/tree_iteration_cursor_links.html">TREE_ITERATION_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/tuple_links.html">TUPLE</a>
+	<a class="eclass" href="../base/two_way_list_links.html">TWO_WAY_LIST</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/two_way_list_iteration_cursor_links.html">TWO_WAY_LIST_ITERATION_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/two_way_sorted_set_links.html">TWO_WAY_SORTED_SET</a> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <a class="eclass" href="../base/comparable_links.html">COMPARABLE</a><span class="esymbol">]</span>
+	<a class="eclass" href="../base/two_way_tree_links.html">TWO_WAY_TREE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/two_way_tree_iteration_cursor_links.html">TWO_WAY_TREE_ITERATION_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/type_links.html">TYPE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+	<a class="eclass" href="../base/unicode_conversion_links.html">UNICODE_CONVERSION</a>
+	<a class="eclass" href="../base/unix_signals_links.html">UNIX_SIGNALS</a>
+	<a class="eclass" href="../base/utf_converter_links.html">UTF_CONVERTER</a>
+	<a class="eclass" href="../base/weak_reference_links.html">WEAK_REFERENCE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+
+<span class="ekeyword">Suppliers</span>
+	<a class="eclass" href="../base/boolean_links.html">BOOLEAN</a>
+
+</pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="boolean_chart.html">Chart</a>
+<span class="nav class selected">Relations</span>
+<a class="nav class" href="boolean_short.html">Contracts</a>
+<span class="nav class goto">Go to: <input name="c" value="boolean"></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>

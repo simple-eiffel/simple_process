@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="description" content="Sequential, one-way linked lists that call add/remove features when an item is removed or added."/>
+<meta name="legal" content="See notice at end of class."/>
+<meta name="keywords" content="Eiffel class, event, linked, list"/>
+<meta name="library" content="EiffelBase: Library of reusable components for Eiffel."/>
+<meta name="copyright" content="Copyright (c) 1984-2021, Eiffel Software and others"/>
+<meta name="license" content="Eiffel Forum License v2 (see http://www.eiffel.com/licensing/forum.txt)"/>
+<meta name="source" content="Eiffel Software 5949 Hollister Ave., Goleta, CA 93117 USA Telephone 805-685-1006, Fax 805-685-6869 Website http://www.eiffel.com Customer support http://support.eiffel.com"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>interactive_list Contracts</title>
+<link rel="stylesheet" href="../default.css" type="text/css">
+<script type="text/javascript" src="../goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="interactive_list_chart.html">Chart</a>
+<a class="nav class" href="interactive_list_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="interactive_list"></span>
+</div></form><pre><span class="ekeyword">note</span>
+	<span class="eitag">description</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">Sequential, one-way linked lists that call add/remove features</span>
+		<span class="estring">when an item is removed or added.</span>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+	<span class="eitag">legal</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">status</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">keywords</span><span class="esymbol">:</span> <span class="estring">&quot;event, linked, list&quot;</span>
+	<span class="eitag">date</span><span class="esymbol">:</span> <span class="estring">&quot;$Date$&quot;</span>
+	<span class="eitag">revision</span><span class="esymbol">:</span> <span class="estring">&quot;$Revision$&quot;</span>
+
+<span class="ekeyword">deferred</span> <span class="ekeyword">class</span> <span class="ekeyword">interface</span>
+	<a class="eclass" href="../base/interactive_list_short.html">INTERACTIVE_LIST</a> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <span class="esymbol">]</span>
+
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Miscellaneous</span>
+
+	<a name="f_on_item_added_at"></a><a class="efeature" href="../base/interactive_list_short.html#f_on_item_added_at">on_item_added_at</a> <span class="esymbol">(</span><span class="elocal">an_item</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <a class="efeature" href="../base/arrayed_list_short.html#f_item">item</a><span class="esymbol">;</span> <span class="elocal">item_index</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span><span class="equoted">an_item</span><span class="ecomment"> has just been added at index </span><span class="equoted">item_index</span><span class="ecomment">.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">item_index_valid</span><span class="esymbol">:</span> <span class="esymbol">(</span><span class="enumber">1</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <span class="elocal">item_index</span><span class="esymbol">)</span> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <span class="esymbol">(</span><span class="elocal">item_index</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <a class="efeature" href="../base/arrayed_list_short.html#f_count">count</a><span class="esymbol">)</span>
+
+	<a name="f_on_item_removed_at"></a><a class="efeature" href="../base/interactive_list_short.html#f_on_item_removed_at">on_item_removed_at</a> <span class="esymbol">(</span><span class="elocal">an_item</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <a class="efeature" href="../base/arrayed_list_short.html#f_item">item</a><span class="esymbol">;</span> <span class="elocal">item_index</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span><span class="equoted">an_item</span><span class="ecomment"> has just been removed from index </span><span class="equoted">item_index</span><span class="ecomment">.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">item_index_valid</span><span class="esymbol">:</span> <span class="esymbol">(</span><span class="enumber">1</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <span class="elocal">item_index</span><span class="esymbol">)</span> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <span class="esymbol">(</span><span class="elocal">item_index</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <a class="efeature" href="../base/arrayed_list_short.html#f_count">count</a> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="enumber">1</span><span class="esymbol">)</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Element Change</span>
+
+	<a name="f_put_front"></a><a class="efeature" href="../base/interactive_list_short.html#f_put_front">put_front</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <a class="efeature" href="../base/arrayed_list_short.html#f_item">item</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Add </span><span class="equoted">v</span><span class="ecomment"> to beginning.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Do not move cursor.</span>
+
+	<a name="f_extend"></a><a class="efeature" href="../base/interactive_list_short.html#f_extend">extend</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <a class="efeature" href="../base/arrayed_list_short.html#f_item">item</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Add </span><span class="equoted">v</span><span class="ecomment"> to end.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Do not move cursor.</span>
+
+	<a name="f_append"></a><a class="efeature" href="../base/interactive_list_short.html#f_append">append</a> <span class="esymbol">(</span><span class="elocal">s</span><span class="esymbol">:</span> <a class="eclass" href="../base/sequence_short.html">SEQUENCE</a> <span class="esymbol">[</span><span class="ekeyword">like</span> <a class="efeature" href="../base/arrayed_list_short.html#f_item">item</a><span class="esymbol">]</span><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Append a copy of </span><span class="equoted">s</span><span class="ecomment">.</span>
+
+	<a name="f_put_left"></a><a class="efeature" href="../base/interactive_list_short.html#f_put_left">put_left</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <a class="efeature" href="../base/arrayed_list_short.html#f_item">item</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Add </span><span class="equoted">v</span><span class="ecomment"> to the left of cursor position.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Do not move cursor.</span>
+
+	<a name="f_put_right"></a><a class="efeature" href="../base/interactive_list_short.html#f_put_right">put_right</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <a class="efeature" href="../base/arrayed_list_short.html#f_item">item</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Add </span><span class="equoted">v</span><span class="ecomment"> to the right of cursor position.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Do not move cursor.</span>
+
+	<a name="f_put_i_th"></a><a class="efeature" href="../base/interactive_list_short.html#f_put_i_th">put_i_th</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <a class="efeature" href="../base/arrayed_list_short.html#f_i_th">i_th</a><span class="esymbol">;</span> <span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Replace </span><span class="equoted">i</span><span class="ecomment">-th entry, if in index interval, by </span><span class="equoted">v</span><span class="ecomment">.</span>
+
+	<a name="f_replace"></a><a class="efeature" href="../base/interactive_list_short.html#f_replace">replace</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <a class="efeature" href="../base/arrayed_list_short.html#f_item">item</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Replace current item by </span><span class="equoted">v</span><span class="ecomment">.</span>
+
+	<a name="f_remove"></a><a class="efeature" href="../base/interactive_list_short.html#f_remove">remove</a>
+			<span class="ecomment">--</span><span class="ecomment"> Remove current item.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Move cursor to right neighbor</span>
+			<span class="ecomment">--</span><span class="ecomment"> (or </span><span class="ecomment">`</span><a class="efeature" href="../base/list_short.html#f_after">after</a><span class="ecomment">`</span><span class="ecomment"> if no right neighbor).</span>
+
+	<a name="f_remove_right"></a><a class="efeature" href="../base/interactive_list_short.html#f_remove_right">remove_right</a>
+			<span class="ecomment">--</span><span class="ecomment"> Remove item to the right of cursor position.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Do not move cursor.</span>
+
+	<a name="f_merge_left"></a><a class="efeature" href="../base/interactive_list_short.html#f_merge_left">merge_left</a> <span class="esymbol">(</span><span class="elocal">other</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <span class="ekeyword">Current</span><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Merge </span><span class="equoted">other</span><span class="ecomment"> into current structure after cursor</span>
+			<span class="ecomment">--</span><span class="ecomment"> position. Do not move cursor. Empty </span><span class="equoted">other</span>
+
+	<a name="f_merge_right"></a><a class="efeature" href="../base/interactive_list_short.html#f_merge_right">merge_right</a> <span class="esymbol">(</span><span class="elocal">other</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <span class="ekeyword">Current</span><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Merge </span><span class="equoted">other</span><span class="ecomment"> into current structure before cursor</span>
+			<span class="ecomment">--</span><span class="ecomment"> position. Do not move cursor. Empty </span><span class="equoted">other</span>
+
+	<a name="f_prune_all"></a><a class="efeature" href="../base/interactive_list_short.html#f_prune_all">prune_all</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <a class="efeature" href="../base/arrayed_list_short.html#f_item">item</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Remove all occurrences of </span><span class="equoted">v</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> (Reference or object equality,</span>
+			<span class="ecomment">--</span><span class="ecomment"> based on </span><span class="ecomment">`</span><a class="efeature" href="../base/container_short.html#f_object_comparison">object_comparison</a><span class="ecomment">`</span><span class="ecomment">.)</span>
+		<span class="ekeyword">ensure then</span>
+			<span class="etag">is_after</span><span class="esymbol">:</span> <a class="efeature" href="../base/list_short.html#f_after">after</a>
+
+	<a name="f_update_for_added"></a><a class="efeature" href="../base/interactive_list_short.html#f_update_for_added">update_for_added</a> <span class="esymbol">(</span><span class="elocal">start_index</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Call </span><span class="ecomment">`</span><a class="efeature" href="../base/interactive_list_short.html#f_added_item">added_item</a><span class="ecomment">`</span><span class="ecomment"> for all items from index </span><span class="equoted">start_index</span><span class="ecomment"> to </span><span class="ecomment">`</span><a class="efeature" href="../base/arrayed_list_short.html#f_count">count</a><span class="ecomment">`</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Removal</span>
+
+	<a name="f_wipe_out"></a><a class="efeature" href="../base/interactive_list_short.html#f_wipe_out">wipe_out</a>
+			<span class="ecomment">--</span><span class="ecomment"> Remove all items.</span>
+	
+<span class="ekeyword">note</span>
+	<span class="eitag">library</span><span class="esymbol">:</span> <span class="estring">&quot;EiffelBase: Library of reusable components for Eiffel.&quot;</span>
+	<span class="eitag">copyright</span><span class="esymbol">:</span> <span class="estring">&quot;Copyright (c) 1984-2021, Eiffel Software and others&quot;</span>
+	<span class="eitag">license</span><span class="esymbol">:</span> <span class="estring">&quot;Eiffel Forum License v2 (see </span><a class="estring" href="http://www.eiffel.com/licensing/forum.txt">http://www.eiffel.com/licensing/forum.txt</a><span class="estring">)&quot;</span>
+	<span class="eitag">source</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">Eiffel Software</span>
+		<span class="estring">5949 Hollister Ave., Goleta, CA 93117 USA</span>
+		<span class="estring">Telephone 805-685-1006, Fax 805-685-6869</span>
+		<span class="estring">Website </span><a class="estring" href="http://www.eiffel.com">http://www.eiffel.com</a>
+		<span class="estring">Customer support </span><a class="estring" href="http://support.eiffel.com">http://support.eiffel.com</a>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+
+<span class="ekeyword">end</span> <span class="ecomment">--</span> <span class="ecomment">class </span><a class="eclass" href="../base/interactive_list_short.html">INTERACTIVE_LIST</a></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="interactive_list_chart.html">Chart</a>
+<a class="nav class" href="interactive_list_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="interactive_list"></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>
+

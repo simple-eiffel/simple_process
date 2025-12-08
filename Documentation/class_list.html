@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="keywords" content="Eiffel system"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>simple_process class dictionary</title>
+<link rel="stylesheet" href="default.css" type="text/css">
+<script type="text/javascript" src="goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('',this.c.value);return false;">
+<div class="nav">
+<span class="nav hierarchy selected">Classes</span>
+<a class="nav hierarchy" href="cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="cluster_hierarchy.html">Cluster hierarchy</a>
+<span class="nav class goto">Go to: <input name="c" value=""></span>
+</div></form><pre><span class="ekeyword">Classes</span>
+	<a class="eclass" href="base/abstract_special_chart.html">ABSTRACT_SPECIAL</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Ancestor of SPECIAL to perform queries on SPECIAL without knowing its actual generic type.</span>
+
+	<a class="eclass" href="base/action_sequence_chart.html">ACTION_SEQUENCE</a> <span class="esymbol">[</span><span class="egeneric">EVENT_DATA</span> <span class="esymbol">-&gt;</span> <span class="ekeyword">detachable</span> <a class="eclass" href="base/tuple_chart.html">TUPLE</a> <span class="ekeyword">create</span> <a class="efeature" href="base/any_short.html#f_default_create">default_create</a> <span class="ekeyword">end</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> A sequence of actions to be performed on </span><span class="equoted">call</span><span class="ecomment">.</span>
+
+	<a class="eclass" href="base/active_chart.html">ACTIVE</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span><span class="equoted">Active</span><span class="ecomment"> data structures, which at every stage have</span>
+			<span class="ecomment">--</span><span class="ecomment"> a possibly undefined </span><span class="equoted">current item</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Basic access and modification operations apply to the current item.</span>
+
+	<a class="eclass" href="base/active_integer_interval_chart.html">ACTIVE_INTEGER_INTERVAL</a>
+			<span class="ecomment">--</span><span class="ecomment"> Contiguous integer interval that calls an action sequence</span>
+			<span class="ecomment">--</span><span class="ecomment"> when it changes.</span>
+
+	<a class="eclass" href="base/active_list_chart.html">ACTIVE_LIST</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Sequential, one-way linked lists that call an action</span>
+			<span class="ecomment">--</span><span class="ecomment"> sequence when an item is removed or added.</span>
+
+	<a class="eclass" href="base/address_applied_to_melted_feature_chart.html">ADDRESS_APPLIED_TO_MELTED_FEATURE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Exception raised when $ is applied to melted feature</span>
+
+	<a class="eclass" href="base/agent_tracing_handler_chart.html">AGENT_TRACING_HANDLER</a>
+			<span class="ecomment">--</span><span class="ecomment"> Abstract class used by TRACE_MANAGER to dispatch tracing events to user using STRING data via an agent.</span>
+
+	<a class="eclass" href="base/any_chart.html">ANY</a>
+			<span class="ecomment">--</span><span class="ecomment"> Project-wide universal properties.</span>
+			<span class="ecomment">--</span><span class="ecomment"> This class is an ancestor to all developer-written classes.</span>
+			<span class="ecomment">--</span><span class="ecomment"> ANY may be customized for individual projects or teams.</span>
+
+	<a class="eclass" href="base/arguments_chart.html">ARGUMENTS</a>
+			<span class="ecomment">--</span><span class="ecomment"> Access to command-line arguments. This class </span>
+			<span class="ecomment">--</span><span class="ecomment"> may be used as ancestor by classes needing its facilities.</span>
+
+	<a class="eclass" href="base/arguments_32_chart.html">ARGUMENTS_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Access to command-line arguments. This class </span>
+			<span class="ecomment">--</span><span class="ecomment"> may be used as ancestor by classes needing its facilities.</span>
+
+	<a class="eclass" href="base/array_chart.html">ARRAY</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Sequences of values, all of the same type or of a conforming one,</span>
+			<span class="ecomment">--</span><span class="ecomment"> accessible through integer indices in a contiguous interval.</span>
+
+	<a class="eclass" href="base/array2_chart.html">ARRAY2</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Two-dimensional arrays</span>
+
+	<a class="eclass" href="base/arrayed_circular_chart.html">ARRAYED_CIRCULAR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Circular chains implemented by resizable arrays</span>
+
+	<a class="eclass" href="base/arrayed_list_chart.html">ARRAYED_LIST</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Lists implemented by resizable arrays</span>
+
+	<a class="eclass" href="base/arrayed_list_cursor_chart.html">ARRAYED_LIST_CURSOR</a>
+			<span class="ecomment">--</span><span class="ecomment"> Cursors for arrayed lists</span>
+
+	<a class="eclass" href="base/arrayed_list_iteration_cursor_chart.html">ARRAYED_LIST_ITERATION_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> External forward one-step iteration cursor for </span><span class="esymbol">{</span><a class="eclass" href="base/arrayed_list_chart.html">ARRAYED_LIST</a><span class="esymbol">}</span><span class="ecomment">.</span>
+
+	<a class="eclass" href="base/arrayed_queue_chart.html">ARRAYED_QUEUE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Unbounded queues, implemented by resizable arrays</span>
+
+	<a class="eclass" href="base/arrayed_queue_iteration_cursor_chart.html">ARRAYED_QUEUE_ITERATION_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> External iteration cursor for </span><span class="esymbol">{</span><a class="eclass" href="base/arrayed_queue_chart.html">ARRAYED_QUEUE</a><span class="esymbol">}</span><span class="ecomment">.</span>
+
+	<a class="eclass" href="base/arrayed_set_chart.html">ARRAYED_SET</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Sets represented as arrayed lists</span>
+
+	<a class="eclass" href="base/arrayed_stack_chart.html">ARRAYED_STACK</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Stacks implemented by resizable arrays</span>
+
+	<a class="eclass" href="base/arrayed_tree_chart.html">ARRAYED_TREE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Trees where the children of each node are kept in an array</span>
+
+	<a class="eclass" href="base/array_iteration_cursor_chart.html">ARRAY_ITERATION_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> External forward one-step iteration cursor for </span><span class="esymbol">{</span><a class="eclass" href="base/array_chart.html">ARRAY</a><span class="esymbol">}</span><span class="ecomment">.</span>
+
+	<a class="eclass" href="base/ascii_chart.html">ASCII</a>
+			<span class="ecomment">--</span><span class="ecomment"> The ASCII character set.</span>
+			<span class="ecomment">--</span><span class="ecomment"> This class may be used as ancestor by classes needing its facilities.</span>
+
+	<a class="eclass" href="base/assertion_violation_chart.html">ASSERTION_VIOLATION</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Exception represents an assertion violation.</span>
+
+	<a class="eclass" href="base/bad_inspect_value_chart.html">BAD_INSPECT_VALUE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Exception raised by inspect value which is not one</span>
+			<span class="ecomment">--</span><span class="ecomment"> of the inspect constants, if there is no Else_part.</span>
+
+	<a class="eclass" href="base/bag_chart.html">BAG</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Collections of items, where each item may occur zero</span>
+			<span class="ecomment">--</span><span class="ecomment"> or more times, and the number of occurrences is meaningful.</span>
+
+	<a class="eclass" href="base/basic_routines_chart.html">BASIC_ROUTINES</a>
+			<span class="ecomment">--</span><span class="ecomment"> Some useful facilities on objects of basic types.</span>
+
+	<a class="eclass" href="base/bilinear_chart.html">BILINEAR</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Structures that may be traversed forward and backward</span>
+
+	<a class="eclass" href="base/binary_search_tree_chart.html">BINARY_SEARCH_TREE</a> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <a class="eclass" href="base/comparable_chart.html">COMPARABLE</a><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Binary search trees; left child item is less than current item,</span>
+			<span class="ecomment">--</span><span class="ecomment"> right child item is greater</span>
+
+	<a class="eclass" href="base/binary_search_tree_set_chart.html">BINARY_SEARCH_TREE_SET</a> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <a class="eclass" href="base/comparable_chart.html">COMPARABLE</a><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Sorted sets implemented as binary search trees</span>
+
+	<a class="eclass" href="base/binary_tree_chart.html">BINARY_TREE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Binary tree: each node may have a left child and a right child</span>
+
+	<a class="eclass" href="base/bi_linkable_chart.html">BI_LINKABLE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Linkable cells with a reference to the left and right neighbors</span>
+
+	<a class="eclass" href="base/boolean_chart.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Truth values, with the boolean operations.</span>
+
+	<a class="eclass" href="base/boolean_ref_chart.html">BOOLEAN_REF</a>
+			<span class="ecomment">--</span><span class="ecomment"> References to objects containing a boolean value.</span>
+
+	<a class="eclass" href="base/bool_string_chart.html">BOOL_STRING</a>
+			<span class="ecomment">--</span><span class="ecomment"> Packed boolean strings</span>
+
+	<a class="eclass" href="base/bounded_chart.html">BOUNDED</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Bounded data structures, with a notion of capacity.</span>
+
+	<a class="eclass" href="base/bounded_queue_chart.html">BOUNDED_QUEUE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Queues with a bounded physical size, implemented by arrays</span>
+
+	<a class="eclass" href="base/bounded_stack_chart.html">BOUNDED_STACK</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Stacks with a bounded physical size, implemented by arrays</span>
+
+	<a class="eclass" href="base/box_chart.html">BOX</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Data structures of the most general kind,</span>
+			<span class="ecomment">--</span><span class="ecomment"> having the potential ability to become full,</span>
+			<span class="ecomment">--</span><span class="ecomment"> and characterized by their implementation properties.</span>
+
+	<a class="eclass" href="base/cell_chart.html">CELL</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Cells containing an item</span>
+
+	<a class="eclass" href="base/chain_chart.html">CHAIN</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Possibly circular sequences of items,</span>
+			<span class="ecomment">--</span><span class="ecomment"> without commitment to a particular representation</span>
+
+	<a class="eclass" href="base/character_32_chart.html">CHARACTER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Unicode characters, with comparison operations</span>
+
+	<a class="eclass" href="base/character_32_ref_chart.html">CHARACTER_32_REF</a>
+			<span class="ecomment">--</span><span class="ecomment"> References to objects containing a unicode character value</span>
+
+	<a class="eclass" href="base/character_8_chart.html">CHARACTER_8</a>
+			<span class="ecomment">--</span><span class="ecomment"> Characters, with comparison operations and an ASCII code</span>
+
+	<a class="eclass" href="base/character_8_ref_chart.html">CHARACTER_8_REF</a>
+			<span class="ecomment">--</span><span class="ecomment"> References to objects containing a character value</span>
+
+	<a class="eclass" href="base/character_property_chart.html">CHARACTER_PROPERTY</a>
+			<span class="ecomment">--</span><span class="ecomment"> Helper functions to provide property of a Unicode character of type CHARACTER_32.</span>
+			<span class="ecomment">--</span><span class="ecomment"> This includes finding out if a character is lower, upper, title case, or if it is a digit,</span>
+			<span class="ecomment">--</span><span class="ecomment"> a punctuation, a control or a space character.</span>
+
+	<a class="eclass" href="base/check_violation_chart.html">CHECK_VIOLATION</a>
+			<span class="ecomment">--</span><span class="ecomment"> Exception raised by violated checks</span>
+
+	<a class="eclass" href="base/circular_chart.html">CIRCULAR</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Circular chains, without commitment to a particular representation</span>
+
+	<a class="eclass" href="base/circular_cursor_chart.html">CIRCULAR_CURSOR</a>
+			<span class="ecomment">--</span><span class="ecomment"> Cursors for circular lists</span>
+
+	<a class="eclass" href="base/class_name_translations_chart.html">CLASS_NAME_TRANSLATIONS</a>
+			<span class="ecomment">--</span><span class="ecomment"> Translations of class names between a storing and a retrieving</span>
+			<span class="ecomment">--</span><span class="ecomment"> system. Values in this table are names of classes in the retrieving</span>
+			<span class="ecomment">--</span><span class="ecomment"> system, indexed by names of generating classes in the storing</span>
+			<span class="ecomment">--</span><span class="ecomment"> system (i.e. with no generic arguments). Values may have generic</span>
+			<span class="ecomment">--</span><span class="ecomment"> arguments (e.g. &quot;MY_CLASS </span><span class="ecomment">[REAL_64]</span><span class="ecomment">&quot;), thus allowing a very simple</span>
+			<span class="ecomment">--</span><span class="ecomment"> conversion of a non-generic class into a generic class. The</span>
+			<span class="ecomment">--</span><span class="ecomment"> presence of entries in this table affects all retrieve operations</span>
+			<span class="ecomment">--</span><span class="ecomment"> for objects stored using </span><span class="equoted">independent_store</span><span class="ecomment">.</span>
+
+	<a class="eclass" href="base/code_page_constants_chart.html">CODE_PAGE_CONSTANTS</a>
+			<span class="ecomment">--</span><span class="ecomment"> Code page constants for general encodings</span>
+
+	<a class="eclass" href="base/collection_chart.html">COLLECTION</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> General container data structures, </span>
+			<span class="ecomment">--</span><span class="ecomment"> characterized by the membership properties of their items.</span>
+
+	<a class="eclass" href="base/comparable_chart.html">COMPARABLE</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Objects that may be compared according to a total order relation</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> Note: The basic operation is </span><span class="equoted">&lt;</span><span class="ecomment"> (less than); others are defined</span>
+			<span class="ecomment">--</span><span class="ecomment"> in terms of this operation and </span><span class="ecomment">`</span><a class="efeature" href="base/any_short.html#f_is_equal">is_equal</a><span class="ecomment">`</span><span class="ecomment">.</span>
+
+	<a class="eclass" href="base/comparable_set_chart.html">COMPARABLE_SET</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <a class="eclass" href="base/comparable_chart.html">COMPARABLE</a><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Sets whose items may be compared according to a total order relation</span>
+
+	<a class="eclass" href="base/comparable_struct_chart.html">COMPARABLE_STRUCT</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <a class="eclass" href="base/comparable_chart.html">COMPARABLE</a><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Data structures whose items may be compared</span>
+			<span class="ecomment">--</span><span class="ecomment"> according to a total order relation</span>
+
+	<a class="eclass" href="base/com_failure_chart.html">COM_FAILURE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Exception for a COM error</span>
+
+	<a class="eclass" href="base/condition_variable_chart.html">CONDITION_VARIABLE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Condition variables allow threads to synchronize based on the content of a shared data, whereas</span>
+			<span class="ecomment">--</span><span class="ecomment"> mutexes only synchronize access to the data. In other words, a condition variable is a</span>
+			<span class="ecomment">--</span><span class="ecomment"> synchronization object that enables threads to wait until a particular condition occurs.</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> When a thread executes a </span><span class="equoted">wait</span><span class="ecomment"> call on a condition variable, it must hold an associated </span><span class="equoted">mutex</span>
+			<span class="ecomment">--</span><span class="ecomment"> (used for checking that condition). Then, it is immediately suspended and put into the waiting</span>
+			<span class="ecomment">--</span><span class="ecomment"> queue. The thread is suspended and is waiting for the condition to occur.</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> Eventually, when the condition has occurred, a thread will </span><span class="equoted">signal</span><span class="ecomment"> it. Two possible scenarios:</span>
+			<span class="ecomment">--</span><span class="ecomment"> - if there are threads waiting, then one of the waiting thread will resume its execution and</span>
+			<span class="ecomment">--</span><span class="ecomment"> &nbsp;&nbsp;will get the </span><span class="equoted">mutex</span><span class="ecomment"> in a locked state.</span>
+			<span class="ecomment">--</span><span class="ecomment"> - if there are no threads waiting, nothing is done</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> For the simple usage of a condition variable, it is very similar to using a semaphore.</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> In addition you have </span><span class="equoted">broadcast</span><span class="ecomment"> that will resume all waiting threads at once, and</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span><span class="equoted">wait_with_timeout</span><span class="ecomment"> that will wait only a certain amount of time before abandonning the wait.</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> The </span><span class="equoted">signal</span><span class="ecomment"> and </span><span class="equoted">broadcast</span><span class="ecomment"> routines can be called by a thread whether or not it currently owns</span>
+			<span class="ecomment">--</span><span class="ecomment"> the mutex that threads calling </span><span class="equoted">wait</span><span class="ecomment"> or </span><span class="equoted">wait_with_timeout</span><span class="ecomment"> have associated with the condition</span>
+			<span class="ecomment">--</span><span class="ecomment"> variable during their waits. If, however, predictable scheduling behavior is required, then that</span>
+			<span class="ecomment">--</span><span class="ecomment"> mutex should be locked by the thread prior to calling </span><span class="equoted">signal</span><span class="ecomment"> or </span><span class="equoted">broadcast</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> Assuming </span><span class="equoted">shared_data</span><span class="ecomment"> an INTEGER initially set to zero, then a typical usage of condition variable</span>
+			<span class="ecomment">--</span><span class="ecomment"> to wait until </span><span class="equoted">shared_data</span><span class="ecomment"> becomes one, could be written as followed in thread A:</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> mutex.lock</span>
+			<span class="ecomment">--</span><span class="ecomment"> from</span>
+			<span class="ecomment">--</span><span class="ecomment"> until</span>
+			<span class="ecomment">--</span><span class="ecomment"> shared_data = 1</span>
+			<span class="ecomment">--</span><span class="ecomment"> loop</span>
+			<span class="ecomment">--</span><span class="ecomment"> condition_variable.wait (mutex)</span>
+			<span class="ecomment">--</span><span class="ecomment"> end</span>
+			<span class="ecomment">--</span><span class="ecomment"> mutex.unlock</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> and in thread B:</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> mutex.lock</span>
+			<span class="ecomment">--</span><span class="ecomment"> shared_data := 1</span>
+			<span class="ecomment">--</span><span class="ecomment"> condition_variable.signal</span>
+			<span class="ecomment">--</span><span class="ecomment"> mutex.unlock</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> Thread A will be blocked until thread B signal that now </span><span class="equoted">shared_data</span><span class="ecomment"> is 1.</span>
+
+	<a class="eclass" href="base/console_chart.html">CONSOLE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Commonly used console input and output mechanisms. </span>
+			<span class="ecomment">--</span><span class="ecomment"> This class may be used as ancestor by classes needing its facilities.</span>
+
+	<a class="eclass" href="base/container_chart.html">CONTAINER</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Data structures of the most general kind,</span>
+			<span class="ecomment">--</span><span class="ecomment"> used to hold zero or more items.</span>
+
+	<a class="eclass" href="base/countable_chart.html">COUNTABLE</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Infinite containers whose items are in one-to-one </span>
+			<span class="ecomment">--</span><span class="ecomment"> correspondence with the integers.</span>
+
+	<a class="eclass" href="base/countable_sequence_chart.html">COUNTABLE_SEQUENCE</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Infinite sequences, indexed by integers</span>
+
+	<a class="eclass" href="base/create_on_deferred_chart.html">CREATE_ON_DEFERRED</a>
+			<span class="ecomment">--</span><span class="ecomment"> Exception raised when creating deferred classes</span>
+
+	<a class="eclass" href="base/cursor_chart.html">CURSOR</a>
+			<span class="ecomment">--</span><span class="ecomment"> Cursors for remembering positions in arbitrary data structures</span>
+
+	<a class="eclass" href="base/cursor_structure_chart.html">CURSOR_STRUCTURE</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Active structures, which always have a current position</span>
+			<span class="ecomment">--</span><span class="ecomment"> accessible through a cursor.</span>
+
+	<a class="eclass" href="base/cursor_tree_chart.html">CURSOR_TREE</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Trees as active structures that may be traversed using a cursor</span>
+
+	<a class="eclass" href="base/cursor_tree_iterator_chart.html">CURSOR_TREE_ITERATOR</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Objects that are able to iterate over cursor trees, </span>
+			<span class="ecomment">--</span><span class="ecomment"> on which they can perform repeated actions and tests according</span>
+			<span class="ecomment">--</span><span class="ecomment"> to a number of predefined control structures such as </span><span class="equoted">if</span><span class="ecomment">,</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span><span class="equoted">until</span><span class="ecomment"> and others.</span>
+
+	<a class="eclass" href="base/c_string_chart.html">C_STRING</a>
+			<span class="ecomment">--</span><span class="ecomment"> A low-level string class to solve some garbage collector problems (mainly objects moving around) when interfacing with C APIs.</span>
+
+	<a class="eclass" href="base/data_exception_chart.html">DATA_EXCEPTION</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Deffered class of data exception from the runtime</span>
+
+	<a class="eclass" href="base/debug_output_chart.html">DEBUG_OUTPUT</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Objects that provide an output in debugger</span>
+
+	<a class="eclass" href="base/declarator_chart.html">DECLARATOR</a>
+			<span class="ecomment">--</span><span class="ecomment"> Class used to ensure proper precompilation of EiffelBase. </span>
+			<span class="ecomment">--</span><span class="ecomment"> Not to be used otherwise.</span>
+
+	<a class="eclass" href="base/developer_exception_chart.html">DEVELOPER_EXCEPTION</a>
+			<span class="ecomment">--</span><span class="ecomment"> Ancestor of all developer exceptions</span>
+
+	<a class="eclass" href="base/directory_chart.html">DIRECTORY</a>
+			<span class="ecomment">--</span><span class="ecomment"> Directories, in the Unix sense, with creation and exploration features</span>
+
+	<a class="eclass" href="base/directory_name_chart.html">DIRECTORY_NAME</a>
+			<span class="ecomment">--</span><span class="ecomment"> Directory name abstraction</span>
+
+	<a class="eclass" href="base/dispenser_chart.html">DISPENSER</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Dispensers: containers for which clients have no say</span>
+			<span class="ecomment">--</span><span class="ecomment"> as to what item they can access at a given time.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Examples include stacks and queues.</span>
+
+	<a class="eclass" href="base/disposable_chart.html">DISPOSABLE</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Perform cleanup operations before current instance is reclaimed by garbage collection.</span>
+
+	<a class="eclass" href="base/double_math_chart.html">DOUBLE_MATH</a>
+			<span class="ecomment">--</span><span class="ecomment"> Basic mathematical operations, double-precision.</span>
+			<span class="ecomment">--</span><span class="ecomment"> This class may be used as ancestor by classes needing its facilities.</span>
+
+	<a class="eclass" href="base/dynamic_chain_chart.html">DYNAMIC_CHAIN</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Dynamically modifiable chains</span>
+
+	<a class="eclass" href="base/dynamic_circular_chart.html">DYNAMIC_CIRCULAR</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Dynamically modifiable circular chains</span>
+
+	<a class="eclass" href="base/dynamic_list_chart.html">DYNAMIC_LIST</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Sequential, dynamically modifiable lists,</span>
+			<span class="ecomment">--</span><span class="ecomment"> without commitment to a particular representation</span>
+
+	<a class="eclass" href="base/dynamic_table_chart.html">DYNAMIC_TABLE</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">,</span> <span class="egeneric">H</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Dynamically modifiable table.</span>
+
+	<a class="eclass" href="base/dynamic_tree_chart.html">DYNAMIC_TREE</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Trees with a dynamically modifiable structure</span>
+
+	<a class="eclass" href="base/ecma_internal_chart.html">ECMA_INTERNAL</a>
+			<span class="ecomment">--</span><span class="ecomment"> Version of INTERNAL which does not use the mapping of STRING to STRING_8, INTEGER to INTEGER_32, etc...</span>
+
+	<a class="eclass" href="base/eiffelstudio_specific_language_exception_chart.html">EIFFELSTUDIO_SPECIFIC_LANGUAGE_EXCEPTION</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Deferred class representing EiffelStudio specific language exceptions.</span>
+
+	<a class="eclass" href="base/eiffel_runtime_exception_chart.html">EIFFEL_RUNTIME_EXCEPTION</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Eiffel runtime exception</span>
+
+	<a class="eclass" href="base/eiffel_runtime_panic_chart.html">EIFFEL_RUNTIME_PANIC</a>
+			<span class="ecomment">--</span><span class="ecomment"> Eiffel runtime panic</span>
+
+	<a class="eclass" href="base/eif_exception_chart.html">EIF_EXCEPTION</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Deferred class for exceptions of Eiffel language, runtime and so on.</span>
+
+	<a class="eclass" href="base/empty_iteration_cursor_chart.html">EMPTY_ITERATION_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> External iteration cursor for an ITERABLE without any elements.</span>
+
+	<a class="eclass" href="base/encoding_chart.html">ENCODING</a>
+			<span class="ecomment">--</span><span class="ecomment"> Objects that represent encodings and that provide conversion methods.</span>
+
+	<a class="eclass" href="base/encoding_helper_chart.html">ENCODING_HELPER</a>
+			<span class="ecomment">--</span><span class="ecomment"> Helper routines for encoding conversion.</span>
+
+	<a class="eclass" href="base/exception_chart.html">EXCEPTION</a>
+			<span class="ecomment">--</span><span class="ecomment"> Ancestor of all exception classes.</span>
+
+	<a class="eclass" href="base/exceptions_chart.html">EXCEPTIONS</a>
+			<span class="ecomment">--</span><span class="ecomment"> Facilities for adapting the exception handling mechanism.</span>
+			<span class="ecomment">--</span><span class="ecomment"> This class may be used as ancestor by classes needing its facilities.</span>
+
+	<a class="eclass" href="base/exception_in_signal_handler_failure_chart.html">EXCEPTION_IN_SIGNAL_HANDLER_FAILURE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Exception raised in signal handler</span>
+
+	<a class="eclass" href="base/exception_manager_chart.html">EXCEPTION_MANAGER</a>
+			<span class="ecomment">--</span><span class="ecomment"> Common exception operations and management.</span>
+
+	<a class="eclass" href="base/exception_manager_factory_chart.html">EXCEPTION_MANAGER_FACTORY</a>
+			<span class="ecomment">--</span><span class="ecomment"> Exception manager factory.</span>
+
+	<a class="eclass" href="base/excep_const_chart.html">EXCEP_CONST</a>
+			<span class="ecomment">--</span><span class="ecomment"> Constants used for exception handling.</span>
+			<span class="ecomment">--</span><span class="ecomment"> This class may be used as ancestor by classes needing its facilities.</span>
+
+	<a class="eclass" href="base/execution_environment_chart.html">EXECUTION_ENVIRONMENT</a>
+			<span class="ecomment">--</span><span class="ecomment"> The objects available from the environment at time of execution</span>
+
+	<a class="eclass" href="base/external_failure_chart.html">EXTERNAL_FAILURE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Exception for operating system error</span>
+			<span class="ecomment">--</span><span class="ecomment"> which does not set the </span><span class="equoted">errno</span><span class="ecomment"> variable (Unix-specific)</span>
+
+	<a class="eclass" href="base/fibonacci_chart.html">FIBONACCI</a>
+			<span class="ecomment">--</span><span class="ecomment"> The Fibonacci number sequence</span>
+
+	<a class="eclass" href="base/file_chart.html">FILE</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Sequential files, viewed as persistent sequences of characters</span>
+
+	<a class="eclass" href="base/file_comparer_chart.html">FILE_COMPARER</a>
+			<span class="ecomment">--</span><span class="ecomment"> Find out if two paths corresponds to exactly the same file.</span>
+
+	<a class="eclass" href="base/file_info_chart.html">FILE_INFO</a>
+			<span class="ecomment">--</span><span class="ecomment"> Internal file information</span>
+
+	<a class="eclass" href="base/file_iteration_cursor_chart.html">FILE_ITERATION_CURSOR</a>
+			<span class="ecomment">--</span><span class="ecomment"> External iteration cursor for a file.</span>
+
+	<a class="eclass" href="base/file_name_chart.html">FILE_NAME</a>
+			<span class="ecomment">--</span><span class="ecomment"> File name abstraction</span>
+
+	<a class="eclass" href="base/file_utilities_chart.html">FILE_UTILITIES</a>
+			<span class="ecomment">--</span><span class="ecomment"> File utilities, for retrieving files and folders and formatting paths.</span>
+
+	<a class="eclass" href="base/finite_chart.html">FINITE</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Structures with a finite item count</span>
+
+	<a class="eclass" href="base/fixed_chart.html">FIXED</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Finite structures whose item count cannot be changed</span>
+
+	<a class="eclass" href="base/fixed_list_chart.html">FIXED_LIST</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Lists with fixed maximum numbers of items, implemented by arrays</span>
+
+	<a class="eclass" href="base/fixed_tree_chart.html">FIXED_TREE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Trees where each node has a fixed number of children.</span>
+			<span class="ecomment">--</span><span class="ecomment"> The number of children is arbitrary but cannot be</span>
+			<span class="ecomment">--</span><span class="ecomment"> changed once the node has been created.</span>
+
+	<a class="eclass" href="base/floating_point_failure_chart.html">FLOATING_POINT_FAILURE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Floating point failure</span>
+
+	<a class="eclass" href="base/format_double_chart.html">FORMAT_DOUBLE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Formatter for non-integral numbers</span>
+
+	<a class="eclass" href="base/format_integer_chart.html">FORMAT_INTEGER</a>
+			<span class="ecomment">--</span><span class="ecomment"> Formatter for integral numbers</span>
+
+	<a class="eclass" href="base/function_chart.html">FUNCTION</a> <span class="esymbol">[</span><span class="egeneric">OPEN_ARGS</span> <span class="esymbol">-&gt;</span> <span class="ekeyword">detachable</span> <a class="eclass" href="base/tuple_chart.html">TUPLE</a> <span class="ekeyword">create</span> <a class="efeature" href="base/any_short.html#f_default_create">default_create</a> <span class="ekeyword">end</span><span class="esymbol">,</span> <span class="egeneric">RESULT_TYPE</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Objects representing delayed calls to a function,</span>
+			<span class="ecomment">--</span><span class="ecomment"> with some arguments possibly still open.</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> Note: Features are the same as those of ROUTINE,</span>
+			<span class="ecomment">--</span><span class="ecomment"> with </span><span class="equoted">apply</span><span class="ecomment"> made effective, and the addition</span>
+			<span class="ecomment">--</span><span class="ecomment"> of </span><span class="equoted">last_result</span><span class="ecomment"> and </span><span class="equoted">item</span><span class="ecomment">.</span>
+
+	<a class="eclass" href="base/gc_info_chart.html">GC_INFO</a>
+			<span class="ecomment">--</span><span class="ecomment"> Garbage collector statistics.</span>
+			<span class="ecomment">--</span><span class="ecomment"> This class may be used as ancestor by classes needing its facilities.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Time accounting is relevant only if </span><span class="equoted">enable_time_accounting</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> (from MEMORY) has been called.</span>
+
+	<a class="eclass" href="base/general_special_iteration_cursor_chart.html">GENERAL_SPECIAL_ITERATION_CURSOR</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">,</span> <span class="egeneric">H</span> <span class="esymbol">-&gt;</span> <a class="eclass" href="base/readable_indexable_chart.html">READABLE_INDEXABLE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> External forward one-step iteration cursor for structures that use </span><span class="esymbol">{</span><a class="eclass" href="base/special_chart.html">SPECIAL</a><span class="esymbol">}</span><span class="ecomment"> for storage.</span>
+
+	<a class="eclass" href="base/hardware_exception_chart.html">HARDWARE_EXCEPTION</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Deferred class for hardware exceptions</span>
+
+	<a class="eclass" href="base/hashable_chart.html">HASHABLE</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Values that may be hashed into an integer index, </span>
+			<span class="ecomment">--</span><span class="ecomment"> for use as keys in hash tables</span>
+
+	<a class="eclass" href="base/hash_table_chart.html">HASH_TABLE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">,</span> <span class="egeneric">K</span> <span class="esymbol">-&gt;</span> <span class="ekeyword">detachable</span> <a class="eclass" href="base/hashable_chart.html">HASHABLE</a><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Hash tables, used to store items identified by hashable keys</span>
+
+	<a class="eclass" href="base/hash_table_cursor_chart.html">HASH_TABLE_CURSOR</a>
+			<span class="ecomment">--</span><span class="ecomment"> Cursors for hash table traversal</span>
+
+	<a class="eclass" href="base/hash_table_iteration_cursor_chart.html">HASH_TABLE_ITERATION_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">,</span> <span class="egeneric">K</span> <span class="esymbol">-&gt;</span> <span class="ekeyword">detachable</span> <a class="eclass" href="base/hashable_chart.html">HASHABLE</a><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> An external iteration cursor for </span><span class="esymbol">{</span><a class="eclass" href="base/hash_table_chart.html">HASH_TABLE</a><span class="esymbol">}</span><span class="ecomment">.</span>
+
+	<a class="eclass" href="base/heap_priority_queue_chart.html">HEAP_PRIORITY_QUEUE</a> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <a class="eclass" href="base/comparable_chart.html">COMPARABLE</a><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Priority queues implemented as heaps</span>
+
+	<a class="eclass" href="base/heap_priority_queue_iteration_cursor_chart.html">HEAP_PRIORITY_QUEUE_ITERATION_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <a class="eclass" href="base/comparable_chart.html">COMPARABLE</a><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> External iteration cursor for </span><span class="esymbol">{</span><a class="eclass" href="base/heap_priority_queue_chart.html">HEAP_PRIORITY_QUEUE</a><span class="esymbol">}</span><span class="ecomment">.</span>
+
+	<a class="eclass" href="base/hexadecimal_string_to_integer_converter_chart.html">HEXADECIMAL_STRING_TO_INTEGER_CONVERTER</a>
+			<span class="ecomment">--</span><span class="ecomment"> Convertor to do hexadecimal string to integer/natural conversion</span>
+
+	<a class="eclass" href="base/hierarchical_chart.html">HIERARCHICAL</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Hierarchical structures in which each item has zero or</span>
+			<span class="ecomment">--</span><span class="ecomment"> one immediate predecessor, and zero or more successors.</span>
+
+	<a class="eclass" href="base/identified_chart.html">IDENTIFIED</a>
+			<span class="ecomment">--</span><span class="ecomment"> Objects identified, uniquely during any session, by an integer</span>
+
+	<a class="eclass" href="base/identified_controller_chart.html">IDENTIFIED_CONTROLLER</a>
+			<span class="ecomment">--</span><span class="ecomment"> Externals for managing the object id stack (see identified.e)</span>
+
+	<a class="eclass" href="base/identified_routines_chart.html">IDENTIFIED_ROUTINES</a>
+			<span class="ecomment">--</span><span class="ecomment"> Objects identified, uniquely during any session, by an integer</span>
+
+	<a class="eclass" href="base/immutable_string_32_chart.html">IMMUTABLE_STRING_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Sequences of immutable 32-bit characters, accessible through integer indices</span>
+			<span class="ecomment">--</span><span class="ecomment"> in a contiguous range.</span>
+
+	<a class="eclass" href="base/immutable_string_8_chart.html">IMMUTABLE_STRING_8</a>
+			<span class="ecomment">--</span><span class="ecomment"> Sequences of immutable 8-bit characters, accessible through integer indices</span>
+			<span class="ecomment">--</span><span class="ecomment"> in a contiguous range.</span>
+
+	<a class="eclass" href="base/immutable_string_general_chart.html">IMMUTABLE_STRING_GENERAL</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Common ancestors to all immutable STRING classes.</span>
+
+	<a class="eclass" href="base/indexable_chart.html">INDEXABLE</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">,</span> <span class="egeneric">H</span> <span class="esymbol">-&gt;</span> <a class="eclass" href="base/integer_32_chart.html">INTEGER_32</a><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Tables whose keys are integers in a contiguous interval</span>
+
+	<a class="eclass" href="base/indexable_iteration_cursor_chart.html">INDEXABLE_ITERATION_CURSOR</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> External iteration cursor for </span><span class="esymbol">{</span><a class="eclass" href="base/readable_indexable_chart.html">READABLE_INDEXABLE</a><span class="esymbol">}</span><span class="ecomment">.</span>
+
+	<a class="eclass" href="base/infinite_chart.html">INFINITE</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Infinite containers.</span>
+
+	<a class="eclass" href="base/integer_16_chart.html">INTEGER_16</a>
+			<span class="ecomment">--</span><span class="ecomment"> Integer values coded on 16 bits</span>
+
+	<a class="eclass" href="base/integer_16_ref_chart.html">INTEGER_16_REF</a>
+			<span class="ecomment">--</span><span class="ecomment"> References to objects containing an integer value coded on 16 bits</span>
+
+	<a class="eclass" href="base/integer_32_chart.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Integer values</span>
+
+	<a class="eclass" href="base/integer_32_ref_chart.html">INTEGER_32_REF</a>
+			<span class="ecomment">--</span><span class="ecomment"> References to objects containing an integer value coded on 32 bits</span>
+
+	<a class="eclass" href="base/integer_64_chart.html">INTEGER_64</a>
+			<span class="ecomment">--</span><span class="ecomment"> Integer values coded on 64 bits</span>
+
+	<a class="eclass" href="base/integer_64_ref_chart.html">INTEGER_64_REF</a>
+			<span class="ecomment">--</span><span class="ecomment"> References to objects containing an integer value coded on 64 bits</span>
+
+	<a class="eclass" href="base/integer_8_chart.html">INTEGER_8</a>
+			<span class="ecomment">--</span><span class="ecomment"> Integer values coded on 8 bits</span>
+
+	<a class="eclass" href="base/integer_8_ref_chart.html">INTEGER_8_REF</a>
+			<span class="ecomment">--</span><span class="ecomment"> References to objects containing an integer value coded on 8 bits</span>
+
+	<a class="eclass" href="base/integer_interval_chart.html">INTEGER_INTERVAL</a>
+			<span class="ecomment">--</span><span class="ecomment"> Contiguous integer intervals</span>
+
+	<a class="eclass" href="base/integer_overflow_checker_chart.html">INTEGER_OVERFLOW_CHECKER</a>
+			<span class="ecomment">--</span><span class="ecomment"> String - Integer/Natural conversion overflow checker</span>
+
+	<a class="eclass" href="base/interactive_list_chart.html">INTERACTIVE_LIST</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Sequential, one-way linked lists that call add/remove features</span>
+			<span class="ecomment">--</span><span class="ecomment"> when an item is removed or added.</span>
+
+	<a class="eclass" href="base/internal_chart.html">INTERNAL</a>
+			<span class="ecomment">--</span><span class="ecomment"> Access to internal object properties.</span>
+			<span class="ecomment">--</span><span class="ecomment"> This class may be used as ancestor by classes needing its facilities.</span>
+
+	<a class="eclass" href="base/internal_helper_chart.html">INTERNAL_HELPER</a>
+			<span class="ecomment">--</span><span class="ecomment"> Helper for routines in REFLECTOR class.</span>
+
+	<a class="eclass" href="base/invariant_violation_chart.html">INVARIANT_VIOLATION</a>
+			<span class="ecomment">--</span><span class="ecomment"> Exception representing an invariant violation</span>
+
+	<a class="eclass" href="base/io_failure_chart.html">IO_FAILURE</a>
+			<span class="ecomment">--</span><span class="ecomment"> IO failure</span>
+
+	<a class="eclass" href="base/io_medium_chart.html">IO_MEDIUM</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Any medium that can perform input and/or output</span>
+
+	<a class="eclass" href="base/ise_exception_manager_chart.html">ISE_EXCEPTION_MANAGER</a>
+			<span class="ecomment">--</span><span class="ecomment"> Exception manager. </span>
+			<span class="ecomment">--</span><span class="ecomment"> The manager handles all common operations of exception mechanism and interaction with the ISE runtime.</span>
+
+	<a class="eclass" href="base/ise_runtime_chart.html">ISE_RUNTIME</a>
+			<span class="ecomment">--</span><span class="ecomment"> Set of features to access ISE runtime functionality.</span>
+			<span class="ecomment">--</span><span class="ecomment"> To be used at your own risk.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Interface may changed without notice.</span>
+
+	<a class="eclass" href="base/ise_scoop_runtime_chart.html">ISE_SCOOP_RUNTIME</a>
+			<span class="ecomment">--</span><span class="ecomment"> Features to access and interact with the SCOOP runtime.</span>
+
+	<a class="eclass" href="base/iterable_chart.html">ITERABLE</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Structure that can be iterated over using </span><span class="equoted">across...loop...end</span><span class="ecomment">.</span>
+
+	<a class="eclass" href="base/iteration_cursor_chart.html">ITERATION_CURSOR</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> External iteration cursor used by </span><span class="equoted">across...loop...end</span><span class="ecomment">.</span>
+
+	<a class="eclass" href="base/iterator_chart.html">ITERATOR</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Objects that are able to iterate over traversable structures,</span>
+			<span class="ecomment">--</span><span class="ecomment"> on which they can perform repeated actions and tests according</span>
+			<span class="ecomment">--</span><span class="ecomment"> to a number of predefined control structures such as </span><span class="equoted">if</span><span class="ecomment">,</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span><span class="equoted">until</span><span class="ecomment"> and others.</span>
+
+	<a class="eclass" href="base/language_exception_chart.html">LANGUAGE_EXCEPTION</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Eiffel language exception</span>
+
+	<a class="eclass" href="base/linear_chart.html">LINEAR</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Structures whose items may be accessed sequentially, one-way</span>
+
+	<a class="eclass" href="base/linear_iterator_chart.html">LINEAR_ITERATOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Objects that are able to iterate over linear structures</span>
+
+	<a class="eclass" href="base/linear_subset_chart.html">LINEAR_SUBSET</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Subsets that are traversable linearly without commitment to a concrete</span>
+			<span class="ecomment">--</span><span class="ecomment"> implementation.</span>
+
+	<a class="eclass" href="base/linkable_chart.html">LINKABLE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Linkable cells containing a reference to their right neighbor</span>
+
+	<a class="eclass" href="base/linked_circular_chart.html">LINKED_CIRCULAR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Circular chains implemented as linked lists</span>
+
+	<a class="eclass" href="base/linked_list_chart.html">LINKED_LIST</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Sequential, one-way linked lists</span>
+
+	<a class="eclass" href="base/linked_list_cursor_chart.html">LINKED_LIST_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Cursors for linked lists</span>
+
+	<a class="eclass" href="base/linked_list_iteration_cursor_chart.html">LINKED_LIST_ITERATION_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Concrete of an external iteration cursor for </span><span class="esymbol">{</span><a class="eclass" href="base/linked_list_chart.html">LINKED_LIST</a><span class="esymbol">}</span><span class="ecomment">. Reversed traversal has a </span><span class="equoted">(n (n + 1)) / 2</span><span class="ecomment"> operations cost.</span>
+
+	<a class="eclass" href="base/linked_priority_queue_chart.html">LINKED_PRIORITY_QUEUE</a> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <a class="eclass" href="base/comparable_chart.html">COMPARABLE</a><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Priority queues implemented as sorted lists</span>
+
+	<a class="eclass" href="base/linked_queue_chart.html">LINKED_QUEUE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Unbounded queues implemented as linked lists</span>
+
+	<a class="eclass" href="base/linked_set_chart.html">LINKED_SET</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Sets implemented by linked lists</span>
+
+	<a class="eclass" href="base/linked_stack_chart.html">LINKED_STACK</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Unbounded stacks implemented as linked lists</span>
+
+	<a class="eclass" href="base/linked_tree_chart.html">LINKED_TREE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Trees implemented using a linked list representation</span>
+
+	<a class="eclass" href="base/linked_tree_cursor_chart.html">LINKED_TREE_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Cursors for linked trees</span>
+
+	<a class="eclass" href="base/linked_tree_iteration_cursor_chart.html">LINKED_TREE_ITERATION_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> External forward iteration cursor for descendants of </span><span class="esymbol">{</span><a class="eclass" href="base/linked_tree_chart.html">LINKED_TREE</a><span class="esymbol">}</span><span class="ecomment">.</span>
+
+	<a class="eclass" href="base/list_chart.html">LIST</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Sequential lists, without commitment to a particular representation</span>
+
+	<a class="eclass" href="base/loop_invariant_violation_chart.html">LOOP_INVARIANT_VIOLATION</a>
+			<span class="ecomment">--</span><span class="ecomment"> Exception raised for violated loop invariant</span>
+
+	<a class="eclass" href="base/machine_exception_chart.html">MACHINE_EXCEPTION</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Deferred class for machine exception, operation exceptions and hardware exceptions</span>
+
+	<a class="eclass" href="base/managed_pointer_chart.html">MANAGED_POINTER</a>
+			<span class="ecomment">--</span><span class="ecomment"> To easily manage allocation and release of allocated C memory, and</span>
+			<span class="ecomment">--</span><span class="ecomment"> to perform insertion of basic elements. Byte order is by default</span>
+			<span class="ecomment">--</span><span class="ecomment"> platform specific.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Although memory allocation routines do not accept a zero sized pointer</span>
+			<span class="ecomment">--</span><span class="ecomment"> MANAGED_POINTER does by allocating in fact a 1 byte sized pointer for</span>
+			<span class="ecomment">--</span><span class="ecomment"> this particular case.</span>
+
+	<a class="eclass" href="base/math_const_chart.html">MATH_CONST</a>
+			<span class="ecomment">--</span><span class="ecomment"> Basic mathematical constants.</span>
+			<span class="ecomment">--</span><span class="ecomment"> This class may be used as ancestor by classes needing its facilities.</span>
+
+	<a class="eclass" href="base/memory_chart.html">MEMORY</a>
+			<span class="ecomment">--</span><span class="ecomment"> Facilities for tuning up the garbage collection mechanism.</span>
+			<span class="ecomment">--</span><span class="ecomment"> This class may be used as ancestor by classes needing its facilities.</span>
+
+	<a class="eclass" href="base/memory_stream_chart.html">MEMORY_STREAM</a>
+			<span class="ecomment">--</span><span class="ecomment"> Stream of data stored in non Eiffel memory</span>
+
+	<a class="eclass" href="base/memory_structure_chart.html">MEMORY_STRUCTURE</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Representation of a memory structure.</span>
+
+	<a class="eclass" href="base/mem_const_chart.html">MEM_CONST</a>
+			<span class="ecomment">--</span><span class="ecomment"> Constants used by memory management.</span>
+			<span class="ecomment">--</span><span class="ecomment"> This class may be used as ancestor by classes needing its facilities.</span>
+
+	<a class="eclass" href="base/mem_info_chart.html">MEM_INFO</a>
+			<span class="ecomment">--</span><span class="ecomment"> Properties of the memory management mechanism.</span>
+			<span class="ecomment">--</span><span class="ecomment"> This class may be used as ancestor by classes needing its facilities.</span>
+
+	<a class="eclass" href="base/mismatch_corrector_chart.html">MISMATCH_CORRECTOR</a>
+			<span class="ecomment">--</span><span class="ecomment"> Ancestor of all classes that need facility to retrieve an older version of an instance of current</span>
+			<span class="ecomment">--</span><span class="ecomment"> class through storable.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Redefine </span><span class="equoted">correct_mismatch</span><span class="ecomment"> to get data from </span><span class="equoted">mismatch_information</span><span class="ecomment"> about found mismatch. A mismatch</span>
+			<span class="ecomment">--</span><span class="ecomment"> might be the addition or the removal of an attribute as well as an attribute type change.</span>
+
+	<a class="eclass" href="base/mismatch_failure_chart.html">MISMATCH_FAILURE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Exception for retrieval error, </span>
+			<span class="ecomment">--</span><span class="ecomment"> may be raised by </span><span class="equoted">retrieved</span><span class="ecomment"> in </span><span class="equoted">IO_MEDIUM</span><span class="ecomment">.</span>
+
+	<a class="eclass" href="base/mismatch_information_chart.html">MISMATCH_INFORMATION</a>
+			<span class="ecomment">--</span><span class="ecomment"> Original values of the attributes of a mismatched object.</span>
+
+	<a class="eclass" href="base/multar_list_cursor_chart.html">MULTAR_LIST_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Cursors for multi-array trees</span>
+
+	<a class="eclass" href="base/multi_array_list_chart.html">MULTI_ARRAY_LIST</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Lists implemented as sequences of arrays, the last of which may</span>
+			<span class="ecomment">--</span><span class="ecomment"> be non-full. No limit on size (a new array is allocated if list</span>
+			<span class="ecomment">--</span><span class="ecomment"> outgrows its initial allocation).</span>
+
+	<a class="eclass" href="base/mutex_chart.html">MUTEX</a>
+			<span class="ecomment">--</span><span class="ecomment"> Mutex synchronization object, allows threads to access global data through critical sections. Mutexes are recursive.</span>
+
+	<a class="eclass" href="base/native_array_chart.html">NATIVE_ARRAY</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Fake abstraction of a .NET NATIVE_ARRAY in a non-.NET system</span>
+
+	<a class="eclass" href="base/native_string_chart.html">NATIVE_STRING</a>
+			<span class="ecomment">--</span><span class="ecomment"> Platform specific encoding of Unicode strings. By default, UTF-8 on unix or UTF-16 on Windows.</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> Mixed-encoding consideration</span>
+			<span class="ecomment">--</span><span class="ecomment"> ============================</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> Most operating systems have conventions for strings that are incompatible with Unicode.</span>
+			<span class="ecomment">--</span><span class="ecomment"> On UNIX, a string is just a null-terminated byte sequence, it does not follow any</span>
+			<span class="ecomment">--</span><span class="ecomment"> specific encoding. Usually the locale setting enables you to see the string the way</span>
+			<span class="ecomment">--</span><span class="ecomment"> you expect.</span>
+			<span class="ecomment">--</span><span class="ecomment"> On Windows, the sequence of names is made of null-terminated UTF-16 code unit sequence. Windows</span>
+			<span class="ecomment">--</span><span class="ecomment"> does not guarantee that the sequence is actually a valid UTF-16 sequence.</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> In other words, when there is an invalid UTF-8 encoding on UNIX, or an invalid UTF-16 encoding</span>
+			<span class="ecomment">--</span><span class="ecomment"> on Windows, the string is not directly representable as a Unicode string. To make it possible</span>
+			<span class="ecomment">--</span><span class="ecomment"> to create and store strings in a textually representable form, the query </span><span class="equoted">string</span><span class="ecomment"> will create</span>
+			<span class="ecomment">--</span><span class="ecomment"> an encoded representation that can be then later used in </span><span class="equoted">make</span><span class="ecomment"> to create a NATIVE_STRING</span>
+			<span class="ecomment">--</span><span class="ecomment"> equivalent to the original string. The encoding is described in UTF_CONVERTER's note clause</span>
+			<span class="ecomment">--</span><span class="ecomment"> and is a fourth variant of the recommended practice for replacement characters in Unicode</span>
+			<span class="ecomment">--</span><span class="ecomment"> (see </span><a class="ecomment" href="http://www.unicode.org/review/pr-121.html">http://www.unicode.org/review/pr-121.html</a><span class="ecomment">).</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+
+	<a class="eclass" href="base/native_string_handler_chart.html">NATIVE_STRING_HANDLER</a>
+			<span class="ecomment">--</span><span class="ecomment"> Objects that can access low level features of </span><span class="ecomment">`</span><span class="ecomment">{</span><a class="eclass" href="base/file_info_chart.html">FILE_INFO</a><span class="ecomment">}</span><span class="ecomment">`</span><span class="ecomment"> to access the underlying operating system encoding of file names.</span>
+
+	<a class="eclass" href="base/natural_16_chart.html">NATURAL_16</a>
+			<span class="ecomment">--</span><span class="ecomment"> Unsigned integer values coded on 16 bits</span>
+
+	<a class="eclass" href="base/natural_16_ref_chart.html">NATURAL_16_REF</a>
+			<span class="ecomment">--</span><span class="ecomment"> References to objects containing an unsigned integer value coded on 16 bits.</span>
+
+	<a class="eclass" href="base/natural_32_chart.html">NATURAL_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Unsigned integer values coded on 32 bits.</span>
+
+	<a class="eclass" href="base/natural_32_ref_chart.html">NATURAL_32_REF</a>
+			<span class="ecomment">--</span><span class="ecomment"> References to objects containing an unsigned integer value coded on 32 bits.</span>
+
+	<a class="eclass" href="base/natural_64_chart.html">NATURAL_64</a>
+			<span class="ecomment">--</span><span class="ecomment"> Unsigned integer values coded on 64 bits</span>
+
+	<a class="eclass" href="base/natural_64_ref_chart.html">NATURAL_64_REF</a>
+			<span class="ecomment">--</span><span class="ecomment"> References to objects containing an unsigned integer value coded on 64 bits.</span>
+
+	<a class="eclass" href="base/natural_8_chart.html">NATURAL_8</a>
+			<span class="ecomment">--</span><span class="ecomment"> Integer values coded on 8 bits</span>
+
+	<a class="eclass" href="base/natural_8_ref_chart.html">NATURAL_8_REF</a>
+			<span class="ecomment">--</span><span class="ecomment"> References to objects containing an unsigned integer value coded on 8 bits.</span>
+
+	<a class="eclass" href="base/no_more_memory_chart.html">NO_MORE_MEMORY</a>
+			<span class="ecomment">--</span><span class="ecomment"> Exception raised when no more memory can be allocated.</span>
+
+	<a class="eclass" href="base/numeric_chart.html">NUMERIC</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Objects to which numerical operations are applicable</span>
+			<span class="ecomment">--</span><span class="ecomment"> Note: The model is that of a commutative ring.</span>
+
+	<a class="eclass" href="base/numeric_information_chart.html">NUMERIC_INFORMATION</a>
+			<span class="ecomment">--</span><span class="ecomment"> Information about integer, natural and real type in Eiffel</span>
+
+	<a class="eclass" href="base/object_graph_breadth_first_traversable_chart.html">OBJECT_GRAPH_BREADTH_FIRST_TRAVERSABLE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Objects that traverse object graphs starting at the root object in a breadth first manner.</span>
+
+	<a class="eclass" href="base/object_graph_depth_first_traversable_chart.html">OBJECT_GRAPH_DEPTH_FIRST_TRAVERSABLE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Objects that traverse object graphs starting at the root object in a depth first manner.</span>
+
+	<a class="eclass" href="base/object_graph_marker_chart.html">OBJECT_GRAPH_MARKER</a>
+			<span class="ecomment">--</span><span class="ecomment"> Facility to mark objects once when traversing an object graph.</span>
+
+	<a class="eclass" href="base/object_graph_traversable_chart.html">OBJECT_GRAPH_TRAVERSABLE</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Utility class to traverse object graphs starting at a root object.</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> When traversing a graph the class distinguishes four different types of references:</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> (1) Normal references</span>
+			<span class="ecomment">--</span><span class="ecomment"> (2) References with copy-semantics, which are usually seen when attaching </span>
+			<span class="ecomment">--</span><span class="ecomment"> an expanded object to an ANY reference</span>
+			<span class="ecomment">--</span><span class="ecomment"> (3) User-defined expanded objects, embedded inside another object. </span>
+			<span class="ecomment">--</span><span class="ecomment"> Semantically this is a special case of a copy-semantics reference.</span>
+			<span class="ecomment">--</span><span class="ecomment"> (4) Language-defined expanded objects (INTEGER, POINTER etc) embedded inside another object. </span>
+			<span class="ecomment">--</span><span class="ecomment"> Semantically, this is a special case of a copy-semantics reference.</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> This class will follow all reference types except (4). </span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> During traversal the agent </span><span class="equoted">on_processing_object_action</span><span class="ecomment"> will be called for each object</span>
+			<span class="ecomment">--</span><span class="ecomment"> and the agent </span><span class="equoted">on_processing_reference_action</span><span class="ecomment"> for each reference, if present. This includes</span>
+			<span class="ecomment">--</span><span class="ecomment"> references to objects that have already been processed.</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> The algorighm has two output values: </span><span class="equoted">visited_objects</span><span class="ecomment"> and </span><span class="equoted">visited_types</span><span class="ecomment">:</span>
+			<span class="ecomment">--</span><span class="ecomment"> Any standard object without copy-semantics (i.e. reference type (1)) will be stored</span>
+			<span class="ecomment">--</span><span class="ecomment"> by aliasing inside </span><span class="equoted">visited_object</span><span class="ecomment">. For references of type (2) and (3) a copy will be stored.</span>
+			<span class="ecomment">--</span><span class="ecomment"> The </span><span class="equoted">visited_types</span><span class="ecomment"> hash table contains the dynamic type id of all types encountered during </span>
+			<span class="ecomment">--</span><span class="ecomment"> traversal. The key and value in the hashtable are the same.</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> Setting </span><span class="equoted">is_skip_copy_semantics_reference</span><span class="ecomment"> to true means that references of (2) and (3) will</span>
+			<span class="ecomment">--</span><span class="ecomment"> not be stored in </span><span class="equoted">visited_types</span><span class="ecomment">. Note that this is the only effect of this setting - i.e.</span>
+			<span class="ecomment">--</span><span class="ecomment"> the traversal algorithm will still follow the references, the agents will be called, and the</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span><span class="equoted">visited_types</span><span class="ecomment"> array will be extended anyway.</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> NOTE:</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> Due to a limitation in the reflection library, references of type (2) and (3) within TUPLE </span>
+			<span class="ecomment">--</span><span class="ecomment"> and references of type (3) within SPECIAL cannot be handled without causing a copy. This is </span>
+			<span class="ecomment">--</span><span class="ecomment"> problematic for agents, especially when they want to change the object. Therefore</span>
+			<span class="ecomment">--</span><span class="ecomment"> the algorithm will raise an exception when an agent is attached.</span>
+			<span class="ecomment">--</span><span class="ecomment"> In read-only situations it may be acceptable to use a copy of an object. Therefore to disable the</span>
+			<span class="ecomment">--</span><span class="ecomment"> exception behaviour you can set </span><span class="equoted">is_exception_on_copy_suppressed</span><span class="ecomment"> to True.</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> NOTE:</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> To maintain backwards compatibility the traversal algorithm will silently ignore any kind of </span>
+			<span class="ecomment">--</span><span class="ecomment"> exception and just return normally, with </span><span class="equoted">traversed_objects</span><span class="ecomment"> set to whatever value it had before </span>
+			<span class="ecomment">--</span><span class="ecomment"> invoking </span><span class="equoted">traverse</span><span class="ecomment">. In order to get exceptions you need to set </span><span class="equoted">is_exception_propagated</span><span class="ecomment"> to True.</span>
+
+	<a class="eclass" href="base/obsolete_exception_chart.html">OBSOLETE_EXCEPTION</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Obsolete exception</span>
+
+	<a class="eclass" href="base/old_violation_chart.html">OLD_VIOLATION</a>
+			<span class="ecomment">--</span><span class="ecomment"> Exception raised when an old expression evaluation failure was recorded and the expression access is attempted in postcondition.</span>
+
+	<a class="eclass" href="base/operating_environment_chart.html">OPERATING_ENVIRONMENT</a>
+			<span class="ecomment">--</span><span class="ecomment"> The objects available from the operating system</span>
+
+	<a class="eclass" href="base/operating_system_exception_chart.html">OPERATING_SYSTEM_EXCEPTION</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Operating system exception</span>
+
+	<a class="eclass" href="base/operating_system_failure_chart.html">OPERATING_SYSTEM_FAILURE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Operating system failure</span>
+
+	<a class="eclass" href="base/operating_system_signal_failure_chart.html">OPERATING_SYSTEM_SIGNAL_FAILURE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Operating system signal failure</span>
+
+	<a class="eclass" href="base/part_comparable_chart.html">PART_COMPARABLE</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Objects that may be compared according to a partial order relation</span>
+
+	<a class="eclass" href="base/part_sorted_list_chart.html">PART_SORTED_LIST</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <a class="eclass" href="base/part_comparable_chart.html">PART_COMPARABLE</a><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Sequential lists whose items are sorted in ascending order</span>
+			<span class="ecomment">--</span><span class="ecomment"> according to the relational operators of PART_COMPARABLE</span>
+
+	<a class="eclass" href="base/part_sorted_set_chart.html">PART_SORTED_SET</a> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <a class="eclass" href="base/part_comparable_chart.html">PART_COMPARABLE</a><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Sets whose items may be compared according to a partial order relation</span>
+			<span class="ecomment">--</span><span class="ecomment"> implemented as sorted two-way lists.</span>
+
+	<a class="eclass" href="base/part_sorted_two_way_list_chart.html">PART_SORTED_TWO_WAY_LIST</a> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <a class="eclass" href="base/part_comparable_chart.html">PART_COMPARABLE</a><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Two-way lists, kept sorted</span>
+
+	<a class="eclass" href="base/path_chart.html">PATH</a>
+			<span class="ecomment">--</span><span class="ecomment"> Objects representing a path, i.e. a way to identify a file or a directory for the</span>
+			<span class="ecomment">--</span><span class="ecomment"> current underlying platform. A path is made of two components:</span>
+			<span class="ecomment">--</span><span class="ecomment"> 1 - an optional root which can either be:</span>
+			<span class="ecomment">--</span><span class="ecomment"> a - a drive letter followed by colon on Windows, i.e. &quot;C:&quot; or &quot;C:\&quot;</span>
+			<span class="ecomment">--</span><span class="ecomment"> b - &quot;/&quot; for UNIX root directory.</span>
+			<span class="ecomment">--</span><span class="ecomment"> c - &quot;\&quot; for Windows root directory.</span>
+			<span class="ecomment">--</span><span class="ecomment"> d - &quot;\\server\share&quot; or &quot;\\server\share\&quot; for Microsoft UNC path.</span>
+			<span class="ecomment">--</span><span class="ecomment"> 2 - a sequence of zero or more names.</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> A path is absolute if it has a root, and on windows if the root is a drive, then it should</span>
+			<span class="ecomment">--</span><span class="ecomment"> be followed by &quot;\&quot;. Otherwise a path is relative.</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> Validity</span>
+			<span class="ecomment">--</span><span class="ecomment"> ========</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> The current class will not check the validity of filenames. Check your file</span>
+			<span class="ecomment">--</span><span class="ecomment"> system for your operating system manual for the list of invalid characters.</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> Windows consideration</span>
+			<span class="ecomment">--</span><span class="ecomment"> =====================</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> When the root of a Windows path is a drive, be aware of the following behavior:</span>
+			<span class="ecomment">--</span><span class="ecomment"> 1 - &quot;C:filename.txt&quot; refers to the file name &quot;filename.txt&quot; in the current directory </span>
+			<span class="ecomment">--</span><span class="ecomment"> &nbsp;&nbsp;&nbsp;&nbsp;on drive &quot;C:&quot;.</span>
+			<span class="ecomment">--</span><span class="ecomment"> 2 - &quot;C:sub\filename.txt&quot; refers to the file name &quot;filename.txt&quot; in a subdirectory &quot;sub&quot;</span>
+			<span class="ecomment">--</span><span class="ecomment"> &nbsp;&nbsp;&nbsp;&nbsp;of the current directory on drive &quot;C:&quot;.</span>
+			<span class="ecomment">--</span><span class="ecomment"> 3 - &quot;C:\sub\filename.txt&quot; refers to the file name &quot;filename.txt&quot; in a subdirectory &quot;sub&quot;</span>
+			<span class="ecomment">--</span><span class="ecomment"> &nbsp;&nbsp;&nbsp;&nbsp;located at the root of the drive &quot;C:&quot;.</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> Both forward and backslashes are accepted, but forward slashes are internally converted</span>
+			<span class="ecomment">--</span><span class="ecomment"> to backward slashes whenever they are used to construct a path.</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> On Windows, there is a limit of 259 characters for a path. If you need to create a larger</span>
+			<span class="ecomment">--</span><span class="ecomment"> path, you can do so by using the following conventions which will let you have paths of</span>
+			<span class="ecomment">--</span><span class="ecomment"> about 32,767 characters:</span>
+			<span class="ecomment">--</span><span class="ecomment"> 1 - Use \\?\ for non-UNC path and let the rest unchanged.</span>
+			<span class="ecomment">--</span><span class="ecomment"> 2 - Use \\?\UNC\server\share for UNC path and let the rest unchanged.</span>
+			<span class="ecomment">--</span><span class="ecomment"> The above path cannot be used to specify a relative path.</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> To know more about Windows paths, read the &quot;Naming Files, Paths, and Namespaces&quot;</span>
+			<span class="ecomment">--</span><span class="ecomment"> document located at:</span>
+			<span class="ecomment">--</span><span class="ecomment"> &nbsp;&nbsp;</span><a class="ecomment" href="http://msdn.microsoft.com/en-us/library/windows/desktop/aa365247">http://msdn.microsoft.com/en-us/library/windows/desktop/aa365247</a><span class="ecomment">(v=vs.85).aspx</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> Unicode consideration</span>
+			<span class="ecomment">--</span><span class="ecomment"> =====================</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> The PATH class treats strings as sequence of Unicode characters, i.e. an instance of </span>
+			<span class="ecomment">--</span><span class="ecomment"> a READABLE_STRING_8 or descendant will be treated as if characters in the range</span>
+			<span class="ecomment">--</span><span class="ecomment"> 128 .. 255 were Unicode code points.</span>
+			<span class="ecomment">--</span><span class="ecomment"> This contrasts to the FILE/DIRECTORY classes where to preserve backward compatibility, those</span>
+			<span class="ecomment">--</span><span class="ecomment"> characters are treated as is.</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> Mixed-encoding consideration</span>
+			<span class="ecomment">--</span><span class="ecomment"> ============================</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> Most operating systems have conventions for paths that are incompatible with Unicode.</span>
+			<span class="ecomment">--</span><span class="ecomment"> On UNIX, in a sequence of names, each name is just a null-terminated byte sequence, it</span>
+			<span class="ecomment">--</span><span class="ecomment"> does not follow any specific encoding. Usually the locale setting enables you to see</span>
+			<span class="ecomment">--</span><span class="ecomment"> the filename the way you expect.</span>
+			<span class="ecomment">--</span><span class="ecomment"> On Windows, the sequence of names is made of null-terminated UTF-16 code unit sequence. Windows</span>
+			<span class="ecomment">--</span><span class="ecomment"> does not guarantee that the sequence is actually a valid UTF-16 sequence.</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> In other words, when there is an invalid UTF-8 encoding on UNIX, or an invalid UTF-16 encoding</span>
+			<span class="ecomment">--</span><span class="ecomment"> on Windows, the filename is not directly representable as a Unicode string. To make it possible</span>
+			<span class="ecomment">--</span><span class="ecomment"> to create and store paths in a textually representable form, the query </span><span class="equoted">name</span><span class="ecomment"> will create</span>
+			<span class="ecomment">--</span><span class="ecomment"> an encoded representation that can be then later used in </span><span class="equoted">make_from_string</span><span class="ecomment"> to create a PATH</span>
+			<span class="ecomment">--</span><span class="ecomment"> equivalent to the original path. The encoding is described in UTF_CONVERTER's note clause</span>
+			<span class="ecomment">--</span><span class="ecomment"> and is a fourth variant of the recommended practice for replacement characters in Unicode</span>
+			<span class="ecomment">--</span><span class="ecomment"> (see </span><a class="ecomment" href="http://www.unicode.org/review/pr-121.html">http://www.unicode.org/review/pr-121.html</a><span class="ecomment">).</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> Immutability</span>
+			<span class="ecomment">--</span><span class="ecomment"> ============</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> Instances of the current class are immutable.</span>
+
+	<a class="eclass" href="base/path_name_chart.html">PATH_NAME</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Path name abstraction</span>
+
+	<a class="eclass" href="base/plain_text_file_chart.html">PLAIN_TEXT_FILE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Files viewed as persistent sequences of ASCII characters</span>
+
+	<a class="eclass" href="base/platform_chart.html">PLATFORM</a>
+			<span class="ecomment">--</span><span class="ecomment"> Platform-dependent properties.</span>
+
+	<a class="eclass" href="base/pointer_chart.html">POINTER</a>
+			<span class="ecomment">--</span><span class="ecomment"> References to objects meant to be exchanged with non-Eiffel software.</span>
+
+	<a class="eclass" href="base/pointer_ref_chart.html">POINTER_REF</a>
+			<span class="ecomment">--</span><span class="ecomment"> References to objects containing reference to object</span>
+			<span class="ecomment">--</span><span class="ecomment"> meant to be exchanged with non-Eiffel software.</span>
+
+	<a class="eclass" href="base/postcondition_violation_chart.html">POSTCONDITION_VIOLATION</a>
+			<span class="ecomment">--</span><span class="ecomment"> Exception representing a postcondition violation</span>
+
+	<a class="eclass" href="base/precondition_violation_chart.html">PRECONDITION_VIOLATION</a>
+			<span class="ecomment">--</span><span class="ecomment"> Exception representing an precondition violation.</span>
+
+	<a class="eclass" href="base/predicate_chart.html">PREDICATE</a> <span class="esymbol">[</span><span class="egeneric">OPEN_ARGS</span> <span class="esymbol">-&gt;</span> <span class="ekeyword">detachable</span> <a class="eclass" href="base/tuple_chart.html">TUPLE</a> <span class="ekeyword">create</span> <a class="efeature" href="base/any_short.html#f_default_create">default_create</a> <span class="ekeyword">end</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Objects representing delayed calls to a boolean function,</span>
+			<span class="ecomment">--</span><span class="ecomment"> with some arguments possibly still open.</span>
+
+	<a class="eclass" href="base/primes_chart.html">PRIMES</a>
+			<span class="ecomment">--</span><span class="ecomment"> Prime number properties</span>
+
+	<a class="eclass" href="base/priority_queue_chart.html">PRIORITY_QUEUE</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <a class="eclass" href="base/part_comparable_chart.html">PART_COMPARABLE</a><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Priority queues, without commitment to a particular representation</span>
+
+	<a class="eclass" href="base/procedure_chart.html">PROCEDURE</a> <span class="esymbol">[</span><span class="egeneric">OPEN_ARGS</span> <span class="esymbol">-&gt;</span> <span class="ekeyword">detachable</span> <a class="eclass" href="base/tuple_chart.html">TUPLE</a> <span class="ekeyword">create</span> <a class="efeature" href="base/any_short.html#f_default_create">default_create</a> <span class="ekeyword">end</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Objects representing delayed calls to a procedure.</span>
+			<span class="ecomment">--</span><span class="ecomment"> with some operands possibly still open.</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> Note: Features are the same as those of ROUTINE,</span>
+			<span class="ecomment">--</span><span class="ecomment"> with </span><span class="equoted">apply</span><span class="ecomment"> made effective, and no further</span>
+			<span class="ecomment">--</span><span class="ecomment"> redefinition of </span><span class="ecomment">`</span><a class="efeature" href="base/any_short.html#f_is_equal">is_equal</a><span class="ecomment">`</span><span class="ecomment"> and </span><span class="ecomment">`</span><a class="efeature" href="base/any_short.html#f_copy">copy</a><span class="ecomment">`</span><span class="ecomment">.</span>
+
+	<a class="eclass" href="base/profiling_setting_chart.html">PROFILING_SETTING</a>
+			<span class="ecomment">--</span><span class="ecomment"> Objects that manage the Eiffel profiler. You can start and</span>
+			<span class="ecomment">--</span><span class="ecomment"> stop the Eiffel profiler whenever you want to. It only works</span>
+			<span class="ecomment">--</span><span class="ecomment"> if </span><span class="equoted">profile (yes)</span><span class="ecomment"> is enabled in your project configuration file.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Also disabling the profiler should be done at the same place</span>
+			<span class="ecomment">--</span><span class="ecomment"> where you enabled it otherwise you might corrupt the profiling data.</span>
+			<span class="ecomment">--</span><span class="ecomment"> To use this functionality effectively, make sure that the first instruction</span>
+			<span class="ecomment">--</span><span class="ecomment"> in your program calls </span><span class="equoted">stop_profiling</span><span class="ecomment">, and that the last executed instruction</span>
+			<span class="ecomment">--</span><span class="ecomment"> calls </span><span class="equoted">start_profiling</span><span class="ecomment">, otherwise no profile information will be generated.</span>
+
+	<a class="eclass" href="base/proxy_comparable_chart.html">PROXY_COMPARABLE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Holder for non-comparable objects used for pseudo-comparison</span>
+			<span class="ecomment">--</span><span class="ecomment"> with others via the use of a custom comparator.</span>
+
+	<a class="eclass" href="base/queue_chart.html">QUEUE</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Queues (first-in, first-out dispensers), without commitment </span>
+			<span class="ecomment">--</span><span class="ecomment"> to a particular representation</span>
+
+	<a class="eclass" href="base/random_chart.html">RANDOM</a>
+			<span class="ecomment">--</span><span class="ecomment"> Pseudo-random number sequence, linear congruential method</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> This class is adapted from work in &quot;Discrete-Event System Simulation&quot;</span>
+			<span class="ecomment">--</span><span class="ecomment"> by Jerry Banks &#38; John S. Carson, II</span>
+			<span class="ecomment">--</span><span class="ecomment"> Prentice-Hall International Series in</span>
+			<span class="ecomment">--</span><span class="ecomment"> Industrial and Systems Engineering 1984</span>
+			<span class="ecomment">--</span><span class="ecomment"> Example 7.12 p 266 which is from</span>
+			<span class="ecomment">--</span><span class="ecomment"> IMSL Scientific Subroutine Package </span><span class="ecomment">[1978]</span><span class="ecomment">,</span>
+			<span class="ecomment">--</span><span class="ecomment"> written in Fortran for IBM 360/370 computers.</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+
+	<a class="eclass" href="base/raw_file_chart.html">RAW_FILE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Files, viewed as persistent sequences of bytes</span>
+
+	<a class="eclass" href="base/readable_indexable_chart.html">READABLE_INDEXABLE</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Tables whose keys are integers in a contiguous interval</span>
+
+	<a class="eclass" href="base/readable_indexable_iteration_cursor_chart.html">READABLE_INDEXABLE_ITERATION_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Concrete version of an external iteration cursor for </span><span class="esymbol">{</span><a class="eclass" href="base/readable_indexable_chart.html">READABLE_INDEXABLE</a><span class="esymbol">}</span><span class="ecomment">.</span>
+
+	<a class="eclass" href="base/readable_string_32_chart.html">READABLE_STRING_32</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Sequences of 32-bit characters, accessible through integer indices</span>
+			<span class="ecomment">--</span><span class="ecomment"> in a contiguous range. Read-only interface.</span>
+
+	<a class="eclass" href="base/readable_string_8_chart.html">READABLE_STRING_8</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Sequences of 8-bit characters, accessible through integer indices</span>
+			<span class="ecomment">--</span><span class="ecomment"> in a contiguous range. Read-only interface.</span>
+
+	<a class="eclass" href="base/readable_string_general_chart.html">READABLE_STRING_GENERAL</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Common ancestors to all STRING classes. Read-only interface.</span>
+
+	<a class="eclass" href="base/read_write_lock_chart.html">READ_WRITE_LOCK</a>
+			<span class="ecomment">--</span><span class="ecomment"> Read/Write synchronization object, allows multiple reader threads to have access to a resource, and only one writer thread.</span>
+
+	<a class="eclass" href="base/real_32_chart.html">REAL_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Real values, single precision.</span>
+
+	<a class="eclass" href="base/real_32_ref_chart.html">REAL_32_REF</a>
+			<span class="ecomment">--</span><span class="ecomment"> References to objects containing a real value</span>
+
+	<a class="eclass" href="base/real_64_chart.html">REAL_64</a>
+			<span class="ecomment">--</span><span class="ecomment"> Real values, double precision.</span>
+
+	<a class="eclass" href="base/real_64_ref_chart.html">REAL_64_REF</a>
+			<span class="ecomment">--</span><span class="ecomment"> References to objects containing a double-precision real number</span>
+
+	<a class="eclass" href="base/recursive_cursor_tree_chart.html">RECURSIVE_CURSOR_TREE</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Cursor trees with a recursive structure</span>
+
+	<a class="eclass" href="base/recursive_tree_cursor_chart.html">RECURSIVE_TREE_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Cursors for recursive trees</span>
+
+	<a class="eclass" href="base/refactoring_helper_chart.html">REFACTORING_HELPER</a>
+			<span class="ecomment">--</span><span class="ecomment"> Collection of features that are used to mark</span>
+			<span class="ecomment">--</span><span class="ecomment"> places in code that needs refactoring.</span>
+
+	<a class="eclass" href="base/reflected_copy_semantics_object_chart.html">REFLECTED_COPY_SEMANTICS_OBJECT</a>
+			<span class="ecomment">--</span><span class="ecomment"> Accessor to an object with copy semantics. Useful to manipulate fields of an object, or</span>
+			<span class="ecomment">--</span><span class="ecomment"> an expanded field of an object without causing any copying.</span>
+
+	<a class="eclass" href="base/reflected_object_chart.html">REFLECTED_OBJECT</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Common ancestor for object inspection.</span>
+
+	<a class="eclass" href="base/reflected_reference_object_chart.html">REFLECTED_REFERENCE_OBJECT</a>
+			<span class="ecomment">--</span><span class="ecomment"> Accessor to an object. Useful to manipulate fields of an object, or</span>
+			<span class="ecomment">--</span><span class="ecomment"> an expanded field of an object without causing any copying.</span>
+			<span class="ecomment">--</span><span class="ecomment"> If applied to an expanded type, a copy will be manipulated.</span>
+
+	<a class="eclass" href="base/reflector_chart.html">REFLECTOR</a>
+			<span class="ecomment">--</span><span class="ecomment"> Access to internal object properties.</span>
+			<span class="ecomment">--</span><span class="ecomment"> This class may be used as ancestor by classes needing its facilities.</span>
+
+	<a class="eclass" href="base/reflector_constants_chart.html">REFLECTOR_CONSTANTS</a>
+			<span class="ecomment">--</span><span class="ecomment"> Constants to represent abstract types in </span><span class="ecomment">{</span><span class="ecomment">REFFLECTOR</span><span class="ecomment">}</span><span class="ecomment"> and </span><span class="ecomment">{</span><span class="ecomment">OBJECT_PROXY</span><span class="ecomment">}</span><span class="ecomment">.</span>
+
+	<a class="eclass" href="base/reflector_helper_chart.html">REFLECTOR_HELPER</a>
+			<span class="ecomment">--</span><span class="ecomment"> Helper for routines in INTERNAL class.</span>
+
+	<a class="eclass" href="base/repeatable_chart.html">REPEATABLE</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Object that may iterate over its own states.</span>
+
+	<a class="eclass" href="base/rescue_failure_chart.html">RESCUE_FAILURE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Exception raised in rescue clause</span>
+
+	<a class="eclass" href="base/resizable_chart.html">RESIZABLE</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Finite structures whose item count is subject to change</span>
+
+	<a class="eclass" href="base/resumption_failure_chart.html">RESUMPTION_FAILURE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Exception raised when retry did not succeed</span>
+
+	<a class="eclass" href="base/routine_chart.html">ROUTINE</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">OPEN_ARGS</span> <span class="esymbol">-&gt;</span> <span class="ekeyword">detachable</span> <a class="eclass" href="base/tuple_chart.html">TUPLE</a> <span class="ekeyword">create</span> <a class="efeature" href="base/any_short.html#f_default_create">default_create</a> <span class="ekeyword">end</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Objects representing delayed calls to a routine,</span>
+			<span class="ecomment">--</span><span class="ecomment"> with some operands possibly still open</span>
+
+	<a class="eclass" href="base/routine_failure_chart.html">ROUTINE_FAILURE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Exception representing a routine failure.</span>
+
+	<a class="eclass" href="base/rt_debugger_chart.html">RT_DEBUGGER</a>
+			<span class="ecomment">--</span><span class="ecomment"> Set of features to access ISE debugger functionality from debuggee.</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> Note: do not try to evaluate the following feature in watch tool!</span>
+
+	<a class="eclass" href="base/sed_abstract_objects_table_chart.html">SED_ABSTRACT_OBJECTS_TABLE</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Abstract equivalent of HASH_TABLE [NATURAL_32, ANY], since this type cannot be written</span>
+			<span class="ecomment">--</span><span class="ecomment"> as ANY does not inherit from HASHABLE</span>
+
+	<a class="eclass" href="base/sed_basic_deserializer_chart.html">SED_BASIC_DESERIALIZER</a>
+			<span class="ecomment">--</span><span class="ecomment"> Decoding of arbitrary objects graphs between sessions of a same program.</span>
+
+	<a class="eclass" href="base/sed_basic_serializer_chart.html">SED_BASIC_SERIALIZER</a>
+			<span class="ecomment">--</span><span class="ecomment"> Encoding of arbitrary objects graphs between sessions of a same program.</span>
+
+	<a class="eclass" href="base/sed_binary_reader_writer_chart.html">SED_BINARY_READER_WRITER</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Ancestor to serialize/deserialize data using a buffer in binary format.</span>
+
+	<a class="eclass" href="base/sed_error_chart.html">SED_ERROR</a>
+			<span class="ecomment">--</span><span class="ecomment"> Simple representation of a SED error</span>
+
+	<a class="eclass" href="base/sed_error_factory_chart.html">SED_ERROR_FACTORY</a>
+			<span class="ecomment">--</span><span class="ecomment"> Objects that provide instances of </span><span class="esymbol">{</span><a class="eclass" href="base/sed_error_chart.html">SED_ERROR</a><span class="esymbol">}</span><span class="ecomment">.</span>
+
+	<a class="eclass" href="base/sed_independent_deserializer_chart.html">SED_INDEPENDENT_DESERIALIZER</a>
+			<span class="ecomment">--</span><span class="ecomment"> Decoding of arbitrary objects graphs between sessions of programs containing the same types. It basically takes care of potential reordering of attributes from one system to the other.</span>
+
+	<a class="eclass" href="base/sed_independent_serializer_chart.html">SED_INDEPENDENT_SERIALIZER</a>
+			<span class="ecomment">--</span><span class="ecomment"> Encoding of arbitrary objects graphs between different version of programs containing the same types.</span>
+
+	<a class="eclass" href="base/sed_medium_reader_writer_chart.html">SED_MEDIUM_READER_WRITER</a>
+			<span class="ecomment">--</span><span class="ecomment"> Serialize/Deserialize data from a medium.</span>
+
+	<a class="eclass" href="base/sed_medium_reader_writer_1_chart.html">SED_MEDIUM_READER_WRITER_1</a>
+			<span class="ecomment">--</span><span class="ecomment"> Serialize/Deserialize data from a medium.</span>
+
+	<a class="eclass" href="base/sed_memory_reader_writer_chart.html">SED_MEMORY_READER_WRITER</a>
+			<span class="ecomment">--</span><span class="ecomment"> Serialize/Deserialize data from memory.</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> Given a memory area referenced by MANAGED_POINTER, store/retrieve data from </span>
+			<span class="ecomment">--</span><span class="ecomment"> memory. Initially memory is read from the first byte unless changed via </span><span class="equoted">set_position</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> After the first store/retrieve operation, </span><span class="equoted">count</span><span class="ecomment"> is set to the position of the last</span>
+			<span class="ecomment">--</span><span class="ecomment"> written/read bytes. If you haven't set an initial position via </span><span class="equoted">set_position</span><span class="ecomment">, it is</span>
+			<span class="ecomment">--</span><span class="ecomment"> also the number of bytes written/read, otherwise the number of bytes read is</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span><span class="equoted">count - initial_position</span><span class="ecomment">.</span>
+
+	<a class="eclass" href="base/sed_meta_model_chart.html">SED_META_MODEL</a>
+			<span class="ecomment">--</span><span class="ecomment"> Meta model representing a deserialized object. Useful for updating serialized data which might not be in sync with more recent version of the associated base class of the serialized object.</span>
+
+	<a class="eclass" href="base/sed_multi_object_serialization_chart.html">SED_MULTI_OBJECT_SERIALIZATION</a>
+			<span class="ecomment">--</span><span class="ecomment"> Serialize and deserialize multiple objects into one file.</span>
+
+	<a class="eclass" href="base/sed_objects_table_chart.html">SED_OBJECTS_TABLE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Equivalent of HASH_TABLE [NATURAL_32, ANY], since this type cannot be written</span>
+			<span class="ecomment">--</span><span class="ecomment"> as ANY does not inherit from HASHABLE</span>
+
+	<a class="eclass" href="base/sed_reader_writer_chart.html">SED_READER_WRITER</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Ancestor for reading/writing basic known entities from and to a particular location specified in concrete descendants of current.</span>
+
+	<a class="eclass" href="base/sed_recoverable_deserializer_chart.html">SED_RECOVERABLE_DESERIALIZER</a>
+			<span class="ecomment">--</span><span class="ecomment"> Decoding of arbitrary objects graphs between sessions of programs</span>
+			<span class="ecomment">--</span><span class="ecomment"> containing the same types or potentially different types (which can</span>
+			<span class="ecomment">--</span><span class="ecomment"> be mapped to the new type system via a correction mechanism,). It</span>
+			<span class="ecomment">--</span><span class="ecomment"> also basically takes care of potential reordering of attributes</span>
+			<span class="ecomment">--</span><span class="ecomment"> from one system to the other.</span>
+
+	<a class="eclass" href="base/sed_recoverable_serializer_chart.html">SED_RECOVERABLE_SERIALIZER</a>
+			<span class="ecomment">--</span><span class="ecomment"> Encoding of arbitrary objects graphs between different version of</span>
+			<span class="ecomment">--</span><span class="ecomment"> programs containing types that might have changed and for which the</span>
+			<span class="ecomment">--</span><span class="ecomment"> retrieving system may know how to fix the mismatches.</span>
+
+	<a class="eclass" href="base/sed_session_deserializer_chart.html">SED_SESSION_DESERIALIZER</a>
+			<span class="ecomment">--</span><span class="ecomment"> Decoding of arbitrary objects graphs within a session of a same program.</span>
+
+	<a class="eclass" href="base/sed_session_serializer_chart.html">SED_SESSION_SERIALIZER</a>
+			<span class="ecomment">--</span><span class="ecomment"> Encoding of arbitrary objects graphs within a session of a same program.</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> Some routines are explicitely frozen, not because we do not want them to be redefined</span>
+			<span class="ecomment">--</span><span class="ecomment"> but if they are frozen, it saves us having to look at all possible descendants whenever</span>
+			<span class="ecomment">--</span><span class="ecomment"> we do a change.</span>
+
+	<a class="eclass" href="base/sed_storable_facilities_chart.html">SED_STORABLE_FACILITIES</a>
+			<span class="ecomment">--</span><span class="ecomment"> Serialize and deserialize objects to and from SED_READER_WRITER instances.</span>
+
+	<a class="eclass" href="base/sed_type_mismatch_chart.html">SED_TYPE_MISMATCH</a>
+			<span class="ecomment">--</span><span class="ecomment"> Store all information about a mismatch in a type.</span>
+
+	<a class="eclass" href="base/sed_utilities_chart.html">SED_UTILITIES</a>
+			<span class="ecomment">--</span><span class="ecomment"> Utilities for serializing/deserializing objects</span>
+
+	<a class="eclass" href="base/sed_versions_chart.html">SED_VERSIONS</a>
+			<span class="ecomment">--</span><span class="ecomment"> Summary description for </span><span class="ecomment">{</span><span class="ecomment">SED_STORABLE_VERSIONS</span><span class="ecomment">}</span><span class="ecomment">.</span>
+
+	<a class="eclass" href="base/semaphore_chart.html">SEMAPHORE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Semaphore synchronization object, allows threads to access global data through critical sections.</span>
+
+	<a class="eclass" href="base/sequence_chart.html">SEQUENCE</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Finite sequences: structures where existing items are arranged</span>
+			<span class="ecomment">--</span><span class="ecomment"> and accessed sequentially, and new ones can be added at the end.</span>
+
+	<a class="eclass" href="base/seq_string_chart.html">SEQ_STRING</a>
+
+	<a class="eclass" href="base/serialization_failure_chart.html">SERIALIZATION_FAILURE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Exception for retrieval error, </span>
+			<span class="ecomment">--</span><span class="ecomment"> may be raised by </span><span class="equoted">retrieved</span><span class="ecomment"> in </span><span class="equoted">IO_MEDIUM</span><span class="ecomment">.</span>
+
+	<a class="eclass" href="base/set_chart.html">SET</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Collection, where each element must be unique.</span>
+
+	<a class="eclass" href="base/shared_execution_environment_chart.html">SHARED_EXECUTION_ENVIRONMENT</a>
+			<span class="ecomment">--</span><span class="ecomment"> Shared instance of execution environment.</span>
+
+	<a class="eclass" href="src/simple_process_chart.html">SIMPLE_PROCESS</a>
+			<span class="ecomment">--</span><span class="ecomment"> SCOOP-compatible process execution.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Uses direct Win32 API calls via C wrapper - no thread dependencies.</span>
+
+	<a class="eclass" href="src/simple_process_helper_chart.html">SIMPLE_PROCESS_HELPER</a>
+			<span class="ecomment">--</span><span class="ecomment"> Simple process execution helper.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Provides features for executing shell commands and capturing output.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Uses SIMPLE_PROCESS for SCOOP-compatible execution.</span>
+
+	<a class="eclass" href="base/single_math_chart.html">SINGLE_MATH</a>
+			<span class="ecomment">--</span><span class="ecomment"> Basic mathematical operations, single-precision.</span>
+			<span class="ecomment">--</span><span class="ecomment"> This class may be used as ancestor by classes needing its facilities</span>
+
+	<a class="eclass" href="base/sorted_list_chart.html">SORTED_LIST</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <a class="eclass" href="base/comparable_chart.html">COMPARABLE</a><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Sequential lists where the cells are sorted in ascending order</span>
+			<span class="ecomment">--</span><span class="ecomment"> according to the relational operators of PART_COMPARABLE</span>
+
+	<a class="eclass" href="base/sorted_struct_chart.html">SORTED_STRUCT</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <a class="eclass" href="base/comparable_chart.html">COMPARABLE</a><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Structures whose items are sorted according to a total order relation</span>
+
+	<a class="eclass" href="base/sorted_two_way_list_chart.html">SORTED_TWO_WAY_LIST</a> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <a class="eclass" href="base/comparable_chart.html">COMPARABLE</a><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Two-way lists, kept sorted.</span>
+
+	<a class="eclass" href="base/special_chart.html">SPECIAL</a> <span class="esymbol">[</span><span class="egeneric">T</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Special objects: homogeneous sequences of values,</span>
+			<span class="ecomment">--</span><span class="ecomment"> used to represent arrays and strings</span>
+
+	<a class="eclass" href="base/special_iteration_cursor_chart.html">SPECIAL_ITERATION_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> External forward one-step iteration cursor for </span><span class="esymbol">{</span><a class="eclass" href="base/special_chart.html">SPECIAL</a><span class="esymbol">}</span><span class="ecomment">.</span>
+
+	<a class="eclass" href="base/stack_chart.html">STACK</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Stacks (last-in, first-out dispensers), without commitment</span>
+			<span class="ecomment">--</span><span class="ecomment"> to a particular representation</span>
+
+	<a class="eclass" href="base/std_files_chart.html">STD_FILES</a>
+			<span class="ecomment">--</span><span class="ecomment"> Commonly used input and output mechanisms.</span>
+			<span class="ecomment">--</span><span class="ecomment"> This class may be used as either ancestor or supplier</span>
+			<span class="ecomment">--</span><span class="ecomment"> by classes needing its facilities.</span>
+
+	<a class="eclass" href="base/storable_chart.html">STORABLE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Objects that may be stored and retrieved along with all their dependents.</span>
+			<span class="ecomment">--</span><span class="ecomment"> This class may be used as ancestor by classes needing its facilities.</span>
+
+	<a class="eclass" href="base/stream_chart.html">STREAM</a>
+			<span class="ecomment">--</span><span class="ecomment"> Implementation of the STORABLE mechanism with streams.</span>
+
+	<a class="eclass" href="base/string_32_chart.html">STRING_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Sequences of 32-bit characters, accessible through integer indices</span>
+			<span class="ecomment">--</span><span class="ecomment"> in a contiguous range.</span>
+
+	<a class="eclass" href="base/string_32_iteration_cursor_chart.html">STRING_32_ITERATION_CURSOR</a>
+			<span class="ecomment">--</span><span class="ecomment"> External forward one-step iteration cursor for </span><span class="esymbol">{</span><a class="eclass" href="base/string_32_chart.html">STRING_32</a><span class="esymbol">}</span><span class="ecomment">.</span>
+
+	<a class="eclass" href="base/string_32_searcher_chart.html">STRING_32_SEARCHER</a>
+			<span class="ecomment">--</span><span class="ecomment"> Helper to perform efficient search of a string in another one.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Note: The algorithm used is the one described in Communications of the ACM,</span>
+			<span class="ecomment">--</span><span class="ecomment"> volume 33, number 8, August 1990, by Daniel M. Sunday. The fuzzy</span>
+			<span class="ecomment">--</span><span class="ecomment"> version was presented by Peter R. Sibbald in Communications of the</span>
+			<span class="ecomment">--</span><span class="ecomment"> ACM, volume 35, number 4, April 1992 (Technical Correspondance).</span>
+
+	<a class="eclass" href="base/string_8_chart.html">STRING_8</a>
+			<span class="ecomment">--</span><span class="ecomment"> Sequences of 8-bit characters, accessible through integer indices</span>
+			<span class="ecomment">--</span><span class="ecomment"> in a contiguous range.</span>
+
+	<a class="eclass" href="base/string_8_iteration_cursor_chart.html">STRING_8_ITERATION_CURSOR</a>
+			<span class="ecomment">--</span><span class="ecomment"> External forward one-step iteration cursor for </span><span class="esymbol">{</span><a class="eclass" href="base/string_8_chart.html">STRING_8</a><span class="esymbol">}</span><span class="ecomment">.</span>
+
+	<a class="eclass" href="base/string_8_searcher_chart.html">STRING_8_SEARCHER</a>
+			<span class="ecomment">--</span><span class="ecomment"> Helper to perform efficient search of a string in another one.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Note: The algorithm used is the one described in Communications of the ACM,</span>
+			<span class="ecomment">--</span><span class="ecomment"> volume 33, number 8, August 1990, by Daniel M. Sunday. The fuzzy</span>
+			<span class="ecomment">--</span><span class="ecomment"> version was presented by Peter R. Sibbald in Communications of the</span>
+			<span class="ecomment">--</span><span class="ecomment"> ACM, volume 35, number 4, April 1992 (Technical Correspondance).</span>
+
+	<a class="eclass" href="base/string_general_chart.html">STRING_GENERAL</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Common ancestors to all STRING classes.</span>
+
+	<a class="eclass" href="base/string_handler_chart.html">STRING_HANDLER</a>
+			<span class="ecomment">--</span><span class="ecomment"> Objects that can access </span><span class="equoted">set_count</span><span class="ecomment"> from STRING</span>
+
+	<a class="eclass" href="base/string_iteration_cursor_chart.html">STRING_ITERATION_CURSOR</a>
+			<span class="ecomment">--</span><span class="ecomment"> External iteration cursor on </span><span class="esymbol">{</span><a class="eclass" href="base/readable_string_general_chart.html">READABLE_STRING_GENERAL</a><span class="esymbol">}</span><span class="ecomment"> based on </span><span class="esymbol">{</span><a class="eclass" href="base/character_32_chart.html">CHARACTER_32</a><span class="esymbol">}</span><span class="ecomment"> item.</span>
+
+	<a class="eclass" href="base/string_searcher_chart.html">STRING_SEARCHER</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Helper to perform efficient search of a string in another one.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Note: The algorithm used is the one described in Communications of the ACM,</span>
+			<span class="ecomment">--</span><span class="ecomment"> volume 33, number 8, August 1990, by Daniel M. Sunday. The fuzzy</span>
+			<span class="ecomment">--</span><span class="ecomment"> version was presented by Peter R. Sibbald in Communications of the</span>
+			<span class="ecomment">--</span><span class="ecomment"> ACM, volume 35, number 4, April 1992 (Technical Correspondance).</span>
+
+	<a class="eclass" href="base/string_table_chart.html">STRING_TABLE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Hash tables, used to store items identified by string keys that are compared with or without case sensitivity.</span>
+
+	<a class="eclass" href="base/string_to_integer_convertor_chart.html">STRING_TO_INTEGER_CONVERTOR</a>
+			<span class="ecomment">--</span><span class="ecomment"> Convertor to do string to integer/natural conversion</span>
+
+	<a class="eclass" href="base/string_to_numeric_convertor_chart.html">STRING_TO_NUMERIC_CONVERTOR</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Abstract convertor for string to number conversion</span>
+
+	<a class="eclass" href="base/string_to_real_convertor_chart.html">STRING_TO_REAL_CONVERTOR</a>
+			<span class="ecomment">--</span><span class="ecomment"> String to real/double convertor</span>
+
+	<a class="eclass" href="base/string_tracing_handler_chart.html">STRING_TRACING_HANDLER</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Abstract class to dispatch tracing events to user using TYPE and STRING data.</span>
+
+	<a class="eclass" href="base/subset_chart.html">SUBSET</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Subsets with the associated operations,</span>
+			<span class="ecomment">--</span><span class="ecomment"> without commitment to a particular representation</span>
+
+	<a class="eclass" href="base/subset_strategy_chart.html">SUBSET_STRATEGY</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Strategies for computing several features of subsets. The computing</span>
+			<span class="ecomment">--</span><span class="ecomment"> strategy is optimized depending on the type of elements contained in</span>
+			<span class="ecomment">--</span><span class="ecomment"> the set.</span>
+
+	<a class="eclass" href="base/subset_strategy_generic_chart.html">SUBSET_STRATEGY_GENERIC</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Strategies for calculating several features for subsets containing</span>
+			<span class="ecomment">--</span><span class="ecomment"> items of any type.</span>
+
+	<a class="eclass" href="base/subset_strategy_hashable_chart.html">SUBSET_STRATEGY_HASHABLE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Strategies for calculating several features for subsets containing</span>
+			<span class="ecomment">--</span><span class="ecomment"> HASHABLEs.</span>
+
+	<a class="eclass" href="base/subset_strategy_tree_chart.html">SUBSET_STRATEGY_TREE</a> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <a class="eclass" href="base/comparable_chart.html">COMPARABLE</a><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Strategies for calculating several features for subsets represented</span>
+			<span class="ecomment">--</span><span class="ecomment"> by binary search trees. Contained items have to be COMPARABLE</span>
+
+	<a class="eclass" href="base/system_encodings_chart.html">SYSTEM_ENCODINGS</a>
+			<span class="ecomment">--</span><span class="ecomment"> Available encodings in the operating system.</span>
+
+	<a class="eclass" href="base/system_string_chart.html">SYSTEM_STRING</a>
+			<span class="ecomment">--</span><span class="ecomment"> Fake abstraction of a .NET SYSTEM_STRING in a non-.NET system</span>
+
+	<a class="eclass" href="base/system_string_factory_chart.html">SYSTEM_STRING_FACTORY</a>
+			<span class="ecomment">--</span><span class="ecomment"> Factory for creating SYSTEM_STRING instances.</span>
+
+	<a class="eclass" href="base/sys_exception_chart.html">SYS_EXCEPTION</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Deferred class of all systematic exceptions</span>
+
+	<a class="eclass" href="base/table_chart.html">TABLE</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">,</span> <span class="egeneric">H</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Containers whose items are accessible through keys</span>
+
+	<a class="eclass" href="base/table_iterable_chart.html">TABLE_ITERABLE</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">,</span> <span class="egeneric">K</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Structure that can be iterated over using </span><span class="equoted">across...loop...end</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> using </span><span class="equoted">key</span><span class="ecomment"> and </span><span class="equoted">item</span><span class="ecomment">.</span>
+
+	<a class="eclass" href="base/table_iteration_cursor_chart.html">TABLE_ITERATION_CURSOR</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">,</span> <span class="egeneric">K</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> External iteration cursor used by </span><span class="equoted">across...loop...end</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> using </span><span class="equoted">key</span><span class="ecomment"> and </span><span class="equoted">item</span><span class="ecomment">.</span>
+
+	<a class="eclass" href="base/test_case_chart.html">TEST_CASE</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Common ancestor of all test case classes</span>
+
+	<a class="eclass" href="base/thread_environment_chart.html">THREAD_ENVIRONMENT</a>
+			<span class="ecomment">--</span><span class="ecomment"> Information about the current thread execution</span>
+
+	<a class="eclass" href="base/to_special_chart.html">TO_SPECIAL</a> <span class="esymbol">[</span><span class="egeneric">T</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> References to special objects, for direct access to arrays and strings</span>
+
+	<a class="eclass" href="base/tracing_handler_chart.html">TRACING_HANDLER</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Abstract class to dispatch tracing events to user. Tracing events are dispatched</span>
+			<span class="ecomment">--</span><span class="ecomment"> by calling </span><span class="equoted">activate</span><span class="ecomment"> on the TRACING_HANDLER's instance.</span>
+			<span class="ecomment">--</span><span class="ecomment"> &nbsp;For each thread being created a copy of the current tracer object will be</span>
+			<span class="ecomment">--</span><span class="ecomment"> &nbsp;used for the newly created thread to avoid race condition. It is up to the implementer</span>
+			<span class="ecomment">--</span><span class="ecomment"> &nbsp;of the class to ensure proper thread-safety and to properly implement </span><span class="equoted">duplicated</span><span class="ecomment"> which</span>
+			<span class="ecomment">--</span><span class="ecomment"> &nbsp;is by default implemented using </span><span class="ecomment">`</span><a class="efeature" href="base/any_short.html#f_twin">twin</a><span class="ecomment">`</span><span class="ecomment">.</span>
+
+	<a class="eclass" href="base/tracing_setting_chart.html">TRACING_SETTING</a>
+			<span class="ecomment">--</span><span class="ecomment"> Objects that manage the Eiffel tracing. You can start and</span>
+			<span class="ecomment">--</span><span class="ecomment"> stop the Eiffel tracing whenever you want to. It only works</span>
+			<span class="ecomment">--</span><span class="ecomment"> if </span><span class="equoted">trace (yes)</span><span class="ecomment"> is enabled in your project configuration file.</span>
+
+	<a class="eclass" href="base/traversable_chart.html">TRAVERSABLE</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Structures for which there exists a traversal policy</span>
+			<span class="ecomment">--</span><span class="ecomment"> that will visit every element exactly once.</span>
+
+	<a class="eclass" href="base/traversable_subset_chart.html">TRAVERSABLE_SUBSET</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Subsets that are traversable sequentially</span>
+
+	<a class="eclass" href="base/tree_chart.html">TREE</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Trees, without commitment to a particular representation</span>
+
+	<a class="eclass" href="base/tree_iteration_cursor_chart.html">TREE_ITERATION_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> External forward one-step iteration cursor for descendants of </span><span class="esymbol">{</span><a class="eclass" href="base/tree_chart.html">TREE</a><span class="esymbol">}</span><span class="ecomment">.</span>
+
+	<a class="eclass" href="base/tuple_chart.html">TUPLE</a>
+			<span class="ecomment">--</span><span class="ecomment"> Implementation of TUPLE</span>
+
+	<a class="eclass" href="base/two_way_chain_iterator_chart.html">TWO_WAY_CHAIN_ITERATOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Objects that are able to iterate over two-way chains,</span>
+			<span class="ecomment">--</span><span class="ecomment"> on which they can perform repeated actions and tests according</span>
+			<span class="ecomment">--</span><span class="ecomment"> to a number of predefined control structures such as </span><span class="equoted">if</span><span class="ecomment">,</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span><span class="equoted">until</span><span class="ecomment"> and others.</span>
+
+	<a class="eclass" href="base/two_way_circular_chart.html">TWO_WAY_CIRCULAR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Circular chains implemented as two-way linked lists</span>
+
+	<a class="eclass" href="base/two_way_list_chart.html">TWO_WAY_LIST</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Sequential, two-way linked lists</span>
+
+	<a class="eclass" href="base/two_way_list_cursor_chart.html">TWO_WAY_LIST_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Cursors for two way lists.</span>
+
+	<a class="eclass" href="base/two_way_list_iteration_cursor_chart.html">TWO_WAY_LIST_ITERATION_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Concrete of an external iteration cursor for </span><span class="esymbol">{</span><a class="eclass" href="base/two_way_list_chart.html">TWO_WAY_LIST</a><span class="esymbol">}</span><span class="ecomment">.</span>
+
+	<a class="eclass" href="base/two_way_sorted_set_chart.html">TWO_WAY_SORTED_SET</a> <span class="esymbol">[</span><span class="egeneric">G</span> <span class="esymbol">-&gt;</span> <a class="eclass" href="base/comparable_chart.html">COMPARABLE</a><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Sets whose items may be compared according to a total order relation;</span>
+			<span class="ecomment">--</span><span class="ecomment"> implemented as sorted two-way lists.</span>
+
+	<a class="eclass" href="base/two_way_tree_chart.html">TWO_WAY_TREE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Trees implemented using a two way linked list representation</span>
+
+	<a class="eclass" href="base/two_way_tree_cursor_chart.html">TWO_WAY_TREE_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Cursors for two-way trees</span>
+
+	<a class="eclass" href="base/two_way_tree_iteration_cursor_chart.html">TWO_WAY_TREE_ITERATION_CURSOR</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> External forward iteration cursor for descendants of </span><span class="esymbol">{</span><a class="eclass" href="base/two_way_tree_chart.html">TWO_WAY_TREE</a><span class="esymbol">}</span><span class="ecomment">.</span>
+
+	<a class="eclass" href="base/type_chart.html">TYPE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Representation of an Eiffel type.</span>
+
+	<a class="eclass" href="base/typed_indexable_iteration_cursor_chart.html">TYPED_INDEXABLE_ITERATION_CURSOR</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">,</span> <span class="egeneric">H</span> <span class="esymbol">-&gt;</span> <a class="eclass" href="base/readable_indexable_chart.html">READABLE_INDEXABLE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> External iteration cursor for </span><span class="esymbol">{</span><a class="eclass" href="base/readable_indexable_chart.html">READABLE_INDEXABLE</a><span class="esymbol">}</span><span class="ecomment">.</span>
+
+	<a class="eclass" href="base/typed_pointer_chart.html">TYPED_POINTER</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> References to objects containing reference to object</span>
+			<span class="ecomment">--</span><span class="ecomment"> meant to be exchanged with non-Eiffel software.</span>
+
+	<a class="eclass" href="base/unbounded_chart.html">UNBOUNDED</a><span class="echar">*</span> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Finite structures whose item count is not bounded</span>
+
+	<a class="eclass" href="base/unicode_conversion_chart.html">UNICODE_CONVERSION</a>
+			<span class="ecomment">--</span><span class="ecomment"> Eiffel implementations for Unicode encoding conversion.</span>
+
+	<a class="eclass" href="base/unix_file_info_chart.html">UNIX_FILE_INFO</a>
+			<span class="ecomment">--</span><span class="ecomment"> Obsolete internal file information, use FILE_INFO directly.</span>
+
+	<a class="eclass" href="base/unix_signals_chart.html">UNIX_SIGNALS</a>
+			<span class="ecomment">--</span><span class="ecomment"> Constants used for signal handling.</span>
+			<span class="ecomment">--</span><span class="ecomment"> This class may be used as ancestor by classes needing its facilities.</span>
+
+	<a class="eclass" href="base/utf_converter_chart.html">UTF_CONVERTER</a>
+			<span class="ecomment">--</span><span class="ecomment"> Converter from/to UTF-8, UTF-16 and UTF-32 encodings.</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> Handling of invalid encodings</span>
+			<span class="ecomment">--</span><span class="ecomment"> =============================</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> Whenever a UTF-8 or UTF-16 sequence is decoded, the decoding routines also check</span>
+			<span class="ecomment">--</span><span class="ecomment"> that the sequence is valid. If it is not, it will replace the invalid unit (e.g. a byte</span>
+			<span class="ecomment">--</span><span class="ecomment"> for UTF-8 and a 2-byte for UTF-16 by the replacement character U+FFFD as described by</span>
+			<span class="ecomment">--</span><span class="ecomment"> variant #3 of the recommended practice for replacement character in Unicode (see</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span><a class="ecomment" href="http://www.unicode.org/review/pr-121.html">http://www.unicode.org/review/pr-121.html</a><span class="ecomment"> for more details).</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> However it means that you cannot roundtrip incorrectly encoded sequence back and forth</span>
+			<span class="ecomment">--</span><span class="ecomment"> between the encoded version and the decoded STRING_32 version. To allow roundtrip, an</span>
+			<span class="ecomment">--</span><span class="ecomment"> escaped representation of a bad encoded sequence has been introduced. It is adding a</span>
+			<span class="ecomment">--</span><span class="ecomment"> a fourth variant (which is a slight modification of variant #3) to the recommended</span>
+			<span class="ecomment">--</span><span class="ecomment"> practice where the replacement character is followed by the printed hexadecimal value</span>
+			<span class="ecomment">--</span><span class="ecomment"> of the invalid byte or the invalid 2-byte sequence.</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span>
+			<span class="ecomment">--</span><span class="ecomment"> To provide an example (assuming that the Unicode character U+FFFD is represented as</span>
+			<span class="ecomment">--</span><span class="ecomment"> ? textually):</span>
+			<span class="ecomment">--</span><span class="ecomment"> 1 - on UNIX, any invalid UTF-8 byte sequence such as 0x8F 0x8F is encoded as the</span>
+			<span class="ecomment">--</span><span class="ecomment"> following Unicode sequence: U+FFFD U+0038 U+0046 U+FFFF U+0038 U+0046, and textually</span>
+			<span class="ecomment">--</span><span class="ecomment"> it looks like &quot;?8F?8F&quot;.</span>
+			<span class="ecomment">--</span><span class="ecomment"> 2 - on Windows, any invalid UTF-16 2-byte sequence such as 0xD800 0x0054 is encoded as the</span>
+			<span class="ecomment">--</span><span class="ecomment"> following Unicode sequence: U+FFFD U+0075 U+0044 U+0038 U+0030 U+0030 U+FFFD U+0035 U+0033,</span>
+			<span class="ecomment">--</span><span class="ecomment"> and textually it looks like &quot;?uD800?54&quot;. The rule is that if the 2-byte sequence does not fit</span>
+			<span class="ecomment">--</span><span class="ecomment"> into 1 byte, it uses the letter </span><span class="equoted">u</span><span class="ecomment"> followed by the hexadecimal value of the 2-byte sequence,</span>
+			<span class="ecomment">--</span><span class="ecomment"> otherwise it simply uses the 1-byte hexadecimal representation.</span>
+
+	<a class="eclass" href="base/variant_violation_chart.html">VARIANT_VIOLATION</a>
+			<span class="ecomment">--</span><span class="ecomment"> Loop variant violation</span>
+
+	<a class="eclass" href="base/versionable_chart.html">VERSIONABLE</a><span class="echar">*</span>
+			<span class="ecomment">--</span><span class="ecomment"> Lightweight tracker of modifications made to instances of this class.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Any modification causes </span><span class="equoted">version</span><span class="ecomment"> to get a new value that can be used</span>
+			<span class="ecomment">--</span><span class="ecomment"> by the clients to see if there were any changes since last access.</span>
+
+	<a class="eclass" href="base/void_assigned_to_expanded_chart.html">VOID_ASSIGNED_TO_EXPANDED</a>
+			<span class="ecomment">--</span><span class="ecomment"> Exception for assignment of void value to expanded entity</span>
+
+	<a class="eclass" href="base/void_target_chart.html">VOID_TARGET</a>
+			<span class="ecomment">--</span><span class="ecomment"> Exception for feature applied to void reference</span>
+
+	<a class="eclass" href="base/weak_reference_chart.html">WEAK_REFERENCE</a> <span class="esymbol">[</span><span class="egeneric">G</span><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Abstraction for weak references, i.e. references to object that can still be reclaimed by the GC.</span>
+			<span class="ecomment">--</span><span class="ecomment"> If the actual generic parameter is expanded, </span><span class="equoted">put</span><span class="ecomment"> cannot be used as it does not make sense from the user</span>
+			<span class="ecomment">--</span><span class="ecomment"> point of view.</span>
+
+</pre><form class="nav" onsubmit="go_to('',this.c.value);return false;">
+<div class="nav">
+<span class="nav hierarchy selected">Classes</span>
+<a class="nav hierarchy" href="cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="cluster_hierarchy.html">Cluster hierarchy</a>
+<span class="nav class goto">Go to: <input name="c" value=""></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>

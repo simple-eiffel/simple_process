@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="description" content="TAbstract class to dispatch tracing events to user. Tracing events are dispatched Tby calling `activate' on the TRACING_HANDLER's instance.  TFor each thread being created a copy of the current tracer object will be  Tused for the newly created thread to avoid race condition. It is up to the implementer  Tof the class to ensure proper thread-safety and to properly implement `duplicated' which  Tis by default implemented using `twin'."/>
+<meta name="legal" content="See notice at end of class."/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="library" content="EiffelBase: Library of reusable components for Eiffel."/>
+<meta name="copyright" content="Copyright (c) 1984-2017, Eiffel Software and others"/>
+<meta name="license" content="Eiffel Forum License v2 (see http://www.eiffel.com/licensing/forum.txt)"/>
+<meta name="source" content="Eiffel Software 5949 Hollister Ave., Goleta, CA 93117 USA Telephone 805-685-1006, Fax 805-685-6869 Website http://www.eiffel.com Customer support http://support.eiffel.com"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>tracing_handler Chart</title>
+<link rel="stylesheet" href="../default.css" type="text/css">
+<script type="text/javascript" src="../goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<span class="nav class selected">Chart</span>
+<a class="nav class" href="tracing_handler_links.html">Relations</a>
+<a class="nav class" href="tracing_handler_short.html">Contracts</a>
+<span class="nav class goto">Go to: <input name="c" value="tracing_handler"></span>
+</div></form><pre><span class="ekeyword">deferred</span> <span class="ekeyword">class</span>
+	<a class="eclass" href="../base/tracing_handler_chart.html">TRACING_HANDLER</a>
+
+<span class="ekeyword">General</span>
+	<span class="eitag">cluster</span><span class="esymbol">:</span> <span class="necluster">ise</span>
+	<span class="eitag">description</span><span class="esymbol">:</span> 
+		<span class="estring">&quot;Abstract class to dispatch tracing events to user. Tracing events are dispatched</span>
+		<span class="estring">by calling </span><span class="estring">activate</span><span class="estring"> on the TRACING_HANDLER's instance.</span>
+		<span class="estring"> For each thread being created a copy of the current tracer object will be</span>
+		<span class="estring"> used for the newly created thread to avoid race condition. It is up to the implementer</span>
+		<span class="estring"> of the class to ensure proper thread-safety and to properly implement </span><span class="estring">duplicated</span><span class="estring"> which</span>
+		<span class="estring"> is by default implemented using </span><span class="estring">`</span><a class="efeature" href="../base/any_short.html#f_twin">twin</a><span class="estring">`</span><span class="estring">.&quot;</span>
+
+<span class="ekeyword">Ancestors</span>
+	<a class="eclass" href="../base/any_chart.html">ANY</a>
+
+<span class="ekeyword">Queries</span>
+	<span title="`duplicated' is declared in `Current'"><a class="efeature" href="../base/tracing_handler_short.html#f_duplicated">duplicated</a><span class="esymbol">:</span> <span class="esymbol">[</span><span class="ekeyword">like</span> <span class="ekeyword">Current</span><span class="esymbol">]</span> <a class="eclass" href="../base/tracing_handler_chart.html">TRACING_HANDLER</a></span>
+
+<span class="ekeyword">Commands</span>
+	<span title="`activate' is declared in `Current'"><a class="efeature" href="../base/tracing_handler_short.html#f_activate">activate</a></span>
+	<span title="`deactivate' is declared in `Current'"><a class="efeature" href="../base/tracing_handler_short.html#f_deactivate">deactivate</a></span>
+	<span title="`trace' is declared in `Current'"><a class="efeature" href="../base/tracing_handler_short.html#f_trace">trace</a> <span class="esymbol">(</span><span class="elocal">a_type_id</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_chart.html">INTEGER_32</a><span class="esymbol">;</span> <span class="elocal">a_c_class_name</span><span class="esymbol">,</span> <span class="elocal">a_c_feature_name</span><span class="esymbol">:</span> <a class="eclass" href="../base/pointer_chart.html">POINTER</a><span class="esymbol">;</span> <span class="elocal">a_depth</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_chart.html">INTEGER_32</a><span class="esymbol">;</span> <span class="elocal">a_is_entering</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_chart.html">BOOLEAN</a><span class="esymbol">)</span></span>
+
+</pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<span class="nav class selected">Chart</span>
+<a class="nav class" href="tracing_handler_links.html">Relations</a>
+<a class="nav class" href="tracing_handler_short.html">Contracts</a>
+<span class="nav class goto">Go to: <input name="c" value="tracing_handler"></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>

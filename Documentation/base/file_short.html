@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="description" content="Sequential files, viewed as persistent sequences of characters"/>
+<meta name="library" content="Free implementation of ELKS library"/>
+<meta name="legal" content="See notice at end of class."/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="copyright" content="Copyright (c) 1984-2020, Eiffel Software and others"/>
+<meta name="license" content="Eiffel Forum License v2 (see http://www.eiffel.com/licensing/forum.txt)"/>
+<meta name="source" content="Eiffel Software 5949 Hollister Ave., Goleta, CA 93117 USA Telephone 805-685-1006, Fax 805-685-6869 Website http://www.eiffel.com Customer support http://support.eiffel.com"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>file Contracts</title>
+<link rel="stylesheet" href="../default.css" type="text/css">
+<script type="text/javascript" src="../goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="file_chart.html">Chart</a>
+<a class="nav class" href="file_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="file"></span>
+</div></form><pre><span class="ekeyword">note</span>
+	<span class="eitag">description</span><span class="esymbol">:</span> <span class="estring">&quot;Sequential files, viewed as persistent sequences of characters&quot;</span>
+	<span class="eitag">library</span><span class="esymbol">:</span> <span class="estring">&quot;Free implementation of ELKS library&quot;</span>
+	<span class="eitag">status</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">legal</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">date</span><span class="esymbol">:</span> <span class="estring">&quot;$Date$&quot;</span>
+	<span class="eitag">revision</span><span class="esymbol">:</span> <span class="estring">&quot;$Revision$&quot;</span>
+
+<span class="ekeyword">deferred</span> <span class="ekeyword">class</span> <span class="ekeyword">interface</span>
+	<a class="eclass" href="../base/file_short.html">FILE</a>
+
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Initialization</span>
+
+	<a name="f_make_with_name"></a><a class="efeature" href="../base/file_short.html#f_make_with_name">make_with_name</a> <span class="esymbol">(</span><span class="elocal">fn</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_short.html">READABLE_STRING_GENERAL</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Create file object with </span><span class="equoted">fn</span><span class="ecomment"> as file name.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">fn_exists</span><span class="esymbol">:</span> <span class="elocal">fn</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">fn_not_empty</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <span class="elocal">fn</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_general_short.html#f_is_empty">is_empty</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">file_named</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_internal_name">internal_name</a> <span class="esymbol">=</span> <span class="elocal">fn</span>
+			<span class="etag">file_closed</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_closed">is_closed</a>
+
+	<a name="f_make_with_path"></a><a class="efeature" href="../base/file_short.html#f_make_with_path">make_with_path</a> <span class="esymbol">(</span><span class="elocal">a_path</span><span class="esymbol">:</span> <a class="eclass" href="../base/path_short.html">PATH</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Create file object with </span><span class="equoted">a_path</span><span class="ecomment"> as path.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">a_path_attached</span><span class="esymbol">:</span> <span class="elocal">a_path</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">a_path_not_empty</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <span class="elocal">a_path</span><span class="edot">.</span><a class="efeature" href="../base/path_short.html#f_is_empty">is_empty</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">path_set</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_path">path</a><span class="edot">.</span><a class="efeature" href="../base/path_short.html#f_same_as">same_as</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">a_path</span><span class="esymbol">)</span>
+			<span class="etag">file_closed</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_closed">is_closed</a>
+
+	<a name="f_make_open_read"></a><a class="efeature" href="../base/file_short.html#f_make_open_read">make_open_read</a> <span class="esymbol">(</span><span class="elocal">fn</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_short.html">READABLE_STRING_GENERAL</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Create file object with </span><span class="equoted">fn</span><span class="ecomment"> as file name</span>
+			<span class="ecomment">--</span><span class="ecomment"> and open file in read mode.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">string_exists</span><span class="esymbol">:</span> <span class="elocal">fn</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">string_not_empty</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <span class="elocal">fn</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_general_short.html#f_is_empty">is_empty</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">file_named</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_internal_name">internal_name</a> <span class="esymbol">=</span> <span class="elocal">fn</span>
+			<span class="etag">exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+			<span class="etag">open_read</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_read">is_open_read</a>
+
+	<a name="f_make_open_write"></a><a class="efeature" href="../base/file_short.html#f_make_open_write">make_open_write</a> <span class="esymbol">(</span><span class="elocal">fn</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_short.html">READABLE_STRING_GENERAL</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Create file object with </span><span class="equoted">fn</span><span class="ecomment"> as file name</span>
+			<span class="ecomment">--</span><span class="ecomment"> and open file for writing;</span>
+			<span class="ecomment">--</span><span class="ecomment"> create it if it does not exist.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">string_exists</span><span class="esymbol">:</span> <span class="elocal">fn</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">string_not_empty</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <span class="elocal">fn</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_general_short.html#f_is_empty">is_empty</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">file_named</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_internal_name">internal_name</a> <span class="esymbol">=</span> <span class="elocal">fn</span>
+			<span class="etag">exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+			<span class="etag">open_write</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_write">is_open_write</a>
+
+	<a name="f_make_open_append"></a><a class="efeature" href="../base/file_short.html#f_make_open_append">make_open_append</a> <span class="esymbol">(</span><span class="elocal">fn</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_short.html">READABLE_STRING_GENERAL</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Create file object with </span><span class="equoted">fn</span><span class="ecomment"> as file name</span>
+			<span class="ecomment">--</span><span class="ecomment"> and open file in append-only mode.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">string_exists</span><span class="esymbol">:</span> <span class="elocal">fn</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">string_not_empty</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <span class="elocal">fn</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_general_short.html#f_is_empty">is_empty</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">file_named</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_internal_name">internal_name</a> <span class="esymbol">=</span> <span class="elocal">fn</span>
+			<span class="etag">exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+			<span class="etag">open_append</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_append">is_open_append</a>
+
+	<a name="f_make_open_read_write"></a><a class="efeature" href="../base/file_short.html#f_make_open_read_write">make_open_read_write</a> <span class="esymbol">(</span><span class="elocal">fn</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_short.html">READABLE_STRING_GENERAL</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Create file object with </span><span class="equoted">fn</span><span class="ecomment"> as file name</span>
+			<span class="ecomment">--</span><span class="ecomment"> and open file for both reading and writing.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">string_exists</span><span class="esymbol">:</span> <span class="elocal">fn</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">string_not_empty</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <span class="elocal">fn</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_general_short.html#f_is_empty">is_empty</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">file_named</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_internal_name">internal_name</a> <span class="esymbol">=</span> <span class="elocal">fn</span>
+			<span class="etag">exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+			<span class="etag">open_read</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_read">is_open_read</a>
+			<span class="etag">open_write</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_write">is_open_write</a>
+
+	<a name="f_make_create_read_write"></a><a class="efeature" href="../base/file_short.html#f_make_create_read_write">make_create_read_write</a> <span class="esymbol">(</span><span class="elocal">fn</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_short.html">READABLE_STRING_GENERAL</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Create file object with </span><span class="equoted">fn</span><span class="ecomment"> as file name</span>
+			<span class="ecomment">--</span><span class="ecomment"> and open file for both reading and writing;</span>
+			<span class="ecomment">--</span><span class="ecomment"> create it if it does not exist.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">string_exists</span><span class="esymbol">:</span> <span class="elocal">fn</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">string_not_empty</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <span class="elocal">fn</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_general_short.html#f_is_empty">is_empty</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">file_named</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_internal_name">internal_name</a> <span class="esymbol">=</span> <span class="elocal">fn</span>
+			<span class="etag">exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+			<span class="etag">open_read</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_read">is_open_read</a>
+			<span class="etag">open_write</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_write">is_open_write</a>
+
+	<a name="f_make_open_read_append"></a><a class="efeature" href="../base/file_short.html#f_make_open_read_append">make_open_read_append</a> <span class="esymbol">(</span><span class="elocal">fn</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_short.html">READABLE_STRING_GENERAL</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Create file object with </span><span class="equoted">fn</span><span class="ecomment"> as file name</span>
+			<span class="ecomment">--</span><span class="ecomment"> and open file for reading anywhere</span>
+			<span class="ecomment">--</span><span class="ecomment"> but writing at the end only.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Create file if it does not exist.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">string_exists</span><span class="esymbol">:</span> <span class="elocal">fn</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">string_not_empty</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <span class="elocal">fn</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_general_short.html#f_is_empty">is_empty</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">file_named</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_internal_name">internal_name</a> <span class="esymbol">=</span> <span class="elocal">fn</span>
+			<span class="etag">exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+			<span class="etag">open_read</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_read">is_open_read</a>
+			<span class="etag">open_append</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_append">is_open_append</a>
+
+	<a name="f_make_open_temporary"></a><a class="efeature" href="../base/file_short.html#f_make_open_temporary">make_open_temporary</a>
+			<span class="ecomment">--</span><span class="ecomment"> Create a file object with a unique temporary file name,</span>
+			<span class="ecomment">--</span><span class="ecomment"> with read/write mode.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+			<span class="etag">open_read</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_read">is_open_read</a>
+			<span class="etag">open_write</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_write">is_open_write</a>
+
+	<a name="f_make_open_temporary_with_prefix"></a><a class="efeature" href="../base/file_short.html#f_make_open_temporary_with_prefix">make_open_temporary_with_prefix</a> <span class="esymbol">(</span><span class="elocal">a_prefix</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_short.html">READABLE_STRING_GENERAL</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Create a file object with a unique temporary file name with prefix </span><span class="equoted">a_prefix</span><span class="ecomment">,</span>
+			<span class="ecomment">--</span><span class="ecomment"> with read/write mode.</span>
+		<span class="ekeyword">note</span>
+			<span class="eitag">eis</span><span class="esymbol">:</span> <span class="estring">&quot;name=mkstemp&quot;</span><span class="esymbol">,</span> <span class="estring">&quot;src=</span><a class="estring" href="http://man7.org/linux/man-pages/man3/mkstemp.3.html">http://man7.org/linux/man-pages/man3/mkstemp.3.html</a><span class="estring">&quot;</span><span class="esymbol">,</span> <span class="estring">&quot;protocol=uri&quot;</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+			<span class="etag">open_read</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_read">is_open_read</a>
+			<span class="etag">open_write</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_write">is_open_write</a>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Access</span>
+
+	<a name="f_path"></a><a class="efeature" href="../base/file_short.html#f_path">path</a><span class="esymbol">:</span> <a class="eclass" href="../base/path_short.html">PATH</a>
+			<span class="ecomment">--</span><span class="ecomment"> Associated path of Current.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">entry_not_empty</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <span class="ekeyword">Result</span><span class="edot">.</span><a class="efeature" href="../base/path_short.html#f_is_empty">is_empty</a>
+
+	<a name="f_item"></a><a class="efeature" href="../base/file_short.html#f_item">item</a><span class="esymbol">:</span> <a class="eclass" href="../base/character_8_short.html">CHARACTER_8</a>
+			<span class="ecomment">--</span><span class="ecomment"> Current item</span>
+
+	<a name="f_position"></a><a class="efeature" href="../base/file_short.html#f_position">position</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Current cursor position.</span>
+
+	<a name="f_descriptor"></a><a class="efeature" href="../base/file_short.html#f_descriptor">descriptor</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> File descriptor as used by the operating system.</span>
+		<span class="ekeyword">require else</span>
+			<span class="etag">file_opened</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/file_short.html#f_is_closed">is_closed</a>
+
+	<a name="f_descriptor_available"></a><a class="efeature" href="../base/file_short.html#f_descriptor_available">descriptor_available</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is the handle available after class has been</span>
+			<span class="ecomment">--</span><span class="ecomment"> created?</span>
+
+	<a name="f_separator"></a><a class="efeature" href="../base/file_short.html#f_separator">separator</a><span class="esymbol">:</span> <a class="eclass" href="../base/character_8_short.html">CHARACTER_8</a>
+			<span class="ecomment">--</span><span class="ecomment"> ASCII code of character following last word read</span>
+
+	<a name="f_file_pointer"></a><a class="efeature" href="../base/file_short.html#f_file_pointer">file_pointer</a><span class="esymbol">:</span> <a class="eclass" href="../base/pointer_short.html">POINTER</a>
+			<span class="ecomment">--</span><span class="ecomment"> File pointer as required in C</span>
+
+	<a name="f_file_info"></a><a class="efeature" href="../base/file_short.html#f_file_info">file_info</a><span class="esymbol">:</span> <a class="eclass" href="../base/file_info_short.html">FILE_INFO</a>
+			<span class="ecomment">--</span><span class="ecomment"> Collected information about the file.</span>
+
+	<a name="f_inode"></a><a class="efeature" href="../base/file_short.html#f_inode">inode</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> I-node number</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+
+	<a name="f_links"></a><a class="efeature" href="../base/file_short.html#f_links">links</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Number of links on file</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+
+	<a name="f_user_id"></a><a class="efeature" href="../base/file_short.html#f_user_id">user_id</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> User identification of owner</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+
+	<a name="f_group_id"></a><a class="efeature" href="../base/file_short.html#f_group_id">group_id</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Group identification of owner</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+
+	<a name="f_protection"></a><a class="efeature" href="../base/file_short.html#f_protection">protection</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Protection mode, in decimal value</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+
+	<a name="f_owner_name"></a><a class="efeature" href="../base/file_short.html#f_owner_name">owner_name</a><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a>
+			<span class="ecomment">--</span><span class="ecomment"> Name of owner</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+
+	<a name="f_date"></a><a class="efeature" href="../base/file_short.html#f_date">date</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Time stamp (time of last modification)</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+
+	<a name="f_access_date"></a><a class="efeature" href="../base/file_short.html#f_access_date">access_date</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Time stamp of last access made to the inode.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+
+	<a name="f_retrieved"></a><a class="efeature" href="../base/file_short.html#f_retrieved">retrieved</a><span class="esymbol">:</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/any_short.html">ANY</a>
+			<span class="ecomment">--</span><span class="ecomment"> Retrieved object structure</span>
+			<span class="ecomment">--</span><span class="ecomment"> To access resulting object under correct type,</span>
+			<span class="ecomment">--</span><span class="ecomment"> use assignment attempt.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Will raise an exception (code </span><span class="equoted">Retrieve_exception</span><span class="ecomment">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> if content is not a stored Eiffel structure.</span>
+
+	<a name="f_null_path"></a><a class="efeature" href="../base/file_short.html#f_null_path">null_path</a><span class="esymbol">:</span> <a class="eclass" href="../base/path_short.html">PATH</a>
+			<span class="ecomment">--</span><span class="ecomment"> Null device path.</span>
+		<span class="ekeyword">note</span>
+			<span class="eitag">eis</span><span class="esymbol">:</span> <span class="estring">&quot;name=Null Device&quot;</span><span class="esymbol">,</span> <span class="estring">&quot;src=</span><a class="estring" href="https://en.wikipedia.org/wiki/Null_device">https://en.wikipedia.org/wiki/Null_device</a><span class="estring">&quot;</span><span class="esymbol">,</span> <span class="estring">&quot;protocol=uri&quot;</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">instance_free</span><span class="esymbol">:</span> <span class="ekeyword">class</span>
+
+	<a name="f_null_name"></a><a class="efeature" href="../base/file_short.html#f_null_name">null_name</a><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a>
+			<span class="ecomment">--</span><span class="ecomment"> Null device name.</span>
+		<span class="ekeyword">note</span>
+			<span class="eitag">eis</span><span class="esymbol">:</span> <span class="estring">&quot;name=Null Device&quot;</span><span class="esymbol">,</span> <span class="estring">&quot;src=</span><a class="estring" href="https://en.wikipedia.org/wiki/Null_device">https://en.wikipedia.org/wiki/Null_device</a><span class="estring">&quot;</span><span class="esymbol">,</span> <span class="estring">&quot;protocol=uri&quot;</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">instance_free</span><span class="esymbol">:</span> <span class="ekeyword">class</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Measurement</span>
+
+	<a name="f_count"></a><a class="efeature" href="../base/file_short.html#f_count">count</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Size in bytes (0 if no associated physical file)</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Status report</span>
+
+	<a name="f_after"></a><a class="efeature" href="../base/file_short.html#f_after">after</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is there no valid cursor position to the right of cursor position?</span>
+
+	<a name="f_before"></a><a class="efeature" href="../base/file_short.html#f_before">before</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is there no valid cursor position to the left of cursor position?</span>
+
+	<a name="f_off"></a><a class="efeature" href="../base/file_short.html#f_off">off</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is there no item?</span>
+
+	<a name="f_end_of_file"></a><a class="efeature" href="../base/file_short.html#f_end_of_file">end_of_file</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Has an EOF been detected?</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">opened</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/file_short.html#f_is_closed">is_closed</a>
+
+	<a name="f_exists"></a><a class="efeature" href="../base/file_short.html#f_exists">exists</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Does physical file exist?</span>
+			<span class="ecomment">--</span><span class="ecomment"> (Uses effective UID.)</span>
+		<span class="ekeyword">ensure then</span>
+			<span class="etag">unchanged_mode</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_mode">mode</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/file_short.html#f_mode">mode</a>
+
+	<a name="f_access_exists"></a><a class="efeature" href="../base/file_short.html#f_access_exists">access_exists</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Does physical file exist?</span>
+			<span class="ecomment">--</span><span class="ecomment"> (Uses real UID.)</span>
+
+	<a name="f_path_exists"></a><a class="efeature" href="../base/file_short.html#f_path_exists">path_exists</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Does physical file </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_name">name</a><span class="ecomment">`</span><span class="ecomment"> exist without resolving</span>
+			<span class="ecomment">--</span><span class="ecomment"> symbolic links?</span>
+		<span class="ekeyword">ensure then</span>
+			<span class="etag">unchanged_mode</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_mode">mode</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/file_short.html#f_mode">mode</a>
+
+	<a name="f_is_readable"></a><a class="efeature" href="../base/file_short.html#f_is_readable">is_readable</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is file readable?</span>
+			<span class="ecomment">--</span><span class="ecomment"> (Checks permission for effective UID.)</span>
+
+	<a name="f_is_writable"></a><a class="efeature" href="../base/file_short.html#f_is_writable">is_writable</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is file writable?</span>
+			<span class="ecomment">--</span><span class="ecomment"> (Checks write permission for effective UID.)</span>
+
+	<a name="f_is_executable"></a><a class="efeature" href="../base/file_short.html#f_is_executable">is_executable</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is file executable?</span>
+			<span class="ecomment">--</span><span class="ecomment"> (Checks execute permission for effective UID.)</span>
+
+	<a name="f_is_creatable"></a><a class="efeature" href="../base/file_short.html#f_is_creatable">is_creatable</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is file creatable in parent directory?</span>
+			<span class="ecomment">--</span><span class="ecomment"> (Uses effective UID to check that parent is writable</span>
+			<span class="ecomment">--</span><span class="ecomment"> and file does not exist.)</span>
+
+	<a name="f_is_plain"></a><a class="efeature" href="../base/file_short.html#f_is_plain">is_plain</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is file a plain file?</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+
+	<a name="f_is_device"></a><a class="efeature" href="../base/file_short.html#f_is_device">is_device</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is file a device?</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+
+	<a name="f_is_directory"></a><a class="efeature" href="../base/file_short.html#f_is_directory">is_directory</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is file a directory?</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+
+	<a name="f_is_symlink"></a><a class="efeature" href="../base/file_short.html#f_is_symlink">is_symlink</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is file a symbolic link?</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_path_exists">path_exists</a>
+
+	<a name="f_is_fifo"></a><a class="efeature" href="../base/file_short.html#f_is_fifo">is_fifo</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is file a named pipe?</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+
+	<a name="f_is_socket"></a><a class="efeature" href="../base/file_short.html#f_is_socket">is_socket</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is file a named socket?</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+
+	<a name="f_is_block"></a><a class="efeature" href="../base/file_short.html#f_is_block">is_block</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is file a block special file?</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+
+	<a name="f_is_character"></a><a class="efeature" href="../base/file_short.html#f_is_character">is_character</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is file a character special file?</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+
+	<a name="f_is_setuid"></a><a class="efeature" href="../base/file_short.html#f_is_setuid">is_setuid</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is file setuid?</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+
+	<a name="f_is_setgid"></a><a class="efeature" href="../base/file_short.html#f_is_setgid">is_setgid</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is file setgid?</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+
+	<a name="f_is_sticky"></a><a class="efeature" href="../base/file_short.html#f_is_sticky">is_sticky</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is file sticky (for memory swaps)?</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+
+	<a name="f_is_owner"></a><a class="efeature" href="../base/file_short.html#f_is_owner">is_owner</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is file owned by effective UID?</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+
+	<a name="f_is_access_readable"></a><a class="efeature" href="../base/file_short.html#f_is_access_readable">is_access_readable</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is file readable by real UID?</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+
+	<a name="f_is_access_writable"></a><a class="efeature" href="../base/file_short.html#f_is_access_writable">is_access_writable</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is file writable by real UID?</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+
+	<a name="f_is_access_executable"></a><a class="efeature" href="../base/file_short.html#f_is_access_executable">is_access_executable</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is file executable by real UID?</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+
+	<a name="f_is_access_owner"></a><a class="efeature" href="../base/file_short.html#f_is_access_owner">is_access_owner</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is file owned by real UID?</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+
+	<a name="f_file_readable"></a><a class="efeature" href="../base/file_short.html#f_file_readable">file_readable</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is there a current item that may be read?</span>
+
+	<a name="f_is_closed"></a><a class="efeature" href="../base/file_short.html#f_is_closed">is_closed</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is file closed?</span>
+
+	<a name="f_is_open_read"></a><a class="efeature" href="../base/file_short.html#f_is_open_read">is_open_read</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is file open for reading?</span>
+
+	<a name="f_is_open_write"></a><a class="efeature" href="../base/file_short.html#f_is_open_write">is_open_write</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is file open for writing?</span>
+
+	<a name="f_is_open_append"></a><a class="efeature" href="../base/file_short.html#f_is_open_append">is_open_append</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is file open for appending?</span>
+
+	<a name="f_file_writable"></a><a class="efeature" href="../base/file_short.html#f_file_writable">file_writable</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is there a current item that may be modified?</span>
+
+	<a name="f_extendible"></a><a class="efeature" href="../base/file_short.html#f_extendible">extendible</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> May new items be added?</span>
+
+	<a name="f_replaceable"></a><a class="efeature" href="../base/file_short.html#f_replaceable">replaceable</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Can current item be replaced?</span>
+
+	<a name="f_full"></a><a class="efeature" href="../base/file_short.html#f_full">Full</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a> <span class="esymbol">=</span> <span class="ekeyword">False</span>
+			<span class="ecomment">--</span><span class="ecomment"> Is structure filled to capacity?</span>
+
+	<a name="f_prunable"></a><a class="efeature" href="../base/file_short.html#f_prunable">prunable</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is there an item to be removed?</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Comparison</span>
+
+	<a name="f_same_file"></a><a class="efeature" href="../base/file_short.html#f_same_file">same_file</a> <span class="esymbol">(</span><span class="elocal">fn</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_short.html">READABLE_STRING_GENERAL</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is current file the same as </span><span class="equoted">a_filename</span><span class="ecomment">?</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">fn_not_void</span><span class="esymbol">:</span> <span class="elocal">fn</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">fn_not_empty</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <span class="elocal">fn</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_general_short.html#f_is_empty">is_empty</a>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Status setting</span>
+
+	<a name="f_open_read"></a><a class="efeature" href="../base/file_short.html#f_open_read">open_read</a>
+			<span class="ecomment">--</span><span class="ecomment"> Open file in read-only mode.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">is_closed</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_closed">is_closed</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+			<span class="etag">open_read</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_read">is_open_read</a>
+
+	<a name="f_open_write"></a><a class="efeature" href="../base/file_short.html#f_open_write">open_write</a>
+			<span class="ecomment">--</span><span class="ecomment"> Open file in write-only mode;</span>
+			<span class="ecomment">--</span><span class="ecomment"> create it if it does not exist.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+			<span class="etag">open_write</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_write">is_open_write</a>
+
+	<a name="f_open_append"></a><a class="efeature" href="../base/file_short.html#f_open_append">open_append</a>
+			<span class="ecomment">--</span><span class="ecomment"> Open file in append-only mode;</span>
+			<span class="ecomment">--</span><span class="ecomment"> create it if it does not exist.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">is_closed</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_closed">is_closed</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+			<span class="etag">open_append</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_append">is_open_append</a>
+
+	<a name="f_open_read_write"></a><a class="efeature" href="../base/file_short.html#f_open_read_write">open_read_write</a>
+			<span class="ecomment">--</span><span class="ecomment"> Open file in read and write mode.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">is_closed</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_closed">is_closed</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+			<span class="etag">open_read</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_read">is_open_read</a>
+			<span class="etag">open_write</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_write">is_open_write</a>
+
+	<a name="f_create_read_write"></a><a class="efeature" href="../base/file_short.html#f_create_read_write">create_read_write</a>
+			<span class="ecomment">--</span><span class="ecomment"> Open file in read and write mode;</span>
+			<span class="ecomment">--</span><span class="ecomment"> create it if it does not exist.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">is_closed</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_closed">is_closed</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+			<span class="etag">open_read</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_read">is_open_read</a>
+			<span class="etag">open_write</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_write">is_open_write</a>
+
+	<a name="f_open_read_append"></a><a class="efeature" href="../base/file_short.html#f_open_read_append">open_read_append</a>
+			<span class="ecomment">--</span><span class="ecomment"> Open file in read and write-at-end mode;</span>
+			<span class="ecomment">--</span><span class="ecomment"> create it if it does not exist.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">is_closed</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_closed">is_closed</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+			<span class="etag">open_read</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_read">is_open_read</a>
+			<span class="etag">open_append</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_append">is_open_append</a>
+
+	<a name="f_fd_open_read"></a><a class="efeature" href="../base/file_short.html#f_fd_open_read">fd_open_read</a> <span class="esymbol">(</span><span class="elocal">fd</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Open file of descriptor </span><span class="equoted">fd</span><span class="ecomment"> in read-only mode.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+			<span class="etag">open_read</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_read">is_open_read</a>
+
+	<a name="f_fd_open_write"></a><a class="efeature" href="../base/file_short.html#f_fd_open_write">fd_open_write</a> <span class="esymbol">(</span><span class="elocal">fd</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Open file of descriptor </span><span class="equoted">fd</span><span class="ecomment"> in write mode.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+			<span class="etag">open_write</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_write">is_open_write</a>
+
+	<a name="f_fd_open_append"></a><a class="efeature" href="../base/file_short.html#f_fd_open_append">fd_open_append</a> <span class="esymbol">(</span><span class="elocal">fd</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Open file of descriptor </span><span class="equoted">fd</span><span class="ecomment"> in append mode.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+			<span class="etag">open_append</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_append">is_open_append</a>
+
+	<a name="f_fd_open_read_write"></a><a class="efeature" href="../base/file_short.html#f_fd_open_read_write">fd_open_read_write</a> <span class="esymbol">(</span><span class="elocal">fd</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Open file of descriptor </span><span class="equoted">fd</span><span class="ecomment"> in read-write mode.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+			<span class="etag">open_read</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_read">is_open_read</a>
+			<span class="etag">open_write</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_write">is_open_write</a>
+
+	<a name="f_fd_open_read_append"></a><a class="efeature" href="../base/file_short.html#f_fd_open_read_append">fd_open_read_append</a> <span class="esymbol">(</span><span class="elocal">fd</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Open file of descriptor </span><span class="equoted">fd</span>
+			<span class="ecomment">--</span><span class="ecomment"> in read and write-at-end mode.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+			<span class="etag">open_read</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_read">is_open_read</a>
+			<span class="etag">open_append</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_append">is_open_append</a>
+
+	<a name="f_reopen_read"></a><a class="efeature" href="../base/file_short.html#f_reopen_read">reopen_read</a> <span class="esymbol">(</span><span class="elocal">fname</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_short.html">READABLE_STRING_GENERAL</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Reopen in read-only mode with file of name </span><span class="equoted">fname</span><span class="ecomment">;</span>
+			<span class="ecomment">--</span><span class="ecomment"> create file if it does not exist.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">is_open</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/file_short.html#f_is_closed">is_closed</a>
+			<span class="etag">valid_name</span><span class="esymbol">:</span> <span class="elocal">fname</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+			<span class="etag">open_read</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_read">is_open_read</a>
+
+	<a name="f_reopen_write"></a><a class="efeature" href="../base/file_short.html#f_reopen_write">reopen_write</a> <span class="esymbol">(</span><span class="elocal">fname</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_short.html">READABLE_STRING_GENERAL</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Reopen in write-only mode with file of name </span><span class="equoted">fname</span><span class="ecomment">;</span>
+			<span class="ecomment">--</span><span class="ecomment"> create file if it does not exist.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">is_open</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/file_short.html#f_is_closed">is_closed</a>
+			<span class="etag">valid_name</span><span class="esymbol">:</span> <span class="elocal">fname</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+			<span class="etag">open_write</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_write">is_open_write</a>
+
+	<a name="f_reopen_append"></a><a class="efeature" href="../base/file_short.html#f_reopen_append">reopen_append</a> <span class="esymbol">(</span><span class="elocal">fname</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_short.html">READABLE_STRING_GENERAL</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Reopen in append mode with file of name </span><span class="equoted">fname</span><span class="ecomment">;</span>
+			<span class="ecomment">--</span><span class="ecomment"> create file if it does not exist.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">is_open</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/file_short.html#f_is_closed">is_closed</a>
+			<span class="etag">valid_name</span><span class="esymbol">:</span> <span class="elocal">fname</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+			<span class="etag">open_append</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_append">is_open_append</a>
+
+	<a name="f_reopen_read_write"></a><a class="efeature" href="../base/file_short.html#f_reopen_read_write">reopen_read_write</a> <span class="esymbol">(</span><span class="elocal">fname</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_short.html">READABLE_STRING_GENERAL</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Reopen in read-write mode with file of name </span><span class="equoted">fname</span><span class="ecomment">.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">is_open</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/file_short.html#f_is_closed">is_closed</a>
+			<span class="etag">valid_name</span><span class="esymbol">:</span> <span class="elocal">fname</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+			<span class="etag">open_read</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_read">is_open_read</a>
+			<span class="etag">open_write</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_write">is_open_write</a>
+
+	<a name="f_recreate_read_write"></a><a class="efeature" href="../base/file_short.html#f_recreate_read_write">recreate_read_write</a> <span class="esymbol">(</span><span class="elocal">fname</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_short.html">READABLE_STRING_GENERAL</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Reopen in read-write mode with file of name </span><span class="equoted">fname</span><span class="ecomment">;</span>
+			<span class="ecomment">--</span><span class="ecomment"> create file if it does not exist.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">is_open</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/file_short.html#f_is_closed">is_closed</a>
+			<span class="etag">valid_name</span><span class="esymbol">:</span> <span class="elocal">fname</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+			<span class="etag">open_read</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_read">is_open_read</a>
+			<span class="etag">open_write</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_write">is_open_write</a>
+
+	<a name="f_reopen_read_append"></a><a class="efeature" href="../base/file_short.html#f_reopen_read_append">reopen_read_append</a> <span class="esymbol">(</span><span class="elocal">fname</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_short.html">READABLE_STRING_GENERAL</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Reopen in read and write-at-end mode with file</span>
+			<span class="ecomment">--</span><span class="ecomment"> of name </span><span class="equoted">fname</span><span class="ecomment">; create file if it does not exist.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">is_open</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/file_short.html#f_is_closed">is_closed</a>
+			<span class="etag">valid_name</span><span class="esymbol">:</span> <span class="elocal">fname</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+			<span class="etag">open_read</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_read">is_open_read</a>
+			<span class="etag">open_append</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_append">is_open_append</a>
+
+	<a name="f_close"></a><a class="efeature" href="../base/file_short.html#f_close">close</a>
+			<span class="ecomment">--</span><span class="ecomment"> Close file.</span>
+		<span class="ekeyword">ensure then</span>
+			<span class="etag">is_closed</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_closed">is_closed</a>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Cursor movement</span>
+
+	<a name="f_start"></a><a class="efeature" href="../base/file_short.html#f_start">start</a>
+			<span class="ecomment">--</span><span class="ecomment"> Go to first position.</span>
+		<span class="ekeyword">require else</span>
+			<span class="etag">file_opened</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/file_short.html#f_is_closed">is_closed</a>
+
+	<a name="f_finish"></a><a class="efeature" href="../base/file_short.html#f_finish">finish</a>
+			<span class="ecomment">--</span><span class="ecomment"> Go to last position.</span>
+		<span class="ekeyword">require else</span>
+			<span class="etag">file_opened</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/file_short.html#f_is_closed">is_closed</a>
+
+	<a name="f_forth"></a><a class="efeature" href="../base/file_short.html#f_forth">forth</a>
+			<span class="ecomment">--</span><span class="ecomment"> Go to next position.</span>
+		<span class="ekeyword">require else</span>
+			<span class="etag">file_opened</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/file_short.html#f_is_closed">is_closed</a>
+
+	<a name="f_back"></a><a class="efeature" href="../base/file_short.html#f_back">back</a>
+			<span class="ecomment">--</span><span class="ecomment"> Go back one position.</span>
+
+	<a name="f_move"></a><a class="efeature" href="../base/file_short.html#f_move">move</a> <span class="esymbol">(</span><span class="elocal">offset</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Advance by </span><span class="equoted">offset</span><span class="ecomment"> from current location.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_opened</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/file_short.html#f_is_closed">is_closed</a>
+
+	<a name="f_go"></a><a class="efeature" href="../base/file_short.html#f_go">go</a> <span class="esymbol">(</span><span class="elocal">abs_position</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Go to the absolute </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_position">position</a><span class="ecomment">`</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> (New position may be beyond physical length.)</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_opened</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/file_short.html#f_is_closed">is_closed</a>
+			<span class="etag">non_negative_argument</span><span class="esymbol">:</span> <span class="elocal">abs_position</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">0</span>
+
+	<a name="f_recede"></a><a class="efeature" href="../base/file_short.html#f_recede">recede</a> <span class="esymbol">(</span><span class="elocal">abs_position</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Go to the absolute </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_position">position</a><span class="ecomment">`</span><span class="ecomment"> backwards,</span>
+			<span class="ecomment">--</span><span class="ecomment"> starting from end of file.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_opened</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/file_short.html#f_is_closed">is_closed</a>
+			<span class="etag">non_negative_argument</span><span class="esymbol">:</span> <span class="elocal">abs_position</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">0</span>
+
+	<a name="f_next_line"></a><a class="efeature" href="../base/file_short.html#f_next_line">next_line</a>
+			<span class="ecomment">--</span><span class="ecomment"> Move to next input line.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">is_readable</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_file_readable">file_readable</a>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Iteration</span>
+
+	<a name="f_new_cursor"></a><a class="efeature" href="../base/file_short.html#f_new_cursor">new_cursor</a><span class="esymbol">:</span> <a class="eclass" href="../base/file_iteration_cursor_short.html">FILE_ITERATION_CURSOR</a>
+			<span class="ecomment">--</span><span class="ecomment"> Fresh cursor associated with current structure</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Element change</span>
+
+	<a name="f_extend"></a><a class="efeature" href="../base/file_short.html#f_extend">extend</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <a class="efeature" href="../base/file_short.html#f_item">item</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Include </span><span class="equoted">v</span><span class="ecomment"> at end.</span>
+
+	<a name="f_flush"></a><a class="efeature" href="../base/file_short.html#f_flush">flush</a>
+			<span class="ecomment">--</span><span class="ecomment"> Flush buffered data to disk.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Note that there is no guarantee that the operating</span>
+			<span class="ecomment">--</span><span class="ecomment"> system will physically write the data to the disk.</span>
+			<span class="ecomment">--</span><span class="ecomment"> At least it will end up in the buffer cache,</span>
+			<span class="ecomment">--</span><span class="ecomment"> making the data visible to other processes.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">is_open</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/file_short.html#f_is_closed">is_closed</a>
+
+	<a name="f_link"></a><a class="efeature" href="../base/file_short.html#f_link">link</a> <span class="esymbol">(</span><span class="elocal">fn</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_short.html">READABLE_STRING_GENERAL</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Link current file to </span><span class="equoted">fn</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span><span class="equoted">fn</span><span class="ecomment"> must not already exist.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+
+	<a name="f_append"></a><a class="efeature" href="../base/file_short.html#f_append">append</a> <span class="esymbol">(</span><span class="elocal">f</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <span class="ekeyword">Current</span><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Append a copy of the contents of </span><span class="equoted">f</span><span class="ecomment">.</span>
+		<span class="ekeyword">require else</span>
+			<span class="etag">target_is_closed</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_closed">is_closed</a>
+			<span class="etag">source_is_closed</span><span class="esymbol">:</span> <span class="elocal">f</span><span class="edot">.</span><a class="efeature" href="../base/file_short.html#f_is_closed">is_closed</a>
+		<span class="ekeyword">ensure then</span>
+			<span class="etag">new_count</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_count">count</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/file_short.html#f_count">count</a> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="elocal">f</span><span class="edot">.</span><a class="efeature" href="../base/file_short.html#f_count">count</a>
+			<span class="etag">files_closed</span><span class="esymbol">:</span> <span class="elocal">f</span><span class="edot">.</span><a class="efeature" href="../base/file_short.html#f_is_closed">is_closed</a> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <a class="efeature" href="../base/file_short.html#f_is_closed">is_closed</a>
+
+	<a name="f_put_integer"></a><a class="efeature" href="../base/file_short.html#f_put_integer">put_integer</a> <span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Write </span><span class="equoted">i</span><span class="ecomment"> at current position.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/file_short.html">FILE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_putint">putint</a><span class="ecomment">`</span><span class="ecomment">.</span>
+
+	<a name="f_putint"></a><a class="efeature" href="../base/file_short.html#f_putint">putint</a> <span class="esymbol">(</span><span class="elocal">i</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Write </span><span class="equoted">i</span><span class="ecomment"> at current position.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/file_short.html">FILE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_put_integer">put_integer</a><span class="ecomment">`</span><span class="ecomment">.</span>
+
+	<a name="f_put_boolean"></a><a class="efeature" href="../base/file_short.html#f_put_boolean">put_boolean</a> <span class="esymbol">(</span><span class="elocal">b</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Write </span><span class="equoted">b</span><span class="ecomment"> at current position.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/file_short.html">FILE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_putbool">putbool</a><span class="ecomment">`</span><span class="ecomment">.</span>
+
+	<a name="f_putbool"></a><a class="efeature" href="../base/file_short.html#f_putbool">putbool</a> <span class="esymbol">(</span><span class="elocal">b</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Write </span><span class="equoted">b</span><span class="ecomment"> at current position.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/file_short.html">FILE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_put_boolean">put_boolean</a><span class="ecomment">`</span><span class="ecomment">.</span>
+
+	<a name="f_put_real"></a><a class="efeature" href="../base/file_short.html#f_put_real">put_real</a> <span class="esymbol">(</span><span class="elocal">r</span><span class="esymbol">:</span> <a class="eclass" href="../base/real_32_short.html">REAL_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Write </span><span class="equoted">r</span><span class="ecomment"> at current position.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/file_short.html">FILE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_putreal">putreal</a><span class="ecomment">`</span><span class="ecomment">.</span>
+
+	<a name="f_putreal"></a><a class="efeature" href="../base/file_short.html#f_putreal">putreal</a> <span class="esymbol">(</span><span class="elocal">r</span><span class="esymbol">:</span> <a class="eclass" href="../base/real_32_short.html">REAL_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Write </span><span class="equoted">r</span><span class="ecomment"> at current position.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/file_short.html">FILE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_put_real">put_real</a><span class="ecomment">`</span><span class="ecomment">.</span>
+
+	<a name="f_put_double"></a><a class="efeature" href="../base/file_short.html#f_put_double">put_double</a> <span class="esymbol">(</span><span class="elocal">d</span><span class="esymbol">:</span> <a class="eclass" href="../base/real_64_short.html">REAL_64</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Write </span><span class="equoted">d</span><span class="ecomment"> at current position.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/file_short.html">FILE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_putdouble">putdouble</a><span class="ecomment">`</span><span class="ecomment">.</span>
+
+	<a name="f_putdouble"></a><a class="efeature" href="../base/file_short.html#f_putdouble">putdouble</a> <span class="esymbol">(</span><span class="elocal">d</span><span class="esymbol">:</span> <a class="eclass" href="../base/real_64_short.html">REAL_64</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Write </span><span class="equoted">d</span><span class="ecomment"> at current position.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/file_short.html">FILE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_put_double">put_double</a><span class="ecomment">`</span><span class="ecomment">.</span>
+
+	<a name="f_put_string"></a><a class="efeature" href="../base/file_short.html#f_put_string">put_string</a> <span class="esymbol">(</span><span class="elocal">s</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_8_short.html">READABLE_STRING_8</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Write </span><span class="equoted">s</span><span class="ecomment"> at current position.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/file_short.html">FILE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_putstring">putstring</a><span class="ecomment">`</span><span class="ecomment">.</span>
+
+	<a name="f_putstring"></a><a class="efeature" href="../base/file_short.html#f_putstring">putstring</a> <span class="esymbol">(</span><span class="elocal">s</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_8_short.html">READABLE_STRING_8</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Write </span><span class="equoted">s</span><span class="ecomment"> at current position.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/file_short.html">FILE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_put_string">put_string</a><span class="ecomment">`</span><span class="ecomment">.</span>
+
+	<a name="f_put_managed_pointer"></a><a class="efeature" href="../base/file_short.html#f_put_managed_pointer">put_managed_pointer</a> <span class="esymbol">(</span><span class="elocal">p</span><span class="esymbol">:</span> <a class="eclass" href="../base/managed_pointer_short.html">MANAGED_POINTER</a><span class="esymbol">;</span> <span class="elocal">start_pos</span><span class="esymbol">,</span> <span class="elocal">nb_bytes</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Put data of length </span><span class="equoted">nb_bytes</span><span class="ecomment"> pointed by </span><span class="equoted">start_pos</span><span class="ecomment"> index in </span><span class="equoted">p</span><span class="ecomment"> at</span>
+			<span class="ecomment">--</span><span class="ecomment"> current position.</span>
+
+	<a name="f_put_character"></a><a class="efeature" href="../base/file_short.html#f_put_character">put_character</a> <span class="esymbol">(</span><span class="elocal">c</span><span class="esymbol">:</span> <a class="eclass" href="../base/character_8_short.html">CHARACTER_8</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Write </span><span class="equoted">c</span><span class="ecomment"> at current position.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/file_short.html">FILE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_putchar">putchar</a><span class="ecomment">`</span><span class="ecomment">.</span>
+
+	<a name="f_putchar"></a><a class="efeature" href="../base/file_short.html#f_putchar">putchar</a> <span class="esymbol">(</span><span class="elocal">c</span><span class="esymbol">:</span> <a class="eclass" href="../base/character_8_short.html">CHARACTER_8</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Write </span><span class="equoted">c</span><span class="ecomment"> at current position.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/file_short.html">FILE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_put_character">put_character</a><span class="ecomment">`</span><span class="ecomment">.</span>
+
+	<a name="f_put_new_line"></a><a class="efeature" href="../base/file_short.html#f_put_new_line">put_new_line</a>
+			<span class="ecomment">--</span><span class="ecomment"> Write a new line character at current position.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/file_short.html">FILE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_new_line">new_line</a><span class="ecomment">`</span><span class="ecomment">.</span>
+
+	<a name="f_new_line"></a><a class="efeature" href="../base/file_short.html#f_new_line">new_line</a>
+			<span class="ecomment">--</span><span class="ecomment"> Write a new line character at current position.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/file_short.html">FILE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_put_new_line">put_new_line</a><span class="ecomment">`</span><span class="ecomment">.</span>
+
+	<a name="f_stamp"></a><a class="efeature" href="../base/file_short.html#f_stamp">stamp</a> <span class="esymbol">(</span><span class="elocal">time</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Stamp with </span><span class="equoted">time</span><span class="ecomment"> (for both access and modification).</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">date_updated</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_date">date</a> <span class="esymbol">=</span> <span class="elocal">time</span>
+
+	<a name="f_set_access"></a><a class="efeature" href="../base/file_short.html#f_set_access">set_access</a> <span class="esymbol">(</span><span class="elocal">time</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Stamp with </span><span class="equoted">time</span><span class="ecomment"> (access only).</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">acess_date_updated</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_access_date">access_date</a> <span class="esymbol">=</span> <span class="elocal">time</span>
+			<span class="etag">date_unchanged</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_date">date</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/file_short.html#f_date">date</a>
+
+	<a name="f_set_date"></a><a class="efeature" href="../base/file_short.html#f_set_date">set_date</a> <span class="esymbol">(</span><span class="elocal">time</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Stamp with </span><span class="equoted">time</span><span class="ecomment"> (modification time only).</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">access_date_unchanged</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_access_date">access_date</a> <span class="esymbol">=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/file_short.html#f_access_date">access_date</a>
+			<span class="etag">date_updated</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_date">date</a> <span class="esymbol">=</span> <span class="elocal">time</span>
+
+	<a name="f_rename_file"></a><a class="efeature" href="../base/file_short.html#f_rename_file">rename_file</a> <span class="esymbol">(</span><span class="elocal">new_name</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_short.html">READABLE_STRING_GENERAL</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Change file name to </span><span class="equoted">new_name</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">new_name_not_void</span><span class="esymbol">:</span> <span class="elocal">new_name</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">new_name_not_empty</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <span class="elocal">new_name</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_general_short.html#f_is_empty">is_empty</a>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">name_changed</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_internal_name">internal_name</a> <span class="esymbol">=</span> <span class="elocal">new_name</span>
+
+	<a name="f_rename_path"></a><a class="efeature" href="../base/file_short.html#f_rename_path">rename_path</a> <span class="esymbol">(</span><span class="elocal">new_path</span><span class="esymbol">:</span> <a class="eclass" href="../base/path_short.html">PATH</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Change file name to </span><span class="equoted">new_path</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">new_path_not_void</span><span class="esymbol">:</span> <span class="elocal">new_path</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">new_path_not_empty</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <span class="elocal">new_path</span><span class="edot">.</span><a class="efeature" href="../base/path_short.html#f_is_empty">is_empty</a>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">name_changed</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_internal_name">internal_name</a><span class="edot">.</span><a class="efeature" href="../base/readable_string_general_short.html#f_same_string">same_string</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">new_path</span><span class="edot">.</span><a class="efeature" href="../base/path_short.html#f_name">name</a><span class="esymbol">)</span>
+
+	<a name="f_add_permission"></a><a class="efeature" href="../base/file_short.html#f_add_permission">add_permission</a> <span class="esymbol">(</span><span class="elocal">who</span><span class="esymbol">,</span> <span class="elocal">what</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Add read, write, execute or setuid permission</span>
+			<span class="ecomment">--</span><span class="ecomment"> for </span><span class="equoted">who</span><span class="ecomment"> ('u', 'g' or 'o') to </span><span class="equoted">what</span><span class="ecomment">.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">who_is_not_void</span><span class="esymbol">:</span> <span class="elocal">who</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">what_is_not_void</span><span class="esymbol">:</span> <span class="elocal">what</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">file_descriptor_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+
+	<a name="f_remove_permission"></a><a class="efeature" href="../base/file_short.html#f_remove_permission">remove_permission</a> <span class="esymbol">(</span><span class="elocal">who</span><span class="esymbol">,</span> <span class="elocal">what</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Remove read, write, execute or setuid permission</span>
+			<span class="ecomment">--</span><span class="ecomment"> for </span><span class="equoted">who</span><span class="ecomment"> ('u', 'g' or 'o') to </span><span class="equoted">what</span><span class="ecomment">.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">who_is_not_void</span><span class="esymbol">:</span> <span class="elocal">who</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">what_is_not_void</span><span class="esymbol">:</span> <span class="elocal">what</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">file_descriptor_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+
+	<a name="f_change_mode"></a><a class="efeature" href="../base/file_short.html#f_change_mode">change_mode</a> <span class="esymbol">(</span><span class="elocal">mask</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Replace mode by </span><span class="equoted">mask</span><span class="ecomment">.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+
+	<a name="f_change_owner"></a><a class="efeature" href="../base/file_short.html#f_change_owner">change_owner</a> <span class="esymbol">(</span><span class="elocal">new_owner_id</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Change owner of file to </span><span class="equoted">new_owner_id</span><span class="ecomment"> found in</span>
+			<span class="ecomment">--</span><span class="ecomment"> system password file. On some systems this</span>
+			<span class="ecomment">--</span><span class="ecomment"> requires super-user privileges.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+
+	<a name="f_change_group"></a><a class="efeature" href="../base/file_short.html#f_change_group">change_group</a> <span class="esymbol">(</span><span class="elocal">new_group_id</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Change group of file to </span><span class="equoted">new_group_id</span><span class="ecomment"> found in</span>
+			<span class="ecomment">--</span><span class="ecomment"> system password file.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+
+	<a name="f_change_date"></a><a class="efeature" href="../base/file_short.html#f_change_date">change_date</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Time stamp of last change.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+
+	<a name="f_touch"></a><a class="efeature" href="../base/file_short.html#f_touch">touch</a>
+			<span class="ecomment">--</span><span class="ecomment"> Update time stamp (for both access and modification).</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_exists">exists</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">date_changed</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_date">date</a> <span class="esymbol">/=</span> <span class="ekeyword">old</span> <a class="efeature" href="../base/file_short.html#f_date">date</a>
+
+	<a name="f_basic_store"></a><a class="efeature" href="../base/file_short.html#f_basic_store">basic_store</a> <span class="esymbol">(</span><span class="elocal">object</span><span class="esymbol">:</span> <a class="eclass" href="../base/any_short.html">ANY</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Produce an external representation of the</span>
+			<span class="ecomment">--</span><span class="ecomment"> entire object structure reachable from </span><span class="equoted">object</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Retrievable within current system only.</span>
+
+	<a name="f_general_store"></a><a class="efeature" href="../base/file_short.html#f_general_store">general_store</a> <span class="esymbol">(</span><span class="elocal">object</span><span class="esymbol">:</span> <a class="eclass" href="../base/any_short.html">ANY</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Produce an external representation of the</span>
+			<span class="ecomment">--</span><span class="ecomment"> entire object structure reachable from </span><span class="equoted">object</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Retrievable from other systems for same platform</span>
+			<span class="ecomment">--</span><span class="ecomment"> (machine architecture).</span>
+
+	<a name="f_independent_store"></a><a class="efeature" href="../base/file_short.html#f_independent_store">independent_store</a> <span class="esymbol">(</span><span class="elocal">object</span><span class="esymbol">:</span> <a class="eclass" href="../base/any_short.html">ANY</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Produce an external representation of the</span>
+			<span class="ecomment">--</span><span class="ecomment"> entire object structure reachable from </span><span class="equoted">object</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Retrievable from other systems for the same or other</span>
+			<span class="ecomment">--</span><span class="ecomment"> platform (machine architecture).</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Removal</span>
+
+	<a name="f_wipe_out"></a><a class="efeature" href="../base/file_short.html#f_wipe_out">wipe_out</a>
+			<span class="ecomment">--</span><span class="ecomment"> Remove all items.</span>
+		<span class="ekeyword">require else</span>
+			<span class="etag">is_closed</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_closed">is_closed</a>
+
+	<a name="f_delete"></a><a class="efeature" href="../base/file_short.html#f_delete">delete</a>
+			<span class="ecomment">--</span><span class="ecomment"> Remove link with physical file.</span>
+			<span class="ecomment">--</span><span class="ecomment"> File does not physically disappear from the disk</span>
+			<span class="ecomment">--</span><span class="ecomment"> until no more processes reference it.</span>
+			<span class="ecomment">--</span><span class="ecomment"> I/O operations on it are still possible.</span>
+			<span class="ecomment">--</span><span class="ecomment"> A directory must be empty to be deleted.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_path_exists">path_exists</a>
+
+	<a name="f_reset"></a><a class="efeature" href="../base/file_short.html#f_reset">reset</a> <span class="esymbol">(</span><span class="elocal">fn</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_short.html">READABLE_STRING_GENERAL</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Change file name to </span><span class="equoted">fn</span><span class="ecomment"> and reset</span>
+			<span class="ecomment">--</span><span class="ecomment"> file descriptor and all information.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">valid_file_name</span><span class="esymbol">:</span> <span class="elocal">fn</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">file_renamed</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_internal_name">internal_name</a> <span class="esymbol">=</span> <span class="elocal">fn</span>
+			<span class="etag">file_closed</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_closed">is_closed</a>
+
+	<a name="f_reset_path"></a><a class="efeature" href="../base/file_short.html#f_reset_path">reset_path</a> <span class="esymbol">(</span><span class="elocal">fp</span><span class="esymbol">:</span> <a class="eclass" href="../base/path_short.html">PATH</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Change file name to </span><span class="equoted">fp</span><span class="ecomment"> and reset</span>
+			<span class="ecomment">--</span><span class="ecomment"> file descriptor and all information.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">valid_file_name</span><span class="esymbol">:</span> <span class="elocal">fp</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">file_closed</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_closed">is_closed</a>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Input</span>
+
+	<a name="f_read_real"></a><a class="efeature" href="../base/file_short.html#f_read_real">read_real</a>
+			<span class="ecomment">--</span><span class="ecomment"> Read a new real.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Make result available in </span><span class="ecomment">`</span><a class="efeature" href="../base/io_medium_short.html#f_last_real">last_real</a><span class="ecomment">`</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/file_short.html">FILE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_readreal">readreal</a><span class="ecomment">`</span><span class="ecomment"> and </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_read_real_32">read_real_32</a><span class="ecomment">`</span><span class="ecomment">.</span>
+		<span class="ekeyword">require else</span>
+			<span class="etag">is_readable</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_file_readable">file_readable</a>
+
+	<a name="f_readreal"></a><a class="efeature" href="../base/file_short.html#f_readreal">readreal</a>
+			<span class="ecomment">--</span><span class="ecomment"> Read a new real.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Make result available in </span><span class="ecomment">`</span><a class="efeature" href="../base/io_medium_short.html#f_last_real">last_real</a><span class="ecomment">`</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/file_short.html">FILE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_read_real">read_real</a><span class="ecomment">`</span><span class="ecomment"> and </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_read_real_32">read_real_32</a><span class="ecomment">`</span><span class="ecomment">.</span>
+		<span class="ekeyword">require else</span>
+			<span class="etag">is_readable</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_file_readable">file_readable</a>
+
+	<a name="f_read_real_32"></a><a class="efeature" href="../base/file_short.html#f_read_real_32">read_real_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Read a new real.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Make result available in </span><span class="ecomment">`</span><a class="efeature" href="../base/io_medium_short.html#f_last_real">last_real</a><span class="ecomment">`</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/file_short.html">FILE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_read_real">read_real</a><span class="ecomment">`</span><span class="ecomment"> and </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_readreal">readreal</a><span class="ecomment">`</span><span class="ecomment">.</span>
+		<span class="ekeyword">require else</span>
+			<span class="etag">is_readable</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_file_readable">file_readable</a>
+
+	<a name="f_read_double"></a><a class="efeature" href="../base/file_short.html#f_read_double">read_double</a>
+			<span class="ecomment">--</span><span class="ecomment"> Read a new double.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Make result available in </span><span class="ecomment">`</span><a class="efeature" href="../base/io_medium_short.html#f_last_double">last_double</a><span class="ecomment">`</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/file_short.html">FILE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_readdouble">readdouble</a><span class="ecomment">`</span><span class="ecomment"> and </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_read_real_64">read_real_64</a><span class="ecomment">`</span><span class="ecomment">.</span>
+		<span class="ekeyword">require else</span>
+			<span class="etag">is_readable</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_file_readable">file_readable</a>
+
+	<a name="f_readdouble"></a><a class="efeature" href="../base/file_short.html#f_readdouble">readdouble</a>
+			<span class="ecomment">--</span><span class="ecomment"> Read a new double.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Make result available in </span><span class="ecomment">`</span><a class="efeature" href="../base/io_medium_short.html#f_last_double">last_double</a><span class="ecomment">`</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/file_short.html">FILE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_read_double">read_double</a><span class="ecomment">`</span><span class="ecomment"> and </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_read_real_64">read_real_64</a><span class="ecomment">`</span><span class="ecomment">.</span>
+		<span class="ekeyword">require else</span>
+			<span class="etag">is_readable</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_file_readable">file_readable</a>
+
+	<a name="f_read_real_64"></a><a class="efeature" href="../base/file_short.html#f_read_real_64">read_real_64</a>
+			<span class="ecomment">--</span><span class="ecomment"> Read a new double.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Make result available in </span><span class="ecomment">`</span><a class="efeature" href="../base/io_medium_short.html#f_last_double">last_double</a><span class="ecomment">`</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/file_short.html">FILE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_read_double">read_double</a><span class="ecomment">`</span><span class="ecomment"> and </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_readdouble">readdouble</a><span class="ecomment">`</span><span class="ecomment">.</span>
+		<span class="ekeyword">require else</span>
+			<span class="etag">is_readable</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_file_readable">file_readable</a>
+
+	<a name="f_read_character"></a><a class="efeature" href="../base/file_short.html#f_read_character">read_character</a>
+			<span class="ecomment">--</span><span class="ecomment"> Read a new character.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Make result available in </span><span class="ecomment">`</span><a class="efeature" href="../base/io_medium_short.html#f_last_character">last_character</a><span class="ecomment">`</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/file_short.html">FILE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_readchar">readchar</a><span class="ecomment">`</span><span class="ecomment">.</span>
+		<span class="ekeyword">require else</span>
+			<span class="etag">is_readable</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_file_readable">file_readable</a>
+
+	<a name="f_readchar"></a><a class="efeature" href="../base/file_short.html#f_readchar">readchar</a>
+			<span class="ecomment">--</span><span class="ecomment"> Read a new character.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Make result available in </span><span class="ecomment">`</span><a class="efeature" href="../base/io_medium_short.html#f_last_character">last_character</a><span class="ecomment">`</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/file_short.html">FILE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_read_character">read_character</a><span class="ecomment">`</span><span class="ecomment">.</span>
+		<span class="ekeyword">require else</span>
+			<span class="etag">is_readable</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_file_readable">file_readable</a>
+
+	<a name="f_read_integer"></a><a class="efeature" href="../base/file_short.html#f_read_integer">read_integer</a>
+			<span class="ecomment">--</span><span class="ecomment"> Read a new integer.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Make result available in </span><span class="ecomment">`</span><a class="efeature" href="../base/io_medium_short.html#f_last_integer">last_integer</a><span class="ecomment">`</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/file_short.html">FILE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_readint">readint</a><span class="ecomment">`</span><span class="ecomment">.</span>
+		<span class="ekeyword">require else</span>
+			<span class="etag">is_readable</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_file_readable">file_readable</a>
+
+	<a name="f_readint"></a><a class="efeature" href="../base/file_short.html#f_readint">readint</a>
+			<span class="ecomment">--</span><span class="ecomment"> Read a new integer.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Make result available in </span><span class="ecomment">`</span><a class="efeature" href="../base/io_medium_short.html#f_last_integer">last_integer</a><span class="ecomment">`</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/file_short.html">FILE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_read_integer">read_integer</a><span class="ecomment">`</span><span class="ecomment">.</span>
+		<span class="ekeyword">require else</span>
+			<span class="etag">is_readable</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_file_readable">file_readable</a>
+
+	<a name="f_read_line"></a><a class="efeature" href="../base/file_short.html#f_read_line">read_line</a>
+			<span class="ecomment">--</span><span class="ecomment"> Read a string until new line or end of file.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Make result available in </span><span class="ecomment">`</span><a class="efeature" href="../base/io_medium_short.html#f_last_string">last_string</a><span class="ecomment">`</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> New line will be consumed but not part of </span><span class="ecomment">`</span><a class="efeature" href="../base/io_medium_short.html#f_last_string">last_string</a><span class="ecomment">`</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/file_short.html">FILE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_readline">readline</a><span class="ecomment">`</span><span class="ecomment">.</span>
+		<span class="ekeyword">require else</span>
+			<span class="etag">is_readable</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_file_readable">file_readable</a>
+
+	<a name="f_readline"></a><a class="efeature" href="../base/file_short.html#f_readline">readline</a>
+			<span class="ecomment">--</span><span class="ecomment"> Read a string until new line or end of file.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Make result available in </span><span class="ecomment">`</span><a class="efeature" href="../base/io_medium_short.html#f_last_string">last_string</a><span class="ecomment">`</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> New line will be consumed but not part of </span><span class="ecomment">`</span><a class="efeature" href="../base/io_medium_short.html#f_last_string">last_string</a><span class="ecomment">`</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/file_short.html">FILE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_read_line">read_line</a><span class="ecomment">`</span><span class="ecomment">.</span>
+		<span class="ekeyword">require else</span>
+			<span class="etag">is_readable</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_file_readable">file_readable</a>
+
+	<a name="f_read_line_thread_aware"></a><a class="efeature" href="../base/file_short.html#f_read_line_thread_aware">read_line_thread_aware</a>
+			<span class="ecomment">--</span><span class="ecomment"> Read characters until a new line or</span>
+			<span class="ecomment">--</span><span class="ecomment"> end of medium.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Make result available in </span><span class="ecomment">`</span><a class="efeature" href="../base/io_medium_short.html#f_last_string">last_string</a><span class="ecomment">`</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Functionally identical to </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_read_line">read_line</a><span class="ecomment">`</span><span class="ecomment"> but</span>
+			<span class="ecomment">--</span><span class="ecomment"> won't prevent garbage collection from occurring</span>
+			<span class="ecomment">--</span><span class="ecomment"> while blocked waiting for data, though data must</span>
+			<span class="ecomment">--</span><span class="ecomment"> be copied an extra time.			</span>
+		<span class="ekeyword">require else</span>
+			<span class="etag">is_readable</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_file_readable">file_readable</a>
+
+	<a name="f_read_stream"></a><a class="efeature" href="../base/file_short.html#f_read_stream">read_stream</a> <span class="esymbol">(</span><span class="elocal">nb_char</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Read a string of at most </span><span class="equoted">nb_char</span><span class="ecomment"> bound characters</span>
+			<span class="ecomment">--</span><span class="ecomment"> or until end of file.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Make result available in </span><span class="ecomment">`</span><a class="efeature" href="../base/io_medium_short.html#f_last_string">last_string</a><span class="ecomment">`</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/file_short.html">FILE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_readstream">readstream</a><span class="ecomment">`</span><span class="ecomment">.</span>
+		<span class="ekeyword">require else</span>
+			<span class="etag">is_readable</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_file_readable">file_readable</a>
+
+	<a name="f_readstream"></a><a class="efeature" href="../base/file_short.html#f_readstream">readstream</a> <span class="esymbol">(</span><span class="elocal">nb_char</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Read a string of at most </span><span class="equoted">nb_char</span><span class="ecomment"> bound characters</span>
+			<span class="ecomment">--</span><span class="ecomment"> or until end of file.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Make result available in </span><span class="ecomment">`</span><a class="efeature" href="../base/io_medium_short.html#f_last_string">last_string</a><span class="ecomment">`</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/file_short.html">FILE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_read_stream">read_stream</a><span class="ecomment">`</span><span class="ecomment">.</span>
+		<span class="ekeyword">require else</span>
+			<span class="etag">is_readable</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_file_readable">file_readable</a>
+
+	<a name="f_read_stream_thread_aware"></a><a class="efeature" href="../base/file_short.html#f_read_stream_thread_aware">read_stream_thread_aware</a> <span class="esymbol">(</span><span class="elocal">nb_char</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Read a string of at most </span><span class="equoted">nb_char</span><span class="ecomment"> bound characters</span>
+			<span class="ecomment">--</span><span class="ecomment"> or until end of medium is encountered.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Make result available in </span><span class="ecomment">`</span><a class="efeature" href="../base/io_medium_short.html#f_last_string">last_string</a><span class="ecomment">`</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Functionally identical to </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_read_stream">read_stream</a><span class="ecomment">`</span><span class="ecomment"> but</span>
+			<span class="ecomment">--</span><span class="ecomment"> won't prevent garbage collection from occurring</span>
+			<span class="ecomment">--</span><span class="ecomment"> while blocked waiting for data, though data must</span>
+			<span class="ecomment">--</span><span class="ecomment"> be copied an extra time.			</span>
+		<span class="ekeyword">require else</span>
+			<span class="etag">is_readable</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_file_readable">file_readable</a>
+
+	<a name="f_read_to_managed_pointer"></a><a class="efeature" href="../base/file_short.html#f_read_to_managed_pointer">read_to_managed_pointer</a> <span class="esymbol">(</span><span class="elocal">p</span><span class="esymbol">:</span> <a class="eclass" href="../base/managed_pointer_short.html">MANAGED_POINTER</a><span class="esymbol">;</span> <span class="elocal">start_pos</span><span class="esymbol">,</span> <span class="elocal">nb_bytes</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Read at most </span><span class="equoted">nb_bytes</span><span class="ecomment"> bound bytes and make result</span>
+			<span class="ecomment">--</span><span class="ecomment"> available in </span><span class="equoted">p</span><span class="ecomment"> at position </span><span class="equoted">start_pos</span><span class="ecomment">.</span>
+		<span class="ekeyword">require else</span>
+			<span class="etag">p_not_void</span><span class="esymbol">:</span> <span class="elocal">p</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">p_large_enough</span><span class="esymbol">:</span> <span class="elocal">p</span><span class="edot">.</span><a class="efeature" href="../base/managed_pointer_short.html#f_count">count</a> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="elocal">nb_bytes</span> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="elocal">start_pos</span>
+			<span class="etag">is_readable</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_file_readable">file_readable</a>
+
+	<a name="f_read_to_string"></a><a class="efeature" href="../base/file_short.html#f_read_to_string">read_to_string</a> <span class="esymbol">(</span><span class="elocal">a_string</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a><span class="esymbol">;</span> <span class="elocal">pos</span><span class="esymbol">,</span> <span class="elocal">nb</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Fill </span><span class="equoted">a_string</span><span class="ecomment">, starting at position </span><span class="equoted">pos</span><span class="ecomment"> with at</span>
+			<span class="ecomment">--</span><span class="ecomment"> most </span><span class="equoted">nb</span><span class="ecomment"> characters read from current file.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Return the number of characters actually read.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">is_readable</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_file_readable">file_readable</a>
+			<span class="etag">not_end_of_file</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/file_short.html#f_end_of_file">end_of_file</a>
+			<span class="etag">a_string_not_void</span><span class="esymbol">:</span> <span class="elocal">a_string</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">valid_position</span><span class="esymbol">:</span> <span class="elocal">a_string</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_general_short.html#f_valid_index">valid_index</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">pos</span><span class="esymbol">)</span>
+			<span class="etag">nb_large_enough</span><span class="esymbol">:</span> <span class="elocal">nb</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater">&gt;</a> <span class="enumber">0</span>
+			<span class="etag">nb_small_enough</span><span class="esymbol">:</span> <span class="elocal">nb</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <span class="elocal">a_string</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_8_short.html#f_count">count</a> <a class="esymbol" href="../base/integer_32_short.html#f_minus">-</a> <span class="elocal">pos</span> <a class="esymbol" href="../base/integer_32_short.html#f_plus">+</a> <span class="enumber">1</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">nb_char_read_large_enough</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">0</span>
+			<span class="etag">nb_char_read_small_enough</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <span class="elocal">nb</span>
+			<span class="etag">character_read</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/file_short.html#f_end_of_file">end_of_file</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <span class="ekeyword">Result</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater">&gt;</a> <span class="enumber">0</span>
+
+	<a name="f_read_word"></a><a class="efeature" href="../base/file_short.html#f_read_word">read_word</a>
+			<span class="ecomment">--</span><span class="ecomment"> Read a string, excluding white space and stripping</span>
+			<span class="ecomment">--</span><span class="ecomment"> leading white space.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Make result available in </span><span class="ecomment">`</span><a class="efeature" href="../base/io_medium_short.html#f_last_string">last_string</a><span class="ecomment">`</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> White space characters are: blank, new_line, tab,</span>
+			<span class="ecomment">--</span><span class="ecomment"> vertical tab, formfeed, end of file.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/file_short.html">FILE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_readword">readword</a><span class="ecomment">`</span><span class="ecomment">.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">is_readable</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_file_readable">file_readable</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">last_string_not_void</span><span class="esymbol">:</span> <a class="efeature" href="../base/io_medium_short.html#f_last_string">last_string</a> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_readword"></a><a class="efeature" href="../base/file_short.html#f_readword">readword</a>
+			<span class="ecomment">--</span><span class="ecomment"> Read a string, excluding white space and stripping</span>
+			<span class="ecomment">--</span><span class="ecomment"> leading white space.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Make result available in </span><span class="ecomment">`</span><a class="efeature" href="../base/io_medium_short.html#f_last_string">last_string</a><span class="ecomment">`</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> White space characters are: blank, new_line, tab,</span>
+			<span class="ecomment">--</span><span class="ecomment"> vertical tab, formfeed, end of file.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Was declared in </span><span class="esymbol">{</span><a class="eclass" href="../base/file_short.html">FILE</a><span class="esymbol">}</span><span class="ecomment"> as synonym of </span><span class="ecomment">`</span><a class="efeature" href="../base/file_short.html#f_read_word">read_word</a><span class="ecomment">`</span><span class="ecomment">.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">is_readable</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_file_readable">file_readable</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">last_string_not_void</span><span class="esymbol">:</span> <a class="efeature" href="../base/io_medium_short.html#f_last_string">last_string</a> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_read_word_thread_aware"></a><a class="efeature" href="../base/file_short.html#f_read_word_thread_aware">read_word_thread_aware</a>
+			<span class="ecomment">--</span><span class="ecomment"> Read a string, excluding white space and stripping</span>
+			<span class="ecomment">--</span><span class="ecomment"> leading white space.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Make result available in </span><span class="ecomment">`</span><a class="efeature" href="../base/io_medium_short.html#f_last_string">last_string</a><span class="ecomment">`</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> White space characters are: blank, new_line, tab,</span>
+			<span class="ecomment">--</span><span class="ecomment"> vertical tab, formfeed, end of file.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">is_readable</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_file_readable">file_readable</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">last_string_not_void</span><span class="esymbol">:</span> <a class="efeature" href="../base/io_medium_short.html#f_last_string">last_string</a> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Convenience</span>
+
+	<a name="f_copy_to"></a><a class="efeature" href="../base/file_short.html#f_copy_to">copy_to</a> <span class="esymbol">(</span><span class="elocal">file</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <span class="ekeyword">Current</span><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Copy content of current from current cursor</span>
+			<span class="ecomment">--</span><span class="ecomment"> position to end of file into </span><span class="equoted">file</span><span class="ecomment"> from</span>
+			<span class="ecomment">--</span><span class="ecomment"> current cursor position of </span><span class="equoted">file</span><span class="ecomment">.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">file_not_void</span><span class="esymbol">:</span> <span class="elocal">file</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">file_is_open_write</span><span class="esymbol">:</span> <span class="elocal">file</span><span class="edot">.</span><a class="efeature" href="../base/file_short.html#f_is_open_write">is_open_write</a>
+			<span class="etag">current_is_open_read</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_is_open_read">is_open_read</a>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Inapplicable</span>
+
+	<a name="f_replace"></a><a class="efeature" href="../base/file_short.html#f_replace">replace</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <a class="efeature" href="../base/file_short.html#f_item">item</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Replace current item by </span><span class="equoted">v</span><span class="ecomment">.</span>
+
+	<a name="f_remove"></a><a class="efeature" href="../base/file_short.html#f_remove">remove</a>
+			<span class="ecomment">--</span><span class="ecomment"> Remove current item.</span>
+
+	<a name="f_prune"></a><a class="efeature" href="../base/file_short.html#f_prune">prune</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <a class="efeature" href="../base/file_short.html#f_item">item</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Remove an occurrence of </span><span class="equoted">v</span><span class="ecomment"> if any.</span>
+		<span class="ekeyword">ensure then</span>
+			<a class="efeature" href="../base/file_short.html#f_count">count</a> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <span class="ekeyword">old</span> <a class="efeature" href="../base/file_short.html#f_count">count</a>
+	
+<span class="ekeyword">invariant</span>
+	<span class="etag">valid_mode</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_closed_file">Closed_file</a> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <a class="efeature" href="../base/file_short.html#f_mode">mode</a> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <a class="efeature" href="../base/file_short.html#f_mode">mode</a> <a class="esymbol" href="../base/comparable_short.html#f_is_less_equal">&lt;=</a> <a class="efeature" href="../base/file_short.html#f_append_read_file">Append_read_file</a>
+	<span class="etag">name_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/file_short.html#f_internal_name">internal_name</a> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+	<span class="etag">name_not_empty</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/file_short.html#f_internal_name">internal_name</a><span class="edot">.</span><a class="efeature" href="../base/readable_string_general_short.html#f_is_empty">is_empty</a>
+
+<span class="ekeyword">note</span>
+	<span class="eitag">copyright</span><span class="esymbol">:</span> <span class="estring">&quot;Copyright (c) 1984-2020, Eiffel Software and others&quot;</span>
+	<span class="eitag">license</span><span class="esymbol">:</span> <span class="estring">&quot;Eiffel Forum License v2 (see </span><a class="estring" href="http://www.eiffel.com/licensing/forum.txt">http://www.eiffel.com/licensing/forum.txt</a><span class="estring">)&quot;</span>
+	<span class="eitag">source</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">Eiffel Software</span>
+		<span class="estring">5949 Hollister Ave., Goleta, CA 93117 USA</span>
+		<span class="estring">Telephone 805-685-1006, Fax 805-685-6869</span>
+		<span class="estring">Website </span><a class="estring" href="http://www.eiffel.com">http://www.eiffel.com</a>
+		<span class="estring">Customer support </span><a class="estring" href="http://support.eiffel.com">http://support.eiffel.com</a>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+
+<span class="ekeyword">end</span> <span class="ecomment">--</span> <span class="ecomment">class </span><a class="eclass" href="../base/file_short.html">FILE</a></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="file_chart.html">Chart</a>
+<a class="nav class" href="file_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="file"></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>
+

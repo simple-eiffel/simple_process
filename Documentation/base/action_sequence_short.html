@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="description" content="A sequence of actions to be performed on `call`."/>
+<meta name="legal" content="See notice at end of class."/>
+<meta name="instructions" content="Use features inherited from LIST to add/remove actions. An action is a procedure of ANY class that takes EVENT_DATA. When `call' is called the actions in the list will be executed in order stating at `first'. An action may call `abort' which will cause `call' to stop executing actions in the sequence. (Until the next call to `call'). Descendants may redefine `initialize' to arrange for `call' to be called by an event source. Use `block', `pause', `flush' and `resume' to change the behavior of `call'. eg.  birthday_data: TUPLE [INTEGER, STRING] -- (age, name)  birthday_actions: ACTION_SEQUENCE [like birthday_data]  create birthday_actions.make (birthday, <<age,name>>)  send_card (age: INTEGER, name, from: STRING) is ...  buy_gift (age: INTEGER, name, gift, from: STRING) is ...  birthday_actions.extend (agent send_card (?, ?, Sam)  birthday_actions.extend (agent buy_gift (?, ?, Wine, Sam)  birthday_actions.call ([35, Julia])  causes call to: send_card (35, Julia, Sam)                  buy_gift (35, Julia, Wine, Sam)"/>
+<meta name="keywords" content="Eiffel class, event, action"/>
+<meta name="library" content="EiffelBase: Library of reusable components for Eiffel."/>
+<meta name="copyright" content="Copyright (c) 1984-2021, Eiffel Software and others"/>
+<meta name="license" content="Eiffel Forum License v2 (see http://www.eiffel.com/licensing/forum.txt)"/>
+<meta name="source" content="Eiffel Software 5949 Hollister Ave., Goleta, CA 93117 USA Telephone 805-685-1006, Fax 805-685-6869 Website http://www.eiffel.com Customer support http://support.eiffel.com"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>action_sequence Contracts</title>
+<link rel="stylesheet" href="../default.css" type="text/css">
+<script type="text/javascript" src="../goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="action_sequence_chart.html">Chart</a>
+<a class="nav class" href="action_sequence_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="action_sequence"></span>
+</div></form><pre><span class="ekeyword">note</span>
+	<span class="eitag">description</span><span class="esymbol">:</span> <span class="estring">&quot;A sequence of actions to be performed on </span><span class="estring">`</span><a class="efeature" href="../base/action_sequence_short.html#f_call">call</a><span class="estring">`</span><span class="estring">.&quot;</span>
+	<span class="eitag">legal</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">instructions</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">Use features inherited from LIST to add/remove actions.</span>
+		<span class="estring">An action is a procedure of ANY class that takes EVENT_DATA.</span>
+		<span class="estring">When </span><span class="estring">`</span><a class="efeature" href="../base/action_sequence_short.html#f_call">call</a><span class="estring">`</span><span class="estring"> is called the actions in the list will be executed</span>
+		<span class="estring">in order stating at </span><span class="estring">`</span><a class="efeature" href="../base/arrayed_list_short.html#f_first">first</a><span class="estring">`</span><span class="estring">.</span>
+		<span class="estring">An action may call </span><span class="estring">`</span><a class="efeature" href="../base/action_sequence_short.html#f_abort">abort</a><span class="estring">`</span><span class="estring"> which will cause </span><span class="estring">`</span><a class="efeature" href="../base/action_sequence_short.html#f_call">call</a><span class="estring">`</span><span class="estring"> to stop executing</span>
+		<span class="estring">actions in the sequence. (Until the next call to </span><span class="estring">`</span><a class="efeature" href="../base/action_sequence_short.html#f_call">call</a><span class="estring">`</span><span class="estring">).</span>
+		<span class="estring">Descendants may redefine </span><span class="estring">initialize</span><span class="estring"> to arrange for </span><span class="estring">`</span><a class="efeature" href="../base/action_sequence_short.html#f_call">call</a><span class="estring">`</span><span class="estring"> to</span>
+		<span class="estring">be called by an event source.</span>
+		<span class="estring">Use </span><span class="estring">`</span><a class="efeature" href="../base/action_sequence_short.html#f_block">block</a><span class="estring">`</span><span class="estring">, </span><span class="estring">`</span><a class="efeature" href="../base/action_sequence_short.html#f_pause">pause</a><span class="estring">`</span><span class="estring">, </span><span class="estring">`</span><a class="efeature" href="../base/action_sequence_short.html#f_flush">flush</a><span class="estring">`</span><span class="estring"> and </span><span class="estring">`</span><a class="efeature" href="../base/action_sequence_short.html#f_resume">resume</a><span class="estring">`</span><span class="estring"> to change the behavior</span>
+		<span class="estring">of </span><span class="estring">`</span><a class="efeature" href="../base/action_sequence_short.html#f_call">call</a><span class="estring">`</span><span class="estring">.</span>
+		<span class="estring">eg.</span>
+		<span class="estring"> birthday_data: TUPLE [INTEGER, STRING] -- (age, name)</span>
+		<span class="estring"> birthday_actions: ACTION_SEQUENCE [like birthday_data]</span>
+		<span class="estring"> create birthday_actions.make (&quot;birthday&quot;, &lt;&lt;&quot;age&quot;,&quot;name&quot;&gt;&gt;)</span>
+		<span class="estring"> send_card (age: INTEGER, name, from: STRING) is ...</span>
+		<span class="estring"> buy_gift (age: INTEGER, name, gift, from: STRING) is ...</span>
+		<span class="estring"> birthday_actions.extend (agent send_card (?, ?, &quot;Sam&quot;)</span>
+		<span class="estring"> birthday_actions.extend (agent buy_gift (?, ?, &quot;Wine&quot;, &quot;Sam&quot;)</span>
+		<span class="estring"> birthday_actions.call ([35, &quot;Julia&quot;])</span>
+		<span class="estring"> causes call to: send_card (35, &quot;Julia&quot;, &quot;Sam&quot;)</span>
+		<span class="estring"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buy_gift (35, &quot;Julia&quot;, &quot;Wine&quot;, &quot;Sam&quot;)</span>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+	<span class="eitag">status</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">keywords</span><span class="esymbol">:</span> event<span class="esymbol">,</span> action
+	<span class="eitag">date</span><span class="esymbol">:</span> <span class="estring">&quot;$Date$&quot;</span>
+	<span class="eitag">revision</span><span class="esymbol">:</span> <span class="estring">&quot;$Revision$&quot;</span>
+
+<span class="ekeyword">class</span> <span class="ekeyword">interface</span>
+	<a class="eclass" href="../base/action_sequence_short.html">ACTION_SEQUENCE</a> <span class="esymbol">[</span><span class="egeneric">EVENT_DATA</span> <span class="esymbol">-&gt;</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/tuple_short.html">TUPLE</a> <span class="ekeyword">create</span> <a class="efeature" href="../base/any_short.html#f_default_create">default_create</a> <span class="ekeyword">end</span><span class="esymbol">]</span>
+
+<span class="ekeyword">create</span> 
+	<a class="efeature" href="../base/action_sequence_short.html#f_default_create">default_create</a><span class="esymbol">,</span>
+	<a class="efeature" href="../base/action_sequence_short.html#f_make">make</a>
+
+
+<span class="ekeyword">create</span> <span class="esymbol">{</span><a class="eclass" href="../base/action_sequence_short.html">ACTION_SEQUENCE</a><span class="esymbol">}</span>
+	<a class="efeature" href="../base/arrayed_list_short.html#f_make">arrayed_list_make</a><span class="esymbol">,</span>
+	<a class="efeature" href="../base/arrayed_list_short.html#f_make_filled">make_filled</a>
+
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Miscellaneous</span>
+
+	<a name="f_on_item_added_at"></a><a class="efeature" href="../base/action_sequence_short.html#f_on_item_added_at">on_item_added_at</a> <span class="esymbol">(</span><span class="elocal">an_item</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <a class="efeature" href="../base/arrayed_list_short.html#f_item">item</a><span class="esymbol">;</span> <span class="elocal">item_index</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span><span class="equoted">an_item</span><span class="ecomment"> has just been added at index </span><span class="equoted">item_index</span><span class="ecomment">.</span>
+
+	<a name="f_on_item_removed_at"></a><a class="efeature" href="../base/action_sequence_short.html#f_on_item_removed_at">on_item_removed_at</a> <span class="esymbol">(</span><span class="elocal">an_item</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <a class="efeature" href="../base/arrayed_list_short.html#f_item">item</a><span class="esymbol">;</span> <span class="elocal">item_index</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span><span class="equoted">an_item</span><span class="ecomment"> has just been removed from index </span><span class="equoted">item_index</span><span class="ecomment">.</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Basic operations</span>
+
+	<a name="f_call"></a><a class="efeature" href="../base/action_sequence_short.html#f_call">call</a> <span class="esymbol">(</span><span class="elocal">event_data</span><span class="esymbol">:</span> <span class="ekeyword">detachable</span> <span class="egeneric">EVENT_DATA</span><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Call each procedure in order unless </span><span class="equoted">is_blocked</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> If </span><span class="equoted">is_paused</span><span class="ecomment"> delay execution until </span><span class="ecomment">`</span><a class="efeature" href="../base/action_sequence_short.html#f_resume">resume</a><span class="ecomment">`</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Stop at current point in list on </span><span class="ecomment">`</span><a class="efeature" href="../base/action_sequence_short.html#f_abort">abort</a><span class="ecomment">`</span><span class="ecomment">.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">is_aborted_stack_unchanged</span><span class="esymbol">:</span> <span class="esymbol">(</span><span class="ekeyword">old</span> <a class="efeature" href="../base/action_sequence_short.html#f_is_aborted_stack">is_aborted_stack</a><span class="esymbol">)</span> <span class="esymbol">~</span> <a class="efeature" href="../base/action_sequence_short.html#f_is_aborted_stack">is_aborted_stack</a>
+
+	<a name="f_extend_kamikaze"></a><a class="efeature" href="../base/action_sequence_short.html#f_extend_kamikaze">extend_kamikaze</a> <span class="esymbol">(</span><span class="elocal">an_item</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <a class="efeature" href="../base/arrayed_list_short.html#f_item">item</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Extend </span><span class="equoted">an_item</span><span class="ecomment"> and remove it again after it is called.</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Access</span>
+
+	<a name="f_name"></a><a class="efeature" href="../base/action_sequence_short.html#f_name">name</a><span class="esymbol">:</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a>
+			<span class="ecomment">--</span><span class="ecomment"> Textual description.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">equal_to_name_internal</span><span class="esymbol">:</span> <span class="ekeyword">Result</span> <span class="esymbol">~</span> <a class="efeature" href="../base/action_sequence_short.html#f_name_internal">name_internal</a>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Status setting</span>
+
+	<a name="f_abort"></a><a class="efeature" href="../base/action_sequence_short.html#f_abort">abort</a>
+			<span class="ecomment">--</span><span class="ecomment"> Abort the current </span><span class="ecomment">`</span><a class="efeature" href="../base/action_sequence_short.html#f_call">call</a><span class="ecomment">`</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> (The current item.call will be completed.)</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">call_is_underway</span><span class="esymbol">:</span> <a class="efeature" href="../base/action_sequence_short.html#f_call_is_underway">call_is_underway</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">is_aborted_set</span><span class="esymbol">:</span> <a class="efeature" href="../base/action_sequence_short.html#f_is_aborted_stack">is_aborted_stack</a><span class="edot">.</span><a class="efeature" href="../base/linked_stack_short.html#f_item">item</a>
+
+	<a name="f_block"></a><a class="efeature" href="../base/action_sequence_short.html#f_block">block</a>
+			<span class="ecomment">--</span><span class="ecomment"> Ignore subsequent </span><span class="ecomment">`</span><a class="efeature" href="../base/action_sequence_short.html#f_call">call</a><span class="ecomment">`</span><span class="ecomment">s.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">blocked_state</span><span class="esymbol">:</span> <a class="efeature" href="../base/action_sequence_short.html#f_state">state</a> <span class="esymbol">=</span> <a class="efeature" href="../base/action_sequence_short.html#f_blocked_state">Blocked_state</a>
+
+	<a name="f_pause"></a><a class="efeature" href="../base/action_sequence_short.html#f_pause">pause</a>
+			<span class="ecomment">--</span><span class="ecomment"> Buffer subsequent </span><span class="ecomment">`</span><a class="efeature" href="../base/action_sequence_short.html#f_call">call</a><span class="ecomment">`</span><span class="ecomment">s for later execution.</span>
+			<span class="ecomment">--</span><span class="ecomment"> If </span><span class="equoted">is_blocked</span><span class="ecomment"> calls will simply be ignored.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">paused_state</span><span class="esymbol">:</span> <a class="efeature" href="../base/action_sequence_short.html#f_state">state</a> <span class="esymbol">=</span> <a class="efeature" href="../base/action_sequence_short.html#f_paused_state">Paused_state</a>
+
+	<a name="f_resume"></a><a class="efeature" href="../base/action_sequence_short.html#f_resume">resume</a>
+			<span class="ecomment">--</span><span class="ecomment"> Used after </span><span class="ecomment">`</span><a class="efeature" href="../base/action_sequence_short.html#f_block">block</a><span class="ecomment">`</span><span class="ecomment"> or </span><span class="ecomment">`</span><a class="efeature" href="../base/action_sequence_short.html#f_pause">pause</a><span class="ecomment">`</span><span class="ecomment"> to resume normal </span><span class="ecomment">`</span><a class="efeature" href="../base/action_sequence_short.html#f_call">call</a><span class="ecomment">`</span>
+			<span class="ecomment">--</span><span class="ecomment"> execution. &nbsp;Executes any buffered </span><span class="ecomment">`</span><a class="efeature" href="../base/action_sequence_short.html#f_call">call</a><span class="ecomment">`</span><span class="ecomment">s.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">normal_state</span><span class="esymbol">:</span> <a class="efeature" href="../base/action_sequence_short.html#f_state">state</a> <span class="esymbol">=</span> <a class="efeature" href="../base/action_sequence_short.html#f_normal_state">Normal_state</a>
+
+	<a name="f_flush"></a><a class="efeature" href="../base/action_sequence_short.html#f_flush">flush</a>
+			<span class="ecomment">--</span><span class="ecomment"> Discard any buffered </span><span class="ecomment">`</span><a class="efeature" href="../base/action_sequence_short.html#f_call">call</a><span class="ecomment">`</span><span class="ecomment">s.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">call_buffer_empty</span><span class="esymbol">:</span> <a class="efeature" href="../base/action_sequence_short.html#f_call_buffer">call_buffer</a><span class="edot">.</span><a class="efeature" href="../base/finite_short.html#f_is_empty">is_empty</a>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Status report</span>
+
+	<a name="f_state"></a><a class="efeature" href="../base/action_sequence_short.html#f_state">state</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> One of </span><span class="ecomment">`</span><a class="efeature" href="../base/action_sequence_short.html#f_normal_state">normal_state</a><span class="ecomment">`</span><span class="ecomment"> </span><span class="ecomment">`</span><a class="efeature" href="../base/action_sequence_short.html#f_paused_state">paused_state</a><span class="ecomment">`</span><span class="ecomment"> or </span><span class="ecomment">`</span><a class="efeature" href="../base/action_sequence_short.html#f_blocked_state">blocked_state</a><span class="ecomment">`</span>
+
+	<a name="f_normal_state"></a><a class="efeature" href="../base/action_sequence_short.html#f_normal_state">Normal_state</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">1</span>
+
+	<a name="f_paused_state"></a><a class="efeature" href="../base/action_sequence_short.html#f_paused_state">Paused_state</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">2</span>
+
+	<a name="f_blocked_state"></a><a class="efeature" href="../base/action_sequence_short.html#f_blocked_state">Blocked_state</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">3</span>
+
+	<a name="f_call_is_underway"></a><a class="efeature" href="../base/action_sequence_short.html#f_call_is_underway">call_is_underway</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is </span><span class="ecomment">`</span><a class="efeature" href="../base/action_sequence_short.html#f_call">call</a><span class="ecomment">`</span><span class="ecomment"> currently being executed?</span>
+		<span class="ekeyword">ensure</span>
+			<span class="ekeyword">Result</span> <span class="esymbol">=</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/action_sequence_short.html#f_is_aborted_stack">is_aborted_stack</a><span class="edot">.</span><a class="efeature" href="../base/finite_short.html#f_is_empty">is_empty</a>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Removal</span>
+
+	<a name="f_prune"></a><a class="efeature" href="../base/action_sequence_short.html#f_prune">prune</a> <span class="esymbol">(</span><span class="elocal">v</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <a class="efeature" href="../base/arrayed_list_short.html#f_item">item</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Remove first occurrence of </span><span class="equoted">v</span><span class="ecomment">, if any,</span>
+			<span class="ecomment">--</span><span class="ecomment"> after cursor position.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Move cursor to right neighbor.</span>
+			<span class="ecomment">--</span><span class="ecomment"> (or </span><span class="ecomment">`</span><a class="efeature" href="../base/list_short.html#f_after">after</a><span class="ecomment">`</span><span class="ecomment"> if no right neighbor or </span><span class="equoted">v</span><span class="ecomment"> does not occur)</span>
+
+	<a name="f_prune_when_called"></a><a class="efeature" href="../base/action_sequence_short.html#f_prune_when_called">prune_when_called</a> <span class="esymbol">(</span><span class="elocal">an_action</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <a class="efeature" href="../base/arrayed_list_short.html#f_item">item</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Remove </span><span class="equoted">an_action</span><span class="ecomment"> after the next time it is called.</span>
+		<span class="ekeyword">require</span>
+			<a class="efeature" href="../base/arrayed_list_short.html#f_has">has</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">an_action</span><span class="esymbol">)</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Element status</span>
+
+	<a name="f_has_kamikaze_action"></a><a class="efeature" href="../base/action_sequence_short.html#f_has_kamikaze_action">has_kamikaze_action</a> <span class="esymbol">(</span><span class="elocal">an_action</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <a class="efeature" href="../base/arrayed_list_short.html#f_item">item</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Return True is </span><span class="equoted">an_action</span><span class="ecomment"> is found and will be pruned when called.</span>
+		<span class="ekeyword">require</span>
+			<a class="efeature" href="../base/arrayed_list_short.html#f_has">has</a><span class="esymbol"> </span><span class="esymbol">(</span><span class="elocal">an_action</span><span class="esymbol">)</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Event handling</span>
+
+	<a name="f_not_empty_actions"></a><a class="efeature" href="../base/action_sequence_short.html#f_not_empty_actions">not_empty_actions</a><span class="esymbol">:</span> <a class="eclass" href="../base/arrayed_list_short.html">ARRAYED_LIST</a> <span class="esymbol">[</span><a class="eclass" href="../base/procedure_short.html">PROCEDURE</a><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Actions to be performed on transition from </span><span class="ecomment">`</span><a class="efeature" href="../base/finite_short.html#f_is_empty">is_empty</a><span class="ecomment">`</span><span class="ecomment"> to not </span><span class="ecomment">`</span><a class="efeature" href="../base/finite_short.html#f_is_empty">is_empty</a><span class="ecomment">`</span><span class="ecomment">.</span>
+
+	<a name="f_empty_actions"></a><a class="efeature" href="../base/action_sequence_short.html#f_empty_actions">empty_actions</a><span class="esymbol">:</span> <a class="eclass" href="../base/arrayed_list_short.html">ARRAYED_LIST</a> <span class="esymbol">[</span><a class="eclass" href="../base/procedure_short.html">PROCEDURE</a><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Actions to be performed on transition from not </span><span class="ecomment">`</span><a class="efeature" href="../base/finite_short.html#f_is_empty">is_empty</a><span class="ecomment">`</span><span class="ecomment"> to </span><span class="ecomment">`</span><a class="efeature" href="../base/finite_short.html#f_is_empty">is_empty</a><span class="ecomment">`</span><span class="ecomment">.</span>
+	
+<span class="ekeyword">invariant</span>
+	<span class="etag">is_aborted_stack_not_void</span><span class="esymbol">:</span> <a class="efeature" href="../base/action_sequence_short.html#f_is_aborted_stack">is_aborted_stack</a> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+	<span class="etag">call_buffer_not_void</span><span class="esymbol">:</span> <a class="efeature" href="../base/action_sequence_short.html#f_call_buffer">call_buffer</a> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+	<span class="etag">valid_state</span><span class="esymbol">:</span> <a class="efeature" href="../base/action_sequence_short.html#f_state">state</a> <span class="esymbol">=</span> <a class="efeature" href="../base/action_sequence_short.html#f_normal_state">Normal_state</a> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <a class="efeature" href="../base/action_sequence_short.html#f_state">state</a> <span class="esymbol">=</span> <a class="efeature" href="../base/action_sequence_short.html#f_paused_state">Paused_state</a> <a class="ekeyword" href="../base/boolean_short.html#f_disjuncted">or</a> <a class="efeature" href="../base/action_sequence_short.html#f_state">state</a> <span class="esymbol">=</span> <a class="efeature" href="../base/action_sequence_short.html#f_blocked_state">Blocked_state</a>
+	<span class="etag">call_buffer_consistent</span><span class="esymbol">:</span> <a class="efeature" href="../base/action_sequence_short.html#f_state">state</a> <span class="esymbol">=</span> <a class="efeature" href="../base/action_sequence_short.html#f_normal_state">Normal_state</a> <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <a class="efeature" href="../base/action_sequence_short.html#f_call_buffer">call_buffer</a><span class="edot">.</span><a class="efeature" href="../base/finite_short.html#f_is_empty">is_empty</a>
+	<span class="etag">not_empty_actions_not_void</span><span class="esymbol">:</span> <a class="efeature" href="../base/action_sequence_short.html#f_not_empty_actions">not_empty_actions</a> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+	<span class="etag">empty_actions_not_void</span><span class="esymbol">:</span> <a class="efeature" href="../base/action_sequence_short.html#f_empty_actions">empty_actions</a> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+<span class="ekeyword">note</span>
+	<span class="eitag">library</span><span class="esymbol">:</span> <span class="estring">&quot;EiffelBase: Library of reusable components for Eiffel.&quot;</span>
+	<span class="eitag">copyright</span><span class="esymbol">:</span> <span class="estring">&quot;Copyright (c) 1984-2021, Eiffel Software and others&quot;</span>
+	<span class="eitag">license</span><span class="esymbol">:</span> <span class="estring">&quot;Eiffel Forum License v2 (see </span><a class="estring" href="http://www.eiffel.com/licensing/forum.txt">http://www.eiffel.com/licensing/forum.txt</a><span class="estring">)&quot;</span>
+	<span class="eitag">source</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">Eiffel Software</span>
+		<span class="estring">5949 Hollister Ave., Goleta, CA 93117 USA</span>
+		<span class="estring">Telephone 805-685-1006, Fax 805-685-6869</span>
+		<span class="estring">Website </span><a class="estring" href="http://www.eiffel.com">http://www.eiffel.com</a>
+		<span class="estring">Customer support </span><a class="estring" href="http://support.eiffel.com">http://support.eiffel.com</a>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+
+<span class="ekeyword">end</span> <span class="ecomment">--</span> <span class="ecomment">class </span><a class="eclass" href="../base/action_sequence_short.html">ACTION_SEQUENCE</a></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="action_sequence_chart.html">Chart</a>
+<a class="nav class" href="action_sequence_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="action_sequence"></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>
+

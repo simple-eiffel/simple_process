@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="description" content="Encoding of arbitrary objects graphs within a session of a same program.  Some routines are explicitely frozen, not because we do not want them to be redefined but if they are frozen, it saves us having to look at all possible descendants whenever we do a change."/>
+<meta name="legal" content="See notice at end of class."/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="library" content="EiffelBase: Library of reusable components for Eiffel."/>
+<meta name="copyright" content="Copyright (c) 1984-2017, Eiffel Software and others"/>
+<meta name="license" content="Eiffel Forum License v2 (see http://www.eiffel.com/licensing/forum.txt)"/>
+<meta name="source" content="Eiffel Software 5949 Hollister Ave., Goleta, CA 93117 USA Telephone 805-685-1006, Fax 805-685-6869 Website http://www.eiffel.com Customer support http://support.eiffel.com"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>sed_session_serializer Contracts</title>
+<link rel="stylesheet" href="../default.css" type="text/css">
+<script type="text/javascript" src="../goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="sed_session_serializer_chart.html">Chart</a>
+<a class="nav class" href="sed_session_serializer_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="sed_session_serializer"></span>
+</div></form><pre><span class="ekeyword">note</span>
+	<span class="eitag">description</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">Encoding of arbitrary objects graphs within a session of a same program.</span>
+		
+		<span class="estring">Some routines are explicitely frozen, not because we do not want them to be redefined</span>
+		<span class="estring">but if they are frozen, it saves us having to look at all possible descendants whenever</span>
+		<span class="estring">we do a change.</span>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+	<span class="eitag">legal</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">status</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">date</span><span class="esymbol">:</span> <span class="estring">&quot;$Date$&quot;</span>
+	<span class="eitag">revision</span><span class="esymbol">:</span> <span class="estring">&quot;$Revision$&quot;</span>
+
+<span class="ekeyword">class</span> <span class="ekeyword">interface</span>
+	<a class="eclass" href="../base/sed_session_serializer_short.html">SED_SESSION_SERIALIZER</a>
+
+<span class="ekeyword">create</span> 
+	<a class="efeature" href="../base/sed_session_serializer_short.html#f_make">make</a>
+
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Access</span>
+
+	<a name="f_root_object"></a><a class="efeature" href="../base/sed_session_serializer_short.html#f_root_object">root_object</a><span class="esymbol">:</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/any_short.html">ANY</a>
+			<span class="ecomment">--</span><span class="ecomment"> Root object of object graph</span>
+
+	<a name="f_serializer"></a><a class="efeature" href="../base/sed_session_serializer_short.html#f_serializer">serializer</a><span class="esymbol">:</span> <a class="eclass" href="../base/sed_reader_writer_short.html">SED_READER_WRITER</a>
+			<span class="ecomment">--</span><span class="ecomment"> Serializer used to encode data</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Status report</span>
+
+	<a name="f_is_traversing_mode_set"></a><a class="efeature" href="../base/sed_session_serializer_short.html#f_is_traversing_mode_set">is_traversing_mode_set</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is traversing mode set?</span>
+
+	<a name="f_is_root_object_set"></a><a class="efeature" href="../base/sed_session_serializer_short.html#f_is_root_object_set">is_root_object_set</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is root object of object graph set?</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Element change</span>
+
+	<a name="f_set_breadth_first_traversing_mode"></a><a class="efeature" href="../base/sed_session_serializer_short.html#f_set_breadth_first_traversing_mode">set_breadth_first_traversing_mode</a>
+			<span class="ecomment">--</span><span class="ecomment"> Change graph traversing to breadth first.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">traversing_mode_set</span><span class="esymbol">:</span> <a class="efeature" href="../base/sed_session_serializer_short.html#f_is_traversing_mode_set">is_traversing_mode_set</a>
+			<span class="etag">breadth_first_mode</span><span class="esymbol">:</span> <span class="ekeyword">attached</span> <span class="esymbol">{</span><a class="eclass" href="../base/object_graph_breadth_first_traversable_short.html">OBJECT_GRAPH_BREADTH_FIRST_TRAVERSABLE</a><span class="esymbol">}</span> <a class="efeature" href="../base/sed_session_serializer_short.html#f_traversable">traversable</a>
+
+	<a name="f_set_depth_first_traversing_mode"></a><a class="efeature" href="../base/sed_session_serializer_short.html#f_set_depth_first_traversing_mode">set_depth_first_traversing_mode</a>
+			<span class="ecomment">--</span><span class="ecomment"> Change graph traversing to depth first.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">traversing_mode_set</span><span class="esymbol">:</span> <a class="efeature" href="../base/sed_session_serializer_short.html#f_is_traversing_mode_set">is_traversing_mode_set</a>
+			<span class="etag">depth_first_mode</span><span class="esymbol">:</span> <span class="ekeyword">attached</span> <span class="esymbol">{</span><a class="eclass" href="../base/object_graph_depth_first_traversable_short.html">OBJECT_GRAPH_DEPTH_FIRST_TRAVERSABLE</a><span class="esymbol">}</span> <a class="efeature" href="../base/sed_session_serializer_short.html#f_traversable">traversable</a>
+
+	<a name="f_set_root_object"></a><a class="efeature" href="../base/sed_session_serializer_short.html#f_set_root_object">set_root_object</a> <span class="esymbol">(</span><span class="elocal">an_object</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <a class="efeature" href="../base/sed_session_serializer_short.html#f_root_object">root_object</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Make 'an_object' the root_object.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">an_object_not_void</span><span class="esymbol">:</span> <span class="elocal">an_object</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">traversing_mode_set</span><span class="esymbol">:</span> <a class="efeature" href="../base/sed_session_serializer_short.html#f_is_traversing_mode_set">is_traversing_mode_set</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">root_object_set</span><span class="esymbol">:</span> <a class="efeature" href="../base/sed_session_serializer_short.html#f_root_object">root_object</a> <span class="esymbol">=</span> <span class="elocal">an_object</span> <a class="ekeyword" href="../base/boolean_short.html#f_conjuncted">and</a> <a class="efeature" href="../base/sed_session_serializer_short.html#f_is_root_object_set">is_root_object_set</a>
+			<span class="etag">root_object_identity</span><span class="esymbol">:</span> <a class="efeature" href="../base/sed_session_serializer_short.html#f_root_object">root_object</a> <span class="esymbol">=</span> <a class="efeature" href="../base/sed_session_serializer_short.html#f_traversable">traversable</a><span class="edot">.</span><a class="efeature" href="../base/object_graph_traversable_short.html#f_root_object">root_object</a>
+
+	<a name="f_set_serializer"></a><a class="efeature" href="../base/sed_session_serializer_short.html#f_set_serializer">set_serializer</a> <span class="esymbol">(</span><span class="elocal">a_serializer</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <a class="efeature" href="../base/sed_session_serializer_short.html#f_serializer">serializer</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Set </span><span class="ecomment">`</span><a class="efeature" href="../base/sed_session_serializer_short.html#f_serializer">serializer</a><span class="ecomment">`</span><span class="ecomment"> with </span><span class="equoted">a_serializer</span><span class="ecomment">.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">a_serializer_not_void</span><span class="esymbol">:</span> <span class="elocal">a_serializer</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">a_serializer_ready</span><span class="esymbol">:</span> <span class="elocal">a_serializer</span><span class="edot">.</span><a class="efeature" href="../base/sed_reader_writer_short.html#f_is_ready_for_writing">is_ready_for_writing</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">serializer_set</span><span class="esymbol">:</span> <a class="efeature" href="../base/sed_session_serializer_short.html#f_serializer">serializer</a> <span class="esymbol">=</span> <span class="elocal">a_serializer</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Basic operations</span>
+
+	<a name="f_encode"></a><span class="ekeyword">frozen</span> <a class="efeature" href="../base/sed_session_serializer_short.html#f_encode">encode</a>
+			<span class="ecomment">--</span><span class="ecomment"> Encode object graph starting with the root object.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">traversing_mode_set</span><span class="esymbol">:</span> <a class="efeature" href="../base/sed_session_serializer_short.html#f_is_traversing_mode_set">is_traversing_mode_set</a>
+			<span class="etag">root_object_set</span><span class="esymbol">:</span> <a class="efeature" href="../base/sed_session_serializer_short.html#f_is_root_object_set">is_root_object_set</a>
+	
+<span class="ekeyword">invariant</span>
+	<span class="etag">reflector_not_void</span><span class="esymbol">:</span> <a class="efeature" href="../base/sed_session_serializer_short.html#f_reflector">reflector</a> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+	<span class="etag">reflected_object_not_void</span><span class="esymbol">:</span> <a class="efeature" href="../base/sed_session_serializer_short.html#f_reflected_object">reflected_object</a> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+	<span class="etag">traversable_not_void</span><span class="esymbol">:</span> <a class="efeature" href="../base/sed_session_serializer_short.html#f_traversable">traversable</a> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+	<span class="etag">serializer_not_void</span><span class="esymbol">:</span> <a class="efeature" href="../base/sed_session_serializer_short.html#f_serializer">serializer</a> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+	<span class="etag">object_indexes_not_void</span><span class="esymbol">:</span> <a class="efeature" href="../base/sed_session_serializer_short.html#f_object_indexes">object_indexes</a> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+<span class="ekeyword">note</span>
+	<span class="eitag">library</span><span class="esymbol">:</span> <span class="estring">&quot;EiffelBase: Library of reusable components for Eiffel.&quot;</span>
+	<span class="eitag">copyright</span><span class="esymbol">:</span> <span class="estring">&quot;Copyright (c) 1984-2017, Eiffel Software and others&quot;</span>
+	<span class="eitag">license</span><span class="esymbol">:</span> <span class="estring">&quot;Eiffel Forum License v2 (see </span><a class="estring" href="http://www.eiffel.com/licensing/forum.txt">http://www.eiffel.com/licensing/forum.txt</a><span class="estring">)&quot;</span>
+	<span class="eitag">source</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">Eiffel Software</span>
+		<span class="estring">5949 Hollister Ave., Goleta, CA 93117 USA</span>
+		<span class="estring">Telephone 805-685-1006, Fax 805-685-6869</span>
+		<span class="estring">Website </span><a class="estring" href="http://www.eiffel.com">http://www.eiffel.com</a>
+		<span class="estring">Customer support </span><a class="estring" href="http://support.eiffel.com">http://support.eiffel.com</a>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+
+<span class="ekeyword">end</span> <span class="ecomment">--</span> <span class="ecomment">class </span><a class="eclass" href="../base/sed_session_serializer_short.html">SED_SESSION_SERIALIZER</a></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="sed_session_serializer_chart.html">Chart</a>
+<a class="nav class" href="sed_session_serializer_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="sed_session_serializer"></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>
+

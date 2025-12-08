@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="description" content="The ASCII character set. This class may be used as ancestor by classes needing its facilities."/>
+<meta name="library" content="Free implementation of ELKS library"/>
+<meta name="legal" content="See notice at end of class."/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="copyright" content="Copyright (c) 1984-2018, Eiffel Software and others"/>
+<meta name="license" content="Eiffel Forum License v2 (see http://www.eiffel.com/licensing/forum.txt)"/>
+<meta name="source" content="Eiffel Software 5949 Hollister Ave., Goleta, CA 93117 USA Telephone 805-685-1006, Fax 805-685-6869 Website http://www.eiffel.com Customer support http://support.eiffel.com"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>ascii Contracts</title>
+<link rel="stylesheet" href="../default.css" type="text/css">
+<script type="text/javascript" src="../goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="ascii_chart.html">Chart</a>
+<a class="nav class" href="ascii_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="ascii"></span>
+</div></form><pre><span class="ekeyword">note</span>
+	<span class="eitag">description</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">The ASCII character set.</span>
+		<span class="estring">This class may be used as ancestor by classes needing its facilities.</span>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+	<span class="eitag">library</span><span class="esymbol">:</span> <span class="estring">&quot;Free implementation of ELKS library&quot;</span>
+	<span class="eitag">status</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">legal</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">date</span><span class="esymbol">:</span> <span class="estring">&quot;$Date$&quot;</span>
+	<span class="eitag">revision</span><span class="esymbol">:</span> <span class="estring">&quot;$Revision$&quot;</span>
+
+<span class="ekeyword">class</span> <span class="ekeyword">interface</span>
+	<a class="eclass" href="../base/ascii_short.html">ASCII</a>
+
+<span class="ekeyword">create</span> 
+	<a class="efeature" href="../base/any_short.html#f_default_create">default_create</a>
+
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Access</span>
+
+	<a name="f_character_set_size"></a><a class="efeature" href="../base/ascii_short.html#f_character_set_size">Character_set_size</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">128</span>
+
+	<a name="f_last_ascii"></a><a class="efeature" href="../base/ascii_short.html#f_last_ascii">Last_ascii</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">127</span>
+
+	<a name="f_first_printable"></a><a class="efeature" href="../base/ascii_short.html#f_first_printable">First_printable</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">32</span>
+
+	<a name="f_last_printable"></a><a class="efeature" href="../base/ascii_short.html#f_last_printable">Last_printable</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">126</span>
+
+	<a name="f_letter_layout"></a><a class="efeature" href="../base/ascii_short.html#f_letter_layout">Letter_layout</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">70</span>
+
+	<a name="f_case_diff"></a><a class="efeature" href="../base/ascii_short.html#f_case_diff">Case_diff</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">32</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span><span class="ecomment">`</span><a class="efeature" href="../base/ascii_short.html#f_lower_a">lower_a</a><span class="ecomment">`</span><span class="ecomment"> - </span><span class="ecomment">`</span><a class="efeature" href="../base/ascii_short.html#f_upper_a">upper_a</a><span class="ecomment">`</span>
+
+	<a name="f_buf_overflow"></a><a class="efeature" href="../base/ascii_short.html#f_buf_overflow">Buf_overflow</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">-9</span>
+
+	<a name="f_overflow"></a><a class="efeature" href="../base/ascii_short.html#f_overflow">Overflow</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">-8</span>
+
+	<a name="f_break"></a><a class="efeature" href="../base/ascii_short.html#f_break">Break</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">-7</span>
+
+	<a name="f_home_arrow"></a><a class="efeature" href="../base/ascii_short.html#f_home_arrow">Home_arrow</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">-6</span>
+
+	<a name="f_right_arrow"></a><a class="efeature" href="../base/ascii_short.html#f_right_arrow">Right_arrow</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">-5</span>
+
+	<a name="f_left_arrow"></a><a class="efeature" href="../base/ascii_short.html#f_left_arrow">Left_arrow</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">-4</span>
+
+	<a name="f_down_arrow"></a><a class="efeature" href="../base/ascii_short.html#f_down_arrow">Down_arrow</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">-3</span>
+
+	<a name="f_up_arrow"></a><a class="efeature" href="../base/ascii_short.html#f_up_arrow">Up_arrow</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">-2</span>
+
+	<a name="f_nul"></a><a class="efeature" href="../base/ascii_short.html#f_nul">Nul</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">0</span>
+
+	<a name="f_ctrl_a"></a><a class="efeature" href="../base/ascii_short.html#f_ctrl_a">Ctrl_a</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">1</span>
+
+	<a name="f_soh"></a><a class="efeature" href="../base/ascii_short.html#f_soh">Soh</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">1</span>
+
+	<a name="f_ctrl_b"></a><a class="efeature" href="../base/ascii_short.html#f_ctrl_b">Ctrl_b</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">2</span>
+
+	<a name="f_stx"></a><a class="efeature" href="../base/ascii_short.html#f_stx">Stx</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">2</span>
+
+	<a name="f_ctrl_c"></a><a class="efeature" href="../base/ascii_short.html#f_ctrl_c">Ctrl_c</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">3</span>
+
+	<a name="f_etx"></a><a class="efeature" href="../base/ascii_short.html#f_etx">Etx</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">3</span>
+
+	<a name="f_ctrl_d"></a><a class="efeature" href="../base/ascii_short.html#f_ctrl_d">Ctrl_d</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">4</span>
+
+	<a name="f_eot"></a><a class="efeature" href="../base/ascii_short.html#f_eot">Eot</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">4</span>
+
+	<a name="f_ctrl_e"></a><a class="efeature" href="../base/ascii_short.html#f_ctrl_e">Ctrl_e</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">5</span>
+
+	<a name="f_enq"></a><a class="efeature" href="../base/ascii_short.html#f_enq">Enq</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">5</span>
+
+	<a name="f_ctrl_f"></a><a class="efeature" href="../base/ascii_short.html#f_ctrl_f">Ctrl_f</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">6</span>
+
+	<a name="f_ack"></a><a class="efeature" href="../base/ascii_short.html#f_ack">Ack</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">6</span>
+
+	<a name="f_ctrl_g"></a><a class="efeature" href="../base/ascii_short.html#f_ctrl_g">Ctrl_g</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">7</span>
+
+	<a name="f_bel"></a><a class="efeature" href="../base/ascii_short.html#f_bel">Bel</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">7</span>
+
+	<a name="f_ctrl_h"></a><a class="efeature" href="../base/ascii_short.html#f_ctrl_h">Ctrl_h</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">8</span>
+
+	<a name="f_bs"></a><a class="efeature" href="../base/ascii_short.html#f_bs">Bs</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">8</span>
+
+	<a name="f_back_space"></a><a class="efeature" href="../base/ascii_short.html#f_back_space">Back_space</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">8</span>
+
+	<a name="f_ctrl_i"></a><a class="efeature" href="../base/ascii_short.html#f_ctrl_i">Ctrl_i</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">9</span>
+
+	<a name="f_ht"></a><a class="efeature" href="../base/ascii_short.html#f_ht">Ht</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">9</span>
+
+	<a name="f_tabulation"></a><a class="efeature" href="../base/ascii_short.html#f_tabulation">Tabulation</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">9</span>
+
+	<a name="f_ctrl_j"></a><a class="efeature" href="../base/ascii_short.html#f_ctrl_j">Ctrl_j</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">10</span>
+
+	<a name="f_nl"></a><a class="efeature" href="../base/ascii_short.html#f_nl">Nl</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">10</span>
+
+	<a name="f_line_feed"></a><a class="efeature" href="../base/ascii_short.html#f_line_feed">Line_feed</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">10</span>
+
+	<a name="f_ctrl_k"></a><a class="efeature" href="../base/ascii_short.html#f_ctrl_k">Ctrl_k</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">11</span>
+
+	<a name="f_vt"></a><a class="efeature" href="../base/ascii_short.html#f_vt">Vt</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">11</span>
+
+	<a name="f_ctrl_l"></a><a class="efeature" href="../base/ascii_short.html#f_ctrl_l">Ctrl_l</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">12</span>
+
+	<a name="f_np"></a><a class="efeature" href="../base/ascii_short.html#f_np">Np</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">12</span>
+
+	<a name="f_ctrl_m"></a><a class="efeature" href="../base/ascii_short.html#f_ctrl_m">Ctrl_m</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">13</span>
+
+	<a name="f_cr"></a><a class="efeature" href="../base/ascii_short.html#f_cr">Cr</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">13</span>
+
+	<a name="f_carriage_return"></a><a class="efeature" href="../base/ascii_short.html#f_carriage_return">Carriage_return</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">13</span>
+
+	<a name="f_ctrl_n"></a><a class="efeature" href="../base/ascii_short.html#f_ctrl_n">Ctrl_n</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">14</span>
+
+	<a name="f_so"></a><a class="efeature" href="../base/ascii_short.html#f_so">So</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">14</span>
+
+	<a name="f_ctrl_o"></a><a class="efeature" href="../base/ascii_short.html#f_ctrl_o">Ctrl_o</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">15</span>
+
+	<a name="f_si"></a><a class="efeature" href="../base/ascii_short.html#f_si">Si</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">15</span>
+
+	<a name="f_ctrl_p"></a><a class="efeature" href="../base/ascii_short.html#f_ctrl_p">Ctrl_p</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">16</span>
+
+	<a name="f_dle"></a><a class="efeature" href="../base/ascii_short.html#f_dle">Dle</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">16</span>
+
+	<a name="f_ctrl_q"></a><a class="efeature" href="../base/ascii_short.html#f_ctrl_q">Ctrl_q</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">17</span>
+
+	<a name="f_dc1"></a><a class="efeature" href="../base/ascii_short.html#f_dc1">Dc1</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">17</span>
+
+	<a name="f_ctrl_r"></a><a class="efeature" href="../base/ascii_short.html#f_ctrl_r">Ctrl_r</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">18</span>
+
+	<a name="f_dc2"></a><a class="efeature" href="../base/ascii_short.html#f_dc2">Dc2</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">18</span>
+
+	<a name="f_ctrl_s"></a><a class="efeature" href="../base/ascii_short.html#f_ctrl_s">Ctrl_s</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">19</span>
+
+	<a name="f_dc3"></a><a class="efeature" href="../base/ascii_short.html#f_dc3">Dc3</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">19</span>
+
+	<a name="f_ctrl_t"></a><a class="efeature" href="../base/ascii_short.html#f_ctrl_t">Ctrl_t</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">20</span>
+
+	<a name="f_dc4"></a><a class="efeature" href="../base/ascii_short.html#f_dc4">Dc4</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">20</span>
+
+	<a name="f_ctrl_u"></a><a class="efeature" href="../base/ascii_short.html#f_ctrl_u">Ctrl_u</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">21</span>
+
+	<a name="f_nak"></a><a class="efeature" href="../base/ascii_short.html#f_nak">Nak</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">21</span>
+
+	<a name="f_ctrl_v"></a><a class="efeature" href="../base/ascii_short.html#f_ctrl_v">Ctrl_v</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">22</span>
+
+	<a name="f_syn"></a><a class="efeature" href="../base/ascii_short.html#f_syn">Syn</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">22</span>
+
+	<a name="f_ctrl_w"></a><a class="efeature" href="../base/ascii_short.html#f_ctrl_w">Ctrl_w</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">23</span>
+
+	<a name="f_etb"></a><a class="efeature" href="../base/ascii_short.html#f_etb">Etb</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">23</span>
+
+	<a name="f_ctrl_x"></a><a class="efeature" href="../base/ascii_short.html#f_ctrl_x">Ctrl_x</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">24</span>
+
+	<a name="f_can"></a><a class="efeature" href="../base/ascii_short.html#f_can">Can</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">24</span>
+
+	<a name="f_ctrl_y"></a><a class="efeature" href="../base/ascii_short.html#f_ctrl_y">Ctrl_y</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">25</span>
+
+	<a name="f_em"></a><a class="efeature" href="../base/ascii_short.html#f_em">Em</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">25</span>
+
+	<a name="f_ctrl_z"></a><a class="efeature" href="../base/ascii_short.html#f_ctrl_z">Ctrl_z</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">26</span>
+
+	<a name="f_sub"></a><a class="efeature" href="../base/ascii_short.html#f_sub">Sub</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">26</span>
+
+	<a name="f_ctrl_lbracket"></a><a class="efeature" href="../base/ascii_short.html#f_ctrl_lbracket">Ctrl_lbracket</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">27</span>
+
+	<a name="f_esc"></a><a class="efeature" href="../base/ascii_short.html#f_esc">Esc</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">27</span>
+
+	<a name="f_ctrl_backslash"></a><a class="efeature" href="../base/ascii_short.html#f_ctrl_backslash">Ctrl_backslash</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">28</span>
+
+	<a name="f_fs"></a><a class="efeature" href="../base/ascii_short.html#f_fs">Fs</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">28</span>
+
+	<a name="f_ctrl_rbracket"></a><a class="efeature" href="../base/ascii_short.html#f_ctrl_rbracket">Ctrl_rbracket</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">29</span>
+
+	<a name="f_gs"></a><a class="efeature" href="../base/ascii_short.html#f_gs">Gs</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">29</span>
+
+	<a name="f_ctrl_circumflex"></a><a class="efeature" href="../base/ascii_short.html#f_ctrl_circumflex">Ctrl_circumflex</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">30</span>
+
+	<a name="f_rs"></a><a class="efeature" href="../base/ascii_short.html#f_rs">Rs</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">30</span>
+
+	<a name="f_ctrl_underlined"></a><a class="efeature" href="../base/ascii_short.html#f_ctrl_underlined">Ctrl_underlined</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">31</span>
+
+	<a name="f_us"></a><a class="efeature" href="../base/ascii_short.html#f_us">Us</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">31</span>
+
+	<a name="f_blank"></a><a class="efeature" href="../base/ascii_short.html#f_blank">Blank</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">32</span>
+
+	<a name="f_sp"></a><a class="efeature" href="../base/ascii_short.html#f_sp">Sp</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">32</span>
+
+	<a name="f_exclamation"></a><a class="efeature" href="../base/ascii_short.html#f_exclamation">Exclamation</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">33</span>
+
+	<a name="f_doublequote"></a><a class="efeature" href="../base/ascii_short.html#f_doublequote">Doublequote</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">34</span>
+
+	<a name="f_number_sign"></a><a class="efeature" href="../base/ascii_short.html#f_number_sign">Number_sign</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">35</span>
+
+	<a name="f_dollar"></a><a class="efeature" href="../base/ascii_short.html#f_dollar">Dollar</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">36</span>
+
+	<a name="f_percent"></a><a class="efeature" href="../base/ascii_short.html#f_percent">Percent</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">37</span>
+
+	<a name="f_ampersand"></a><a class="efeature" href="../base/ascii_short.html#f_ampersand">Ampersand</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">38</span>
+
+	<a name="f_singlequote"></a><a class="efeature" href="../base/ascii_short.html#f_singlequote">Singlequote</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">39</span>
+
+	<a name="f_lcurly"></a><a class="efeature" href="../base/ascii_short.html#f_lcurly">Lcurly</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">40</span>
+
+	<a name="f_rcurly"></a><a class="efeature" href="../base/ascii_short.html#f_rcurly">Rcurly</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">41</span>
+
+	<a name="f_star"></a><a class="efeature" href="../base/ascii_short.html#f_star">Star</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">42</span>
+
+	<a name="f_plus"></a><a class="efeature" href="../base/ascii_short.html#f_plus">Plus</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">43</span>
+
+	<a name="f_comma"></a><a class="efeature" href="../base/ascii_short.html#f_comma">Comma</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">44</span>
+
+	<a name="f_minus"></a><a class="efeature" href="../base/ascii_short.html#f_minus">Minus</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">45</span>
+
+	<a name="f_dot"></a><a class="efeature" href="../base/ascii_short.html#f_dot">Dot</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">46</span>
+
+	<a name="f_slash"></a><a class="efeature" href="../base/ascii_short.html#f_slash">Slash</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">47</span>
+
+	<a name="f_zero"></a><a class="efeature" href="../base/ascii_short.html#f_zero">Zero</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">48</span>
+
+	<a name="f_one"></a><a class="efeature" href="../base/ascii_short.html#f_one">One</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">49</span>
+
+	<a name="f_two"></a><a class="efeature" href="../base/ascii_short.html#f_two">Two</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">50</span>
+
+	<a name="f_three"></a><a class="efeature" href="../base/ascii_short.html#f_three">Three</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">51</span>
+
+	<a name="f_four"></a><a class="efeature" href="../base/ascii_short.html#f_four">Four</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">52</span>
+
+	<a name="f_five"></a><a class="efeature" href="../base/ascii_short.html#f_five">Five</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">53</span>
+
+	<a name="f_six"></a><a class="efeature" href="../base/ascii_short.html#f_six">Six</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">54</span>
+
+	<a name="f_seven"></a><a class="efeature" href="../base/ascii_short.html#f_seven">Seven</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">55</span>
+
+	<a name="f_eight"></a><a class="efeature" href="../base/ascii_short.html#f_eight">Eight</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">56</span>
+
+	<a name="f_nine"></a><a class="efeature" href="../base/ascii_short.html#f_nine">Nine</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">57</span>
+
+	<a name="f_colon"></a><a class="efeature" href="../base/ascii_short.html#f_colon">Colon</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">58</span>
+
+	<a name="f_semicolon"></a><a class="efeature" href="../base/ascii_short.html#f_semicolon">Semicolon</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">59</span>
+
+	<a name="f_lessthan"></a><a class="efeature" href="../base/ascii_short.html#f_lessthan">Lessthan</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">60</span>
+
+	<a name="f_equal_sign"></a><a class="efeature" href="../base/ascii_short.html#f_equal_sign">Equal_sign</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">61</span>
+
+	<a name="f_greaterthan"></a><a class="efeature" href="../base/ascii_short.html#f_greaterthan">Greaterthan</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">62</span>
+
+	<a name="f_questmark"></a><a class="efeature" href="../base/ascii_short.html#f_questmark">Questmark</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">63</span>
+
+	<a name="f_commercial_at"></a><a class="efeature" href="../base/ascii_short.html#f_commercial_at">Commercial_at</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">64</span>
+
+	<a name="f_upper_a"></a><a class="efeature" href="../base/ascii_short.html#f_upper_a">Upper_a</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">65</span>
+
+	<a name="f_upper_b"></a><a class="efeature" href="../base/ascii_short.html#f_upper_b">Upper_b</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">66</span>
+
+	<a name="f_upper_c"></a><a class="efeature" href="../base/ascii_short.html#f_upper_c">Upper_c</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">67</span>
+
+	<a name="f_upper_d"></a><a class="efeature" href="../base/ascii_short.html#f_upper_d">Upper_d</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">68</span>
+
+	<a name="f_upper_e"></a><a class="efeature" href="../base/ascii_short.html#f_upper_e">Upper_e</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">69</span>
+
+	<a name="f_upper_f"></a><a class="efeature" href="../base/ascii_short.html#f_upper_f">Upper_f</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">70</span>
+
+	<a name="f_upper_g"></a><a class="efeature" href="../base/ascii_short.html#f_upper_g">Upper_g</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">71</span>
+
+	<a name="f_upper_h"></a><a class="efeature" href="../base/ascii_short.html#f_upper_h">Upper_h</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">72</span>
+
+	<a name="f_upper_i"></a><a class="efeature" href="../base/ascii_short.html#f_upper_i">Upper_i</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">73</span>
+
+	<a name="f_upper_j"></a><a class="efeature" href="../base/ascii_short.html#f_upper_j">Upper_j</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">74</span>
+
+	<a name="f_upper_k"></a><a class="efeature" href="../base/ascii_short.html#f_upper_k">Upper_k</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">75</span>
+
+	<a name="f_upper_l"></a><a class="efeature" href="../base/ascii_short.html#f_upper_l">Upper_l</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">76</span>
+
+	<a name="f_upper_m"></a><a class="efeature" href="../base/ascii_short.html#f_upper_m">Upper_m</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">77</span>
+
+	<a name="f_upper_n"></a><a class="efeature" href="../base/ascii_short.html#f_upper_n">Upper_n</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">78</span>
+
+	<a name="f_upper_o"></a><a class="efeature" href="../base/ascii_short.html#f_upper_o">Upper_o</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">79</span>
+
+	<a name="f_upper_p"></a><a class="efeature" href="../base/ascii_short.html#f_upper_p">Upper_p</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">80</span>
+
+	<a name="f_upper_q"></a><a class="efeature" href="../base/ascii_short.html#f_upper_q">Upper_q</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">81</span>
+
+	<a name="f_upper_r"></a><a class="efeature" href="../base/ascii_short.html#f_upper_r">Upper_r</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">82</span>
+
+	<a name="f_upper_s"></a><a class="efeature" href="../base/ascii_short.html#f_upper_s">Upper_s</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">83</span>
+
+	<a name="f_upper_t"></a><a class="efeature" href="../base/ascii_short.html#f_upper_t">Upper_t</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">84</span>
+
+	<a name="f_upper_u"></a><a class="efeature" href="../base/ascii_short.html#f_upper_u">Upper_u</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">85</span>
+
+	<a name="f_upper_v"></a><a class="efeature" href="../base/ascii_short.html#f_upper_v">Upper_v</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">86</span>
+
+	<a name="f_upper_w"></a><a class="efeature" href="../base/ascii_short.html#f_upper_w">Upper_w</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">87</span>
+
+	<a name="f_upper_x"></a><a class="efeature" href="../base/ascii_short.html#f_upper_x">Upper_x</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">88</span>
+
+	<a name="f_upper_y"></a><a class="efeature" href="../base/ascii_short.html#f_upper_y">Upper_y</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">89</span>
+
+	<a name="f_upper_z"></a><a class="efeature" href="../base/ascii_short.html#f_upper_z">Upper_z</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">90</span>
+
+	<a name="f_lbracket"></a><a class="efeature" href="../base/ascii_short.html#f_lbracket">Lbracket</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">91</span>
+
+	<a name="f_backslash"></a><a class="efeature" href="../base/ascii_short.html#f_backslash">Backslash</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">92</span>
+
+	<a name="f_rbracket"></a><a class="efeature" href="../base/ascii_short.html#f_rbracket">Rbracket</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">93</span>
+
+	<a name="f_circumflex"></a><a class="efeature" href="../base/ascii_short.html#f_circumflex">Circumflex</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">94</span>
+
+	<a name="f_underlined"></a><a class="efeature" href="../base/ascii_short.html#f_underlined">Underlined</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">95</span>
+
+	<a name="f_grave_accent"></a><a class="efeature" href="../base/ascii_short.html#f_grave_accent">Grave_accent</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">96</span>
+
+	<a name="f_lower_a"></a><a class="efeature" href="../base/ascii_short.html#f_lower_a">Lower_a</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">97</span>
+
+	<a name="f_lower_b"></a><a class="efeature" href="../base/ascii_short.html#f_lower_b">Lower_b</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">98</span>
+
+	<a name="f_lower_c"></a><a class="efeature" href="../base/ascii_short.html#f_lower_c">Lower_c</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">99</span>
+
+	<a name="f_lower_d"></a><a class="efeature" href="../base/ascii_short.html#f_lower_d">Lower_d</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">100</span>
+
+	<a name="f_lower_e"></a><a class="efeature" href="../base/ascii_short.html#f_lower_e">Lower_e</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">101</span>
+
+	<a name="f_lower_f"></a><a class="efeature" href="../base/ascii_short.html#f_lower_f">Lower_f</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">102</span>
+
+	<a name="f_lower_g"></a><a class="efeature" href="../base/ascii_short.html#f_lower_g">Lower_g</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">103</span>
+
+	<a name="f_lower_h"></a><a class="efeature" href="../base/ascii_short.html#f_lower_h">Lower_h</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">104</span>
+
+	<a name="f_lower_i"></a><a class="efeature" href="../base/ascii_short.html#f_lower_i">Lower_i</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">105</span>
+
+	<a name="f_lower_j"></a><a class="efeature" href="../base/ascii_short.html#f_lower_j">Lower_j</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">106</span>
+
+	<a name="f_lower_k"></a><a class="efeature" href="../base/ascii_short.html#f_lower_k">Lower_k</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">107</span>
+
+	<a name="f_lower_l"></a><a class="efeature" href="../base/ascii_short.html#f_lower_l">Lower_l</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">108</span>
+
+	<a name="f_lower_m"></a><a class="efeature" href="../base/ascii_short.html#f_lower_m">Lower_m</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">109</span>
+
+	<a name="f_lower_n"></a><a class="efeature" href="../base/ascii_short.html#f_lower_n">Lower_n</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">110</span>
+
+	<a name="f_lower_o"></a><a class="efeature" href="../base/ascii_short.html#f_lower_o">Lower_o</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">111</span>
+
+	<a name="f_lower_p"></a><a class="efeature" href="../base/ascii_short.html#f_lower_p">Lower_p</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">112</span>
+
+	<a name="f_lower_q"></a><a class="efeature" href="../base/ascii_short.html#f_lower_q">Lower_q</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">113</span>
+
+	<a name="f_lower_r"></a><a class="efeature" href="../base/ascii_short.html#f_lower_r">Lower_r</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">114</span>
+
+	<a name="f_lower_s"></a><a class="efeature" href="../base/ascii_short.html#f_lower_s">Lower_s</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">115</span>
+
+	<a name="f_lower_t"></a><a class="efeature" href="../base/ascii_short.html#f_lower_t">Lower_t</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">116</span>
+
+	<a name="f_lower_u"></a><a class="efeature" href="../base/ascii_short.html#f_lower_u">Lower_u</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">117</span>
+
+	<a name="f_lower_v"></a><a class="efeature" href="../base/ascii_short.html#f_lower_v">Lower_v</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">118</span>
+
+	<a name="f_lower_w"></a><a class="efeature" href="../base/ascii_short.html#f_lower_w">Lower_w</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">119</span>
+
+	<a name="f_lower_x"></a><a class="efeature" href="../base/ascii_short.html#f_lower_x">Lower_x</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">120</span>
+
+	<a name="f_lower_y"></a><a class="efeature" href="../base/ascii_short.html#f_lower_y">Lower_y</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">121</span>
+
+	<a name="f_lower_z"></a><a class="efeature" href="../base/ascii_short.html#f_lower_z">Lower_z</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">122</span>
+
+	<a name="f_opening_brace"></a><a class="efeature" href="../base/ascii_short.html#f_opening_brace">Opening_brace</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">123</span>
+
+	<a name="f_bar"></a><a class="efeature" href="../base/ascii_short.html#f_bar">Bar</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">124</span>
+
+	<a name="f_closing_brace"></a><a class="efeature" href="../base/ascii_short.html#f_closing_brace">Closing_brace</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">125</span>
+
+	<a name="f_tilde"></a><a class="efeature" href="../base/ascii_short.html#f_tilde">Tilde</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">126</span>
+
+	<a name="f_ctrl_questmark"></a><a class="efeature" href="../base/ascii_short.html#f_ctrl_questmark">Ctrl_questmark</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">127</span>
+
+	<a name="f_del"></a><a class="efeature" href="../base/ascii_short.html#f_del">Del</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a> <span class="esymbol">=</span> <span class="enumber">127</span>
+	
+<span class="ekeyword">note</span>
+	<span class="eitag">copyright</span><span class="esymbol">:</span> <span class="estring">&quot;Copyright (c) 1984-2018, Eiffel Software and others&quot;</span>
+	<span class="eitag">license</span><span class="esymbol">:</span> <span class="estring">&quot;Eiffel Forum License v2 (see </span><a class="estring" href="http://www.eiffel.com/licensing/forum.txt">http://www.eiffel.com/licensing/forum.txt</a><span class="estring">)&quot;</span>
+	<span class="eitag">source</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">Eiffel Software</span>
+		<span class="estring">5949 Hollister Ave., Goleta, CA 93117 USA</span>
+		<span class="estring">Telephone 805-685-1006, Fax 805-685-6869</span>
+		<span class="estring">Website </span><a class="estring" href="http://www.eiffel.com">http://www.eiffel.com</a>
+		<span class="estring">Customer support </span><a class="estring" href="http://support.eiffel.com">http://support.eiffel.com</a>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+
+<span class="ekeyword">end</span> <span class="ecomment">--</span> <span class="ecomment">class </span><a class="eclass" href="../base/ascii_short.html">ASCII</a></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="ascii_chart.html">Chart</a>
+<a class="nav class" href="ascii_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="ascii"></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>
+

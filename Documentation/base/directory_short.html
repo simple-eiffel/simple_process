@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="description" content="Directories, in the Unix sense, with creation and exploration features"/>
+<meta name="library" content="Free implementation of ELKS library"/>
+<meta name="legal" content="See notice at end of class."/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="copyright" content="Copyright (c) 1984-2017, Eiffel Software and others"/>
+<meta name="license" content="Eiffel Forum License v2 (see http://www.eiffel.com/licensing/forum.txt)"/>
+<meta name="source" content="Eiffel Software 5949 Hollister Ave., Goleta, CA 93117 USA Telephone 805-685-1006, Fax 805-685-6869 Website http://www.eiffel.com Customer support http://support.eiffel.com"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>directory Contracts</title>
+<link rel="stylesheet" href="../default.css" type="text/css">
+<script type="text/javascript" src="../goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="directory_chart.html">Chart</a>
+<a class="nav class" href="directory_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="directory"></span>
+</div></form><pre><span class="ekeyword">note</span>
+	<span class="eitag">description</span><span class="esymbol">:</span> <span class="estring">&quot;Directories, in the Unix sense, with creation and exploration features&quot;</span>
+	<span class="eitag">library</span><span class="esymbol">:</span> <span class="estring">&quot;Free implementation of ELKS library&quot;</span>
+	<span class="eitag">status</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">legal</span><span class="esymbol">:</span> <span class="estring">&quot;See notice at end of class.&quot;</span>
+	<span class="eitag">date</span><span class="esymbol">:</span> <span class="estring">&quot;$Date$&quot;</span>
+	<span class="eitag">revision</span><span class="esymbol">:</span> <span class="estring">&quot;$Revision$&quot;</span>
+
+<span class="ekeyword">class</span> <span class="ekeyword">interface</span>
+	<a class="eclass" href="../base/directory_short.html">DIRECTORY</a>
+
+<span class="ekeyword">create</span> 
+	<a class="efeature" href="../base/directory_short.html#f_make">make</a><span class="esymbol">,</span>
+	<a class="efeature" href="../base/directory_short.html#f_make_with_path">make_with_path</a><span class="esymbol">,</span>
+	<a class="efeature" href="../base/directory_short.html#f_make_with_name">make_with_name</a><span class="esymbol">,</span>
+	<a class="efeature" href="../base/directory_short.html#f_make_open_read">make_open_read</a>
+
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Initialization</span>
+
+	<a name="f_make"></a><a class="efeature" href="../base/directory_short.html#f_make">make</a> <span class="esymbol">(</span><span class="elocal">dn</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_short.html">READABLE_STRING_GENERAL</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Create directory object for directory</span>
+			<span class="ecomment">--</span><span class="ecomment"> of name </span><span class="equoted">dn</span><span class="ecomment">.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">string_exists</span><span class="esymbol">:</span> <span class="elocal">dn</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">name_set</span><span class="esymbol">:</span> <a class="efeature" href="../base/directory_short.html#f_internal_name">internal_name</a> <span class="esymbol">=</span> <span class="elocal">dn</span>
+
+	<a name="f_make_with_name"></a><a class="efeature" href="../base/directory_short.html#f_make_with_name">make_with_name</a> <span class="esymbol">(</span><span class="elocal">dn</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_short.html">READABLE_STRING_GENERAL</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Create directory object for directory</span>
+			<span class="ecomment">--</span><span class="ecomment"> of name </span><span class="equoted">dn</span><span class="ecomment">.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">string_exists</span><span class="esymbol">:</span> <span class="elocal">dn</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">name_set</span><span class="esymbol">:</span> <a class="efeature" href="../base/directory_short.html#f_internal_name">internal_name</a> <span class="esymbol">=</span> <span class="elocal">dn</span>
+
+	<a name="f_make_with_path"></a><a class="efeature" href="../base/directory_short.html#f_make_with_path">make_with_path</a> <span class="esymbol">(</span><span class="elocal">a_path</span><span class="esymbol">:</span> <a class="eclass" href="../base/path_short.html">PATH</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Create file object with </span><span class="equoted">a_path</span><span class="ecomment"> as path.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">a_path_attached</span><span class="esymbol">:</span> <span class="elocal">a_path</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_make_open_read"></a><a class="efeature" href="../base/directory_short.html#f_make_open_read">make_open_read</a> <span class="esymbol">(</span><span class="elocal">dn</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_short.html">READABLE_STRING_GENERAL</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Create directory object for directory</span>
+			<span class="ecomment">--</span><span class="ecomment"> of name </span><span class="equoted">dn</span><span class="ecomment"> and open it for reading.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">string_exists</span><span class="esymbol">:</span> <span class="elocal">dn</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">name_set</span><span class="esymbol">:</span> <a class="efeature" href="../base/directory_short.html#f_internal_name">internal_name</a> <span class="esymbol">=</span> <span class="elocal">dn</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Creation</span>
+
+	<a name="f_create_dir"></a><a class="efeature" href="../base/directory_short.html#f_create_dir">create_dir</a>
+			<span class="ecomment">--</span><span class="ecomment"> Create a physical directory.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">physical_not_exists</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/directory_short.html#f_exists">exists</a>
+
+	<a name="f_recursive_create_dir"></a><a class="efeature" href="../base/directory_short.html#f_recursive_create_dir">recursive_create_dir</a>
+			<span class="ecomment">--</span><span class="ecomment"> Create the directory recursively.</span>
+			<span class="ecomment">--</span>
+			<span class="ecomment">--</span><span class="ecomment"> Ex: if /temp/ exists but not /temp/test, then trying</span>
+			<span class="ecomment">--</span><span class="ecomment"> &nbsp;to create /temp/test/toto will create /temp/test</span>
+			<span class="ecomment">--</span><span class="ecomment"> &nbsp;and then /temp/test/toto.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">physical_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/directory_short.html#f_exists">exists</a>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Access</span>
+
+	<a name="f_path"></a><a class="efeature" href="../base/directory_short.html#f_path">path</a><span class="esymbol">:</span> <a class="eclass" href="../base/path_short.html">PATH</a>
+			<span class="ecomment">--</span><span class="ecomment"> Associated path of Current.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">entry_not_empty</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <span class="ekeyword">Result</span><span class="edot">.</span><a class="efeature" href="../base/path_short.html#f_is_empty">is_empty</a>
+
+	<a name="f_readentry"></a><a class="efeature" href="../base/directory_short.html#f_readentry">readentry</a>
+			<span class="ecomment">--</span><span class="ecomment"> Read next directory entry</span>
+			<span class="ecomment">--</span><span class="ecomment"> make result available in </span><span class="ecomment">`</span><a class="efeature" href="../base/directory_short.html#f_lastentry">lastentry</a><span class="ecomment">`</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Make result Void if all entries have been read.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">is_opened</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/directory_short.html#f_is_closed">is_closed</a>
+
+	<a name="f_has_entry"></a><a class="efeature" href="../base/directory_short.html#f_has_entry">has_entry</a> <span class="esymbol">(</span><span class="elocal">entry_name</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_short.html">READABLE_STRING_GENERAL</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Has directory the entry </span><span class="equoted">entry_name</span><span class="ecomment">?</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">string_exists</span><span class="esymbol">:</span> <span class="elocal">entry_name</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+
+	<a name="f_open_read"></a><a class="efeature" href="../base/directory_short.html#f_open_read">open_read</a>
+			<span class="ecomment">--</span><span class="ecomment"> Open directory for reading.</span>
+
+	<a name="f_close"></a><a class="efeature" href="../base/directory_short.html#f_close">close</a>
+			<span class="ecomment">--</span><span class="ecomment"> Close directory.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">is_open</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/directory_short.html#f_is_closed">is_closed</a>
+
+	<a name="f_start"></a><a class="efeature" href="../base/directory_short.html#f_start">start</a>
+			<span class="ecomment">--</span><span class="ecomment"> Go to first entry of directory.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">is_opened</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <a class="efeature" href="../base/directory_short.html#f_is_closed">is_closed</a>
+
+	<a name="f_change_name"></a><a class="efeature" href="../base/directory_short.html#f_change_name">change_name</a> <span class="esymbol">(</span><span class="elocal">new_name</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_general_short.html">READABLE_STRING_GENERAL</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Change directory name to </span><span class="equoted">new_name</span><span class="ecomment">.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">new_name_not_void</span><span class="esymbol">:</span> <span class="elocal">new_name</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">directory_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/directory_short.html#f_exists">exists</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">name_changed</span><span class="esymbol">:</span> <a class="efeature" href="../base/directory_short.html#f_internal_name">internal_name</a> <span class="esymbol">=</span> <span class="elocal">new_name</span>
+
+	<a name="f_rename_path"></a><a class="efeature" href="../base/directory_short.html#f_rename_path">rename_path</a> <span class="esymbol">(</span><span class="elocal">new_name</span><span class="esymbol">:</span> <a class="eclass" href="../base/path_short.html">PATH</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Change directory name to </span><span class="equoted">new_name</span><span class="ecomment">.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">new_name_not_void</span><span class="esymbol">:</span> <span class="elocal">new_name</span> <span class="esymbol">/=</span> <span class="ekeyword">Void</span>
+			<span class="etag">new_name_not_empty</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <span class="elocal">new_name</span><span class="edot">.</span><a class="efeature" href="../base/path_short.html#f_is_empty">is_empty</a>
+			<span class="etag">file_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/directory_short.html#f_exists">exists</a>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">name_changed</span><span class="esymbol">:</span> <a class="efeature" href="../base/directory_short.html#f_internal_name">internal_name</a> <span class="esymbol">=</span> <span class="elocal">new_name</span><span class="edot">.</span><a class="efeature" href="../base/path_short.html#f_name">name</a>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Measurement</span>
+
+	<a name="f_count"></a><a class="efeature" href="../base/directory_short.html#f_count">count</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Number of entries in directory.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">directory_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/directory_short.html#f_exists">exists</a>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Conversion</span>
+
+	<a name="f_entries"></a><a class="efeature" href="../base/directory_short.html#f_entries">entries</a><span class="esymbol">:</span> <a class="eclass" href="../base/arrayed_list_short.html">ARRAYED_LIST</a> <span class="esymbol">[</span><a class="eclass" href="../base/path_short.html">PATH</a><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Entries (i.e. just the file or directory name) of current directory,</span>
+			<span class="ecomment">--</span><span class="ecomment"> in sequential format, in a platform specific order.</span>
+
+	<a name="f_resolved_entries"></a><a class="efeature" href="../base/directory_short.html#f_resolved_entries">resolved_entries</a><span class="esymbol">:</span> <a class="eclass" href="../base/arrayed_list_short.html">ARRAYED_LIST</a> <span class="esymbol">[</span><a class="eclass" href="../base/path_short.html">PATH</a><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> Entries of current directory resolved in the context of current directory (i.e. the path</span>
+			<span class="ecomment">--</span><span class="ecomment"> of the current directory appended with the entry) in sequential format, in a platform specific</span>
+			<span class="ecomment">--</span><span class="ecomment"> order.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Compared to </span><span class="ecomment">`</span><a class="efeature" href="../base/directory_short.html#f_entries">entries</a><span class="ecomment">`</span><span class="ecomment">, it removes the need for callers to build the full path of the entry</span>
+			<span class="ecomment">--</span><span class="ecomment"> using </span><span class="equoted">Current</span><span class="ecomment">.</span>
+
+	<a name="f_linear_representation_32"></a><a class="efeature" href="../base/directory_short.html#f_linear_representation_32">linear_representation_32</a><span class="esymbol">:</span> <a class="eclass" href="../base/arrayed_list_short.html">ARRAYED_LIST</a> <span class="esymbol">[</span><a class="eclass" href="../base/string_32_short.html">STRING_32</a><span class="esymbol">]</span>
+			<span class="ecomment">--</span><span class="ecomment"> The entries, in sequential format.</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Status report</span>
+
+	<a name="f_last_entry_32"></a><a class="efeature" href="../base/directory_short.html#f_last_entry_32">last_entry_32</a><span class="esymbol">:</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/string_32_short.html">STRING_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Last Unicode entry read by </span><span class="ecomment">`</span><a class="efeature" href="../base/directory_short.html#f_readentry">readentry</a><span class="ecomment">`</span><span class="ecomment"> if any.</span>
+
+	<a name="f_last_entry_8"></a><a class="efeature" href="../base/directory_short.html#f_last_entry_8">last_entry_8</a><span class="esymbol">:</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a>
+			<span class="ecomment">--</span><span class="ecomment"> Raw byte sequence of the last found entry if this entry cannot be</span>
+			<span class="ecomment">--</span><span class="ecomment"> expressed with Unicode characters. This is useful</span>
+			<span class="ecomment">--</span><span class="ecomment"> when handling a file that is not a valid UTF-8 sequence on Unix.</span>
+
+	<a name="f_is_closed"></a><a class="efeature" href="../base/directory_short.html#f_is_closed">is_closed</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is current directory closed?</span>
+
+	<a name="f_is_empty"></a><a class="efeature" href="../base/directory_short.html#f_is_empty">is_empty</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is directory empty?</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">directory_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/directory_short.html#f_exists">exists</a>
+
+	<a name="f_exists"></a><a class="efeature" href="../base/directory_short.html#f_exists">exists</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Does the directory exist?</span>
+
+	<a name="f_is_readable"></a><a class="efeature" href="../base/directory_short.html#f_is_readable">is_readable</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is the directory readable?</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">directory_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/directory_short.html#f_exists">exists</a>
+
+	<a name="f_is_executable"></a><a class="efeature" href="../base/directory_short.html#f_is_executable">is_executable</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is the directory executable?</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">directory_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/directory_short.html#f_exists">exists</a>
+
+	<a name="f_is_writable"></a><a class="efeature" href="../base/directory_short.html#f_is_writable">is_writable</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Is the directory writable?</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">directory_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/directory_short.html#f_exists">exists</a>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Removal</span>
+
+	<a name="f_delete"></a><a class="efeature" href="../base/directory_short.html#f_delete">delete</a>
+			<span class="ecomment">--</span><span class="ecomment"> Delete directory if empty.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">directory_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/directory_short.html#f_exists">exists</a>
+			<span class="etag">empty_directory</span><span class="esymbol">:</span> <a class="efeature" href="../base/directory_short.html#f_is_empty">is_empty</a>
+
+	<a name="f_delete_content"></a><a class="efeature" href="../base/directory_short.html#f_delete_content">delete_content</a>
+			<span class="ecomment">--</span><span class="ecomment"> Delete all files located in current directory and its</span>
+			<span class="ecomment">--</span><span class="ecomment"> subdirectories.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">directory_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/directory_short.html#f_exists">exists</a>
+
+	<a name="f_recursive_delete"></a><a class="efeature" href="../base/directory_short.html#f_recursive_delete">recursive_delete</a>
+			<span class="ecomment">--</span><span class="ecomment"> Delete directory, its files and its subdirectories.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">directory_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/directory_short.html#f_exists">exists</a>
+
+	<a name="f_delete_content_with_action"></a><a class="efeature" href="../base/directory_short.html#f_delete_content_with_action">delete_content_with_action</a> <span class="esymbol">(</span><span class="elocal">action</span><span class="esymbol">:</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/procedure_short.html">PROCEDURE</a> <span class="esymbol">[</span><a class="eclass" href="../base/list_short.html">LIST</a> <span class="esymbol">[</span><a class="eclass" href="../base/readable_string_general_short.html">READABLE_STRING_GENERAL</a><span class="esymbol">]</span><span class="esymbol">]</span><span class="esymbol">;</span> <span class="elocal">is_cancel_requested</span><span class="esymbol">:</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/function_short.html">FUNCTION</a> <span class="esymbol">[</span><a class="eclass" href="../base/boolean_short.html">BOOLEAN</a><span class="esymbol">]</span><span class="esymbol">;</span> <span class="elocal">file_number</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Delete all files located in current directory and its</span>
+			<span class="ecomment">--</span><span class="ecomment"> subdirectories.</span>
+			<span class="ecomment">--</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span><span class="equoted">action</span><span class="ecomment"> is called each time at most </span><span class="equoted">file_number</span><span class="ecomment"> files has</span>
+			<span class="ecomment">--</span><span class="ecomment"> been deleted and before the function exits. If </span><span class="equoted">a_file_number</span>
+			<span class="ecomment">--</span><span class="ecomment"> is non-positive, </span><span class="equoted">action</span><span class="ecomment"> is not called.</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span><span class="equoted">action</span><span class="ecomment"> may be set to Void if you don't need it.</span>
+			<span class="ecomment">--</span>
+			<span class="ecomment">--</span><span class="ecomment"> Same for </span><span class="equoted">is_cancel_requested</span><span class="ecomment">.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Make it return </span><span class="equoted">True</span><span class="ecomment"> to cancel the operation.</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span><span class="equoted">is_cancel_requested</span><span class="ecomment"> may be set to Void if you don't need it.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">directory_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/directory_short.html#f_exists">exists</a>
+			<span class="etag">valid_file_number</span><span class="esymbol">:</span> <span class="elocal">file_number</span> <a class="esymbol" href="../base/comparable_short.html#f_is_greater_equal">&gt;=</a> <span class="enumber">0</span>
+
+	<a name="f_recursive_delete_with_action"></a><a class="efeature" href="../base/directory_short.html#f_recursive_delete_with_action">recursive_delete_with_action</a> <span class="esymbol">(</span><span class="elocal">action</span><span class="esymbol">:</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/procedure_short.html">PROCEDURE</a> <span class="esymbol">[</span><a class="eclass" href="../base/list_short.html">LIST</a> <span class="esymbol">[</span><a class="eclass" href="../base/readable_string_general_short.html">READABLE_STRING_GENERAL</a><span class="esymbol">]</span><span class="esymbol">]</span><span class="esymbol">;</span> <span class="elocal">is_cancel_requested</span><span class="esymbol">:</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/function_short.html">FUNCTION</a> <span class="esymbol">[</span><a class="eclass" href="../base/boolean_short.html">BOOLEAN</a><span class="esymbol">]</span><span class="esymbol">;</span> <span class="elocal">file_number</span><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Delete directory, its files and its subdirectories.</span>
+			<span class="ecomment">--</span>
+			<span class="ecomment">--</span><span class="ecomment"> </span><span class="equoted">action</span><span class="ecomment"> is called each time at most </span><span class="equoted">file_number</span><span class="ecomment"> files has</span>
+			<span class="ecomment">--</span><span class="ecomment"> been deleted and before the function exits. If </span><span class="equoted">a_file_number</span>
+			<span class="ecomment">--</span><span class="ecomment"> is non-positive, </span><span class="equoted">action</span><span class="ecomment"> is not called.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">directory_exists</span><span class="esymbol">:</span> <a class="efeature" href="../base/directory_short.html#f_exists">exists</a>
+
+	<a name="f_dispose"></a><a class="efeature" href="../base/directory_short.html#f_dispose">dispose</a>
+			<span class="ecomment">--</span><span class="ecomment"> Ensure this medium is closed when garbage collected.</span>
+	
+<span class="ekeyword">invariant</span>
+	<span class="etag">name_attached</span><span class="esymbol">:</span> <span class="ekeyword">attached</span> <a class="efeature" href="../base/directory_short.html#f_internal_name">internal_name</a>
+
+<span class="ekeyword">note</span>
+	<span class="eitag">copyright</span><span class="esymbol">:</span> <span class="estring">&quot;Copyright (c) 1984-2017, Eiffel Software and others&quot;</span>
+	<span class="eitag">license</span><span class="esymbol">:</span> <span class="estring">&quot;Eiffel Forum License v2 (see </span><a class="estring" href="http://www.eiffel.com/licensing/forum.txt">http://www.eiffel.com/licensing/forum.txt</a><span class="estring">)&quot;</span>
+	<span class="eitag">source</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">Eiffel Software</span>
+		<span class="estring">5949 Hollister Ave., Goleta, CA 93117 USA</span>
+		<span class="estring">Telephone 805-685-1006, Fax 805-685-6869</span>
+		<span class="estring">Website </span><a class="estring" href="http://www.eiffel.com">http://www.eiffel.com</a>
+		<span class="estring">Customer support </span><a class="estring" href="http://support.eiffel.com">http://support.eiffel.com</a>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+
+<span class="ekeyword">end</span> <span class="ecomment">--</span> <span class="ecomment">class </span><a class="eclass" href="../base/directory_short.html">DIRECTORY</a></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="directory_chart.html">Chart</a>
+<a class="nav class" href="directory_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="directory"></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>
+

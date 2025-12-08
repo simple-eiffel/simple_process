@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="generator" content="ISE EiffelStudio version 25.02.9.8732 - win64">
+<meta name="description" content="Simple process execution helper. Provides features for executing shell commands and capturing output. Uses SIMPLE_PROCESS for SCOOP-compatible execution."/>
+<meta name="author" content="Larry Rix"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="copyright" content="Copyright (c) 2024-2025, Larry Rix"/>
+<meta name="license" content="MIT License"/>
+<meta name="source" content="SIMPLE_PROCESS - SCOOP-compatible process execution library Uses direct Win32 API calls without thread dependencies"/>
+<meta name="keywords" content="Eiffel class"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<title>simple_process_helper Contracts</title>
+<link rel="stylesheet" href="../default.css" type="text/css">
+<script type="text/javascript" src="../goto.html"></script>
+</head>
+<body>
+<pre></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="simple_process_helper_chart.html">Chart</a>
+<a class="nav class" href="simple_process_helper_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="simple_process_helper"></span>
+</div></form><pre><span class="ekeyword">note</span>
+	<span class="eitag">description</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">Simple process execution helper.</span>
+		<span class="estring">Provides features for executing shell commands and capturing output.</span>
+		<span class="estring">Uses SIMPLE_PROCESS for SCOOP-compatible execution.</span>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+	<span class="eitag">author</span><span class="esymbol">:</span> <span class="estring">&quot;Larry Rix&quot;</span>
+	<span class="eitag">date</span><span class="esymbol">:</span> <span class="estring">&quot;$Date$&quot;</span>
+	<span class="eitag">revision</span><span class="esymbol">:</span> <span class="estring">&quot;$Revision$&quot;</span>
+
+<span class="ekeyword">class</span> <span class="ekeyword">interface</span>
+	<a class="eclass" href="../src/simple_process_helper_short.html">SIMPLE_PROCESS_HELPER</a>
+
+<span class="ekeyword">create</span> 
+	<a class="efeature" href="../base/any_short.html#f_default_create">default_create</a>
+
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Status Report</span>
+
+	<a name="f_has_file_in_path"></a><a class="efeature" href="../src/simple_process_helper_short.html#f_has_file_in_path">has_file_in_path</a> <span class="esymbol">(</span><span class="elocal">a_name</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Does </span><span class="equoted">a_name</span><span class="ecomment"> exist in the system PATH?</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Basic Operations</span>
+
+	<a name="f_last_error"></a><a class="efeature" href="../src/simple_process_helper_short.html#f_last_error">last_error</a><span class="esymbol">:</span> <a class="eclass" href="../base/integer_32_short.html">INTEGER_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Last error code from process execution</span>
+
+	<a name="f_output_of_command"></a><a class="efeature" href="../src/simple_process_helper_short.html#f_output_of_command">output_of_command</a> <span class="esymbol">(</span><span class="elocal">a_command_line</span><span class="esymbol">:</span> <a class="eclass" href="../base/readable_string_32_short.html">READABLE_STRING_32</a><span class="esymbol">;</span> <span class="elocal">a_directory</span><span class="esymbol">:</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/readable_string_32_short.html">READABLE_STRING_32</a><span class="esymbol">)</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_32_short.html">STRING_32</a>
+			<span class="ecomment">--</span><span class="ecomment"> Execute </span><span class="equoted">a_command_line</span><span class="ecomment"> in </span><span class="equoted">a_directory</span><span class="ecomment"> and return captured output.</span>
+			<span class="ecomment">--</span><span class="ecomment"> If </span><span class="equoted">a_directory</span><span class="ecomment"> is Void, uses current directory.</span>
+		<span class="ekeyword">require</span>
+			<span class="etag">cmd_not_empty</span><span class="esymbol">:</span> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <span class="elocal">a_command_line</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_general_short.html#f_is_empty">is_empty</a>
+			<span class="etag">dir_not_empty</span><span class="esymbol">:</span> <span class="ekeyword">attached</span> <span class="elocal">a_directory</span> <span class="ekeyword">as</span> al_dir <a class="ekeyword" href="../base/boolean_short.html#f_implication">implies</a> <a class="ekeyword" href="../base/boolean_short.html#f_negated">not</a> <span class="elocal">al_dir</span><span class="edot">.</span><a class="efeature" href="../base/readable_string_general_short.html#f_is_empty">is_empty</a>
+
+	<a name="f_show_process"></a><a class="efeature" href="../src/simple_process_helper_short.html#f_show_process">show_process</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Show process window during </span><span class="ecomment">`</span><a class="efeature" href="../src/simple_process_helper_short.html#f_output_of_command">output_of_command</a><span class="ecomment">`</span><span class="ecomment">?</span>
+
+	<a name="f_set_show_process"></a><a class="efeature" href="../src/simple_process_helper_short.html#f_set_show_process">set_show_process</a> <span class="esymbol">(</span><span class="elocal">a_value</span><span class="esymbol">:</span> <span class="ekeyword">like</span> <a class="efeature" href="../src/simple_process_helper_short.html#f_show_process">show_process</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Set </span><span class="ecomment">`</span><a class="efeature" href="../src/simple_process_helper_short.html#f_show_process">show_process</a><span class="ecomment">`</span><span class="ecomment"> to </span><span class="equoted">a_value</span><span class="ecomment">.</span>
+		<span class="ekeyword">ensure</span>
+			<span class="etag">set</span><span class="esymbol">:</span> <a class="efeature" href="../src/simple_process_helper_short.html#f_show_process">show_process</a> <span class="esymbol">=</span> <span class="elocal">a_value</span>
+
+	<a name="f_launch_fail_handler"></a><a class="efeature" href="../src/simple_process_helper_short.html#f_launch_fail_handler">launch_fail_handler</a> <span class="esymbol">(</span><span class="elocal">a_result</span><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a><span class="esymbol">)</span>
+			<span class="ecomment">--</span><span class="ecomment"> Handle launch failure with </span><span class="equoted">a_result</span><span class="ecomment"> message.</span>
+
+	<a name="f_last_error_result"></a><a class="efeature" href="../src/simple_process_helper_short.html#f_last_error_result">last_error_result</a><span class="esymbol">:</span> <span class="ekeyword">detachable</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a>
+			<span class="ecomment">--</span><span class="ecomment"> Last error message from process execution</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Status Report: Wait for Exit</span>
+
+	<a name="f_is_not_wait_for_exit"></a><a class="efeature" href="../src/simple_process_helper_short.html#f_is_not_wait_for_exit">is_not_wait_for_exit</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Do not wait for process to exit?</span>
+			<span class="ecomment">--</span><span class="ecomment"> Note: Current implementation always waits (synchronous).</span>
+
+	<a name="f_is_wait_for_exit"></a><a class="efeature" href="../src/simple_process_helper_short.html#f_is_wait_for_exit">is_wait_for_exit</a><span class="esymbol">:</span> <a class="eclass" href="../base/boolean_short.html">BOOLEAN</a>
+			<span class="ecomment">--</span><span class="ecomment"> Wait for process to exit?</span>
+
+	<a name="f_set_do_not_wait_for_exit"></a><a class="efeature" href="../src/simple_process_helper_short.html#f_set_do_not_wait_for_exit">set_do_not_wait_for_exit</a>
+			<span class="ecomment">--</span><span class="ecomment"> Set to not wait for process exit.</span>
+			<span class="ecomment">--</span><span class="ecomment"> Note: This is kept for API compatibility but has no effect.</span>
+
+	<a name="f_set_wait_for_exit"></a><a class="efeature" href="../src/simple_process_helper_short.html#f_set_wait_for_exit">set_wait_for_exit</a>
+			<span class="ecomment">--</span><span class="ecomment"> Set to wait for process exit.</span>
+	
+<span class="ekeyword">feature</span> <span class="ecomment">--</span><span class="ecomment"> Implementation: Constants</span>
+
+	<a name="f_dos_where_not_found_message"></a><a class="efeature" href="../src/simple_process_helper_short.html#f_dos_where_not_found_message">Dos_where_not_found_message</a><span class="esymbol">:</span> <a class="eclass" href="../base/string_8_short.html">STRING_8</a> <span class="esymbol">=</span> &quot;INFO: Could not find files for the given pattern(s).%N&quot;
+			<span class="ecomment">--</span><span class="ecomment"> Windows 'where' command not found message</span>
+	
+<span class="ekeyword">note</span>
+	<span class="eitag">copyright</span><span class="esymbol">:</span> <span class="estring">&quot;Copyright (c) 2024-2025, Larry Rix&quot;</span>
+	<span class="eitag">license</span><span class="esymbol">:</span> <span class="estring">&quot;MIT License&quot;</span>
+	<span class="eitag">source</span><span class="esymbol">:</span> <span class="estring">&quot;</span><span class="estring">[</span>
+		<span class="estring">SIMPLE_PROCESS - SCOOP-compatible process execution library</span>
+		<span class="estring">Uses direct Win32 API calls without thread dependencies</span>
+	<span class="estring">]</span><span class="estring">&quot;</span>
+
+<span class="ekeyword">end</span> <span class="ecomment">--</span> <span class="ecomment">class </span><a class="eclass" href="../src/simple_process_helper_short.html">SIMPLE_PROCESS_HELPER</a></pre><form class="nav" onsubmit="go_to('../',this.c.value);return false;">
+<div class="nav">
+<a class="nav hierarchy" href="../class_list.html">Classes</a>
+<a class="nav hierarchy" href="../cluster_list.html">Clusters</a>
+<a class="nav hierarchy" href="../cluster_hierarchy.html">Cluster hierarchy</a>
+<a class="nav class" href="simple_process_helper_chart.html">Chart</a>
+<a class="nav class" href="simple_process_helper_links.html">Relations</a>
+<span class="nav class selected">Contracts</span>
+<span class="nav class goto">Go to: <input name="c" value="simple_process_helper"></span>
+</div></form><pre></pre>
+<p style="text-align:center;">Generated by <a href="http://www.eiffel.com">ISE EiffelStudio</a></p>
+</body>
+</html>
+
