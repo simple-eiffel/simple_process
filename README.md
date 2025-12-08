@@ -4,7 +4,7 @@
 
 # SIMPLE_PROCESS
 
-**[Documentation](https://ljr1981.github.io/simple_process/)**
+**[Documentation](https://simple-eiffel.github.io/simple_process/)**
 
 ### Process Execution Library for Eiffel
 
@@ -47,7 +47,7 @@ SIMPLE_PROCESS provides SCOOP-compatible process execution for Eiffel applicatio
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/ljr1981/simple_process.git
+git clone https://github.com/simple-eiffel/simple_process.git
 ```
 
 2. Compile the C library:
@@ -277,8 +277,8 @@ MIT License - see [LICENSE](LICENSE) file for details.
 ## Contact
 
 - **Author:** Larry Rix
-- **Repository:** https://github.com/ljr1981/simple_process
-- **Issues:** https://github.com/ljr1981/simple_process/issues
+- **Repository:** https://github.com/simple-eiffel/simple_process
+- **Issues:** https://github.com/simple-eiffel/simple_process/issues
 
 ---
 
