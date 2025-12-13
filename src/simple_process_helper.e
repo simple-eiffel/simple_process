@@ -13,7 +13,10 @@ class
 
 feature -- Status Report
 
-	has_file_in_path (a_name: STRING): BOOLEAN
+	has_file_in_path,
+	is_in_path,
+	command_exists,
+	has_command (a_name: STRING): BOOLEAN
 			-- Does `a_name' exist in the system PATH?
 		local
 			l_process: SIMPLE_PROCESS
@@ -27,7 +30,12 @@ feature -- Basic Operations
 	last_error: INTEGER
 			-- Last error code from process execution
 
-	output_of_command (a_command_line: READABLE_STRING_32; a_directory: detachable READABLE_STRING_32): STRING_32
+	output_of_command,
+	run_and_capture,
+	exec_output,
+	shell_output,
+	capture_output,
+	command_output (a_command_line: READABLE_STRING_32; a_directory: detachable READABLE_STRING_32): STRING_32
 			-- Execute `a_command_line' in `a_directory' and return captured output.
 			-- If `a_directory' is Void, uses current directory.
 		require

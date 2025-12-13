@@ -23,16 +23,30 @@ feature {NONE} -- Initialization
 
 feature -- Access
 
-	last_output: detachable STRING_32
+	last_output,
+	output,
+	stdout,
+	result_text,
+	captured_output: detachable STRING_32
 			-- Output from last command execution
 
-	last_exit_code: INTEGER
+	last_exit_code,
+	exit_code,
+	return_code,
+	status_code: INTEGER
 			-- Exit code from last command execution
 
-	last_error: detachable STRING_32
+	last_error,
+	error_message,
+	stderr,
+	failure_reason: detachable STRING_32
 			-- Error message if execution failed
 
-	was_successful: BOOLEAN
+	was_successful,
+	succeeded,
+	ok,
+	passed,
+	completed_ok: BOOLEAN
 			-- Was last execution successful?
 
 feature -- Settings
@@ -50,7 +64,13 @@ feature -- Settings
 
 feature -- Execution
 
-	execute (a_command: READABLE_STRING_GENERAL)
+	execute,
+	run,
+	run_command,
+	shell,
+	exec,
+	spawn,
+	launch (a_command: READABLE_STRING_GENERAL)
 			-- Execute `a_command' and capture output.
 		require
 			command_not_empty: not a_command.is_empty
@@ -58,7 +78,12 @@ feature -- Execution
 			execute_in_directory (a_command, Void)
 		end
 
-	execute_in_directory (a_command: READABLE_STRING_GENERAL; a_directory: detachable READABLE_STRING_GENERAL)
+	execute_in_directory,
+	run_in,
+	run_in_directory,
+	exec_in,
+	shell_in,
+	launch_in (a_command: READABLE_STRING_GENERAL; a_directory: detachable READABLE_STRING_GENERAL)
 			-- Execute `a_command' in `a_directory' and capture output.
 		require
 			command_not_empty: not a_command.is_empty
@@ -118,7 +143,12 @@ feature -- Execution
 			end
 		end
 
-	output_of_command (a_command: READABLE_STRING_GENERAL): STRING_32
+	output_of_command,
+	run_and_capture,
+	exec_output,
+	shell_output,
+	capture_output,
+	command_output (a_command: READABLE_STRING_GENERAL): STRING_32
 			-- Execute `a_command' and return output.
 		require
 			command_not_empty: not a_command.is_empty
@@ -131,7 +161,10 @@ feature -- Execution
 			end
 		end
 
-	output_of_command_in_directory (a_command: READABLE_STRING_GENERAL; a_directory: READABLE_STRING_GENERAL): STRING_32
+	output_of_command_in_directory,
+	run_and_capture_in,
+	exec_output_in,
+	capture_output_in (a_command: READABLE_STRING_GENERAL; a_directory: READABLE_STRING_GENERAL): STRING_32
 			-- Execute `a_command' in `a_directory' and return output.
 		require
 			command_not_empty: not a_command.is_empty
@@ -147,7 +180,10 @@ feature -- Execution
 
 feature -- Query
 
-	file_exists_in_path (a_filename: READABLE_STRING_GENERAL): BOOLEAN
+	file_exists_in_path,
+	is_in_path,
+	command_exists,
+	has_command (a_filename: READABLE_STRING_GENERAL): BOOLEAN
 			-- Does `a_filename' exist in system PATH?
 		require
 			filename_not_empty: not a_filename.is_empty
