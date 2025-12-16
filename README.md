@@ -56,14 +56,14 @@ cd simple_process/Clib
 compile.bat
 ```
 
-3. Set the environment variable:
+3. Set the environment variable (one-time setup for all simple_* libraries):
 ```bash
-set SIMPLE_PROCESS=D:\path\to\simple_process
+set SIMPLE_EIFFEL=D:\prod
 ```
 
 4. Add to your ECF file:
 ```xml
-<library name="simple_process" location="$SIMPLE_PROCESS\simple_process.ecf"/>
+<library name="simple_process" location="$SIMPLE_EIFFEL/simple_process/simple_process.ecf"/>
 ```
 
 ### Basic Usage
