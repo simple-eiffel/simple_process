@@ -1,5 +1,8 @@
 /*
- * simple_process.h - Win32 process execution wrapper for Eiffel
+ * simple_process.h - Cross-platform process execution wrapper for Eiffel
+ *
+ * Windows: Uses Win32 CreateProcess API
+ * Linux: Uses POSIX fork/exec with pipes
  *
  * Provides SCOOP-compatible process execution without thread dependencies.
  * Uses synchronous I/O for output capture.
@@ -10,7 +13,12 @@
 #ifndef SIMPLE_PROCESS_H
 #define SIMPLE_PROCESS_H
 
+#if defined(_WIN32) || defined(EIF_WINDOWS)
 #include <windows.h>
+#else
+#include <sys/types.h>
+#include <unistd.h>
+#endif
 
 #ifdef __cplusplus
 extern "C" {
@@ -26,6 +34,7 @@ typedef struct {
 } sp_result;
 
 /* Async process handle structure */
+#if defined(_WIN32) || defined(EIF_WINDOWS)
 typedef struct {
     HANDLE hProcess;        /* Process handle */
     HANDLE hThread;         /* Thread handle */
@@ -34,6 +43,14 @@ typedef struct {
     int started;            /* Was process started successfully? */
     char* error_message;    /* Error if start failed */
 } sp_async_process;
+#else
+typedef struct {
+    pid_t pid;              /* Process ID */
+    int stdout_fd;          /* Pipe read handle for output */
+    int started;            /* Was process started successfully? */
+    char* error_message;    /* Error if start failed */
+} sp_async_process;
+#endif
 
 /* Execute a command and capture output synchronously
  * Returns: sp_result pointer (caller must free with sp_free_result)
@@ -69,12 +86,16 @@ int sp_is_running(sp_async_process* proc);
 /* Get the process ID (PID)
  * Returns: process ID or 0 if invalid
  */
+#if defined(_WIN32) || defined(EIF_WINDOWS)
 DWORD sp_get_pid(sp_async_process* proc);
+#else
+pid_t sp_get_pid(sp_async_process* proc);
+#endif
 
 /* Wait for process with timeout
  * Returns: 1 if process finished, 0 if timeout, -1 on error
  */
-int sp_wait_timeout(sp_async_process* proc, DWORD timeout_ms);
+int sp_wait_timeout(sp_async_process* proc, unsigned int timeout_ms);
 
 /* Kill/terminate the process
  * Returns: 1 on success, 0 on failure
