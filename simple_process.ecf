@@ -22,6 +22,11 @@
 				<platform value="windows"/>
 			</condition>
 		</external_object>
+		<external_object location="$(SIMPLE_EIFFEL)/simple_process/Clib/simple_process.o">
+			<condition>
+				<platform excluded_value="windows"/>
+			</condition>
+		</external_object>
 		<library name="base" location="$ISE_LIBRARY\library\base\base.ecf"/>
 		<library name="simple_datetime" location="$SIMPLE_EIFFEL/simple_datetime/simple_datetime.ecf"/>
 		<cluster name="src" location=".\src\" recursive="true"/>
