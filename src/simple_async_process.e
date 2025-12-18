@@ -326,7 +326,7 @@ feature {NONE} -- C externals
 		external
 			"C inline use %"simple_process.h%""
 		alias
-			"return sp_wait_timeout((sp_async_process*)$a_proc, (DWORD)$a_timeout_ms);"
+			"return sp_wait_timeout((sp_async_process*)$a_proc, (unsigned int)$a_timeout_ms);"
 		end
 
 	c_sp_kill (a_proc: POINTER): INTEGER
