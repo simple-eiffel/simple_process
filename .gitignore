@@ -26,3 +26,4 @@ Thumbs.db
 
 *.obj
 *.o
+exception_trace.log
