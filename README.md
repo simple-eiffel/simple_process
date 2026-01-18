@@ -1,29 +1,35 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/simple-eiffel/.github/main/profile/assets/logo.png" alt="simple_ library logo" width="400">
+  <img src="docs/images/logo.png" alt="simple_process logo" width="200">
 </p>
 
-# SIMPLE_PROCESS
+<h1 align="center">simple_process</h1>
 
-**[Documentation](https://simple-eiffel.github.io/simple_process/)**
+<p align="center">
+  <a href="https://simple-eiffel.github.io/simple_process/">Documentation</a> •
+  <a href="https://github.com/simple-eiffel/simple_process">GitHub</a>
+</p>
 
-### Process Execution Library for Eiffel
+<p align="center">
+  <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT">
+  <img src="https://img.shields.io/badge/Eiffel-25.02-purple.svg" alt="Eiffel 25.02">
+  <img src="https://img.shields.io/badge/DBC-Contracts-green.svg" alt="Design by Contract">
+</p>
 
-[![Language](https://img.shields.io/badge/language-Eiffel-blue.svg)](https://www.eiffel.org/)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Platform](https://img.shields.io/badge/platform-Windows-blue.svg)]()
-[![SCOOP](https://img.shields.io/badge/SCOOP-compatible-orange.svg)]()
-[![Design by Contract](https://img.shields.io/badge/DbC-enforced-orange.svg)]()
-[![Tests](https://img.shields.io/badge/tests-9%20passing-brightgreen.svg)]()
+**SCOOP-compatible process execution for Eiffel** — Win32 API wrapper with output capture. Part of the [Simple Eiffel](https://github.com/simple-eiffel) ecosystem.
 
----
+## Status
+
+✅ **Production Ready** — v1.0.0
+- 9 tests passing
+- SCOOP-compatible (no thread dependency)
+- Direct Win32 API wrapper
+- Full Design by Contract coverage
 
 ## Overview
 
 SIMPLE_PROCESS provides SCOOP-compatible process execution for Eiffel applications. It wraps Win32 Process APIs through a clean C interface, enabling command execution with output capture without threading complications.
 
-**Important:** This library has **no dependency on the EiffelStudio process library**. It uses direct Win32 API calls through a custom C wrapper, making it fully SCOOP-compatible and eliminating threading issues that existed with the previous Eiffel process library dependency.
-
-**Developed using AI-assisted methodology:** Built interactively with Claude Opus 4.5 following rigorous Design by Contract principles.
+**Important:** This library has **no dependency on the EiffelStudio process library**. It uses direct Win32 API calls through a custom C wrapper, making it fully SCOOP-compatible.
 
 ---
 
@@ -282,8 +288,4 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ---
 
-## Acknowledgments
-
-- Built with Claude Opus 4.5 (Anthropic)
-- Uses Win32 Process APIs (Microsoft)
-- Part of the simple_ library collection for Eiffel
+Part of the [Simple Eiffel](https://github.com/simple-eiffel) ecosystem.
