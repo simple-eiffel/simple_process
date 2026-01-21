@@ -18,11 +18,34 @@ feature -- Status Report
 	command_exists,
 	has_command (a_name: STRING): BOOLEAN
 			-- Does `a_name' exist in the system PATH?
+		require
+			name_not_empty: not a_name.is_empty
 		local
 			l_process: SIMPLE_PROCESS
 		do
 			create l_process.make
 			Result := l_process.file_exists_in_path (a_name)
+		ensure
+			execution_count_unchanged: execution_count = old execution_count
+		end
+
+feature -- Model Queries
+
+	execution_count: INTEGER
+			-- Number of commands executed since creation.
+			-- Model query for tracking execution history.
+		do
+			Result := execution_count_impl
+		ensure
+			non_negative: Result >= 0
+		end
+
+	has_executed: BOOLEAN
+			-- Has at least one command been executed?
+		do
+			Result := execution_count > 0
+		ensure
+			definition: Result = (execution_count > 0)
 		end
 
 feature -- Basic Operations
@@ -63,6 +86,12 @@ feature -- Basic Operations
 
 			-- Remove carriage returns for consistency
 			Result.prune_all ('%R')
+
+			-- Update model state
+			execution_count_impl := execution_count_impl + 1
+		ensure
+			execution_recorded: execution_count = old execution_count + 1
+			result_not_void: Result /= Void
 		end
 
 	show_process: BOOLEAN
@@ -110,10 +139,19 @@ feature -- Status Report: Wait for Exit
 			is_not_wait_for_exit := False
 		end
 
+feature {NONE} -- Model Implementation
+
+	execution_count_impl: INTEGER
+			-- Internal counter for execution tracking.
+
 feature -- Implementation: Constants
 
 	Dos_where_not_found_message: STRING = "INFO: Could not find files for the given pattern(s).%N"
 			-- Windows 'where' command not found message
+
+invariant
+	execution_count_non_negative: execution_count >= 0
+	has_executed_consistency: has_executed = (execution_count > 0)
 
 note
 	copyright: "Copyright (c) 2024-2025, Larry Rix"

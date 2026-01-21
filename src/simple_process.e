@@ -19,6 +19,10 @@ feature {NONE} -- Initialization
 			-- Initialize process executor.
 		do
 			show_window := False
+			execution_count_impl := 0
+		ensure
+			window_hidden: not show_window
+			no_executions: execution_count = 0
 		end
 
 feature -- Access
@@ -60,7 +64,30 @@ feature -- Settings
 			show_window := a_value
 		ensure
 			set: show_window = a_value
+			execution_count_unchanged: execution_count = old execution_count
 		end
+
+feature -- Model Queries
+
+	execution_count: INTEGER
+			-- Number of commands executed since creation.
+			-- Model query for tracking execution history.
+		do
+			Result := execution_count_impl
+		ensure
+			non_negative: Result >= 0
+		end
+
+	has_executed: BOOLEAN
+			-- Has at least one command been executed?
+		do
+			Result := execution_count > 0
+		ensure
+			definition: Result = (execution_count > 0)
+		end
+
+	last_command: detachable READABLE_STRING_GENERAL
+			-- Last command that was executed (for model purposes).
 
 feature -- Execution
 
@@ -76,6 +103,9 @@ feature -- Execution
 			command_not_empty: not a_command.is_empty
 		do
 			execute_in_directory (a_command, Void)
+		ensure
+			execution_recorded: execution_count = old execution_count + 1
+			command_recorded: attached last_command as lc and then lc.same_string (a_command)
 		end
 
 	execute_in_directory,
@@ -141,6 +171,13 @@ feature -- Execution
 			else
 				last_error := {STRING_32} "Failed to execute command"
 			end
+
+			-- Update model state
+			last_command := a_command
+			execution_count_impl := execution_count_impl + 1
+		ensure
+			execution_recorded: execution_count = old execution_count + 1
+			command_recorded: attached last_command as lc and then lc.same_string (a_command)
 		end
 
 	output_of_command,
@@ -159,6 +196,9 @@ feature -- Execution
 			else
 				create Result.make_empty
 			end
+		ensure
+			execution_recorded: execution_count = old execution_count + 1
+			empty_on_failure: not was_successful implies Result.is_empty
 		end
 
 	output_of_command_in_directory,
@@ -176,6 +216,9 @@ feature -- Execution
 			else
 				create Result.make_empty
 			end
+		ensure
+			execution_recorded: execution_count = old execution_count + 1
+			empty_on_failure: not was_successful implies Result.is_empty
 		end
 
 feature -- Query
@@ -192,7 +235,14 @@ feature -- Query
 		do
 			create l_name.make (a_filename.to_string_8)
 			Result := c_sp_file_in_path (l_name.item) /= 0
+		ensure
+			execution_unchanged: execution_count = old execution_count
 		end
+
+feature {NONE} -- Model Implementation
+
+	execution_count_impl: INTEGER
+			-- Internal counter for execution tracking.
 
 feature {NONE} -- String conversion
 
@@ -290,5 +340,10 @@ feature {NONE} -- C externals
 		alias
 			"return sp_file_in_path((const char*)$a_filename);"
 		end
+
+invariant
+	execution_count_non_negative: execution_count >= 0
+	has_executed_consistency: has_executed = (execution_count > 0)
+	success_state_consistency: was_successful implies last_output /= Void
 
 end

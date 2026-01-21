@@ -44,6 +44,10 @@ feature {NONE} -- Initialization
 		do
 			show_window := False
 			create accumulated_output.make_empty
+		ensure
+			not_started: not is_started
+			no_output: accumulated_output.is_empty
+			window_hidden: not show_window
 		end
 
 feature -- Access
@@ -103,6 +107,8 @@ feature -- Status
 			-- Has the process finished?
 		do
 			Result := is_started and then not is_running
+		ensure
+			definition: Result = (is_started and then not is_running)
 		end
 
 	was_started_successfully: BOOLEAN
@@ -120,6 +126,8 @@ feature -- Settings
 
 	set_show_window (a_value: BOOLEAN)
 			-- Set whether to show process window.
+		require
+			not_started: not is_started
 		do
 			show_window := a_value
 		ensure
@@ -136,6 +144,8 @@ feature -- Operations
 			not_started: not is_started
 		do
 			start_in_directory (a_command, Void)
+		ensure
+			started_or_error: is_started or last_error /= Void
 		end
 
 	start_in_directory (a_command: READABLE_STRING_GENERAL; a_directory: detachable READABLE_STRING_GENERAL)
@@ -236,8 +246,11 @@ feature -- Operations
 			-- Returns True on success.
 		require
 			started: is_started
+			running: is_running
 		do
 			Result := c_sp_kill (async_handle) /= 0
+		ensure
+			still_started: is_started
 		end
 
 	close
@@ -385,7 +398,20 @@ feature {NONE} -- C externals
 			"free($a_ptr);"
 		end
 
+feature -- Model Queries
+
+	output_byte_count: INTEGER
+			-- Total bytes of output accumulated.
+			-- Model query for tracking output accumulation.
+		do
+			Result := accumulated_output.count
+		ensure
+			non_negative: Result >= 0
+			consistent: Result = accumulated_output.count
+		end
+
 invariant
 	output_exists: accumulated_output /= Void
+	output_count_consistent: output_byte_count = accumulated_output.count
 
 end
