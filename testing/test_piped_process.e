@@ -220,6 +220,139 @@ feature -- Tests: writing to stdin (D14 part 1)
 			end
 		end
 
+feature -- Tests: plain execute, 1.1.0 (stdin, no 1 MB cap, any command line)
+
+	test_execute_gives_the_child_an_empty_stdin
+			-- A child that reads stdin until EOF finishes at once: its stdin is
+			-- empty. (Before 1.1.0 it read this process's own stdin, and waited
+			-- on it for as long as that stayed open.)
+		local
+			l_process: SIMPLE_PROCESS
+		do
+			require_echo_child
+			create l_process.make
+			assert_false ("default: empty stdin", l_process.inherits_standard_input)
+			l_process.execute (echo_command (""))
+			assert_true ("ran", l_process.was_successful)
+			assert_integers_equal ("exit code", 0, l_process.last_exit_code)
+			assert_true ("read nothing", attached l_process.last_output as l_o and then l_o.is_empty)
+		end
+
+	test_execute_can_hand_the_child_its_own_stdin
+			-- With `inherits_standard_input' the grandchild reads the stdin
+			-- its parent was given; without it, nothing.
+		local
+			l_process: SIMPLE_PROCESS
+		do
+			require_echo_child
+			create l_process.make
+			l_process.execute_with_input (echo_command ("inherit 1"), {STRING_32} "through two generations")
+			print ("      inherit 1: %"" + utf_8.bytes (output_of (l_process)) + "%"%N")
+			assert_true ("grandchild read the parent's stdin", output_of (l_process).same_string ("through two generations"))
+			l_process.execute_with_input (echo_command ("inherit 0"), {STRING_32} "through two generations")
+			print ("      inherit 0: %"" + utf_8.bytes (output_of (l_process)) + "%"%N")
+			assert_true ("grandchild read an empty stdin", output_of (l_process).is_empty)
+		end
+
+	test_execute_output_is_not_cut_at_1_mb
+			-- 3 MB of output all arrives (before 1.1.0: silently cut at 1 MB).
+		local
+			l_process: SIMPLE_PROCESS
+		do
+			require_echo_child
+			create l_process.make
+			l_process.execute (echo_command ("flood 3000000"))
+			if attached l_process.last_output_bytes as l_raw then
+				print ("      execute of a 3000000-byte flood: " + l_raw.count.out + " bytes, truncated "
+					+ l_process.was_output_truncated.out + "%N")
+				assert_integers_equal ("every byte", 3_000_000, l_raw.count)
+			else
+				assert_true ("output captured", False)
+			end
+			assert_false ("not truncated", l_process.was_output_truncated)
+		end
+
+	test_execute_output_limit_reports_the_cut
+			-- With a limit, output is cut there, the cut is reported, and the
+			-- child is still drained to its end.
+		local
+			l_process: SIMPLE_PROCESS
+		do
+			require_echo_child
+			create l_process.make
+			l_process.set_output_limit (100_000)
+			l_process.execute (echo_command ("flood 3000000"))
+			assert_true ("ran", l_process.was_successful)
+			assert_integers_equal ("child finished", 0, l_process.last_exit_code)
+			if attached l_process.last_output_bytes as l_raw then
+				print ("      limit 100000: " + l_raw.count.out + " bytes kept, truncated "
+					+ l_process.was_output_truncated.out + "%N")
+				assert_integers_equal ("kept the limit", 100_000, l_raw.count)
+			else
+				assert_true ("output captured", False)
+			end
+			assert_true ("cut reported", l_process.was_output_truncated)
+		end
+
+	test_execute_takes_any_command_line
+			-- A Hebrew file name in the command (before 1.1.0: a to_string_8
+			-- precondition violation), and in a PATH query.
+		local
+			l_process: SIMPLE_PROCESS
+			l_path: STRING_32
+		do
+			require_echo_child
+			l_path := temporary_file_named (from_codes (<<0x05E9, 0x05DC, 0x05D5, 0x05DD, 0x5F, 0x31, 0x2E, 0x74, 0x78, 0x74>>),
+				utf_8.bytes (sample_line (3)))
+			create l_process.make
+			l_process.execute (echo_command ({STRING_32} "cat %"" + l_path + {STRING_32} "%""))
+			assert_true ("ran", l_process.was_successful)
+			assert_integers_equal ("child found the file", 0, l_process.last_exit_code)
+			assert_true ("contents", output_of (l_process).same_string (sample_line (3)))
+			assert_false ("Hebrew name not on PATH, and no crash", l_process.has_command (from_codes (<<0x05E9, 0x05DC, 0x05D5, 0x05DD>>)))
+			assert_true ("cmd is on PATH", l_process.has_command ("cmd"))
+		end
+
+	test_async_takes_any_command_line_and_gives_an_empty_stdin
+			-- SIMPLE_ASYNC_PROCESS: the stdin-reading child ends at once, and a
+			-- Hebrew file name reaches its child.
+		local
+			l_async: SIMPLE_ASYNC_PROCESS
+			l_path: STRING_32
+		do
+			require_echo_child
+			create l_async.make
+			l_async.start (echo_command (""))
+			assert_true ("started", l_async.was_started_successfully)
+			assert_integers_equal ("finished at once", 1, l_async.wait (5_000))
+			assert_integers_equal ("exit code", 0, l_async.exit_code)
+			l_async.close
+			l_path := temporary_file_named (from_codes (<<0x05E9, 0x05DC, 0x05D5, 0x05DD, 0x5F, 0x32, 0x2E, 0x74, 0x78, 0x74>>),
+				utf_8.bytes (sample_line (4)))
+			create l_async.make
+			l_async.start (echo_command ({STRING_32} "cat %"" + l_path + {STRING_32} "%""))
+			assert_integers_equal ("finished", 1, l_async.wait (5_000))
+			l_async.close
+			assert_true ("contents", l_async.accumulated_output.same_string (sample_line (4)))
+		end
+
+	test_async_start_failure_keeps_its_shape
+			-- A failed start is still `is_started' with `last_error', as in 1.0.
+		local
+			l_async: SIMPLE_ASYNC_PROCESS
+		do
+			create l_async.make
+			l_async.start ("no_such_program_sp_1_1_0.exe")
+			assert_true ("started (attempted)", l_async.is_started)
+			assert_false ("not successfully", l_async.was_started_successfully)
+			assert_attached ("reason", l_async.last_error)
+			assert_false ("not running", l_async.is_running)
+			assert_integers_equal ("no exit code", -1, l_async.exit_code)
+			assert_integers_equal ("wait is an error", -1, l_async.wait (0))
+			l_async.close
+			assert_false ("closed", l_async.is_started)
+		end
+
 feature -- Tests: SIMPLE_PIPED_PROCESS
 
 	test_piped_line_exchange
@@ -380,6 +513,16 @@ feature -- Tests: SIMPLE_PIPED_PROCESS
 		end
 
 feature {NONE} -- The child
+
+	output_of (a_process: SIMPLE_PROCESS): STRING_32
+			-- `a_process.last_output', or empty.
+		do
+			if attached a_process.last_output as l_out then
+				Result := l_out
+			else
+				create Result.make_empty
+			end
+		end
 
 	echo_child: STRING_32
 			-- Full path of sp_echo_child.exe.

@@ -37,6 +37,10 @@
 #define SPP_AWAIT_LINE 2  /* a LF in stdout, or stdout ended */
 #define SPP_AWAIT_END 3   /* every stream ended */
 
+/* spp_start options */
+#define SPP_INHERIT_STDIN 1      /* the child reads this process's stdin, not a pipe */
+#define SPP_NO_CONSOLE 2         /* CREATE_NO_WINDOW even when the window is shown */
+
 #if defined(_WIN32) || defined(EIF_WINDOWS)
 
 #include <windows.h>
@@ -59,6 +63,9 @@ typedef struct {
     size_t capacity;
     int ended;                   /* EOF (or a read error) seen */
     int lost;                    /* out of memory: bytes were dropped */
+    size_t limit;                /* keep at most this many bytes in all; 0 = no limit */
+    size_t total;                /* bytes kept so far, taken or not */
+    int truncated;               /* bytes past `limit' were read and dropped */
     struct spp_process_s* owner;
 } spp_stream;
 
@@ -127,6 +134,14 @@ static unsigned __stdcall spp_pump(void* a_stream)
             s->ended = 1;
             if (!l_chunk) s->lost = 1;
         } else if (l_n > 0) {
+            /* Past the limit the pump keeps READING, so the child never
+               blocks on a full pipe, but drops what it reads. */
+            if (s->limit > 0 && s->total + l_n > s->limit) {
+                s->truncated = 1;
+                l_n = (DWORD) (s->limit - s->total);
+            }
+        }
+        if (!l_done && l_n > 0) {
             if (s->count + l_n > s->capacity) {
                 size_t l_cap = s->capacity ? s->capacity : SPP_READ_CHUNK;
                 char* l_grown;
@@ -143,6 +158,7 @@ static unsigned __stdcall spp_pump(void* a_stream)
             if (l_n > 0) {
                 memcpy(s->data + s->count, l_chunk, l_n);
                 s->count += l_n;
+                s->total += l_n;
             }
         }
         SetEvent(p->signal);
@@ -152,14 +168,17 @@ static unsigned __stdcall spp_pump(void* a_stream)
     return 0;
 }
 
-/* Start `a_command' (UTF-16) in `a_directory' (UTF-16 or NULL). Always answers
-   a record unless malloc fails; `process' is NULL when the start failed, and
-   `error_message' says why. Free it with spp_close either way. */
-static spp_process* spp_start(void* a_command, void* a_directory, int a_show_window, int a_merge_error)
+/* Start `a_command' (UTF-16) in `a_directory' (UTF-16 or NULL). `a_options'
+   is SPP_INHERIT_STDIN and/or SPP_NO_CONSOLE. `a_limit' caps the bytes kept
+   per output stream (0: none). Always answers a record unless malloc fails;
+   `process' is NULL when the start failed, and `error_message' says why. Free
+   it with spp_close either way. */
+static spp_process* spp_start(void* a_command, void* a_directory, int a_show_window, int a_merge_error, int a_options, int a_limit)
 {
     spp_process* p;
     SECURITY_ATTRIBUTES sa;
     HANDLE in_read = NULL, in_write = NULL, out_read = NULL, out_write = NULL, err_read = NULL, err_write = NULL;
+    HANDLE l_parent_in;
     HANDLE l_inherit[3];
     int l_inherit_count;
     spp_startup_info_ex six;
@@ -183,17 +202,32 @@ static spp_process* spp_start(void* a_command, void* a_directory, int a_show_win
     InitializeCriticalSection(&p->lock);
     p->out.owner = p;
     p->err.owner = p;
+    if (a_limit > 0) {
+        p->out.limit = (size_t) a_limit;
+        p->err.limit = (size_t) a_limit;
+    }
     p->signal = CreateEventW(NULL, TRUE, FALSE, NULL);
     if (!p->signal) { spp_set_error(p, "CreateEvent", GetLastError()); return p; }
 
     sa.nLength = sizeof(sa);
     sa.bInheritHandle = TRUE;
     sa.lpSecurityDescriptor = NULL;
-    if (!CreatePipe(&in_read, &in_write, &sa, SPP_PIPE_BUFFER)) { spp_set_error(p, "CreatePipe (stdin)", GetLastError()); goto fail; }
+    if (a_options & SPP_INHERIT_STDIN) {
+        /* An inheritable duplicate of this process's own stdin. No usable
+           stdin (a GUI process): fall back to a pipe closed at once. */
+        l_parent_in = GetStdHandle(STD_INPUT_HANDLE);
+        if (l_parent_in && l_parent_in != INVALID_HANDLE_VALUE &&
+            DuplicateHandle(GetCurrentProcess(), l_parent_in, GetCurrentProcess(), &in_read, 0, TRUE, DUPLICATE_SAME_ACCESS)) {
+            in_write = NULL;
+        } else {
+            in_read = NULL;
+        }
+    }
+    if (!in_read && !CreatePipe(&in_read, &in_write, &sa, SPP_PIPE_BUFFER)) { spp_set_error(p, "CreatePipe (stdin)", GetLastError()); goto fail; }
     if (!CreatePipe(&out_read, &out_write, &sa, SPP_PIPE_BUFFER)) { spp_set_error(p, "CreatePipe (stdout)", GetLastError()); goto fail; }
     if (!a_merge_error && !CreatePipe(&err_read, &err_write, &sa, SPP_PIPE_BUFFER)) { spp_set_error(p, "CreatePipe (stderr)", GetLastError()); goto fail; }
     /* The parent's ends must not be inherited by anyone. */
-    SetHandleInformation(in_write, HANDLE_FLAG_INHERIT, 0);
+    if (in_write) SetHandleInformation(in_write, HANDLE_FLAG_INHERIT, 0);
     SetHandleInformation(out_read, HANDLE_FLAG_INHERIT, 0);
     if (err_read) SetHandleInformation(err_read, HANDLE_FLAG_INHERIT, 0);
 
@@ -210,6 +244,7 @@ static spp_process* spp_start(void* a_command, void* a_directory, int a_show_win
         six.si.wShowWindow = SW_HIDE;
         l_flags |= CREATE_NO_WINDOW;
     }
+    if (a_options & SPP_NO_CONSOLE) l_flags |= CREATE_NO_WINDOW;
 
     /* Inherit exactly the child's own pipe ends: a child another processor
        starts at this moment can then never be handed ours, and ours never
@@ -270,7 +305,7 @@ static spp_process* spp_start(void* a_command, void* a_directory, int a_show_win
     CloseHandle(pi.hThread);
     p->process = pi.hProcess;
     p->pid = pi.dwProcessId;
-    p->input = in_write; in_write = NULL;
+    p->input = in_write; in_write = NULL;  /* NULL when stdin is inherited */
     p->out.pipe = out_read; out_read = NULL;
     p->err.pipe = err_read; err_read = NULL;
     p->out.thread = (HANDLE) _beginthreadex(NULL, 65536, spp_pump, &p->out, STACK_SIZE_PARAM_IS_A_RESERVATION, NULL);
@@ -399,6 +434,27 @@ static int spp_drained(spp_process* p, int a_which)
     return l_result;
 }
 
+/* Did a stream pass its limit, so bytes were dropped? */
+static int spp_truncated(spp_process* p)
+{
+    int l_result;
+    if (!p || !p->process) return 0;
+    EnterCriticalSection(&p->lock);
+    l_result = (p->out.truncated || p->err.truncated) ? 1 : 0;
+    LeaveCriticalSection(&p->lock);
+    return l_result;
+}
+
+/* Is `a_name' (UTF-16) found the way CreateProcess would find it: the
+   application directory, the system directories, then PATH, ".exe" added
+   when it has no extension? WAITS: a dead network share on PATH costs
+   seconds. */
+static int spp_file_in_path(void* a_name)
+{
+    wchar_t l_found[MAX_PATH];
+    return SearchPathW(NULL, (const wchar_t*) a_name, L".exe", MAX_PATH, l_found, NULL) > 0 ? 1 : 0;
+}
+
 /* Did a pump run out of memory and drop bytes? */
 static int spp_lost(spp_process* p)
 {
@@ -506,7 +562,7 @@ static void spp_close(spp_process* p)
 
 #else  /* ============ not Windows ============ */
 
-/* SIMPLE_PIPED_PROCESS is implemented for Windows only. Every start fails
+/* simple_process runs child processes on Windows only. Every start fails
    with a message saying so; the rest answer "nothing". */
 
 typedef struct {
@@ -514,11 +570,11 @@ typedef struct {
     char error_message[1024];
 } spp_process;
 
-static spp_process* spp_start(void* a_command, void* a_directory, int a_show_window, int a_merge_error)
+static spp_process* spp_start(void* a_command, void* a_directory, int a_show_window, int a_merge_error, int a_options, int a_limit)
 {
     spp_process* p = (spp_process*) calloc(1, sizeof(spp_process));
-    (void) a_command; (void) a_directory; (void) a_show_window; (void) a_merge_error;
-    if (p) strcpy(p->error_message, "SIMPLE_PIPED_PROCESS is implemented for Windows only");
+    (void) a_command; (void) a_directory; (void) a_show_window; (void) a_merge_error; (void) a_options; (void) a_limit;
+    if (p) strcpy(p->error_message, "simple_process runs child processes on Windows only");
     return p;
 }
 static int spp_started(spp_process* p) { (void) p; return 0; }
@@ -533,6 +589,8 @@ static int spp_available(spp_process* p, int a_which) { (void) p; (void) a_which
 static int spp_take(spp_process* p, int a_which, char* a_buffer, int a_capacity) { (void) p; (void) a_which; (void) a_buffer; (void) a_capacity; return 0; }
 static int spp_drained(spp_process* p, int a_which) { (void) p; (void) a_which; return 1; }
 static int spp_lost(spp_process* p) { (void) p; return 0; }
+static int spp_truncated(spp_process* p) { (void) p; return 0; }
+static int spp_file_in_path(void* a_name) { (void) a_name; return 0; }
 static int spp_await(spp_process* p, int a_mode, int a_timeout_ms) { (void) p; (void) a_mode; (void) a_timeout_ms; return 1; }
 static int spp_wait_exit(spp_process* p, int a_timeout_ms) { (void) p; (void) a_timeout_ms; return 1; }
 static int spp_kill(spp_process* p) { (void) p; return 0; }

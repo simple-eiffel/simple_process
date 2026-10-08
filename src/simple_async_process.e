@@ -14,7 +14,7 @@ note
 		Usage:
 			async: SIMPLE_ASYNC_PROCESS
 			create async.make
-			async.start ("ec.exe -batch -config lib.ecf -c_compile", "D:\prod\lib")
+			async.start_in_directory ("ec.exe -batch -config lib.ecf -c_compile", "D:\prod\lib")
 			from until not async.is_running or async.elapsed_seconds > 300 loop
 				sleep (1_000_000_000) -- 1 second
 				if attached async.read_available_output as out then
@@ -28,19 +28,28 @@ note
 			async.close
 
 		THE GUARANTEE (1.0.1). A child process monitored here never stops
-		another processor's allocator. `c_sp_start_async',
-		`c_sp_wait_timeout' and `c_sp_read_output' each sit in the kernel,
-		and each is declared `external "C blocking inline"' so ISE's
-		garbage collector can collect while they do. A bounded wait is
-		still a wait: unmarked, `wait (120_000)' cost every other
-		processor every millisecond the child actually took. See
-		testing/scoop/ for the assault that proves it.
+		another processor's allocator. Since 1.1.0 this class runs its
+		child through SIMPLE_PIPED_PROCESS, every one of whose waiting
+		externals - the start, the bounded wait, the output reads - is
+		declared `external "C blocking inline"'. A bounded wait is still a
+		wait: unmarked, `wait (120_000)' cost every other processor every
+		millisecond the child actually took. See testing/scoop/.
 
 		OUTPUT IS UTF-8 (1.1.0). Output text is decoded as UTF-8
 		(SIMPLE_PROCESS_UTF_8); before 1.1.0 every byte became one
 		character. A character whose bytes straddle two reads is held back
 		until its last byte arrives, so it is never decoded as two broken
-		halves. `accumulated_bytes' keeps the raw bytes. This class still
+		halves. `accumulated_bytes' keeps the raw bytes.
+
+		OUTPUT IS ALWAYS DRAINED (1.1.0). The child's output is collected
+		from the moment it starts, so a child whose output is never read no
+		longer blocks on a full pipe; what it wrote waits in memory until
+		`read_available_output'.
+
+		STDIN AND COMMAND LINE (1.1.0). The child gets an empty stdin unless
+		`set_inherits_standard_input (True)' hands it this process's own;
+		before 1.1.0 it always got this process's own. Commands and
+		directories may hold any characters (CreateProcessW). This class
 		cannot write to the child: SIMPLE_PIPED_PROCESS can.
 	]"
 	author: "Larry Rix"
@@ -67,6 +76,7 @@ feature {NONE} -- Initialization
 			no_output: accumulated_output.is_empty
 			no_bytes: accumulated_bytes.is_empty
 			window_hidden: not show_window
+			stdin_empty: not inherits_standard_input
 		end
 
 feature -- Access
@@ -77,7 +87,9 @@ feature -- Access
 		require
 			started: is_started
 		do
-			Result := c_sp_get_pid (async_handle)
+			if attached child as al_child and then al_child.is_started then
+				Result := al_child.process_id
+			end
 		end
 
 	exit_code: INTEGER
@@ -86,7 +98,11 @@ feature -- Access
 		require
 			started: is_started
 		do
-			Result := c_sp_get_exit_code (async_handle)
+			if attached child as al_child then
+				Result := al_child.exit_code
+			else
+				Result := -1
+			end
 		end
 
 	last_error: detachable STRING_32
@@ -112,17 +128,12 @@ feature -- Access
 feature -- Status
 
 	is_started: BOOLEAN
-			-- Has process been started?
-		do
-			Result := async_handle /= default_pointer
-		end
+			-- Has `start' been called (successfully or not) since the last `close'?
 
 	is_running: BOOLEAN
 			-- Is the process still running?
 		do
-			if is_started then
-				Result := c_sp_is_running (async_handle) /= 0
-			end
+			Result := attached child as al_child and then al_child.is_running
 		end
 
 	has_finished: BOOLEAN
@@ -136,15 +147,14 @@ feature -- Status
 	was_started_successfully: BOOLEAN
 			-- Did the process start without error?
 		do
-			if is_started then
-				Result := c_sp_async_started (async_handle) /= 0
-			end
+			Result := attached child as al_child and then al_child.is_started
 		end
 
 feature -- Settings
 
 	show_window: BOOLEAN
-			-- Show process window during execution?
+			-- Show process window during execution? (A console child never
+			-- gets a console window either way, as before 1.1.0.)
 
 	set_show_window (a_value: BOOLEAN)
 			-- Set whether to show process window.
@@ -154,6 +164,20 @@ feature -- Settings
 			show_window := a_value
 		ensure
 			set: show_window = a_value
+		end
+
+	inherits_standard_input: BOOLEAN
+			-- Does the child read this process's own stdin? Default False: its
+			-- stdin is empty, so a read sees end of file.
+
+	set_inherits_standard_input (a_value: BOOLEAN)
+			-- Set `inherits_standard_input' to `a_value'.
+		require
+			not_started: not is_started
+		do
+			inherits_standard_input := a_value
+		ensure
+			set: inherits_standard_input = a_value
 		end
 
 feature -- Operations
@@ -171,18 +195,16 @@ feature -- Operations
 		end
 
 	start_in_directory (a_command: READABLE_STRING_GENERAL; a_directory: detachable READABLE_STRING_GENERAL)
-			-- Start process with `a_command' in `a_directory'.
-			-- Does not wait for completion.
+			-- Start process with `a_command' in `a_directory' (Void or empty:
+			-- the current one). Does not wait for completion.
 		require
 			command_not_empty: not a_command.is_empty
 			not_started: not is_started
 		local
-			l_cmd: C_STRING
-			l_dir: detachable C_STRING
+			l_child: SIMPLE_PIPED_PROCESS
+			l_directory: detachable READABLE_STRING_GENERAL
 			l_now: SIMPLE_DATE_TIME
-			l_error_ptr: POINTER
 		do
-			-- Reset state
 			last_error := Void
 			accumulated_output.wipe_out
 			accumulated_bytes.wipe_out
@@ -190,65 +212,52 @@ feature -- Operations
 			create l_now.make_now
 			start_time := l_now.to_timestamp
 
-			-- Convert strings to C
-			create l_cmd.make (a_command.to_string_8)
-			if attached a_directory as al_dir then
-				create l_dir.make (al_dir.to_string_8)
+			if attached a_directory as al_dir and then not al_dir.is_empty then
+				l_directory := al_dir
 			end
-
-			-- Start process
-			if attached l_dir then
-				async_handle := c_sp_start_async (l_cmd.item, l_dir.item, show_window.to_integer)
-			else
-				async_handle := c_sp_start_async (l_cmd.item, default_pointer, show_window.to_integer)
-			end
-
-			-- Check for start errors
-			if async_handle /= default_pointer then
-				if c_sp_async_started (async_handle) = 0 then
-					l_error_ptr := c_sp_async_error (async_handle)
-					if l_error_ptr /= default_pointer then
-						last_error := pointer_to_string (l_error_ptr)
-					else
-						last_error := {STRING_32} "Failed to start process"
-					end
+			create l_child.make
+			l_child.set_show_window (show_window)
+			l_child.set_suppresses_console (True)
+			l_child.set_inherits_standard_input (inherits_standard_input)
+			l_child.start_in_directory (a_command, l_directory)
+			if l_child.is_started then
+				if l_child.is_input_open then
+					l_child.close_input
 				end
+			elseif attached l_child.last_error as l_reason then
+				last_error := l_reason
 			else
-				last_error := {STRING_32} "Failed to allocate process structure"
+				last_error := {STRING_32} "Failed to start process"
 			end
+			child := l_child
+			is_started := True
 		ensure
 			started_or_error: is_started or last_error /= Void
+			error_iff_failed: was_started_successfully = (last_error = Void)
 		end
 
 	read_available_output: detachable STRING_32
 			-- Read any available output (non-blocking).
 			-- Returns Void if no output available.
 			-- Appends to `accumulated_output' (decoded) and
-			-- `accumulated_bytes' (raw). While the child runs, the bytes of
-			-- a character not yet complete wait for the next call.
+			-- `accumulated_bytes' (raw). Until the child's output ends, the
+			-- bytes of a character not yet complete wait for the next call.
 		require
 			started: is_started
 		local
-			l_ptr: POINTER
-			l_len: INTEGER
-			l_was_running: BOOLEAN
 			l_held, l_ready: INTEGER
 			l_chunk: STRING_32
 		do
-				-- Sampled BEFORE the read: a child that had already exited
-				-- has written everything, so this read gets all of it and no
-				-- unfinished character can still be completed.
-			l_was_running := is_running
-			l_ptr := c_sp_read_output (async_handle, $l_len)
-			if l_ptr /= default_pointer then
-				if l_len > 0 then
-					append_raw (l_ptr, l_len)
+			if attached child as al_child and then al_child.is_started then
+				al_child.receive_output
+				if not al_child.pending_output.is_empty then
+					accumulated_bytes.append (al_child.pending_output)
+					undecoded_tail.append (al_child.pending_output)
+					al_child.discard_pending_output
 				end
-				-- Free the returned buffer
-				c_free (l_ptr)
-			end
-			if l_was_running then
-				l_held := utf_8.unfinished_tail_count (undecoded_tail)
+				if not al_child.is_output_ended then
+					l_held := utf_8.unfinished_tail_count (undecoded_tail)
+				end
 			end
 			l_ready := undecoded_tail.count - l_held
 			if l_ready > 0 then
@@ -268,7 +277,14 @@ feature -- Operations
 			started: is_started
 			positive_timeout: a_timeout_ms >= 0
 		do
-			Result := c_sp_wait_timeout (async_handle, a_timeout_ms.to_natural_32)
+			if attached child as al_child and then al_child.is_started then
+				al_child.wait_for_exit (a_timeout_ms)
+				if al_child.has_exited then
+					Result := 1
+				end
+			else
+				Result := -1
+			end
 		ensure
 			valid_result: Result >= -1 and Result <= 1
 		end
@@ -290,7 +306,10 @@ feature -- Operations
 			started: is_started
 			running: is_running
 		do
-			Result := c_sp_kill (async_handle) /= 0
+			if attached child as al_child and then al_child.is_started then
+				al_child.kill
+				Result := True
+			end
 		ensure
 			still_started: is_started
 		end
@@ -298,19 +317,23 @@ feature -- Operations
 	close
 			-- Close and cleanup process handle.
 			-- Must be called when done with process.
+			-- Does not kill a child that is still running.
 		do
-			if async_handle /= default_pointer then
+			if is_started then
 				-- Read any remaining output first
 				if attached read_available_output then
 					-- Output captured
 				end
-				-- The child may still run: what it wrote is all there is.
+				-- What the child wrote is all there is now.
 				if not undecoded_tail.is_empty then
 					accumulated_output.append (utf_8.text (undecoded_tail))
 					undecoded_tail.wipe_out
 				end
-				c_sp_async_close (async_handle)
-				async_handle := default_pointer
+				if attached child as al_child then
+					al_child.close
+				end
+				child := Void
+				is_started := False
 			end
 		ensure
 			closed: not is_started
@@ -318,8 +341,8 @@ feature -- Operations
 
 feature {NONE} -- Implementation
 
-	async_handle: POINTER
-			-- Handle to async process structure.
+	child: detachable SIMPLE_PIPED_PROCESS
+			-- The child, from `start' to `close'.
 
 	start_time: INTEGER_64
 			-- Time when process was started (epoch seconds).
@@ -328,153 +351,10 @@ feature {NONE} -- Implementation
 			-- Bytes read but not yet decoded: at most the start of one
 			-- character whose remaining bytes have not arrived.
 
-	append_raw (a_ptr: POINTER; a_count: INTEGER)
-			-- Append the `a_count' bytes at `a_ptr' to `accumulated_bytes'
-			-- and `undecoded_tail'.
-		require
-			pointer_valid: a_ptr /= default_pointer
-			positive: a_count > 0
-		local
-			l_bytes: STRING_8
-		do
-			create l_bytes.make_from_c_byte_array (a_ptr, a_count)
-			accumulated_bytes.append (l_bytes)
-			undecoded_tail.append (l_bytes)
-		ensure
-			bytes_kept: accumulated_bytes.count = old accumulated_bytes.count + a_count
-		end
-
-feature {NONE} -- String conversion
-
 	utf_8: SIMPLE_PROCESS_UTF_8
 			-- The codec.
 		once
 			create Result
-		end
-
-	pointer_to_string (a_ptr: POINTER): STRING_32
-			-- Convert C string pointer to STRING_32.
-		local
-			l_c_string: C_STRING
-		do
-			create l_c_string.make_by_pointer (a_ptr)
-			Result := l_c_string.string.to_string_32
-		end
-
-feature {NONE} -- C externals
-
-	c_sp_start_async (a_command, a_working_dir: POINTER; a_show_window: INTEGER): POINTER
-			-- Start async process and return handle.
-			--
-			-- BLOCKING. CreateProcess is not instant: the loader maps an image,
-			-- and an anti-virus filter driver can scan it first. Tens to hundreds
-			-- of milliseconds is normal, and every one of them was a millisecond
-			-- no other processor could allocate in.
-			--
-			-- Safe to mark: both string arguments are C_STRING buffers on the C
-			-- heap, and the result is a malloc'd sp_async_process read only after
-			-- the call returns.
-		external
-			"C blocking inline use %"simple_process.h%""
-		alias
-			"return sp_start_async((const char*)$a_command, (const char*)$a_working_dir, (int)$a_show_window);"
-		end
-
-	c_sp_is_running (a_proc: POINTER): INTEGER
-			-- Check if process is running.
-		external
-			"C inline use %"simple_process.h%""
-		alias
-			"return sp_is_running((sp_async_process*)$a_proc);"
-		end
-
-	c_sp_get_pid (a_proc: POINTER): NATURAL_32
-			-- Get process ID.
-		external
-			"C inline use %"simple_process.h%""
-		alias
-			"return (EIF_NATURAL_32)sp_get_pid((sp_async_process*)$a_proc);"
-		end
-
-	c_sp_wait_timeout (a_proc: POINTER; a_timeout_ms: NATURAL_32): INTEGER
-			-- Wait with timeout.
-			--
-			-- BLOCKING. A bounded wait is still a wait: WaitForSingleObject sits
-			-- in the kernel for however much of `a_timeout_ms' the child actually
-			-- takes, and callers pass whole minutes.
-			--
-			-- Safe to mark: `a_proc' is a malloc'd structure this library owns and
-			-- `a_timeout_ms' is a value, so nothing Eiffel-collected is touched.
-		external
-			"C blocking inline use %"simple_process.h%""
-		alias
-			"return sp_wait_timeout((sp_async_process*)$a_proc, (unsigned int)$a_timeout_ms);"
-		end
-
-	c_sp_kill (a_proc: POINTER): INTEGER
-			-- Kill process.
-		external
-			"C inline use %"simple_process.h%""
-		alias
-			"return sp_kill((sp_async_process*)$a_proc);"
-		end
-
-	c_sp_get_exit_code (a_proc: POINTER): INTEGER
-			-- Get exit code.
-		external
-			"C inline use %"simple_process.h%""
-		alias
-			"return sp_get_exit_code((sp_async_process*)$a_proc);"
-		end
-
-	c_sp_read_output (a_proc: POINTER; a_len: TYPED_POINTER [INTEGER]): POINTER
-			-- Read available output.
-			--
-			-- BLOCKING. Each ReadFile is guarded by PeekNamedPipe, but the loop
-			-- keeps reading for as long as a chatty child keeps writing, and a
-			-- pipe read is a kernel call either way.
-			--
-			-- Safe to mark: `a_len' is the address of a LOCAL INTEGER of the sole
-			-- caller, `read_available_output', which lives in that routine's own C
-			-- stack frame - never the address of an attribute in an object the
-			-- collector may move. `a_proc' is a malloc'd structure this library
-			-- owns, and the returned buffer is malloc'd and read after the return.
-		external
-			"C blocking inline use %"simple_process.h%""
-		alias
-			"return sp_read_output((sp_async_process*)$a_proc, (int*)$a_len);"
-		end
-
-	c_sp_async_close (a_proc: POINTER)
-			-- Close async process handle.
-		external
-			"C inline use %"simple_process.h%""
-		alias
-			"sp_async_close((sp_async_process*)$a_proc);"
-		end
-
-	c_sp_async_started (a_proc: POINTER): INTEGER
-			-- Check if process started successfully.
-		external
-			"C inline use %"simple_process.h%""
-		alias
-			"return ((sp_async_process*)$a_proc)->started;"
-		end
-
-	c_sp_async_error (a_proc: POINTER): POINTER
-			-- Get error message from async process.
-		external
-			"C inline use %"simple_process.h%""
-		alias
-			"return ((sp_async_process*)$a_proc)->error_message;"
-		end
-
-	c_free (a_ptr: POINTER)
-			-- Free C memory.
-		external
-			"C inline use <stdlib.h>"
-		alias
-			"free($a_ptr);"
 		end
 
 feature -- Model Queries
@@ -494,5 +374,6 @@ invariant
 	output_count_consistent: output_byte_count = accumulated_output.count
 	bytes_exist: accumulated_bytes /= Void
 	tail_is_one_character_at_most: undecoded_tail.count <= 3
+	child_while_started: is_started implies attached child
 
 end

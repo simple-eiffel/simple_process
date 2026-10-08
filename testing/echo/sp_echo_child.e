@@ -16,6 +16,12 @@ note
 		                                  shape for a parent that writes
 		                                  first and reads later)
 		    sp_echo_child cat <path>      write the file's bytes to stdout
+		    sp_echo_child inherit <0|1>   run this same program in echo mode
+		                                  through SIMPLE_PROCESS.execute, with
+		                                  `inherits_standard_input' 0 or 1,
+		                                  and write what it captured to stdout
+		                                  (so a test can see which stdin the
+		                                  grandchild was given)
 		    sp_echo_child cat <path> <n> <ms>
 		                                  the same, <n> bytes per write with
 		                                  a <ms> pause after each, so a reader
@@ -40,6 +46,7 @@ feature {NONE} -- Initialization
 		local
 			l_mode: STRING_32
 			l_code: INTEGER
+			l_process: SIMPLE_PROCESS
 		do
 			if argument_count >= 1 then
 				l_mode := argument (1)
@@ -58,6 +65,13 @@ feature {NONE} -- Initialization
 			elseif l_mode.same_string ("flood") and argument_count >= 2 then
 				c_flood (Std_output, argument (2).to_integer)
 				c_copy (Std_input, Std_output)
+			elseif l_mode.same_string ("inherit") and argument_count >= 2 then
+				create l_process.make
+				l_process.set_inherits_standard_input (argument (2).same_string ("1"))
+				l_process.execute ({STRING_32} "%"" + command_name + {STRING_32} "%"")
+				if attached l_process.last_output_bytes as al_bytes and then not al_bytes.is_empty then
+					c_write_count (Std_output, (create {C_STRING}.make (al_bytes)).item, al_bytes.count)
+				end
 			elseif l_mode.same_string ("cat") and argument_count >= 2 then
 				if argument_count >= 4 then
 					l_code := c_cat ((create {NATIVE_STRING}.make (argument (2))).item, Std_output, argument (3).to_integer, argument (4).to_integer)
@@ -107,6 +121,20 @@ feature {NONE} -- Externals
 			"[
 				DWORD l_w = 0;
 				WriteFile (GetStdHandle ((DWORD) $a_to), (const char *) $a_text, (DWORD) strlen ((const char *) $a_text), &l_w, NULL);
+			]"
+		end
+
+	c_write_count (a_to: INTEGER; a_data: POINTER; a_count: INTEGER)
+			-- Write `a_count' bytes at `a_data' to standard handle `a_to'.
+		external
+			"C blocking inline use <windows.h>"
+		alias
+			"[
+				DWORD l_w = 0, l_done = 0;
+				while (l_done < (DWORD) $a_count) {
+					if (!WriteFile (GetStdHandle ((DWORD) $a_to), (const char *) $a_data + l_done, (DWORD) $a_count - l_done, &l_w, NULL) || l_w == 0) return;
+					l_done += l_w;
+				}
 			]"
 		end
 

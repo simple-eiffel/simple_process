@@ -55,6 +55,9 @@ note
 		`close' must be called when done; it does not kill a child that
 		is still running (`kill' does).
 
+		Output is kept in full unless `set_output_limit' caps it; a capped
+		stream is still drained, and `was_output_truncated' reports the cut.
+
 		Windows only. On other platforms `start' fails with a
 		`last_error' that says so.
 	]"
@@ -105,6 +108,23 @@ feature -- Settings
 			set: show_window = a_value
 		end
 
+	output_limit: INTEGER
+			-- Most bytes kept from each output stream; 0 (the default) keeps
+			-- everything. Past the limit the child's output is still read -
+			-- so it never blocks on a full pipe - but dropped, and
+			-- `was_output_truncated' says so.
+
+	set_output_limit (a_bytes: INTEGER)
+			-- Keep at most `a_bytes' of each output stream (0: no limit).
+		require
+			not_started: not is_started
+			non_negative: a_bytes >= 0
+		do
+			output_limit := a_bytes
+		ensure
+			set: output_limit = a_bytes
+		end
+
 	merge_error_output: BOOLEAN
 			-- Does the child's stderr go into the same pipe as its stdout
 			-- (into `pending_output'), as SIMPLE_PROCESS does? When False it
@@ -119,6 +139,36 @@ feature -- Settings
 			merge_error_output := a_value
 		ensure
 			set: merge_error_output = a_value
+		end
+
+feature {SIMPLE_PROCESS, SIMPLE_ASYNC_PROCESS} -- Settings for the classes built on this one
+
+	inherits_standard_input: BOOLEAN
+			-- Does the child read this process's own stdin instead of a pipe?
+			-- (Then `is_input_open' is False from the start.)
+
+	set_inherits_standard_input (a_value: BOOLEAN)
+			-- Set `inherits_standard_input' to `a_value'.
+		require
+			not_started: not is_started
+		do
+			inherits_standard_input := a_value
+		ensure
+			set: inherits_standard_input = a_value
+		end
+
+	suppresses_console: BOOLEAN
+			-- Does a console child get no console window even when
+			-- `show_window'? (What SIMPLE_PROCESS has always done.)
+
+	set_suppresses_console (a_value: BOOLEAN)
+			-- Set `suppresses_console' to `a_value'.
+		require
+			not_started: not is_started
+		do
+			suppresses_console := a_value
+		ensure
+			set: suppresses_console = a_value
 		end
 
 feature -- Status report
@@ -157,6 +207,17 @@ feature -- Status report
 		do
 			Result := not is_started or else
 				(c_drained (handle, Stdout_stream) /= 0 and c_drained (handle, Stderr_stream) /= 0)
+		end
+
+	was_output_truncated: BOOLEAN
+			-- Did an output stream pass `output_limit', so bytes were dropped?
+			-- Still answers after `close'.
+		do
+			if is_started then
+				Result := c_truncated (handle) /= 0
+			else
+				Result := truncated_at_close
+			end
 		end
 
 	were_bytes_lost: BOOLEAN
@@ -250,14 +311,15 @@ feature -- Basic operations: start
 			last_line := Void
 			last_line_bytes := Void
 			final_exit_code := -1
+			truncated_at_close := False
 			create l_command.make (a_command)
 			if attached a_directory as al_dir then
 				create l_directory.make (al_dir)
 			end
 			if attached l_directory as al_native then
-				l_record := c_start (l_command.item, al_native.item, show_window.to_integer, merge_error_output.to_integer)
+				l_record := c_start (l_command.item, al_native.item, show_window.to_integer, merge_error_output.to_integer, start_options, output_limit)
 			else
-				l_record := c_start (l_command.item, default_pointer, show_window.to_integer, merge_error_output.to_integer)
+				l_record := c_start (l_command.item, default_pointer, show_window.to_integer, merge_error_output.to_integer, start_options, output_limit)
 			end
 			if l_record = default_pointer then
 				last_error := {STRING_32} "Failed to allocate the process record"
@@ -446,6 +508,7 @@ feature -- Basic operations: lifetime
 			if is_started then
 				receive_output
 				final_exit_code := c_exit_code (handle)
+				truncated_at_close := c_truncated (handle) /= 0
 				c_close (handle)
 				handle := default_pointer
 			end
@@ -460,6 +523,20 @@ feature {NONE} -- Implementation
 
 	final_exit_code: INTEGER
 			-- `exit_code' as it was at `close'.
+
+	truncated_at_close: BOOLEAN
+			-- `was_output_truncated' as it was at `close'.
+
+	start_options: INTEGER
+			-- SPP_INHERIT_STDIN (1) and SPP_NO_CONSOLE (2), as settings ask.
+		do
+			if inherits_standard_input then
+				Result := Result + 1
+			end
+			if suppresses_console then
+				Result := Result + 2
+			end
+		end
 
 	utf_8: SIMPLE_PROCESS_UTF_8
 			-- The codec.
@@ -520,7 +597,7 @@ feature {NONE} -- Implementation
 
 feature {NONE} -- C externals: waiting (marked `blocking')
 
-	c_start (a_command, a_directory: POINTER; a_show_window, a_merge_error: INTEGER): POINTER
+	c_start (a_command, a_directory: POINTER; a_show_window, a_merge_error, a_options, a_limit: INTEGER): POINTER
 			-- Create the pipes, start the child, start the pump threads.
 			--
 			-- BLOCKING: CreateProcess maps an image, and an anti-virus filter
@@ -529,7 +606,7 @@ feature {NONE} -- C externals: waiting (marked `blocking')
 		external
 			"C blocking inline use %"simple_process_pipe.h%""
 		alias
-			"return spp_start((void*)$a_command, (void*)$a_directory, (int)$a_show_window, (int)$a_merge_error);"
+			"return spp_start((void*)$a_command, (void*)$a_directory, (int)$a_show_window, (int)$a_merge_error, (int)$a_options, (int)$a_limit);"
 		end
 
 	c_write (a_record, a_data: POINTER; a_count: INTEGER): INTEGER
@@ -617,6 +694,16 @@ feature {NONE} -- C externals: waiting (marked `blocking')
 			"C blocking inline use %"simple_process_pipe.h%""
 		alias
 			"return spp_drained((spp_process*)$a_record, (int)$a_which);"
+		end
+
+	c_truncated (a_record: POINTER): INTEGER
+			-- Did a stream pass its limit?
+			--
+			-- BLOCKING: takes the pumps' lock. Touches no Eiffel memory.
+		external
+			"C blocking inline use %"simple_process_pipe.h%""
+		alias
+			"return spp_truncated((spp_process*)$a_record);"
 		end
 
 	c_lost (a_record: POINTER): INTEGER
