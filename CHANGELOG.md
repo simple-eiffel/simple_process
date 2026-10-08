@@ -96,7 +96,7 @@ non-ASCII character a child wrote (Hebrew intact as shipped: 0/1000).
   marked, 5 ms and 4 ms.
 
 ### Evidence
-- `simple_process_tests` 34/34 (17 new): 1000/1000 Hebrew-and-Greek lines
+- `simple_process_tests` 41/41 (24 new): 1000/1000 Hebrew-and-Greek lines
   intact through `execute`, through `SIMPLE_ASYNC_PROCESS` read in chunks
   that ended inside a character, through `execute_with_input`, and as 1000
   request/reply lines over one `SIMPLE_PIPED_PROCESS`.
@@ -104,13 +104,46 @@ non-ASCII character a child wrote (Hebrew intact as shipped: 0/1000).
 - The F3-C spike re-run against 1.1.0: "Hebrew intact AS SHIPPED" 1000/1000
   (was 0/1000).
 
+### Plain `execute` and `SIMPLE_ASYNC_PROCESS` (also folded into 1.1.0)
+Both now run their child through `SIMPLE_PIPED_PROCESS`, which fixes three
+more defects:
+- **Stdin is empty by default.** Before, the child was handed this process's
+  own stdin, so a child that read it hung (or took keystrokes from this
+  program's console). Now a read sees end of file at once.
+  `set_inherits_standard_input (True)` (on `SIMPLE_PROCESS` and
+  `SIMPLE_ASYNC_PROCESS`) restores the old hand-over. **Behavior change:** a
+  child that needs this program's console input now needs that call.
+- **No 1 MB cut.** `execute` stopped reading at 1 MB and said nothing. Now
+  everything is kept unless `set_output_limit (n)` caps it, and then
+  `was_output_truncated` reports the cut; past the cap the child is still
+  drained, so it never blocks. `SIMPLE_PIPED_PROCESS` has the same pair.
+- **Any command line.** Commands, directories and `has_command` names went
+  through `to_string_8` (CreateProcessA / SearchPathA), so a character above
+  U+00FF violated a precondition. Now they reach CreateProcessW /
+  SearchPathW as UTF-16.
+- A console child still never gets a console window, as before.
+- `SIMPLE_ASYNC_PROCESS` keeps its 1.0 shape: a failed start is still
+  `is_started` with `last_error`, `wait` answers -1 for it. **Behavior
+  change:** its output is now drained from the start, so a child whose
+  output is never read no longer blocks on a full pipe; its output waits in
+  memory instead.
+- `SIMPLE_PROCESS_HELPER.last_error_result` holds a Windows error text as
+  UTF-8 bytes instead of `to_string_8` (which a localized message above
+  U+00FF would violate).
+- **Build:** `Clib/simple_process.c` and `.h` are gone and the ECF no longer
+  links `Clib/simple_process.obj`. That object had been removed from git
+  (b321175), so a fresh clone could not link. All C is now the header-only
+  `Clib/simple_process_pipe.h`. A non-Windows build compiles, and every start
+  fails with a `last_error` saying Windows only (the POSIX code in the old
+  `.c` was never built from this repository).
+- Tests: 7 more (empty stdin, inherited stdin through a grandchild, a 3 MB
+  flood not cut, a 100 KB limit reported, a Hebrew file name through
+  `execute`, `has_command` and `SIMPLE_ASYNC_PROCESS`, and the async
+  failed-start shape). With this program's own stdin an open, never-closing
+  pipe, the suite finishes in 3.6 s.
+
 ### Not changed
-- Plain `execute` still runs the child with this process's own stdin, caps
-  captured output at 1 MB, and passes the command through `to_string_8`
-  (CreateProcessA): a command with characters above U+00FF violates that
-  precondition. `execute_with_input` has none of the three limits.
-- `SIMPLE_PIPED_PROCESS` is Windows only; elsewhere `start` fails with a
-  `last_error` saying so.
+- Every child-process class is Windows only.
 
 [1.1.0]: https://github.com/simple-eiffel/simple_process/releases/tag/v1.1.0
 

@@ -20,7 +20,8 @@
 ## Status
 
 ✅ **Production Ready** — v1.1.0
-- 34 tests passing, plus a 7-test SCOOP freeze assault
+- 41 tests passing, plus a 7-test SCOOP freeze assault
+- **A child gets an empty stdin**, output is **never silently cut**, and commands may hold **any characters** (1.1.0)
 - **Write to a child's stdin** without pipe deadlock, any size (1.1.0)
 - **Output is UTF-8 decoded**; raw bytes kept (1.1.0, see CHANGELOG for what changed)
 - **A running child never stops another processor's allocator** (see CHANGELOG 1.0.1)
@@ -60,11 +61,8 @@ SIMPLE_PROCESS provides SCOOP-compatible process execution for Eiffel applicatio
 git clone https://github.com/simple-eiffel/simple_process.git
 ```
 
-2. Compile the C library:
-```bash
-cd simple_process/Clib
-compile.bat
-```
+2. Nothing to compile separately: since 1.1.0 all C is inline, in the
+   header `Clib/simple_process_pipe.h`.
 
 3. Set the environment variable (one-time setup for all simple_* libraries):
 ```bash
@@ -219,7 +217,21 @@ show_window: BOOLEAN
 
 set_show_window (a_value: BOOLEAN)
     -- Set whether to show process window.
+
+inherits_standard_input: BOOLEAN
+set_inherits_standard_input (a_value: BOOLEAN)
+    -- Hand the child this process's own stdin (1.1.0). Default False:
+    -- the child's stdin is empty, so a read sees end of file at once.
+
+output_limit: INTEGER
+set_output_limit (a_bytes: INTEGER)
+was_output_truncated: BOOLEAN
+    -- Cap the output kept (1.1.0). Default 0: keep everything (before
+    -- 1.1.0 output was cut at 1 MB without a word).
 ```
+
+Commands, directories and `has_command` names may hold any characters
+(CreateProcessW / SearchPathW, 1.1.0).
 
 #### Query
 
@@ -247,7 +259,7 @@ ec -config simple_process.ecf -target simple_process -c_compile
 ./EIFGENs/simple_process_tests/F_code/simple_process.exe
 ```
 
-**Test Results:** 34 tests passing, including 1000/1000 Hebrew-and-Greek
+**Test Results:** 41 tests passing, including 1000/1000 Hebrew-and-Greek
 lines intact through every capture path and 1.5 MB each way through stdin
 and stdout
 
@@ -284,16 +296,19 @@ Tests cover:
 
 ```
 simple_process/
-├── Clib/                       # C wrapper library
-│   ├── simple_process.h        # C header file
-│   ├── simple_process.c        # C implementation
-│   └── compile.bat             # Build script
+├── Clib/
+│   └── simple_process_pipe.h   # All the C, header-only (static functions, no file-scope data)
 ├── src/                        # Eiffel source
-│   ├── simple_process.e        # Main process class
+│   ├── simple_process.e        # Run a command, capture its output
+│   ├── simple_async_process.e  # Start, poll, read, kill
+│   ├── simple_piped_process.e  # Talk to a child over stdin/stdout
+│   ├── simple_process_utf_8.e  # The UTF-8 codec for pipe bytes
 │   └── simple_process_helper.e # Legacy helper class
 ├── testing/                    # Test suite
-│   ├── application.e           # Test runner
-│   └── test_simple_process.e   # Test cases
+│   ├── test_app.e              # Test runner
+│   ├── test_piped_process.e    # 1.1.0 tests
+│   ├── echo/                   # sp_echo_child.exe, the test child
+│   └── scoop/                  # The freeze assault
 ├── simple_process.ecf          # Library configuration
 ├── README.md                   # This file
 └── LICENSE                     # MIT License
@@ -342,7 +357,7 @@ SIMPLE_PROCESS is fully SCOOP-compatible. The C wrapper handles all Win32 API ca
 
 This is a key improvement over the previous version which required thread concurrency mode due to its dependency on the EiffelStudio process library.
 
-**And a running child never freezes the others.** Every external here that waits - `c_sp_execute_command`, `c_sp_file_in_path`, `c_sp_start_async`, `c_sp_wait_timeout`, `c_sp_read_output` - is declared `external "C blocking inline ..."`. ISE's collector stops every thread of the system before it collects, and a thread inside an *unmarked* external cannot be seen or stopped, so the collection waits for it - and every other processor waits with it, at its very next allocation. `sp_execute_command` waits on the child with `INFINITE`, so before 1.0.1 a two-minute `claude -p` stopped the whole program for two minutes (simple_chat, 2026-09-02). Marked, the runtime knows the thread has left Eiffel and collects without it. The struct-field readers and the deallocators are left unmarked on purpose: none of them can wait on anything, and a marker costs a runtime transition on every call.
+**And a running child never freezes the others.** Every external here that waits - since 1.1.0 those of `SIMPLE_PIPED_PROCESS` (start, write, the waits for output and exit, joining the pump threads, every call that takes the pumps' lock) and `SIMPLE_PROCESS.c_file_in_path`; in 1.0.1 `c_sp_execute_command`, `c_sp_file_in_path`, `c_sp_start_async`, `c_sp_wait_timeout`, `c_sp_read_output` - is declared `external "C blocking inline ..."`. ISE's collector stops every thread of the system before it collects, and a thread inside an *unmarked* external cannot be seen or stopped, so the collection waits for it - and every other processor waits with it, at its very next allocation. `sp_execute_command` waits on the child with `INFINITE`, so before 1.0.1 a two-minute `claude -p` stopped the whole program for two minutes (simple_chat, 2026-09-02). Marked, the runtime knows the thread has left Eiffel and collects without it. The struct-field readers and the deallocators are left unmarked on purpose: none of them can wait on anything, and a marker costs a runtime transition on every call.
 
 ---
 
