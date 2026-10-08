@@ -94,6 +94,14 @@ helper.set_show_process (True)</code></pre>
                     <p>Wait or no-wait execution modes</p>
                 </div>
                 <div class="feature-card">
+                    <h4>Standard Input</h4>
+                    <p>Run a command with input, or talk to a running child line by line with <code>SIMPLE_PIPED_PROCESS</code>, at any size without pipe deadlock (1.1.0)</p>
+                </div>
+                <div class="feature-card">
+                    <h4>UTF-8 Output</h4>
+                    <p>Captured output is decoded as UTF-8; the raw bytes stay available (1.1.0)</p>
+                </div>
+                <div class="feature-card">
                     <h4>Never Freezes the Collector</h4>
                     <p>Every waiting external is marked <code>blocking</code>, so a running child never stops another SCOOP processor's allocator (1.0.1)</p>
                 </div>

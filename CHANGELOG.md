@@ -17,6 +17,103 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - init
 - first commit
 
+## [1.1.0] - 2026-10-08
+
+Defect D14 from the simple_bible D-014 debate (fork 03, F3-C stdio spike):
+simple_process could not write to a child's stdin, and it corrupted every
+non-ASCII character a child wrote (Hebrew intact as shipped: 0/1000).
+
+### Added
+- **`SIMPLE_PIPED_PROCESS`**: a child with stdin, stdout and stderr all piped.
+  `start` / `start_in_directory` (CreateProcessW: the command line and
+  directory may hold any characters), `write_bytes`, `write_text`,
+  `write_line` (UTF-8), `close_input` (the child reads EOF),
+  `receive_output`, `await_output`, `await_output_end`, `read_line` with a
+  timeout, `pending_output` / `pending_error` (raw bytes) and their `_text`
+  forms, `wait_for_exit`, `kill`, `close`. `merge_error_output` (default
+  True) or a separate `pending_error`, so diagnostics cannot corrupt a
+  protocol on stdout.
+- **No pipe deadlock.** From the moment the child starts, each of its output
+  streams is drained by its own C thread into a growing C-heap buffer, so a
+  write of any size completes while the child keeps reading. Proven with
+  1.5 MB each way, and against a child that writes 1 MB before it reads a
+  byte while the parent writes 1 MB before it reads one.
+- **`SIMPLE_PROCESS.execute_with_input`** (text as UTF-8),
+  **`execute_with_input_bytes`** (bytes as they are), their `_in_directory`
+  forms, and **`output_of_command_with_input`**: run a command with this
+  input and capture its output, built on `SIMPLE_PIPED_PROCESS`.
+- **`SIMPLE_PROCESS_UTF_8`**: the codec (`text`, `bytes`,
+  `sequence_length`, `unfinished_tail_count`).
+- **Raw bytes**: `SIMPLE_PROCESS.last_output_bytes`,
+  `SIMPLE_ASYNC_PROCESS.accumulated_bytes`.
+- The child inherits only its own three pipe ends
+  (`PROC_THREAD_ATTRIBUTE_HANDLE_LIST`, resolved at run time because ISE
+  compiles with `_WIN32_WINNT=0x0500`), so a child another processor starts
+  at the same moment can never hold this one's output open.
+- Test helper target `simple_process_echo` (`sp_echo_child.exe`, byte-exact
+  ReadFile/WriteFile echo with exit, stderr, sleep, flood and cat modes). Build
+  it before running `simple_process_tests`.
+
+### Changed (behavior dependents may notice)
+- **`last_output` (and `SIMPLE_PROCESS_HELPER.output_of_command`,
+  `SIMPLE_ASYNC_PROCESS.read_available_output` / `accumulated_output`) are now
+  UTF-8 decoded.** Before, each byte became one character 0-255, so UTF-8
+  text arrived as mojibake. A byte that starts no well-formed UTF-8 sequence
+  (RFC 3629: no overlongs, no surrogates, nothing above U+10FFFF) still reads
+  as its Latin-1 character, exactly as before, and NUL is still dropped, so
+  ASCII and ANSI/OEM code-page output read as they always did. The old form
+  is `last_output_bytes` widened to STRING_32.
+  - A client that worked around the old behavior by narrowing `last_output`
+    to STRING_8 and UTF-8 decoding it again now double-decodes when the text
+    holds characters 128-255 and none above 255 (it is a no-op otherwise).
+    Known: `simple_ai_client` `AI_CLIENT.decode_process_bytes` and
+    `OLLAMA_EMBEDDING_CLIENT.decode_process_bytes` should become the
+    identity, or read `last_output_bytes`.
+  - A client that calls `last_output.to_string_8` now violates its
+    precondition when the child writes a character above U+00FF. Known:
+    `simple_code` `SC_COMPILER` (`last_output := l_out.to_string_8`).
+- `SIMPLE_ASYNC_PROCESS.read_available_output` holds back the first 1-3
+  bytes of a character whose remaining bytes have not arrived yet, while the
+  child runs; they come out with the next read (or at `close`).
+
+### Fixed
+- **D14.3 audit, the `blocking` marker.** Every waiting external of 1.0.1 was
+  already marked; nothing remained. Every new external that waits or takes
+  the pump threads' lock is `C blocking` (`c_start`, `c_write`,
+  `c_close_input`, `c_await`, `c_wait_exit`, `c_close`, `c_available`,
+  `c_take`, `c_drained`, `c_lost`); the unmarked ones never wait (field
+  reads, a 0 ms WaitForSingleObject, TerminateProcess). The 423 ms stall the
+  F3-C spike measured was its own deliberately unmarked control
+  (`F3C_PIPE_CHILD.c_read_unmarked`), not this library.
+- **The freeze assault's control could not fail.** Test 2 ("an unmarked C
+  call stops the allocator") failed on the 1.1.0 baseline: after test 1 grew
+  the heap, no collection ran in its window and an unmarked 3 s wait cost the
+  root 2 ms. Each burst now forces `{MEMORY}.full_collect`: unmarked 3016 ms,
+  marked 2 ms.
+- Two new assault tests, red then green: `execute_with_input` and
+  `SIMPLE_PIPED_PROCESS.read_line` on a three-second child. With `c_await`
+  unmarked on purpose the root's worst allocation was 3066 ms and 3053 ms;
+  marked, 5 ms and 4 ms.
+
+### Evidence
+- `simple_process_tests` 34/34 (17 new): 1000/1000 Hebrew-and-Greek lines
+  intact through `execute`, through `SIMPLE_ASYNC_PROCESS` read in chunks
+  that ended inside a character, through `execute_with_input`, and as 1000
+  request/reply lines over one `SIMPLE_PIPED_PROCESS`.
+- `simple_process_scoop_tests` 7/7.
+- The F3-C spike re-run against 1.1.0: "Hebrew intact AS SHIPPED" 1000/1000
+  (was 0/1000).
+
+### Not changed
+- Plain `execute` still runs the child with this process's own stdin, caps
+  captured output at 1 MB, and passes the command through `to_string_8`
+  (CreateProcessA): a command with characters above U+00FF violates that
+  precondition. `execute_with_input` has none of the three limits.
+- `SIMPLE_PIPED_PROCESS` is Windows only; elsewhere `start` fails with a
+  `last_error` saying so.
+
+[1.1.0]: https://github.com/simple-eiffel/simple_process/releases/tag/v1.1.0
+
 ## [1.0.1] - 2026-09-02
 
 ### Fixed
@@ -113,5 +210,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Test suite with comprehensive coverage
 - Documentation and examples
 
-[Unreleased]: https://github.com/simple-eiffel/simple_process/compare/v1.0.1...HEAD
+[Unreleased]: https://github.com/simple-eiffel/simple_process/compare/v1.1.0...HEAD
 [1.0.0]: https://github.com/simple-eiffel/simple_process/releases/tag/v1.0.0

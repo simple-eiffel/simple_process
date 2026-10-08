@@ -19,8 +19,10 @@
 
 ## Status
 
-✅ **Production Ready** — v1.0.1
-- 17 tests passing, plus a 5-test SCOOP freeze assault
+✅ **Production Ready** — v1.1.0
+- 34 tests passing, plus a 7-test SCOOP freeze assault
+- **Write to a child's stdin** without pipe deadlock, any size (1.1.0)
+- **Output is UTF-8 decoded**; raw bytes kept (1.1.0, see CHANGELOG for what changed)
 - **A running child never stops another processor's allocator** (see CHANGELOG 1.0.1)
 - SCOOP-compatible (no thread dependency)
 - Direct Win32 API wrapper
@@ -40,7 +42,8 @@ SIMPLE_PROCESS provides SCOOP-compatible process execution for Eiffel applicatio
 
 - **Execute Commands** - Run shell commands and capture output
 - **Working Directory** - Execute in specific directories
-- **Output Capture** - Get stdout as STRING_32
+- **Output Capture** - Get stdout as STRING_32, UTF-8 decoded (raw bytes in `last_output_bytes`)
+- **Standard Input** - Run with input (`execute_with_input`), or talk to a running child line by line (`SIMPLE_PIPED_PROCESS`)
 - **Exit Codes** - Access process exit codes
 - **Error Handling** - Detailed error messages on failure
 - **PATH Lookup** - Check if executables exist in PATH
@@ -163,6 +166,51 @@ was_successful: BOOLEAN
     -- Was last execution successful?
 ```
 
+`last_output` is the child's output decoded as UTF-8. A byte that starts no
+well-formed UTF-8 sequence reads as its Latin-1 character, as every byte did
+before 1.1.0, and NUL is dropped. `last_output_bytes: detachable STRING_8`
+holds the raw bytes.
+
+#### Execution with input (1.1.0)
+
+```eiffel
+execute_with_input (a_command, a_input: READABLE_STRING_GENERAL)
+    -- Run `a_command' with `a_input' on its stdin as UTF-8, then EOF.
+
+execute_with_input_bytes (a_command: READABLE_STRING_GENERAL; a_input: READABLE_STRING_8)
+    -- The same with bytes, exactly as they are.
+
+output_of_command_with_input (a_command, a_input: READABLE_STRING_GENERAL): STRING_32
+    -- Run it and return its output.
+```
+
+Input and output of any size flow at once without deadlock.
+
+### SIMPLE_PIPED_PROCESS Class (1.1.0)
+
+A child with stdin, stdout and stderr piped, for a conversation:
+
+```eiffel
+child: SIMPLE_PIPED_PROCESS
+create child.make
+child.start ("helper.exe")
+if child.is_started then
+    child.write_line ({STRING_32} "{%"id%":1}")    -- UTF-8 + LF
+    child.read_line (5_000)                          -- wait up to 5 s
+    if attached child.last_line as reply then ... end
+    child.close_input                                -- child reads EOF
+    child.wait_for_exit (5_000)
+    child.close
+end
+```
+
+Also `write_bytes`, `write_text`, `receive_output`, `await_output`,
+`await_output_end`, `pending_output` / `pending_error` (raw bytes) and their
+`_text` forms, `set_merge_error_output (False)` to keep stderr out of a
+protocol on stdout, `kill`, `exit_code`. Each output stream is drained by its
+own C thread from the moment the child starts, so a write never deadlocks
+against the child's output. Windows only.
+
 #### Settings
 
 ```eiffel
@@ -194,11 +242,14 @@ ec -config simple_process.ecf -target simple_process -c_compile
 ### Run Tests
 
 ```bash
+/d/prod/ec.sh test -config simple_process.ecf -target simple_process_echo    # the test child, first
 /d/prod/ec.sh test -config simple_process.ecf -target simple_process_tests
 ./EIFGENs/simple_process_tests/F_code/simple_process.exe
 ```
 
-**Test Results:** 17 tests passing
+**Test Results:** 34 tests passing, including 1000/1000 Hebrew-and-Greek
+lines intact through every capture path and 1.5 MB each way through stdin
+and stdout
 
 ### The freeze assault (SCOOP)
 
@@ -207,13 +258,16 @@ ec -config simple_process.ecf -target simple_process -c_compile
 ./EIFGENs/simple_process_scoop_tests/F_code/simple_process.exe
 ```
 
-Five tests on two processors. A real three-second child runs through
-`SIMPLE_PROCESS.execute` and through `SIMPLE_ASYNC_PROCESS.wait` on its own
+Seven tests on two processors. A real three-second child runs through
+`SIMPLE_PROCESS.execute`, `SIMPLE_ASYNC_PROCESS.wait`,
+`SIMPLE_PROCESS.execute_with_input` and `SIMPLE_PIPED_PROCESS.read_line` on its own
 processor while the root does nothing but allocate against a growing live set;
 the root's worst single allocation must stay under 500 ms. Unmarked it was
 3,166 ms and 3,053 ms; marked it is 4 ms and 4 ms. Three companion probes hold
 the law itself - the same wait as an Eiffel sleep, as an unmarked C call, and
-as the same C call marked `blocking`.
+as the same C call marked `blocking`. Every burst forces a full collection
+(1.1.0), so the unmarked probe stops the root every time (3,016 ms) instead of
+only when the allocator happens to collect.
 
 Tests cover:
 - Command execution
