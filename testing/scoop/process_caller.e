@@ -147,6 +147,89 @@ feature -- Basic operations
 			timed: elapsed_milliseconds >= 0
 		end
 
+	run_commands_with_input (a_count: INTEGER)
+			-- `a_count' SIMPLE_PROCESS.execute_with_input runs (1.1.0) of the
+			-- slow child: CreateProcessW, a stdin write, closing stdin, the
+			-- wait for the output to end and the wait for exit - each a
+			-- `blocking' external of SIMPLE_PIPED_PROCESS.
+		require
+			positive: a_count > 0
+		local
+			l_process: SIMPLE_PROCESS
+			i: INTEGER
+			t0: INTEGER_64
+		do
+			t0 := now_ms
+			create l_process.make
+			from
+				i := 1
+			until
+				i > a_count
+			loop
+				attempted := attempted + 1
+				l_process.execute_with_input (Slow_command, {STRING_32} "input the child ignores%N")
+				if l_process.was_successful then
+					completed := completed + 1
+					if attached l_process.last_output as l_out and then l_out.has_substring ("slept") then
+						with_output := with_output + 1
+					end
+				end
+				i := i + 1
+			variant
+				a_count + 1 - i
+			end
+			elapsed_milliseconds := now_ms - t0
+			is_finished := True
+		ensure
+			finished: is_finished
+			all_attempted: attempted = old attempted + a_count
+			timed: elapsed_milliseconds >= 0
+		end
+
+	run_piped_line_waits (a_count: INTEGER)
+			-- `a_count' SIMPLE_PIPED_PROCESS runs (1.1.0), each sitting in
+			-- `read_line' - the pumps' event wait - for the whole three
+			-- seconds the child takes to print its one line.
+		require
+			positive: a_count > 0
+		local
+			l_child: SIMPLE_PIPED_PROCESS
+			i: INTEGER
+			t0: INTEGER_64
+		do
+			t0 := now_ms
+			from
+				i := 1
+			until
+				i > a_count
+			loop
+				attempted := attempted + 1
+				create l_child.make
+				l_child.start (Slow_command)
+				if l_child.is_started then
+					l_child.close_input
+					l_child.read_line (Async_wait_ms)
+					if attached l_child.last_line as l_line and then l_line.has_substring ("slept") then
+						with_output := with_output + 1
+					end
+					l_child.wait_for_exit (Async_wait_ms)
+					if l_child.has_exited then
+						completed := completed + 1
+					end
+					l_child.close
+				end
+				i := i + 1
+			variant
+				a_count + 1 - i
+			end
+			elapsed_milliseconds := now_ms - t0
+			is_finished := True
+		ensure
+			finished: is_finished
+			all_attempted: attempted = old attempted + a_count
+			timed: elapsed_milliseconds >= 0
+		end
+
 feature -- Constants
 
 	Slow_command: STRING_8 = "powershell -NoProfile -NonInteractive -Command Start-Sleep -Seconds 3; Write-Output slept"

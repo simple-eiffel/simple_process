@@ -21,7 +21,7 @@ note
 		and a bot can think for two minutes: one question, and the whole
 		chat server stopped for every user in it.
 
-		Five tests, in the order the argument runs:
+		Seven tests, in the order the argument runs:
 
 		1-3  THE LAW (BLOCKING_PROBE). The same wait, three ways: an Eiffel
 		     sleep costs the root nothing; an UNMARKED C call costs it the
@@ -37,6 +37,21 @@ note
 		5    THE VECTOR, asynchronous. The same child through
 		     SIMPLE_ASYNC_PROCESS.start / .wait / .read_available_output -
 		     three more externals that sit in the kernel.
+
+		6-7  THE VECTOR, with stdin (1.1.0). SIMPLE_PROCESS
+		     .execute_with_input, and SIMPLE_PIPED_PROCESS.read_line
+		     waiting the child's whole life for its one line. Both go
+		     through SIMPLE_PIPED_PROCESS's externals. With `c_await'
+		     unmarked on purpose (2026-10-08) the root's worst
+		     allocation in 6 and 7 was 3066 ms and 3053 ms; marked, 4 ms.
+
+		Every burst forces one full collection (1.1.0). Before that the
+		probe relied on the allocator triggering one by itself, which
+		depends on heap history: on 2026-10-08 test 2 saw no collection
+		in its window and its unmarked 3 s wait cost the root 2 ms, so the
+		control could not show the mechanism at all. A forced collection
+		must stop every thread, so the probe now always waits for a
+		thread inside an unmarked external, and never for a marked one.
 
 		Before 1.0.1 the root's worst single allocation in 4 and 5 was in
 		the thousands of milliseconds. After, it is single-digit. The
@@ -77,6 +92,10 @@ feature {NONE} -- Initialization
 				"a slow SIMPLE_PROCESS execution never stops another processor's allocator")
 			run_test (agent test_a_slow_async_wait_never_stops_another_processors_allocator,
 				"a slow SIMPLE_ASYNC_PROCESS wait never stops another processor's allocator")
+			run_test (agent test_a_slow_execute_with_input_never_stops_another_processors_allocator,
+				"a slow SIMPLE_PROCESS.execute_with_input never stops another processor's allocator")
+			run_test (agent test_a_slow_piped_read_line_never_stops_another_processors_allocator,
+				"a slow SIMPLE_PIPED_PROCESS.read_line never stops another processor's allocator")
 
 			print ("%N========================%N")
 			print ("Results: " + passed.out + " passed, " + failed.out + " failed%N")
@@ -209,6 +228,60 @@ feature {NONE} -- Tests: the vector
 				l_worst <= Allocation_budget_ms)
 		end
 
+	test_a_slow_execute_with_input_never_stops_another_processors_allocator
+			-- 1.1.0, synchronous with stdin: SIMPLE_PROCESS.execute_with_input
+			-- of the same three-second child.
+		local
+			l_caller: separate PROCESS_CALLER
+			l_worst, l_call_ms: INTEGER_64
+			l_all: BOOLEAN
+		do
+			create l_caller.make
+			launch_commands_with_input (l_caller, Executions)
+
+			l_worst := worst_allocation_burst (Bursts, Burst_gap_ms)
+
+			l_all := caller_ran_everything (l_caller, Executions)
+			l_call_ms := caller_elapsed (l_caller)
+
+			print ("      " + Executions.out + " x SIMPLE_PROCESS.execute_with_input of a "
+				+ Child_life_ms.out + " ms child on another processor (" + l_call_ms.out
+				+ " ms in the library): worst allocation on the root " + l_worst.out + " ms%N")
+			assert ("every child ran to completion and printed", l_all)
+			assert ("the children really were slow ones (" + l_call_ms.out + " ms for "
+				+ Executions.out + " x " + Child_life_ms.out + " ms)",
+				l_call_ms >= (Executions * Child_life_ms) * 8 // 10)
+			assert ("no allocation on the root waited on the child (" + l_worst.out + " ms)",
+				l_worst <= Allocation_budget_ms)
+		end
+
+	test_a_slow_piped_read_line_never_stops_another_processors_allocator
+			-- 1.1.0, a persistent channel: SIMPLE_PIPED_PROCESS.read_line
+			-- waiting the child's whole life for its one line.
+		local
+			l_caller: separate PROCESS_CALLER
+			l_worst, l_call_ms: INTEGER_64
+			l_all: BOOLEAN
+		do
+			create l_caller.make
+			launch_piped_line_waits (l_caller, Executions)
+
+			l_worst := worst_allocation_burst (Bursts, Burst_gap_ms)
+
+			l_all := caller_ran_everything (l_caller, Executions)
+			l_call_ms := caller_elapsed (l_caller)
+
+			print ("      " + Executions.out + " x SIMPLE_PIPED_PROCESS.read_line on a "
+				+ Child_life_ms.out + " ms child on another processor (" + l_call_ms.out
+				+ " ms in the library): worst allocation on the root " + l_worst.out + " ms%N")
+			assert ("every child ran to completion and printed", l_all)
+			assert ("the waits really were slow ones (" + l_call_ms.out + " ms for "
+				+ Executions.out + " x " + Child_life_ms.out + " ms)",
+				l_call_ms >= (Executions * Child_life_ms) * 8 // 10)
+			assert ("no allocation on the root waited on the child (" + l_worst.out + " ms)",
+				l_worst <= Allocation_budget_ms)
+		end
+
 feature {NONE} -- The probe's processor (each a short, separate call)
 
 	launch_eiffel_sleeps (a_probe: separate BLOCKING_PROBE)
@@ -256,6 +329,22 @@ feature {NONE} -- The caller's processor (each a short, separate call)
 			a_caller.run_async_waits (a_count)
 		end
 
+	launch_commands_with_input (a_caller: separate PROCESS_CALLER; a_count: INTEGER)
+			-- Start the executions with input; asynchronous.
+		require
+			positive: a_count > 0
+		do
+			a_caller.run_commands_with_input (a_count)
+		end
+
+	launch_piped_line_waits (a_caller: separate PROCESS_CALLER; a_count: INTEGER)
+			-- Start the piped line waits; asynchronous.
+		require
+			positive: a_count > 0
+		do
+			a_caller.run_piped_line_waits (a_count)
+		end
+
 	caller_ran_everything (a_caller: separate PROCESS_CALLER; a_count: INTEGER): BOOLEAN
 			-- Did every child run and print? A query, so it joins the caller.
 		require
@@ -283,12 +372,14 @@ feature {NONE} -- The root's own allocator
 			positive: a_bursts > 0 and a_gap_ms > 0
 		local
 			l_env: EXECUTION_ENVIRONMENT
+			l_memory: MEMORY
 			l_live: ARRAYED_LIST [STRING_8]
 			l_junk: ARRAYED_LIST [STRING_8]
 			i, k: INTEGER
 			t0, l_span: INTEGER_64
 		do
 			create l_env
+			create l_memory
 			create l_live.make (a_bursts * Burst_kept)
 			from
 				i := 1
@@ -313,6 +404,15 @@ feature {NONE} -- The root's own allocator
 				variant
 					Burst_strings + 1 - k
 				end
+					-- Force one collection inside every burst. Whether the
+					-- allocator alone triggers one in a given 100 ms window
+					-- depends on heap history (2026-10-08: after test 1 grew
+					-- the heap, test 2 saw no collection at all and its
+					-- unmarked 3 s wait cost the root 2 ms). A collection
+					-- must stop every thread, so forcing one makes the probe
+					-- deterministic: it waits for any thread in an unmarked
+					-- external, and for none in a marked one.
+				l_memory.full_collect
 				l_span := now_ms - t0
 				if l_span > Result then
 					Result := l_span

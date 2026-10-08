@@ -19,6 +19,7 @@ feature {NONE} -- Initialization
 
 			run_lib_tests
 			run_simple_process_tests
+			run_piped_process_tests
 
 			print ("%N========================%N")
 			print ("Results: " + passed.out + " passed, " + failed.out + " failed%N")
@@ -59,9 +60,34 @@ feature {NONE} -- Test Runners
 			run_test (agent process_tests.test_output_of_command_multi_arg, "test_output_of_command_multi_arg")
 		end
 
+	run_piped_process_tests
+			-- 1.1.0: stdin, UTF-8, no pipe deadlock. Needs the echo child
+			-- (ec.sh test -config simple_process.ecf -target simple_process_echo).
+		do
+			create piped_tests
+			run_test (agent piped_tests.test_utf_8_round_trips_every_script, "test_utf_8_round_trips_every_script")
+			run_test (agent piped_tests.test_utf_8_bytes_outside_utf_8_read_as_latin_1, "test_utf_8_bytes_outside_utf_8_read_as_latin_1")
+			run_test (agent piped_tests.test_utf_8_unfinished_tail, "test_utf_8_unfinished_tail")
+			run_test (agent piped_tests.test_execute_output_is_utf_8, "test_execute_output_is_utf_8")
+			run_test (agent piped_tests.test_async_output_is_utf_8_across_reads, "test_async_output_is_utf_8_across_reads")
+			run_test (agent piped_tests.test_execute_with_input_round_trips_text, "test_execute_with_input_round_trips_text")
+			run_test (agent piped_tests.test_execute_with_input_large_both_ways, "test_execute_with_input_large_both_ways")
+			run_test (agent piped_tests.test_execute_with_input_against_a_flooding_child, "test_execute_with_input_against_a_flooding_child")
+			run_test (agent piped_tests.test_execute_with_input_exit_code_and_failure, "test_execute_with_input_exit_code_and_failure")
+			run_test (agent piped_tests.test_piped_line_exchange, "test_piped_line_exchange")
+			run_test (agent piped_tests.test_piped_close_input_is_eof, "test_piped_close_input_is_eof")
+			run_test (agent piped_tests.test_piped_separate_stderr, "test_piped_separate_stderr")
+			run_test (agent piped_tests.test_piped_large_write_before_any_read, "test_piped_large_write_before_any_read")
+			run_test (agent piped_tests.test_piped_read_line_times_out, "test_piped_read_line_times_out")
+			run_test (agent piped_tests.test_piped_kill, "test_piped_kill")
+			run_test (agent piped_tests.test_piped_start_failure, "test_piped_start_failure")
+			run_test (agent piped_tests.test_piped_unicode_command_line, "test_piped_unicode_command_line")
+		end
+
 feature {NONE} -- Implementation
 
 	lib_tests: LIB_TESTS
+	piped_tests: TEST_PIPED_PROCESS
 	process_tests: TEST_SIMPLE_PROCESS
 
 	passed: INTEGER
@@ -79,6 +105,9 @@ feature {NONE} -- Implementation
 			end
 		rescue
 			print ("  FAIL: " + a_name + "%N")
+			if attached (create {EXCEPTION_MANAGER}).last_exception as l_ex and then attached l_ex.description as l_d then
+				print ("        " + l_d.to_string_8 + "%N")
+			end
 			failed := failed + 1
 			l_retried := True
 			retry

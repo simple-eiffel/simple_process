@@ -35,6 +35,13 @@ note
 		still a wait: unmarked, `wait (120_000)' cost every other
 		processor every millisecond the child actually took. See
 		testing/scoop/ for the assault that proves it.
+
+		OUTPUT IS UTF-8 (1.1.0). Output text is decoded as UTF-8
+		(SIMPLE_PROCESS_UTF_8); before 1.1.0 every byte became one
+		character. A character whose bytes straddle two reads is held back
+		until its last byte arrives, so it is never decoded as two broken
+		halves. `accumulated_bytes' keeps the raw bytes. This class still
+		cannot write to the child: SIMPLE_PIPED_PROCESS can.
 	]"
 	author: "Larry Rix"
 	date: "$Date$"
@@ -53,9 +60,12 @@ feature {NONE} -- Initialization
 		do
 			show_window := False
 			create accumulated_output.make_empty
+			create accumulated_bytes.make_empty
+			create undecoded_tail.make_empty
 		ensure
 			not_started: not is_started
 			no_output: accumulated_output.is_empty
+			no_bytes: accumulated_bytes.is_empty
 			window_hidden: not show_window
 		end
 
@@ -83,7 +93,10 @@ feature -- Access
 			-- Error message if start failed.
 
 	accumulated_output: STRING_32
-			-- All output read so far.
+			-- All output read so far, decoded as UTF-8.
+
+	accumulated_bytes: STRING_8
+			-- All output read so far, as the raw bytes the child wrote.
 
 	elapsed_seconds: INTEGER
 			-- Seconds since process started.
@@ -172,6 +185,8 @@ feature -- Operations
 			-- Reset state
 			last_error := Void
 			accumulated_output.wipe_out
+			accumulated_bytes.wipe_out
+			undecoded_tail.wipe_out
 			create l_now.make_now
 			start_time := l_now.to_timestamp
 
@@ -208,23 +223,41 @@ feature -- Operations
 	read_available_output: detachable STRING_32
 			-- Read any available output (non-blocking).
 			-- Returns Void if no output available.
-			-- Appends to `accumulated_output'.
+			-- Appends to `accumulated_output' (decoded) and
+			-- `accumulated_bytes' (raw). While the child runs, the bytes of
+			-- a character not yet complete wait for the next call.
 		require
 			started: is_started
 		local
 			l_ptr: POINTER
 			l_len: INTEGER
-			l_managed: MANAGED_POINTER
+			l_was_running: BOOLEAN
+			l_held, l_ready: INTEGER
 			l_chunk: STRING_32
 		do
+				-- Sampled BEFORE the read: a child that had already exited
+				-- has written everything, so this read gets all of it and no
+				-- unfinished character can still be completed.
+			l_was_running := is_running
 			l_ptr := c_sp_read_output (async_handle, $l_len)
-			if l_ptr /= default_pointer and l_len > 0 then
-				create l_managed.share_from_pointer (l_ptr, l_len)
-				l_chunk := utf8_to_string_32 (l_managed, l_len)
-				accumulated_output.append (l_chunk)
-				Result := l_chunk
+			if l_ptr /= default_pointer then
+				if l_len > 0 then
+					append_raw (l_ptr, l_len)
+				end
 				-- Free the returned buffer
 				c_free (l_ptr)
+			end
+			if l_was_running then
+				l_held := utf_8.unfinished_tail_count (undecoded_tail)
+			end
+			l_ready := undecoded_tail.count - l_held
+			if l_ready > 0 then
+				l_chunk := utf_8.text (undecoded_tail.substring (1, l_ready))
+				undecoded_tail.remove_head (l_ready)
+				accumulated_output.append (l_chunk)
+				if not l_chunk.is_empty then
+					Result := l_chunk
+				end
 			end
 		end
 
@@ -271,6 +304,11 @@ feature -- Operations
 				if attached read_available_output then
 					-- Output captured
 				end
+				-- The child may still run: what it wrote is all there is.
+				if not undecoded_tail.is_empty then
+					accumulated_output.append (utf_8.text (undecoded_tail))
+					undecoded_tail.wipe_out
+				end
 				c_sp_async_close (async_handle)
 				async_handle := default_pointer
 			end
@@ -286,26 +324,32 @@ feature {NONE} -- Implementation
 	start_time: INTEGER_64
 			-- Time when process was started (epoch seconds).
 
+	undecoded_tail: STRING_8
+			-- Bytes read but not yet decoded: at most the start of one
+			-- character whose remaining bytes have not arrived.
+
+	append_raw (a_ptr: POINTER; a_count: INTEGER)
+			-- Append the `a_count' bytes at `a_ptr' to `accumulated_bytes'
+			-- and `undecoded_tail'.
+		require
+			pointer_valid: a_ptr /= default_pointer
+			positive: a_count > 0
+		local
+			l_bytes: STRING_8
+		do
+			create l_bytes.make_from_c_byte_array (a_ptr, a_count)
+			accumulated_bytes.append (l_bytes)
+			undecoded_tail.append (l_bytes)
+		ensure
+			bytes_kept: accumulated_bytes.count = old accumulated_bytes.count + a_count
+		end
+
 feature {NONE} -- String conversion
 
-	utf8_to_string_32 (a_data: MANAGED_POINTER; a_length: INTEGER): STRING_32
-			-- Convert UTF-8 data to STRING_32.
-		local
-			i: INTEGER
-			c: NATURAL_8
-		do
-			create Result.make (a_length)
-			from
-				i := 0
-			until
-				i >= a_length
-			loop
-				c := a_data.read_natural_8 (i)
-				if c /= 0 then
-					Result.append_character (c.to_character_32)
-				end
-				i := i + 1
-			end
+	utf_8: SIMPLE_PROCESS_UTF_8
+			-- The codec.
+		once
+			create Result
 		end
 
 	pointer_to_string (a_ptr: POINTER): STRING_32
@@ -448,5 +492,7 @@ feature -- Model Queries
 invariant
 	output_exists: accumulated_output /= Void
 	output_count_consistent: output_byte_count = accumulated_output.count
+	bytes_exist: accumulated_bytes /= Void
+	tail_is_one_character_at_most: undecoded_tail.count <= 3
 
 end

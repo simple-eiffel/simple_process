@@ -17,6 +17,19 @@ note
 		froze simple_chat's window on 2026-09-02.
 
 		The assault that proves it lives in testing/scoop/.
+
+		OUTPUT IS UTF-8 (1.1.0). `last_output' decodes the child's bytes as
+		UTF-8 (SIMPLE_PROCESS_UTF_8); before 1.1.0 every byte became one
+		character, so Hebrew, Greek or any non-ASCII text came back as
+		mojibake. A byte that starts no well-formed UTF-8 sequence still
+		reads as its Latin-1 character, exactly as before, and NUL is still
+		dropped. `last_output_bytes' keeps the raw bytes.
+
+		INPUT (1.1.0). `execute_with_input' runs a command with text on its
+		stdin (UTF-8) and captures its output; `execute_with_input_bytes'
+		takes the bytes as they are. Any size in either direction, with no
+		pipe deadlock (see SIMPLE_PIPED_PROCESS, which they are built on).
+		Plain `execute' still hands the child this process's own stdin.
 	]"
 	author: "Larry Rix"
 	date: "$Date$"
@@ -48,6 +61,9 @@ feature -- Access
 	result_text,
 	captured_output: detachable STRING_32
 			-- Output from last command execution
+
+	last_output_bytes: detachable STRING_8
+			-- The raw bytes behind `last_output', as the child wrote them.
 
 	last_exit_code,
 	exit_code,
@@ -139,10 +155,11 @@ feature -- Execution
 			l_output_ptr: POINTER
 			l_output_len: INTEGER
 			l_error_ptr: POINTER
-			l_managed: MANAGED_POINTER
+			l_bytes: STRING_8
 		do
 			-- Reset state
 			last_output := Void
+			last_output_bytes := Void
 			last_error := Void
 			last_exit_code := 0
 			was_successful := False
@@ -169,11 +186,12 @@ feature -- Execution
 					l_output_ptr := c_sp_result_output (l_result)
 					l_output_len := c_sp_result_output_length (l_result)
 					if l_output_ptr /= default_pointer and l_output_len > 0 then
-						create l_managed.share_from_pointer (l_output_ptr, l_output_len)
-						last_output := utf8_to_string_32 (l_managed, l_output_len)
+						create l_bytes.make_from_c_byte_array (l_output_ptr, l_output_len)
 					else
-						create last_output.make_empty
+						create l_bytes.make_empty
 					end
+					last_output_bytes := l_bytes
+					last_output := utf_8.text (l_bytes)
 				else
 					l_error_ptr := c_sp_result_error (l_result)
 					if l_error_ptr /= default_pointer then
@@ -236,6 +254,118 @@ feature -- Execution
 			empty_on_failure: not was_successful implies Result.is_empty
 		end
 
+feature -- Execution with input
+
+	execute_with_input (a_command, a_input: READABLE_STRING_GENERAL)
+			-- Execute `a_command' with `a_input' on its stdin, as UTF-8, then
+			-- end of file; capture its output as `execute' does. (A STRING_8
+			-- `a_input' is taken as characters: use `execute_with_input_bytes'
+			-- for bytes.)
+		require
+			command_not_empty: not a_command.is_empty
+		do
+			execute_with_input_bytes_in_directory (a_command, utf_8.bytes (a_input), Void)
+		ensure
+			execution_recorded: execution_count = old execution_count + 1
+			command_recorded: attached last_command as lc and then lc.same_string (a_command)
+			output_forms_agree: attached last_output implies attached last_output_bytes
+		end
+
+	execute_with_input_in_directory (a_command, a_input: READABLE_STRING_GENERAL; a_directory: detachable READABLE_STRING_GENERAL)
+			-- `execute_with_input' in `a_directory' (Void: the current one).
+		require
+			command_not_empty: not a_command.is_empty
+			directory_not_empty: attached a_directory as al_dir implies not al_dir.is_empty
+		do
+			execute_with_input_bytes_in_directory (a_command, utf_8.bytes (a_input), a_directory)
+		ensure
+			execution_recorded: execution_count = old execution_count + 1
+			command_recorded: attached last_command as lc and then lc.same_string (a_command)
+			output_forms_agree: attached last_output implies attached last_output_bytes
+		end
+
+	execute_with_input_bytes (a_command: READABLE_STRING_GENERAL; a_input: READABLE_STRING_8)
+			-- Execute `a_command' with the bytes `a_input' on its stdin, exactly
+			-- as they are, then end of file; capture its output.
+		require
+			command_not_empty: not a_command.is_empty
+		do
+			execute_with_input_bytes_in_directory (a_command, a_input, Void)
+		ensure
+			execution_recorded: execution_count = old execution_count + 1
+			command_recorded: attached last_command as lc and then lc.same_string (a_command)
+			output_forms_agree: attached last_output implies attached last_output_bytes
+		end
+
+	execute_with_input_bytes_in_directory (a_command: READABLE_STRING_GENERAL; a_input: READABLE_STRING_8; a_directory: detachable READABLE_STRING_GENERAL)
+			-- `execute_with_input_bytes' in `a_directory' (Void: the current one).
+			--
+			-- The child's stdout and stderr come back together in
+			-- `last_output', as with `execute'. Input and output of any size
+			-- flow at once without deadlock. Input the child never reads is
+			-- discarded when it exits. Waits for the child's output to end and
+			-- for the child to exit, with no timeout - as `execute' does. The
+			-- command and directory may hold any characters (CreateProcessW).
+		require
+			command_not_empty: not a_command.is_empty
+			directory_not_empty: attached a_directory as al_dir implies not al_dir.is_empty
+		local
+			l_child: SIMPLE_PIPED_PROCESS
+		do
+			last_output := Void
+			last_output_bytes := Void
+			last_error := Void
+			last_exit_code := 0
+			was_successful := False
+
+			create l_child.make
+			l_child.set_show_window (show_window)
+			l_child.start_in_directory (a_command, a_directory)
+			if l_child.is_started then
+				if l_child.is_input_open then
+					l_child.write_bytes (a_input)
+					l_child.close_input
+				end
+				l_child.await_output_end ({SIMPLE_PIPED_PROCESS}.Infinite)
+				l_child.wait_for_exit ({SIMPLE_PIPED_PROCESS}.Infinite)
+				l_child.close
+				last_exit_code := l_child.exit_code
+				last_output_bytes := l_child.pending_output
+				last_output := utf_8.text (l_child.pending_output)
+				was_successful := True
+			elseif attached l_child.last_error as l_reason then
+				last_error := l_reason
+			else
+				last_error := {STRING_32} "Failed to execute command"
+			end
+
+			last_command := a_command
+			execution_count_impl := execution_count_impl + 1
+		ensure
+			execution_recorded: execution_count = old execution_count + 1
+			command_recorded: attached last_command as lc and then lc.same_string (a_command)
+			output_forms_agree: attached last_output implies attached last_output_bytes
+			success_has_output: was_successful implies attached last_output
+			failure_has_reason: not was_successful implies attached last_error
+		end
+
+	output_of_command_with_input (a_command, a_input: READABLE_STRING_GENERAL): STRING_32
+			-- Execute `a_command' with `a_input' on its stdin (UTF-8) and return
+			-- its output.
+		require
+			command_not_empty: not a_command.is_empty
+		do
+			execute_with_input (a_command, a_input)
+			if attached last_output as l_out then
+				Result := l_out
+			else
+				create Result.make_empty
+			end
+		ensure
+			execution_recorded: execution_count = old execution_count + 1
+			empty_on_failure: not was_successful implies Result.is_empty
+		end
+
 feature -- Query
 
 	file_exists_in_path,
@@ -261,24 +391,10 @@ feature {NONE} -- Model Implementation
 
 feature {NONE} -- String conversion
 
-	utf8_to_string_32 (a_data: MANAGED_POINTER; a_length: INTEGER): STRING_32
-			-- Convert UTF-8 data to STRING_32.
-		local
-			i: INTEGER
-			c: NATURAL_8
-		do
-			create Result.make (a_length)
-			from
-				i := 0
-			until
-				i >= a_length
-			loop
-				c := a_data.read_natural_8 (i)
-				if c /= 0 then
-					Result.append_character (c.to_character_32)
-				end
-				i := i + 1
-			end
+	utf_8: SIMPLE_PROCESS_UTF_8
+			-- The codec.
+		once
+			create Result
 		end
 
 	pointer_to_string (a_ptr: POINTER): STRING_32
@@ -377,5 +493,6 @@ invariant
 	execution_count_non_negative: execution_count >= 0
 	has_executed_consistency: has_executed = (execution_count > 0)
 	success_state_consistency: was_successful implies last_output /= Void
+	output_forms_agree: (last_output = Void) = (last_output_bytes = Void)
 
 end

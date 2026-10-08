@@ -43,6 +43,7 @@
 		<cluster name="tests" location=".\testing\" recursive="true">
 			<file_rule>
 				<exclude>/scoop$</exclude>
+				<exclude>/echo$</exclude>
 			</file_rule>
 		</cluster>
 	</target>
@@ -62,5 +63,18 @@
 			<concurrency use="scoop"/>
 		</capability>
 		<cluster name="scoop_tests" location=".\testing\scoop\" recursive="true"/>
+	</target>
+	<!-- The child the stdin and UTF-8 tests run (1.1.0): sp_echo_child.exe copies
+	     its stdin to its stdout byte for byte, plus a few modes for exit codes,
+	     stderr, delay and flooding. Build it before running simple_process_tests;
+	     those tests look for EIFGENs/simple_process_echo/F_code/sp_echo_child.exe. -->
+	<target name="simple_process_echo" extends="simple_process">
+		<root class="SP_ECHO_CHILD" feature="make"/>
+		<option warning="warning">
+			<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
+		</option>
+		<setting name="console_application" value="true"/>
+		<setting name="executable_name" value="sp_echo_child"/>
+		<cluster name="echo_child" location=".\testing\echo\" recursive="true"/>
 	</target>
 </system>
