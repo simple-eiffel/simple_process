@@ -80,7 +80,8 @@ feature -- Basic Operations
 
 			if not l_process.was_successful then
 				if attached l_process.last_error as l_err then
-					last_error_result := l_err.to_string_8
+						-- UTF-8: a Windows error text can hold any character (1.1.0).
+					last_error_result := (create {SIMPLE_PROCESS_UTF_8}).bytes (l_err)
 				end
 			end
 
