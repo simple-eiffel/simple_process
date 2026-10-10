@@ -72,6 +72,7 @@ typedef struct {
 typedef struct spp_process_s {
     HANDLE process;              /* NULL when the start failed */
     DWORD pid;
+    int in_job;                  /* the child joined the owner job it was given */
     HANDLE input;                /* write end of the child's stdin; NULL once closed */
     spp_stream out;
     spp_stream err;              /* pipe NULL, ended = 1 when stderr is merged into stdout */
@@ -173,7 +174,7 @@ static unsigned __stdcall spp_pump(void* a_stream)
    per output stream (0: none). Always answers a record unless malloc fails;
    `process' is NULL when the start failed, and `error_message' says why. Free
    it with spp_close either way. */
-static spp_process* spp_start(void* a_command, void* a_directory, int a_show_window, int a_merge_error, int a_options, int a_limit)
+static spp_process* spp_start(void* a_command, void* a_directory, int a_show_window, int a_merge_error, int a_options, int a_limit, void* a_job)
 {
     spp_process* p;
     SECURITY_ATTRIBUTES sa;
@@ -245,6 +246,9 @@ static spp_process* spp_start(void* a_command, void* a_directory, int a_show_win
         l_flags |= CREATE_NO_WINDOW;
     }
     if (a_options & SPP_NO_CONSOLE) l_flags |= CREATE_NO_WINDOW;
+    /* An owner job: start suspended, join the job, then run - so the child
+       never runs a single instruction outside it. */
+    if (a_job) l_flags |= CREATE_SUSPENDED;
 
     /* Inherit exactly the child's own pipe ends: a child another processor
        starts at this moment can then never be handed ours, and ours never
@@ -302,6 +306,10 @@ static spp_process* spp_start(void* a_command, void* a_directory, int a_show_win
     if (err_write) { CloseHandle(err_write); err_write = NULL; }
     if (!l_ok) { spp_set_error(p, "CreateProcess", l_code); goto fail; }
 
+    if (a_job) {
+        p->in_job = AssignProcessToJobObject((HANDLE) a_job, pi.hProcess) ? 1 : 0;
+        ResumeThread(pi.hThread);
+    }
     CloseHandle(pi.hThread);
     p->process = pi.hProcess;
     p->pid = pi.dwProcessId;
@@ -341,6 +349,26 @@ static int spp_started(spp_process* p) { return (p && p->process) ? 1 : 0; }
 static const char* spp_error(spp_process* p) { return p ? p->error_message : ""; }
 
 static unsigned long spp_pid(spp_process* p) { return (p && p->process) ? (unsigned long) p->pid : 0; }
+static int spp_in_job(spp_process* p) { return (p && p->process) ? p->in_job : 0; }
+
+/* A job that kills every process in it when its last handle closes: when the
+   program holding the handle ends, however it ends (closed, crashed, killed
+   from Task Manager). Nothing is stored here - the caller keeps the handle for
+   the program's life (SIMPLE_PIPED_PROCESS.owner_job, a once per process). The
+   handle is not inheritable, so no child can keep the job alive. NULL on failure. */
+static void* spp_new_owner_job(void)
+{
+    HANDLE l_job = CreateJobObjectW(NULL, NULL);
+    JOBOBJECT_EXTENDED_LIMIT_INFORMATION l_info;
+    if (!l_job) return NULL;
+    memset(&l_info, 0, sizeof(l_info));
+    l_info.BasicLimitInformation.LimitFlags = JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE;
+    if (!SetInformationJobObject(l_job, JobObjectExtendedLimitInformation, &l_info, sizeof(l_info))) {
+        CloseHandle(l_job);
+        return NULL;
+    }
+    return (void*) l_job;
+}
 
 /* Has the child exited? Never waits (a 0 ms wait). */
 static int spp_is_running(spp_process* p)
@@ -570,16 +598,18 @@ typedef struct {
     char error_message[1024];
 } spp_process;
 
-static spp_process* spp_start(void* a_command, void* a_directory, int a_show_window, int a_merge_error, int a_options, int a_limit)
+static spp_process* spp_start(void* a_command, void* a_directory, int a_show_window, int a_merge_error, int a_options, int a_limit, void* a_job)
 {
     spp_process* p = (spp_process*) calloc(1, sizeof(spp_process));
-    (void) a_command; (void) a_directory; (void) a_show_window; (void) a_merge_error; (void) a_options; (void) a_limit;
+    (void) a_command; (void) a_directory; (void) a_show_window; (void) a_merge_error; (void) a_options; (void) a_limit; (void) a_job;
     if (p) strcpy(p->error_message, "simple_process runs child processes on Windows only");
     return p;
 }
 static int spp_started(spp_process* p) { (void) p; return 0; }
 static const char* spp_error(spp_process* p) { return p ? p->error_message : ""; }
 static unsigned long spp_pid(spp_process* p) { (void) p; return 0; }
+static int spp_in_job(spp_process* p) { (void) p; return 0; }
+static void* spp_new_owner_job(void) { return NULL; }
 static int spp_is_running(spp_process* p) { (void) p; return 0; }
 static int spp_exit_code(spp_process* p) { (void) p; return -1; }
 static int spp_write(spp_process* p, const char* a_data, int a_count) { (void) p; (void) a_data; (void) a_count; return 0; }

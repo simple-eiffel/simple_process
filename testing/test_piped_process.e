@@ -481,6 +481,54 @@ feature -- Tests: SIMPLE_PIPED_PROCESS
 			l_child.close
 		end
 
+	test_child_ends_with_its_owner
+			-- An owner started with `ends_with_owner' is killed outright (no
+			-- `kill' of its own child, as in a crash): Windows ends the grandchild.
+		local
+			l_owner: SIMPLE_PIPED_PROCESS
+			l_pid: NATURAL_32
+		do
+			require_echo_child
+			create l_owner.make
+			l_owner.start (echo_command ("own 1"))
+			l_owner.read_line (10_000)
+			assert_attached ("owner reported its child", l_owner.last_line)
+			if attached l_owner.last_line as al_line then
+				l_pid := al_line.split (' ').first.to_natural_32
+				assert_true ("child bound to the owner", al_line.ends_with ({STRING_32} " 1"))
+				assert_true ("child alive while the owner lives", c_pid_alive (l_pid, 0) /= 0)
+				l_owner.kill
+				l_owner.wait_for_exit (5_000)
+				print ("      owner killed; child " + l_pid.out + " alive after 5 s: "
+					+ (c_pid_alive (l_pid, 5_000) /= 0).out + "%N")
+				assert_true ("child ended with its owner", c_pid_alive (l_pid, 5_000) = 0)
+			end
+			l_owner.close
+		end
+
+	test_child_outlives_owner_by_default
+			-- Without `ends_with_owner' the grandchild outlives a killed owner (the
+			-- 1.1.0 behaviour, kept as the default). The test then ends it itself.
+		local
+			l_owner: SIMPLE_PIPED_PROCESS
+			l_pid: NATURAL_32
+		do
+			require_echo_child
+			create l_owner.make
+			l_owner.start (echo_command ("own 0"))
+			l_owner.read_line (10_000)
+			assert_attached ("owner reported its child", l_owner.last_line)
+			if attached l_owner.last_line as al_line then
+				l_pid := al_line.split (' ').first.to_natural_32
+				assert_true ("child not bound", al_line.ends_with ({STRING_32} " 0"))
+				l_owner.kill
+				l_owner.wait_for_exit (5_000)
+				assert_true ("child outlived its owner", c_pid_alive (l_pid, 1_000) /= 0)
+				c_kill_pid (l_pid)
+			end
+			l_owner.close
+		end
+
 	test_piped_start_failure
 			-- A missing program does not start, and says why.
 		local
@@ -532,6 +580,32 @@ feature {NONE} -- The child
 			create l_env
 			create Result.make_from_string_general (l_env.current_working_path.name)
 			Result.append ({STRING_32} "\EIFGENs\simple_process_echo\F_code\sp_echo_child.exe")
+		end
+
+	c_pid_alive (a_pid: NATURAL_32; a_wait_ms: INTEGER): INTEGER
+			-- 1 if process `a_pid' is still running after waiting up to `a_wait_ms' for it to end.
+		external
+			"C blocking inline use <windows.h>"
+		alias
+			"[
+				HANDLE l_h = OpenProcess (SYNCHRONIZE, FALSE, (DWORD) $a_pid);
+				DWORD l_r;
+				if (!l_h) return 0;
+				l_r = WaitForSingleObject (l_h, (DWORD) $a_wait_ms);
+				CloseHandle (l_h);
+				return (l_r == WAIT_TIMEOUT) ? 1 : 0;
+			]"
+		end
+
+	c_kill_pid (a_pid: NATURAL_32)
+			-- End process `a_pid'.
+		external
+			"C inline use <windows.h>"
+		alias
+			"[
+				HANDLE l_h = OpenProcess (PROCESS_TERMINATE, FALSE, (DWORD) $a_pid);
+				if (l_h) { TerminateProcess (l_h, 1); CloseHandle (l_h); }
+			]"
 		end
 
 	echo_command (a_arguments: READABLE_STRING_GENERAL): STRING_32

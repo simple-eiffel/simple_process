@@ -19,10 +19,11 @@
 
 ## Status
 
-✅ **Production Ready** — v1.1.0
+✅ **Production Ready** — v1.2.0
 - 41 tests passing, plus a 7-test SCOOP freeze assault
 - **A child gets an empty stdin**, output is **never silently cut**, and commands may hold **any characters** (1.1.0)
 - **Write to a child's stdin** without pipe deadlock, any size (1.1.0)
+- **A child can end with its owner**: `set_ends_with_owner (True)` and Windows ends it if this program crashes or is killed (1.2.0)
 - **Output is UTF-8 decoded**; raw bytes kept (1.1.0, see CHANGELOG for what changed)
 - **A running child never stops another processor's allocator** (see CHANGELOG 1.0.1)
 - SCOOP-compatible (no thread dependency)

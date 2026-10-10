@@ -17,6 +17,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - init
 - first commit
 
+## [1.2.0] - 2026-10-09
+
+### Added
+- **A child can end with its owner.** `set_ends_with_owner (True)` on
+  `SIMPLE_PIPED_PROCESS` or `SIMPLE_ASYNC_PROCESS`, before the start, ties the
+  child to this program: if the program ends without `kill` (crashed, killed
+  from Task Manager, debugger stopped), Windows ends the child too. Found in
+  simple_prompter: a hard-killed prompter left its camera ffmpeg running,
+  holding the camera and its build folder. The child starts suspended, joins a
+  kill-on-close job (one per program, an Eiffel `once ("PROCESS")` - the C
+  header still keeps no state), then runs. `is_bound_to_owner` says whether it
+  joined. Default off: other clients see no change.
+- Tests `test_child_ends_with_its_owner` (an owner exe is killed outright; its
+  child is gone within 5 s) and `test_child_outlives_owner_by_default` (without
+  the setting the child survives, as before). `sp_echo_child own <0|1>` is the
+  owner. 43 tests and 7 SCOOP tests pass.
+
 ## [1.1.0] - 2026-10-08
 
 Defect D14 from the simple_bible D-014 debate (fork 03, F3-C stdio spike):

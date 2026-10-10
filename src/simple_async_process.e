@@ -51,6 +51,11 @@ note
 		before 1.1.0 it always got this process's own. Commands and
 		directories may hold any characters (CreateProcessW). This class
 		cannot write to the child: SIMPLE_PIPED_PROCESS can.
+
+		ENDS WITH ITS OWNER (1.2.0). `set_ends_with_owner (True)' ties the
+		child to this program: if the program ends without `kill' - crashed,
+		killed from Task Manager - Windows ends the child too, instead of
+		leaving it running with its files and devices held.
 	]"
 	author: "Larry Rix"
 	date: "$Date$"
@@ -180,6 +185,28 @@ feature -- Settings
 			set: inherits_standard_input = a_value
 		end
 
+	ends_with_owner: BOOLEAN
+			-- Does the child end when this program ends, however it ends? (1.2.0;
+			-- see SIMPLE_PIPED_PROCESS.ends_with_owner.) Default False.
+
+	set_ends_with_owner (a_value: BOOLEAN)
+			-- Set `ends_with_owner' to `a_value'.
+		require
+			not_started: not is_started
+		do
+			ends_with_owner := a_value
+		ensure
+			set: ends_with_owner = a_value
+		end
+
+	is_bound_to_owner: BOOLEAN
+			-- Did the started child join the owner job?
+		do
+			Result := attached child as al_child and then al_child.is_bound_to_owner
+		ensure
+			only_when_asked: Result implies ends_with_owner
+		end
+
 feature -- Operations
 
 	start (a_command: READABLE_STRING_GENERAL)
@@ -219,6 +246,7 @@ feature -- Operations
 			l_child.set_show_window (show_window)
 			l_child.set_suppresses_console (True)
 			l_child.set_inherits_standard_input (inherits_standard_input)
+			l_child.set_ends_with_owner (ends_with_owner)
 			l_child.start_in_directory (a_command, l_directory)
 			if l_child.is_started then
 				if l_child.is_input_open then

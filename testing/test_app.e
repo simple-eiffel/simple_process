@@ -87,6 +87,8 @@ feature {NONE} -- Test Runners
 			run_test (agent piped_tests.test_piped_large_write_before_any_read, "test_piped_large_write_before_any_read")
 			run_test (agent piped_tests.test_piped_read_line_times_out, "test_piped_read_line_times_out")
 			run_test (agent piped_tests.test_piped_kill, "test_piped_kill")
+			run_test (agent piped_tests.test_child_ends_with_its_owner, "test_child_ends_with_its_owner")
+			run_test (agent piped_tests.test_child_outlives_owner_by_default, "test_child_outlives_owner_by_default")
 			run_test (agent piped_tests.test_piped_start_failure, "test_piped_start_failure")
 			run_test (agent piped_tests.test_piped_unicode_command_line, "test_piped_unicode_command_line")
 		end

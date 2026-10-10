@@ -22,6 +22,14 @@ note
 		                                  and write what it captured to stdout
 		                                  (so a test can see which stdin the
 		                                  grandchild was given)
+		    sp_echo_child own <0|1>       start this same program as
+		                                  "sleep 60000" through
+		                                  SIMPLE_PIPED_PROCESS with
+		                                  `ends_with_owner' 0 or 1, write
+		                                  "<pid> <bound 0|1>" LF, then sleep
+		                                  a minute (so a test can kill this
+		                                  owner and see the grandchild live
+		                                  or die)
 		    sp_echo_child cat <path> <n> <ms>
 		                                  the same, <n> bytes per write with
 		                                  a <ms> pause after each, so a reader
@@ -47,6 +55,7 @@ feature {NONE} -- Initialization
 			l_mode: STRING_32
 			l_code: INTEGER
 			l_process: SIMPLE_PROCESS
+			l_piped: SIMPLE_PIPED_PROCESS
 		do
 			if argument_count >= 1 then
 				l_mode := argument (1)
@@ -72,6 +81,15 @@ feature {NONE} -- Initialization
 				if attached l_process.last_output_bytes as al_bytes and then not al_bytes.is_empty then
 					c_write_count (Std_output, (create {C_STRING}.make (al_bytes)).item, al_bytes.count)
 				end
+			elseif l_mode.same_string ("own") and argument_count >= 2 then
+				create l_piped.make
+				l_piped.set_ends_with_owner (argument (2).same_string ("1"))
+				l_piped.start ({STRING_32} "%"" + command_name + {STRING_32} "%" sleep 60000")
+				if l_piped.is_started then
+					c_write_text (Std_output, (create {C_STRING}.make (l_piped.process_id.out + " "
+						+ l_piped.is_bound_to_owner.to_integer.out + "%N")).item)
+				end
+				(create {EXECUTION_ENVIRONMENT}).sleep ({INTEGER_64} 60_000 * 1_000_000)
 			elseif l_mode.same_string ("cat") and argument_count >= 2 then
 				if argument_count >= 4 then
 					l_code := c_cat ((create {NATIVE_STRING}.make (argument (2))).item, Std_output, argument (3).to_integer, argument (4).to_integer)
