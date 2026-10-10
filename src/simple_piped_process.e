@@ -141,6 +141,23 @@ feature -- Settings
 			set: merge_error_output = a_value
 		end
 
+	ends_with_owner: BOOLEAN
+			-- Does the child end when this program ends, however it ends -
+			-- closed, crashed, or killed from Task Manager? (1.2.0) It then
+			-- joins a Windows job that kills its members when this program's
+			-- last handle to the job closes. Default False: a child outlives
+			-- a program that ends without `kill', as before.
+
+	set_ends_with_owner (a_value: BOOLEAN)
+			-- Set `ends_with_owner' to `a_value'.
+		require
+			not_started: not is_started
+		do
+			ends_with_owner := a_value
+		ensure
+			set: ends_with_owner = a_value
+		end
+
 feature {SIMPLE_PROCESS, SIMPLE_ASYNC_PROCESS} -- Settings for the classes built on this one
 
 	inherits_standard_input: BOOLEAN
@@ -177,6 +194,15 @@ feature -- Status report
 			-- Is a child running or finished under this object, not yet `close'd?
 		do
 			Result := handle /= default_pointer
+		end
+
+	is_bound_to_owner: BOOLEAN
+			-- Did the started child join the owner job, so it ends when this
+			-- program does (`ends_with_owner')?
+		do
+			Result := is_started and then c_in_job (handle) /= 0
+		ensure
+			only_when_asked: Result implies ends_with_owner
 		end
 
 	is_running: BOOLEAN
@@ -304,10 +330,13 @@ feature -- Basic operations: start
 		local
 			l_command: NATIVE_STRING
 			l_directory: detachable NATIVE_STRING
-			l_record: POINTER
+			l_record, l_job: POINTER
 			l_reason: STRING_32
 		do
 			last_error := Void
+			if ends_with_owner then
+				l_job := owner_job
+			end
 			last_line := Void
 			last_line_bytes := Void
 			final_exit_code := -1
@@ -317,9 +346,9 @@ feature -- Basic operations: start
 				create l_directory.make (al_dir)
 			end
 			if attached l_directory as al_native then
-				l_record := c_start (l_command.item, al_native.item, show_window.to_integer, merge_error_output.to_integer, start_options, output_limit)
+				l_record := c_start (l_command.item, al_native.item, show_window.to_integer, merge_error_output.to_integer, start_options, output_limit, l_job)
 			else
-				l_record := c_start (l_command.item, default_pointer, show_window.to_integer, merge_error_output.to_integer, start_options, output_limit)
+				l_record := c_start (l_command.item, default_pointer, show_window.to_integer, merge_error_output.to_integer, start_options, output_limit, l_job)
 			end
 			if l_record = default_pointer then
 				last_error := {STRING_32} "Failed to allocate the process record"
@@ -527,6 +556,14 @@ feature {NONE} -- Implementation
 	truncated_at_close: BOOLEAN
 			-- `was_output_truncated' as it was at `close'.
 
+	owner_job: POINTER
+			-- The kill-on-close job every `ends_with_owner' child joins: one per
+			-- program, never closed, so Windows closes it - and ends its members -
+			-- when the program ends. Null if Windows refused to create it.
+		once ("PROCESS")
+			Result := c_new_owner_job
+		end
+
 	start_options: INTEGER
 			-- SPP_INHERIT_STDIN (1) and SPP_NO_CONSOLE (2), as settings ask.
 		do
@@ -597,8 +634,8 @@ feature {NONE} -- Implementation
 
 feature {NONE} -- C externals: waiting (marked `blocking')
 
-	c_start (a_command, a_directory: POINTER; a_show_window, a_merge_error, a_options, a_limit: INTEGER): POINTER
-			-- Create the pipes, start the child, start the pump threads.
+	c_start (a_command, a_directory: POINTER; a_show_window, a_merge_error, a_options, a_limit: INTEGER; a_job: POINTER): POINTER
+			-- Create the pipes, start the child (in job `a_job' unless null), start the pump threads.
 			--
 			-- BLOCKING: CreateProcess maps an image, and an anti-virus filter
 			-- may scan it first. Safe to mark: both strings are NATIVE_STRING
@@ -606,7 +643,7 @@ feature {NONE} -- C externals: waiting (marked `blocking')
 		external
 			"C blocking inline use %"simple_process_pipe.h%""
 		alias
-			"return spp_start((void*)$a_command, (void*)$a_directory, (int)$a_show_window, (int)$a_merge_error, (int)$a_options, (int)$a_limit);"
+			"return spp_start((void*)$a_command, (void*)$a_directory, (int)$a_show_window, (int)$a_merge_error, (int)$a_options, (int)$a_limit, (void*)$a_job);"
 		end
 
 	c_write (a_record, a_data: POINTER; a_count: INTEGER): INTEGER
@@ -740,6 +777,22 @@ feature {NONE} -- C externals: never waiting (unmarked)
 			"C inline use %"simple_process_pipe.h%""
 		alias
 			"return (EIF_NATURAL_32) spp_pid((spp_process*)$a_record);"
+		end
+
+	c_in_job (a_record: POINTER): INTEGER
+			-- Did the child join its owner job? A field read.
+		external
+			"C inline use %"simple_process_pipe.h%""
+		alias
+			"return spp_in_job((spp_process*)$a_record);"
+		end
+
+	c_new_owner_job: POINTER
+			-- A new kill-on-close job object, or null.
+		external
+			"C inline use %"simple_process_pipe.h%""
+		alias
+			"return (EIF_POINTER) spp_new_owner_job();"
 		end
 
 	c_input_open (a_record: POINTER): INTEGER
