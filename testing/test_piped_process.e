@@ -199,6 +199,39 @@ feature -- Tests: writing to stdin (D14 part 1)
 			end
 		end
 
+	test_every_name_reports_the_same
+			-- Each other name gives what its `last_*' query gives. `succeeded' and its
+			-- other names also need an exit code of 0, which `was_successful' does not.
+		local
+			l_process: SIMPLE_PROCESS
+		do
+			require_echo_child
+			create l_process.make
+			l_process.execute_with_input (echo_command ("exit 7"), {STRING_32} "x")
+			assert_integers_equal ("exit_code", 7, l_process.exit_code)
+			assert_integers_equal ("return_code", 7, l_process.return_code)
+			assert_integers_equal ("status_code", 7, l_process.status_code)
+			assert_true ("output", l_process.output = l_process.last_output and attached l_process.output)
+			assert_true ("stdout", l_process.stdout = l_process.last_output)
+			assert_true ("result_text", l_process.result_text = l_process.last_output)
+			assert_true ("captured_output", l_process.captured_output = l_process.last_output)
+			assert_true ("ran", l_process.was_successful)
+			assert_false ("exit 7 not succeeded", l_process.succeeded)
+			assert_false ("exit 7 not ok", l_process.ok)
+			assert_false ("exit 7 not passed", l_process.passed)
+			assert_false ("exit 7 not completed_ok", l_process.completed_ok)
+			l_process.execute_with_input (echo_command ("exit 0"), {STRING_32} "x")
+			assert_true ("succeeded", l_process.succeeded)
+			assert_true ("ok", l_process.ok)
+			assert_true ("passed", l_process.passed)
+			assert_true ("completed_ok", l_process.completed_ok)
+			l_process.execute_with_input ("no_such_program_sp_1_1_0.exe", {STRING_32} "x")
+			assert_false ("not succeeded", l_process.succeeded)
+			assert_true ("error_message", attached l_process.error_message and l_process.error_message = l_process.last_error)
+			assert_true ("stderr", l_process.stderr = l_process.last_error)
+			assert_true ("failure_reason", l_process.failure_reason = l_process.last_error)
+		end
+
 	test_execute_with_input_exit_code_and_failure
 			-- The exit code comes back; a missing program is a failure with a reason.
 		local

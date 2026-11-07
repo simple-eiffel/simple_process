@@ -74,6 +74,7 @@ feature {NONE} -- Test Runners
 			run_test (agent piped_tests.test_execute_with_input_large_both_ways, "test_execute_with_input_large_both_ways")
 			run_test (agent piped_tests.test_execute_with_input_against_a_flooding_child, "test_execute_with_input_against_a_flooding_child")
 			run_test (agent piped_tests.test_execute_with_input_exit_code_and_failure, "test_execute_with_input_exit_code_and_failure")
+			run_test (agent piped_tests.test_every_name_reports_the_same, "test_every_name_reports_the_same")
 			run_test (agent piped_tests.test_execute_gives_the_child_an_empty_stdin, "test_execute_gives_the_child_an_empty_stdin")
 			run_test (agent piped_tests.test_execute_can_hand_the_child_its_own_stdin, "test_execute_can_hand_the_child_its_own_stdin")
 			run_test (agent piped_tests.test_execute_output_is_not_cut_at_1_mb, "test_execute_output_is_not_cut_at_1_mb")
