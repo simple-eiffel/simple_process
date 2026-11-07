@@ -23,7 +23,7 @@ feature -- Test: Process Helper
 			output: STRING_32
 		do
 			create helper
-			output := helper.output_of_command ("cmd /c echo Hello", Void)
+			output := helper.output_of_command (shell.shell_command ("echo Hello"), Void)
 			assert_false ("has output", output.is_empty)
 			assert_string_contains ("contains hello", output, "Hello")
 		end
@@ -37,7 +37,7 @@ feature -- Test: Process Helper
 			helper: SIMPLE_PROCESS_HELPER
 		do
 			create helper
-			assert_true ("cmd.exe in path", helper.has_file_in_path ("cmd.exe"))
+			assert_true ("cmd.exe in path", helper.has_file_in_path (shell.shell_program))
 		end
 
 	test_show_process_flag
@@ -122,8 +122,16 @@ feature -- Test: Command with Directory
 			output: STRING_32
 		do
 			create helper
-			output := helper.output_of_command ("cmd /c dir", "C:\")
+			output := helper.output_of_command (shell.listing_command, shell.root_folder)
 			assert_false ("has output", output.is_empty)
+		end
+
+feature {NONE} -- Implementation
+
+	shell: SP_TEST_COMMANDS
+			-- Commands for this platform.
+		once
+			create Result
 		end
 
 end

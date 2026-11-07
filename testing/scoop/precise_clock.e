@@ -15,11 +15,11 @@ class
 feature -- Access
 
 	now_ms: INTEGER_64
-			-- Milliseconds off QueryPerformanceCounter.
+			-- Milliseconds off the high-resolution counter.
 		external
-			"C inline use <windows.h>"
+			"C inline use %"sp_test_support.h%""
 		alias
-			"LARGE_INTEGER c, f; QueryPerformanceCounter(&c); QueryPerformanceFrequency(&f); return (EIF_INTEGER_64) ((c.QuadPart * 1000) / f.QuadPart);"
+			"return (EIF_INTEGER_64) spt_now_ms ();"
 		end
 
 end

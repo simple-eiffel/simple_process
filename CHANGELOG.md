@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- macOS and Linux: real POSIX child processes in simple_process_pipe.h, replacing the stub that failed every start. Same contract as Windows: no shell, pump threads, owner-bound children.
+
 ### Changed
 - Testing config updates, AutoTest fixes, .gitignore cleanup
 - Migrate to simple_testing library

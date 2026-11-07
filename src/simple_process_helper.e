@@ -159,7 +159,7 @@ note
 	license: "MIT License"
 	source: "[
 		SIMPLE_PROCESS - SCOOP-compatible process execution library
-		Uses direct Win32 API calls without thread dependencies
+		Uses the system process calls directly, on Windows, macOS and Linux
 	]"
 
 end

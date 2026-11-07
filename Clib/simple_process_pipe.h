@@ -588,43 +588,918 @@ static void spp_close(spp_process* p)
     free(p);
 }
 
-#else  /* ============ not Windows ============ */
+#else  /* ============ POSIX: macOS and Linux ============ */
 
-/* simple_process runs child processes on Windows only. Every start fails
-   with a message saying so; the rest answer "nothing". */
+/* The same contract as the Windows half, with these platform choices:
+
+   - The command line is split here, by the Windows rules (white space
+     separates, double quotes group, backslashes are literal unless they
+     precede a double quote), and the program is run directly with no shell,
+     as CreateProcess does. A missing program is therefore a failed start. To
+     get a shell, run one: sh -c "a | b".
+   - fork and exec, with only async-signal-safe calls between them, because
+     other threads may hold any lock at that moment. The program is found
+     before the fork. A close-on-exec status pipe carries a failure in the
+     child back as a failed start.
+   - The child closes every descriptor above its own, so it holds exactly its
+     own pipe ends, whichever other processor starts a child at this moment.
+   - Pump and reaper threads run with every signal blocked: the Eiffel
+     runtime's signal handler must never run on a thread it does not know.
+   - An owner job is a pipe whose write end only the owner holds. A small
+     watcher process per bound child sees it end, however the owner ended, and
+     kills the child's process group. The watcher leaves when the child's life
+     pipe ends, which the child holds on descriptor 3.
+   - A record is reference counted, because `spp_close' does not kill the
+     child: the reaper thread keeps it until the child has exited. */
+
+#include <errno.h>
+#include <fcntl.h>
+#include <limits.h>
+#include <poll.h>
+#include <pthread.h>
+#include <signal.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <time.h>
+#include <unistd.h>
+#ifdef __linux__
+#include <sys/syscall.h>
+#endif
+
+#ifndef PATH_MAX
+#define PATH_MAX 4096
+#endif
+
+#define SPP_READ_CHUNK 65536
+#define SPP_THREAD_STACK 131072
+#define SPP_FIRST_FREE_FD 5      /* pipes stay above the descriptors a child sets up */
+#define SPP_WAIT_SLICE_MS 100    /* a wall clock jump can only cost this much */
+
+struct spp_process_s;
 
 typedef struct {
-    int process;
-    char error_message[1024];
+    int pipe;                    /* read end, owned; -1 when the stream does not exist */
+    pthread_t thread;            /* pump thread, when `has_thread' */
+    int has_thread;
+    char* data;                  /* bytes collected and not yet taken */
+    size_t count;
+    size_t capacity;
+    int ended;                   /* EOF (or a read error) seen */
+    int lost;                    /* out of memory: bytes were dropped */
+    size_t limit;                /* keep at most this many bytes in all; 0 = no limit */
+    size_t total;                /* bytes kept so far, taken or not */
+    int truncated;               /* bytes past `limit' were read and dropped */
+    struct spp_process_s* owner;
+} spp_stream;
+
+typedef struct spp_process_s {
+    int process;                 /* 0 when the start failed */
+    pid_t pid;
+    int in_job;                  /* a watcher ends the child with its owner */
+    int input;                   /* write end of the child's stdin; -1 once closed */
+    spp_stream out;
+    spp_stream err;              /* pipe -1, ended = 1 when stderr is merged into stdout */
+    pthread_mutex_t lock;        /* guards the streams and the fields below */
+    pthread_cond_t signal;       /* a stream gained bytes or ended, or the child exited */
+    int wake[2];                 /* closing wake[1] stops the pumps */
+    int exited;
+    int exit_code;
+    int killed;                  /* `spp_kill' ended it */
+    int references;              /* the owner, and the reaper while the child runs */
+    char error_message[1024];    /* UTF-8 */
 } spp_process;
 
+typedef struct {
+    int read_end;
+    int write_end;
+} spp_owner_job;
+
+static void spp_set_error(spp_process* p, const char* a_where, int a_code)
+{
+    snprintf(p->error_message, sizeof(p->error_message), "%s failed (errno %d): %s", a_where, a_code, strerror(a_code));
+}
+
+static void spp_close_fd(int* a_fd)
+{
+    if (*a_fd >= 0) {
+        close(*a_fd);
+        *a_fd = -1;
+    }
+}
+
+/* A close-on-exec pipe, both ends at or above SPP_FIRST_FREE_FD. 1 on success. */
+static int spp_pipe(int a_ends[2])
+{
+    int l_i, l_moved;
+    if (pipe(a_ends) != 0) {
+        a_ends[0] = -1;
+        a_ends[1] = -1;
+        return 0;
+    }
+    for (l_i = 0; l_i < 2; l_i++) {
+        if (a_ends[l_i] < SPP_FIRST_FREE_FD) {
+            l_moved = fcntl(a_ends[l_i], F_DUPFD_CLOEXEC, SPP_FIRST_FREE_FD);
+            if (l_moved < 0) {
+                l_moved = errno;
+                close(a_ends[0]);
+                close(a_ends[1]);
+                a_ends[0] = -1;
+                a_ends[1] = -1;
+                errno = l_moved;
+                return 0;
+            }
+            close(a_ends[l_i]);
+            a_ends[l_i] = l_moved;
+        } else {
+            fcntl(a_ends[l_i], F_SETFD, FD_CLOEXEC);
+        }
+    }
+    return 1;
+}
+
+/* Start a plain C thread with every signal blocked. 1 on success. */
+static int spp_thread(pthread_t* a_thread, void* (*a_body)(void*), void* a_argument, int a_detached)
+{
+    pthread_attr_t l_attributes;
+    pthread_t l_ignored;
+    sigset_t l_all, l_old;
+    int l_result;
+
+    if (pthread_attr_init(&l_attributes) != 0) return 0;
+    pthread_attr_setstacksize(&l_attributes, SPP_THREAD_STACK);
+    if (a_detached) pthread_attr_setdetachstate(&l_attributes, PTHREAD_CREATE_DETACHED);
+    sigfillset(&l_all);
+    pthread_sigmask(SIG_SETMASK, &l_all, &l_old);
+    l_result = pthread_create(a_thread ? a_thread : &l_ignored, &l_attributes, a_body, a_argument);
+    pthread_sigmask(SIG_SETMASK, &l_old, NULL);
+    pthread_attr_destroy(&l_attributes);
+    return l_result == 0 ? 1 : 0;
+}
+
+static void spp_release(spp_process* p)
+{
+    int l_left;
+    pthread_mutex_lock(&p->lock);
+    p->references--;
+    l_left = p->references;
+    pthread_mutex_unlock(&p->lock);
+    if (l_left == 0) {
+        pthread_cond_destroy(&p->signal);
+        pthread_mutex_destroy(&p->lock);
+        free(p);
+    }
+}
+
+static void* spp_pump(void* a_stream)
+{
+    spp_stream* s = (spp_stream*) a_stream;
+    spp_process* p = s->owner;
+    char* l_chunk = (char*) malloc(SPP_READ_CHUNK);
+    struct pollfd l_wait[2];
+    ssize_t l_read;
+    size_t l_n;
+    int l_done = 0;
+
+    while (!l_done) {
+        l_n = 0;
+        if (!l_chunk) {
+            l_done = 1;
+        } else {
+            l_wait[0].fd = s->pipe;
+            l_wait[0].events = POLLIN;
+            l_wait[0].revents = 0;
+            l_wait[1].fd = p->wake[0];
+            l_wait[1].events = POLLIN;
+            l_wait[1].revents = 0;
+            if (poll(l_wait, 2, -1) < 0) {
+                if (errno == EINTR) continue;
+                l_done = 1;
+            } else if (l_wait[1].revents) {
+                l_done = 1;
+            } else {
+                l_read = read(s->pipe, l_chunk, SPP_READ_CHUNK);
+                if (l_read > 0) {
+                    l_n = (size_t) l_read;
+                } else if (l_read == 0 || (errno != EINTR && errno != EAGAIN)) {
+                    l_done = 1;
+                } else {
+                    continue;
+                }
+            }
+        }
+        pthread_mutex_lock(&p->lock);
+        if (l_done) {
+            s->ended = 1;
+            if (!l_chunk) s->lost = 1;
+        } else if (s->limit > 0 && s->total + l_n > s->limit) {
+            /* Past the limit the pump keeps READING, so the child never
+               blocks on a full pipe, but drops what it reads. */
+            s->truncated = 1;
+            l_n = s->limit - s->total;
+        }
+        if (l_n > 0 && s->count + l_n > s->capacity) {
+            size_t l_cap = s->capacity ? s->capacity : SPP_READ_CHUNK;
+            char* l_grown;
+            while (l_cap < s->count + l_n) l_cap *= 2;
+            l_grown = (char*) realloc(s->data, l_cap);
+            if (l_grown) {
+                s->data = l_grown;
+                s->capacity = l_cap;
+            } else {
+                s->lost = 1;
+                l_n = 0;
+            }
+        }
+        if (l_n > 0) {
+            memcpy(s->data + s->count, l_chunk, l_n);
+            s->count += l_n;
+            s->total += l_n;
+        }
+        pthread_cond_broadcast(&p->signal);
+        pthread_mutex_unlock(&p->lock);
+    }
+    free(l_chunk);
+    return NULL;
+}
+
+/* Wait for the child and record how it ended. A kill by `spp_kill' reads as
+   exit code 1, as TerminateProcess gives on Windows; any other signal as the
+   shell convention, 128 + the signal. */
+static void* spp_reap(void* a_process)
+{
+    spp_process* p = (spp_process*) a_process;
+    int l_status = 0;
+    pid_t l_pid;
+
+    do {
+        l_pid = waitpid(p->pid, &l_status, 0);
+    } while (l_pid < 0 && errno == EINTR);
+    pthread_mutex_lock(&p->lock);
+    if (l_pid < 0) {
+        p->exit_code = -1;
+    } else if (WIFEXITED(l_status)) {
+        p->exit_code = WEXITSTATUS(l_status);
+    } else if (p->killed) {
+        p->exit_code = 1;
+    } else {
+        p->exit_code = 128 + WTERMSIG(l_status);
+    }
+    p->exited = 1;
+    pthread_cond_broadcast(&p->signal);
+    pthread_mutex_unlock(&p->lock);
+    spp_release(p);
+    return NULL;
+}
+
+/* Split `a_command' by the Windows rules. Answers an argument vector whose
+   first entry is the start of the single block holding the text (free that
+   and the vector), or NULL when out of memory. `a_count' may be 0. */
+static char** spp_split_command(const char* a_command, int* a_count)
+{
+    size_t l_len = strlen(a_command);
+    char* l_text = (char*) malloc(l_len + 1);
+    char** l_arguments = (char**) malloc((l_len / 2 + 2) * sizeof(char*));
+    const char* s = a_command;
+    char* l_out = l_text;
+    size_t l_slashes, l_i;
+    int l_count = 0;
+    int l_quoted;
+
+    *a_count = 0;
+    if (!l_text || !l_arguments) {
+        free(l_text);
+        free(l_arguments);
+        return NULL;
+    }
+    for (;;) {
+        while (*s == ' ' || *s == '\t') s++;
+        if (!*s) break;
+        l_arguments[l_count++] = l_out;
+        l_quoted = 0;
+        while (*s && (l_quoted || (*s != ' ' && *s != '\t'))) {
+            if (*s == '\\') {
+                l_slashes = 0;
+                while (*s == '\\') { l_slashes++; s++; }
+                if (*s == '"') {
+                    for (l_i = 0; l_i < l_slashes / 2; l_i++) *l_out++ = '\\';
+                    if (l_slashes % 2) *l_out++ = *s++;
+                } else {
+                    for (l_i = 0; l_i < l_slashes; l_i++) *l_out++ = '\\';
+                }
+            } else if (*s == '"') {
+                l_quoted = !l_quoted;
+                s++;
+            } else {
+                *l_out++ = *s++;
+            }
+        }
+        *l_out++ = 0;
+    }
+    l_arguments[l_count] = NULL;
+    *a_count = l_count;
+    if (l_count == 0) free(l_text);
+    return l_arguments;
+}
+
+static int spp_is_program(const char* a_path)
+{
+    struct stat l_info;
+    if (stat(a_path, &l_info) != 0) return 0;
+    if (!S_ISREG(l_info.st_mode)) { errno = EACCES; return 0; }
+    return access(a_path, X_OK) == 0 ? 1 : 0;
+}
+
+/* Find `a_name' the way a shell would: as a path when it holds a slash, else
+   along PATH. `a_found' (PATH_MAX bytes) gets an absolute path, because the
+   child changes directory before it runs the program. 1 when found, else 0
+   with errno set. */
+static int spp_find_program(const char* a_name, char* a_found)
+{
+    const char* l_path;
+    const char* l_end;
+    char l_candidate[PATH_MAX];
+    size_t l_dir, l_name = strlen(a_name);
+    int l_code = ENOENT;
+
+    if (l_name == 0) { errno = ENOENT; return 0; }
+    if (strchr(a_name, '/')) {
+        if (!spp_is_program(a_name)) return 0;
+        if (a_name[0] == '/') {
+            if (l_name >= PATH_MAX) { errno = ENAMETOOLONG; return 0; }
+            memcpy(a_found, a_name, l_name + 1);
+            return 1;
+        }
+        return realpath(a_name, a_found) ? 1 : 0;
+    }
+    l_path = getenv("PATH");
+    if (!l_path) l_path = "/usr/bin:/bin";
+    for (;;) {
+        l_end = strchr(l_path, ':');
+        l_dir = l_end ? (size_t) (l_end - l_path) : strlen(l_path);
+        if (l_dir + l_name + 2 <= sizeof(l_candidate)) {
+            if (l_dir == 0) {
+                l_candidate[0] = '.';
+                l_dir = 1;
+            } else {
+                memcpy(l_candidate, l_path, l_dir);
+            }
+            l_candidate[l_dir] = '/';
+            memcpy(l_candidate + l_dir + 1, a_name, l_name + 1);
+            if (spp_is_program(l_candidate)) {
+                if (l_candidate[0] == '/') {
+                    memcpy(a_found, l_candidate, strlen(l_candidate) + 1);
+                    return 1;
+                }
+                return realpath(l_candidate, a_found) ? 1 : 0;
+            }
+            if (errno == EACCES) l_code = EACCES;
+        }
+        if (!l_end) break;
+        l_path = l_end + 1;
+    }
+    errno = l_code;
+    return 0;
+}
+
+/* Close every descriptor from `a_first' up. Async-signal-safe. */
+static void spp_close_from(int a_first, long a_limit)
+{
+    long l_fd;
+#if defined(__linux__) && defined(SYS_close_range)
+    if (syscall(SYS_close_range, (unsigned int) a_first, ~0U, 0U) == 0) return;
+#endif
+    for (l_fd = a_first; l_fd < a_limit; l_fd++) close((int) l_fd);
+}
+
+/* After the fork: become the program. Reports through `a_status' on failure. */
+static void spp_run_child(const char* a_program, char** a_arguments, const char* a_directory,
+                          int a_input, int a_output, int a_error, int a_life, int a_status,
+                          int a_own_group, long a_fd_limit)
+{
+    int l_report[2];
+    int l_next = 3;
+    sigset_t l_none;
+
+    if (a_own_group) setpgid(0, 0);
+    if (a_input == 0) {
+        fcntl(0, F_SETFD, 0);
+    } else {
+        dup2(a_input, 0);
+    }
+    dup2(a_output, 1);
+    dup2(a_error, 2);
+    if (a_life >= 0) {
+        dup2(a_life, 3);
+        l_next = 4;
+    }
+    dup2(a_status, l_next);
+    fcntl(l_next, F_SETFD, FD_CLOEXEC);
+    spp_close_from(l_next + 1, a_fd_limit);
+    /* An ignored signal would stay ignored through exec. */
+    signal(SIGPIPE, SIG_DFL);
+    l_report[0] = 0;
+    if (a_directory && chdir(a_directory) != 0) {
+        l_report[0] = 1;
+    } else {
+        sigemptyset(&l_none);
+        sigprocmask(SIG_SETMASK, &l_none, NULL);
+        execv(a_program, a_arguments);
+        l_report[0] = 2;
+    }
+    l_report[1] = errno;
+    if (write(l_next, l_report, sizeof(l_report)) < 0) { /* the parent sees a plain exit 127 */ }
+    _exit(127);
+}
+
+/* The watcher: ends child group `a_pid' when the owner's pipe ends. It keeps
+   no other descriptor, so nothing waiting on the owner's output waits on it. */
+static void spp_watch(int a_owner, int a_life, pid_t a_pid, long a_fd_limit)
+{
+    struct pollfd l_wait[2];
+    int l_i;
+
+    dup2(a_owner, 3);
+    dup2(a_life, 4);
+    for (l_i = 0; l_i < 3; l_i++) close(l_i);
+    spp_close_from(5, a_fd_limit);
+    if (chdir("/") != 0) { /* stays where it was */ }
+    l_wait[0].fd = 3;
+    l_wait[0].events = POLLIN;
+    l_wait[1].fd = 4;
+    l_wait[1].events = POLLIN;
+    for (;;) {
+        l_wait[0].revents = 0;
+        l_wait[1].revents = 0;
+        if (poll(l_wait, 2, -1) < 0) {
+            if (errno == EINTR) continue;
+            _exit(1);
+        }
+        if (l_wait[1].revents) _exit(0);
+        if (l_wait[0].revents) {
+            if (kill(-a_pid, SIGKILL) != 0) kill(a_pid, SIGKILL);
+            _exit(0);
+        }
+    }
+}
+
+/* Start `a_command' (UTF-8) in `a_directory' (UTF-8 or NULL). `a_show_window'
+   and SPP_NO_CONSOLE mean nothing here. `a_limit' caps the bytes kept per
+   output stream (0: none). Always answers a record unless malloc fails;
+   `process' is 0 when the start failed, and `error_message' says why. Free it
+   with spp_close either way. */
 static spp_process* spp_start(void* a_command, void* a_directory, int a_show_window, int a_merge_error, int a_options, int a_limit, void* a_job)
 {
-    spp_process* p = (spp_process*) calloc(1, sizeof(spp_process));
-    (void) a_command; (void) a_directory; (void) a_show_window; (void) a_merge_error; (void) a_options; (void) a_limit; (void) a_job;
-    if (p) strcpy(p->error_message, "simple_process runs child processes on Windows only");
+    spp_process* p;
+    spp_owner_job* l_job = (spp_owner_job*) a_job;
+    const char* l_directory = (const char*) a_directory;
+    int l_in[2] = {-1, -1}, l_out[2] = {-1, -1}, l_err[2] = {-1, -1};
+    int l_status[2] = {-1, -1}, l_life[2] = {-1, -1};
+    int l_child_in, l_report[2];
+    int l_argument_count = 0;
+    char** l_arguments;
+    char l_program[PATH_MAX];
+    long l_fd_limit;
+    sigset_t l_all, l_old;
+    pid_t l_pid, l_middle;
+    ssize_t l_read;
+
+    (void) a_show_window;
+    p = (spp_process*) calloc(1, sizeof(spp_process));
+    if (!p) return NULL;
+    pthread_mutex_init(&p->lock, NULL);
+    pthread_cond_init(&p->signal, NULL);
+    p->references = 1;
+    p->input = -1;
+    p->wake[0] = -1;
+    p->wake[1] = -1;
+    p->out.pipe = -1;
+    p->err.pipe = -1;
+    p->out.owner = p;
+    p->err.owner = p;
+    if (a_limit > 0) {
+        p->out.limit = (size_t) a_limit;
+        p->err.limit = (size_t) a_limit;
+    }
+
+    l_arguments = spp_split_command((const char*) a_command, &l_argument_count);
+    if (!l_arguments) { spp_set_error(p, "Reading the command", ENOMEM); return p; }
+    if (l_argument_count == 0) {
+        spp_set_error(p, "Reading the command", EINVAL);
+        free(l_arguments);
+        return p;
+    }
+    if (!spp_find_program(l_arguments[0], l_program)) { spp_set_error(p, "Finding the program", errno); goto fail; }
+
+    /* No usable stdin to inherit: fall back to a pipe. */
+    if ((a_options & SPP_INHERIT_STDIN) && fcntl(0, F_GETFD) != -1) {
+        l_child_in = 0;
+    } else {
+        if (!spp_pipe(l_in)) { spp_set_error(p, "pipe (stdin)", errno); goto fail; }
+        l_child_in = l_in[0];
+#ifdef F_SETNOSIGPIPE
+        fcntl(l_in[1], F_SETNOSIGPIPE, 1);
+#endif
+    }
+    if (!spp_pipe(l_out)) { spp_set_error(p, "pipe (stdout)", errno); goto fail; }
+    if (!a_merge_error && !spp_pipe(l_err)) { spp_set_error(p, "pipe (stderr)", errno); goto fail; }
+    if (!spp_pipe(l_status)) { spp_set_error(p, "pipe (status)", errno); goto fail; }
+    if (!spp_pipe(p->wake)) { spp_set_error(p, "pipe (wake)", errno); goto fail; }
+    if (l_job && !spp_pipe(l_life)) { spp_set_error(p, "pipe (owner)", errno); goto fail; }
+    l_fd_limit = sysconf(_SC_OPEN_MAX);
+    if (l_fd_limit < 0 || l_fd_limit > 65536) l_fd_limit = 65536;
+
+    /* Every signal stays blocked across the fork, so no Eiffel handler runs
+       in the child; the child opens the mask just before exec. */
+    sigfillset(&l_all);
+    pthread_sigmask(SIG_SETMASK, &l_all, &l_old);
+    l_pid = fork();
+    if (l_pid == 0) {
+        spp_run_child(l_program, l_arguments, (l_directory && l_directory[0]) ? l_directory : NULL,
+                      l_child_in, l_out[1], a_merge_error ? l_out[1] : l_err[1], l_life[1], l_status[1],
+                      l_job != NULL, l_fd_limit);
+    }
+    if (l_pid > 0 && l_job) {
+        setpgid(l_pid, l_pid);
+        /* Two forks: the watcher belongs to init, so nobody here reaps it. */
+        l_middle = fork();
+        if (l_middle == 0) {
+            if (fork() == 0) spp_watch(l_job->read_end, l_life[0], l_pid, l_fd_limit);
+            _exit(0);
+        }
+        if (l_middle > 0) {
+            int l_ignored;
+            while (waitpid(l_middle, &l_ignored, 0) < 0 && errno == EINTR) { }
+            p->in_job = 1;
+        }
+    }
+    if (l_pid < 0) {
+        int l_code = errno;
+        pthread_sigmask(SIG_SETMASK, &l_old, NULL);
+        spp_set_error(p, "fork", l_code);
+        goto fail;
+    }
+    pthread_sigmask(SIG_SETMASK, &l_old, NULL);
+
+    /* The child holds its own ends now. */
+    spp_close_fd(&l_in[0]);
+    spp_close_fd(&l_out[1]);
+    spp_close_fd(&l_err[1]);
+    spp_close_fd(&l_status[1]);
+    spp_close_fd(&l_life[0]);
+    spp_close_fd(&l_life[1]);
+
+    /* End of file means exec worked. */
+    do {
+        l_read = read(l_status[0], l_report, sizeof(l_report));
+    } while (l_read < 0 && errno == EINTR);
+    spp_close_fd(&l_status[0]);
+    if (l_read == (ssize_t) sizeof(l_report)) {
+        int l_ignored;
+        while (waitpid(l_pid, &l_ignored, 0) < 0 && errno == EINTR) { }
+        spp_set_error(p, l_report[0] == 1 ? "Changing to the directory" : "exec", l_report[1]);
+        p->in_job = 0;
+        goto fail;
+    }
+
+    free(l_arguments[0]);
+    free(l_arguments);
+    p->pid = l_pid;
+    p->process = 1;
+    p->input = l_in[1];          /* -1 when stdin is inherited */
+    p->out.pipe = l_out[0];
+    p->err.pipe = l_err[0];
+    if (spp_thread(&p->out.thread, spp_pump, &p->out, 0)) p->out.has_thread = 1; else p->out.ended = 1;
+    if (p->err.pipe >= 0) {
+        if (spp_thread(&p->err.thread, spp_pump, &p->err, 0)) p->err.has_thread = 1; else p->err.ended = 1;
+    } else {
+        p->err.ended = 1;
+    }
+    p->references = 2;
+    if (!spp_thread(NULL, spp_reap, p, 1)) {
+        p->references = 1;
+        p->out.ended = 1;
+        p->err.ended = 1;
+        kill(l_pid, SIGKILL);
+        { int l_ignored; while (waitpid(l_pid, &l_ignored, 0) < 0 && errno == EINTR) { } }
+        spp_set_error(p, "pthread_create (reaper)", EAGAIN);
+        p->process = 0;
+    } else if (!p->out.has_thread || (p->err.pipe >= 0 && !p->err.has_thread)) {
+        /* Without a pump the child could block forever on a full pipe. */
+        spp_set_error(p, "pthread_create (pump)", EAGAIN);
+        kill(l_pid, SIGKILL);
+        p->process = 0;
+    }
+    return p;
+
+fail:
+    free(l_arguments[0]);
+    free(l_arguments);
+    spp_close_fd(&l_in[0]);
+    spp_close_fd(&l_in[1]);
+    spp_close_fd(&l_out[0]);
+    spp_close_fd(&l_out[1]);
+    spp_close_fd(&l_err[0]);
+    spp_close_fd(&l_err[1]);
+    spp_close_fd(&l_status[0]);
+    spp_close_fd(&l_status[1]);
+    spp_close_fd(&l_life[0]);
+    spp_close_fd(&l_life[1]);
+    spp_close_fd(&p->wake[0]);
+    spp_close_fd(&p->wake[1]);
     return p;
 }
-static int spp_started(spp_process* p) { (void) p; return 0; }
+
+static int spp_started(spp_process* p) { return (p && p->process) ? 1 : 0; }
+
 static const char* spp_error(spp_process* p) { return p ? p->error_message : ""; }
-static unsigned long spp_pid(spp_process* p) { (void) p; return 0; }
-static int spp_in_job(spp_process* p) { (void) p; return 0; }
-static void* spp_new_owner_job(void) { return NULL; }
-static int spp_is_running(spp_process* p) { (void) p; return 0; }
-static int spp_exit_code(spp_process* p) { (void) p; return -1; }
-static int spp_write(spp_process* p, const char* a_data, int a_count) { (void) p; (void) a_data; (void) a_count; return 0; }
-static void spp_close_input(spp_process* p) { (void) p; }
-static int spp_input_open(spp_process* p) { (void) p; return 0; }
-static int spp_available(spp_process* p, int a_which) { (void) p; (void) a_which; return 0; }
-static int spp_take(spp_process* p, int a_which, char* a_buffer, int a_capacity) { (void) p; (void) a_which; (void) a_buffer; (void) a_capacity; return 0; }
-static int spp_drained(spp_process* p, int a_which) { (void) p; (void) a_which; return 1; }
-static int spp_lost(spp_process* p) { (void) p; return 0; }
-static int spp_truncated(spp_process* p) { (void) p; return 0; }
-static int spp_file_in_path(void* a_name) { (void) a_name; return 0; }
-static int spp_await(spp_process* p, int a_mode, int a_timeout_ms) { (void) p; (void) a_mode; (void) a_timeout_ms; return 1; }
-static int spp_wait_exit(spp_process* p, int a_timeout_ms) { (void) p; (void) a_timeout_ms; return 1; }
-static int spp_kill(spp_process* p) { (void) p; return 0; }
-static void spp_close(spp_process* p) { free(p); }
+
+static unsigned long spp_pid(spp_process* p) { return (p && p->process) ? (unsigned long) p->pid : 0; }
+static int spp_in_job(spp_process* p) { return (p && p->process) ? p->in_job : 0; }
+
+/* The pipe that ends with this program, however it ends: only this program
+   holds the write end, and it never closes it. The caller keeps the record
+   for the program's life (SIMPLE_PIPED_PROCESS.owner_job, a once per
+   process). NULL on failure. */
+static void* spp_new_owner_job(void)
+{
+    int l_ends[2];
+    spp_owner_job* l_job = (spp_owner_job*) malloc(sizeof(spp_owner_job));
+    if (!l_job) return NULL;
+    if (!spp_pipe(l_ends)) {
+        free(l_job);
+        return NULL;
+    }
+    l_job->read_end = l_ends[0];
+    l_job->write_end = l_ends[1];
+    return (void*) l_job;
+}
+
+/* Has the child exited? Never waits. */
+static int spp_is_running(spp_process* p)
+{
+    int l_result;
+    if (!p || !p->process) return 0;
+    pthread_mutex_lock(&p->lock);
+    l_result = p->exited ? 0 : 1;
+    pthread_mutex_unlock(&p->lock);
+    return l_result;
+}
+
+/* Exit code, or -1 while running. Never waits. */
+static int spp_exit_code(spp_process* p)
+{
+    int l_result;
+    if (!p || !p->process) return -1;
+    pthread_mutex_lock(&p->lock);
+    l_result = p->exited ? p->exit_code : -1;
+    pthread_mutex_unlock(&p->lock);
+    return l_result;
+}
+
+/* Write all `a_count' bytes to the child's stdin. 1 on success, 0 when the
+   pipe is gone (the child exited or closed its stdin). WAITS while the pipe
+   is full. A write to a gone reader raises SIGPIPE, which must not reach the
+   Eiffel runtime: macOS turns it off per pipe (F_SETNOSIGPIPE at the start);
+   elsewhere it is blocked for this call and any it raised is consumed. */
+static int spp_write(spp_process* p, const char* a_data, int a_count)
+{
+    int l_total = 0;
+    int l_result = 1;
+    ssize_t l_written;
+#ifndef F_SETNOSIGPIPE
+    sigset_t l_pipe, l_pending, l_old;
+    struct timespec l_now = {0, 0};
+    int l_was_pending;
+#endif
+    if (!p || p->input < 0) return 0;
+#ifndef F_SETNOSIGPIPE
+    sigemptyset(&l_pipe);
+    sigaddset(&l_pipe, SIGPIPE);
+    sigpending(&l_pending);
+    l_was_pending = sigismember(&l_pending, SIGPIPE);
+    pthread_sigmask(SIG_BLOCK, &l_pipe, &l_old);
+#endif
+    while (l_total < a_count && l_result) {
+        l_written = write(p->input, a_data + l_total, (size_t) (a_count - l_total));
+        if (l_written > 0) {
+            l_total += (int) l_written;
+        } else if (l_written == 0 || errno != EINTR) {
+            l_result = 0;
+        }
+    }
+#ifndef F_SETNOSIGPIPE
+    if (!l_was_pending) {
+        while (sigtimedwait(&l_pipe, NULL, &l_now) < 0 && errno == EINTR) { }
+    }
+    pthread_sigmask(SIG_SETMASK, &l_old, NULL);
+#endif
+    return l_result;
+}
+
+/* Close the child's stdin: it reads EOF. */
+static void spp_close_input(spp_process* p)
+{
+    if (p) spp_close_fd(&p->input);
+}
+
+static int spp_input_open(spp_process* p) { return (p && p->input >= 0) ? 1 : 0; }
+
+static spp_stream* spp_stream_of(spp_process* p, int a_which)
+{
+    return a_which == SPP_STDERR ? &p->err : &p->out;
+}
+
+/* Bytes of stream `a_which' collected and not yet taken. */
+static int spp_available(spp_process* p, int a_which)
+{
+    size_t l_count;
+    if (!p || !p->process) return 0;
+    pthread_mutex_lock(&p->lock);
+    l_count = spp_stream_of(p, a_which)->count;
+    pthread_mutex_unlock(&p->lock);
+    return l_count > 0x3FFFFFFF ? 0x3FFFFFFF : (int) l_count;
+}
+
+/* Move at most `a_capacity' collected bytes of stream `a_which' into
+   `a_buffer'. Answers how many. */
+static int spp_take(spp_process* p, int a_which, char* a_buffer, int a_capacity)
+{
+    spp_stream* s;
+    size_t l_n;
+    if (!p || !p->process || a_capacity <= 0) return 0;
+    pthread_mutex_lock(&p->lock);
+    s = spp_stream_of(p, a_which);
+    l_n = s->count < (size_t) a_capacity ? s->count : (size_t) a_capacity;
+    if (l_n > 0) {
+        memcpy(a_buffer, s->data, l_n);
+        memmove(s->data, s->data + l_n, s->count - l_n);
+        s->count -= l_n;
+    }
+    pthread_mutex_unlock(&p->lock);
+    return (int) l_n;
+}
+
+/* Has stream `a_which' ended with every byte taken? */
+static int spp_drained(spp_process* p, int a_which)
+{
+    int l_result;
+    spp_stream* s;
+    if (!p || !p->process) return 1;
+    pthread_mutex_lock(&p->lock);
+    s = spp_stream_of(p, a_which);
+    l_result = (s->ended && s->count == 0) ? 1 : 0;
+    pthread_mutex_unlock(&p->lock);
+    return l_result;
+}
+
+/* Did a stream pass its limit, so bytes were dropped? */
+static int spp_truncated(spp_process* p)
+{
+    int l_result;
+    if (!p || !p->process) return 0;
+    pthread_mutex_lock(&p->lock);
+    l_result = (p->out.truncated || p->err.truncated) ? 1 : 0;
+    pthread_mutex_unlock(&p->lock);
+    return l_result;
+}
+
+/* Is `a_name' (UTF-8) found the way `spp_start' would find it? WAITS: a dead
+   network mount on PATH costs seconds. */
+static int spp_file_in_path(void* a_name)
+{
+    char l_found[PATH_MAX];
+    return spp_find_program((const char*) a_name, l_found);
+}
+
+/* Did a pump run out of memory and drop bytes? */
+static int spp_lost(spp_process* p)
+{
+    int l_result;
+    if (!p || !p->process) return 0;
+    pthread_mutex_lock(&p->lock);
+    l_result = (p->out.lost || p->err.lost) ? 1 : 0;
+    pthread_mutex_unlock(&p->lock);
+    return l_result;
+}
+
+static int spp_ready(spp_process* p, int a_mode)
+{
+    switch (a_mode) {
+    case SPP_AWAIT_ANY:
+        return p->out.count > 0 || p->err.count > 0 || (p->out.ended && p->err.ended);
+    case SPP_AWAIT_LINE:
+        return p->out.ended || (p->out.count > 0 && memchr(p->out.data, '\n', p->out.count) != NULL);
+    default:
+        return p->out.ended && p->err.ended;
+    }
+}
+
+static long long spp_now_ms(void)
+{
+    struct timespec l_now;
+    clock_gettime(CLOCK_MONOTONIC, &l_now);
+    return (long long) l_now.tv_sec * 1000 + l_now.tv_nsec / 1000000;
+}
+
+/* With the lock held: wait for a change, at most `a_ms' (negative: no limit). */
+static void spp_wait_change(spp_process* p, long long a_ms)
+{
+    struct timespec l_until;
+    long long l_slice = (a_ms < SPP_WAIT_SLICE_MS) ? a_ms : SPP_WAIT_SLICE_MS;
+    if (a_ms < 0) {
+        pthread_cond_wait(&p->signal, &p->lock);
+    } else {
+        clock_gettime(CLOCK_REALTIME, &l_until);
+        l_until.tv_sec += (time_t) (l_slice / 1000);
+        l_until.tv_nsec += (long) (l_slice % 1000) * 1000000L;
+        if (l_until.tv_nsec >= 1000000000L) {
+            l_until.tv_sec += 1;
+            l_until.tv_nsec -= 1000000000L;
+        }
+        pthread_cond_timedwait(&p->signal, &p->lock, &l_until);
+    }
+}
+
+/* Wait until `a_mode' holds or `a_timeout_ms' passes (negative: forever).
+   1 when it holds, 0 on timeout. */
+static int spp_await(spp_process* p, int a_mode, int a_timeout_ms)
+{
+    long long l_start = spp_now_ms();
+    long long l_left = -1;
+    int l_result = 0;
+    if (!p || !p->process) return 1;
+    pthread_mutex_lock(&p->lock);
+    for (;;) {
+        if (spp_ready(p, a_mode)) { l_result = 1; break; }
+        if (a_timeout_ms >= 0) {
+            l_left = (long long) a_timeout_ms - (spp_now_ms() - l_start);
+            if (l_left <= 0) break;
+        }
+        spp_wait_change(p, l_left);
+    }
+    pthread_mutex_unlock(&p->lock);
+    return l_result;
+}
+
+/* Wait for the child to exit. 1 when it has, 0 on timeout (negative: forever). */
+static int spp_wait_exit(spp_process* p, int a_timeout_ms)
+{
+    long long l_start = spp_now_ms();
+    long long l_left = -1;
+    int l_result = 0;
+    if (!p || !p->process) return 1;
+    pthread_mutex_lock(&p->lock);
+    for (;;) {
+        if (p->exited) { l_result = 1; break; }
+        if (a_timeout_ms >= 0) {
+            l_left = (long long) a_timeout_ms - (spp_now_ms() - l_start);
+            if (l_left <= 0) break;
+        }
+        spp_wait_change(p, l_left);
+    }
+    pthread_mutex_unlock(&p->lock);
+    return l_result;
+}
+
+static int spp_kill(spp_process* p)
+{
+    int l_result = 0;
+    if (!p || !p->process) return 0;
+    pthread_mutex_lock(&p->lock);
+    if (!p->exited) {
+        p->killed = 1;
+        l_result = kill(p->pid, SIGKILL) == 0 ? 1 : 0;
+    }
+    pthread_mutex_unlock(&p->lock);
+    return l_result;
+}
+
+static void spp_join_pump(spp_stream* s)
+{
+    if (s->has_thread) {
+        pthread_join(s->thread, NULL);
+        s->has_thread = 0;
+    }
+    spp_close_fd(&s->pipe);
+    free(s->data);
+    s->data = NULL;
+    s->count = 0;
+    s->capacity = 0;
+}
+
+/* Close stdin, stop the pumps, release everything. Does NOT kill the child:
+   one still running keeps running, and its later writes fail. */
+static void spp_close(spp_process* p)
+{
+    if (!p) return;
+    spp_close_input(p);
+    spp_close_fd(&p->wake[1]);
+    spp_join_pump(&p->out);
+    spp_join_pump(&p->err);
+    spp_close_fd(&p->wake[0]);
+    spp_release(p);
+}
 
 #endif
 

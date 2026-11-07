@@ -2,7 +2,7 @@ note
 	description: "[
 		The child the stdin/UTF-8 tests run (target simple_process_echo,
 		executable sp_echo_child.exe). Byte-exact: it moves bytes with
-		ReadFile/WriteFile on the raw standard handles, so no text-mode
+		raw reads and writes on the standard streams, so no text-mode
 		CR LF translation and no code page touch them.
 
 		    sp_echo_child                 copy stdin to stdout until EOF
@@ -116,87 +116,42 @@ feature {NONE} -- Externals
 	c_copy (a_from, a_to: INTEGER)
 			-- Copy standard handle `a_from' to `a_to' until EOF, chunk by chunk.
 		external
-			"C blocking inline use <windows.h>"
+			"C blocking inline use %"sp_test_support.h%""
 		alias
-			"[
-				HANDLE l_in = GetStdHandle ((DWORD) $a_from);
-				HANDLE l_out = GetStdHandle ((DWORD) $a_to);
-				char l_buffer [65536];
-				DWORD l_n = 0, l_w = 0, l_done = 0;
-				while (ReadFile (l_in, l_buffer, sizeof (l_buffer), &l_n, NULL) && l_n > 0) {
-					for (l_done = 0; l_done < l_n; l_done += l_w) {
-						if (!WriteFile (l_out, l_buffer + l_done, l_n - l_done, &l_w, NULL) || l_w == 0) return;
-					}
-				}
-			]"
+			"spt_copy ((int) $a_from, (int) $a_to);"
 		end
 
 	c_write_text (a_to: INTEGER; a_text: POINTER)
 			-- Write the C string `a_text' to standard handle `a_to'.
 		external
-			"C blocking inline use <windows.h>"
+			"C blocking inline use %"sp_test_support.h%""
 		alias
-			"[
-				DWORD l_w = 0;
-				WriteFile (GetStdHandle ((DWORD) $a_to), (const char *) $a_text, (DWORD) strlen ((const char *) $a_text), &l_w, NULL);
-			]"
+			"spt_write_count ((int) $a_to, (const char *) $a_text, (int) strlen ((const char *) $a_text));"
 		end
 
 	c_write_count (a_to: INTEGER; a_data: POINTER; a_count: INTEGER)
 			-- Write `a_count' bytes at `a_data' to standard handle `a_to'.
 		external
-			"C blocking inline use <windows.h>"
+			"C blocking inline use %"sp_test_support.h%""
 		alias
-			"[
-				DWORD l_w = 0, l_done = 0;
-				while (l_done < (DWORD) $a_count) {
-					if (!WriteFile (GetStdHandle ((DWORD) $a_to), (const char *) $a_data + l_done, (DWORD) $a_count - l_done, &l_w, NULL) || l_w == 0) return;
-					l_done += l_w;
-				}
-			]"
+			"spt_write_count ((int) $a_to, (const char *) $a_data, (int) $a_count);"
 		end
 
 	c_flood (a_to, a_count: INTEGER)
 			-- Write `a_count' bytes of a repeating pattern to standard handle `a_to'.
 		external
-			"C blocking inline use <windows.h>"
+			"C blocking inline use %"sp_test_support.h%""
 		alias
-			"[
-				HANDLE l_out = GetStdHandle ((DWORD) $a_to);
-				char l_buffer [4096];
-				int l_i, l_left = (int) $a_count;
-				DWORD l_w = 0, l_chunk;
-				for (l_i = 0; l_i < 4096; l_i++) l_buffer [l_i] = (char) ('a' + (l_i % 26));
-				while (l_left > 0) {
-					l_chunk = l_left > 4096 ? 4096 : (DWORD) l_left;
-					if (!WriteFile (l_out, l_buffer, l_chunk, &l_w, NULL) || l_w == 0) return;
-					l_left -= (int) l_w;
-				}
-			]"
+			"spt_flood ((int) $a_to, (int) $a_count);"
 		end
 
 	c_cat (a_path: POINTER; a_to, a_chunk, a_pause_ms: INTEGER): INTEGER
-			-- Write the bytes of file `a_path' (UTF-16) to standard handle `a_to',
+			-- Write the bytes of file `a_path' (a NATIVE_STRING) to standard handle `a_to',
 			-- `a_chunk' bytes per write, pausing `a_pause_ms' after each. 0 on success.
 		external
-			"C blocking inline use <windows.h>"
+			"C blocking inline use %"sp_test_support.h%""
 		alias
-			"[
-				HANDLE l_file = CreateFileW ((LPCWSTR) $a_path, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-				HANDLE l_out = GetStdHandle ((DWORD) $a_to);
-				char l_buffer [65536];
-				DWORD l_n = 0, l_w = 0, l_done;
-				if (l_file == INVALID_HANDLE_VALUE) return 2;
-				DWORD l_chunk = ($a_chunk > 0 && $a_chunk < 65536) ? (DWORD) $a_chunk : 65536;
-				while (ReadFile (l_file, l_buffer, l_chunk, &l_n, NULL) && l_n > 0) {
-					for (l_done = 0; l_done < l_n; l_done += l_w) {
-						if (!WriteFile (l_out, l_buffer + l_done, l_n - l_done, &l_w, NULL) || l_w == 0) { CloseHandle (l_file); return 3; }
-					}
-					if ($a_pause_ms > 0) Sleep ((DWORD) $a_pause_ms);
-				}
-				CloseHandle (l_file);
-				return 0;
-			]"
+			"return spt_cat ((void *) $a_path, (int) $a_to, (int) $a_chunk, (int) $a_pause_ms);"
 		end
 
 end

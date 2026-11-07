@@ -58,8 +58,7 @@ note
 		Output is kept in full unless `set_output_limit' caps it; a capped
 		stream is still drained, and `was_output_truncated' reports the cut.
 
-		Windows only. On other platforms `start' fails with a
-		`last_error' that says so.
+		Windows, macOS and Linux. See SIMPLE_PROCESS for how a command runs.
 	]"
 	author: "Larry Rix"
 	date: "$Date$"
@@ -145,7 +144,8 @@ feature -- Settings
 			-- Does the child end when this program ends, however it ends -
 			-- closed, crashed, or killed from Task Manager? (1.2.0) It then
 			-- joins a Windows job that kills its members when this program's
-			-- last handle to the job closes. Default False: a child outlives
+			-- last handle to the job closes; elsewhere a small watcher process
+			-- does the same when a pipe only this program holds ends. Default False: a child outlives
 			-- a program that ends without `kill', as before.
 
 	set_ends_with_owner (a_value: BOOLEAN)
@@ -558,8 +558,8 @@ feature {NONE} -- Implementation
 
 	owner_job: POINTER
 			-- The kill-on-close job every `ends_with_owner' child joins: one per
-			-- program, never closed, so Windows closes it - and ends its members -
-			-- when the program ends. Null if Windows refused to create it.
+			-- program, never closed, so the system closes it - and ends its members -
+			-- when the program ends. Null if it could not be created.
 		once ("PROCESS")
 			Result := c_new_owner_job
 		end

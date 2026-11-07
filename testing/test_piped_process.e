@@ -310,7 +310,7 @@ feature -- Tests: plain execute, 1.1.0 (stdin, no 1 MB cap, any command line)
 			assert_integers_equal ("child found the file", 0, l_process.last_exit_code)
 			assert_true ("contents", output_of (l_process).same_string (sample_line (3)))
 			assert_false ("Hebrew name not on PATH, and no crash", l_process.has_command (from_codes (<<0x05E9, 0x05DC, 0x05D5, 0x05DD>>)))
-			assert_true ("cmd is on PATH", l_process.has_command ("cmd"))
+			assert_true ("the shell is on PATH", l_process.has_command ((create {SP_TEST_COMMANDS}).shell_program))
 		end
 
 	test_async_takes_any_command_line_and_gives_an_empty_stdin
@@ -573,39 +573,38 @@ feature {NONE} -- The child
 		end
 
 	echo_child: STRING_32
-			-- Full path of sp_echo_child.exe.
+			-- Full path of the echo child:  when set, for a build
+			-- kept outside this folder, else under this folder's EIFGENs.
 		local
 			l_env: EXECUTION_ENVIRONMENT
 		once
 			create l_env
-			create Result.make_from_string_general (l_env.current_working_path.name)
-			Result.append ({STRING_32} "\EIFGENs\simple_process_echo\F_code\sp_echo_child.exe")
+			if attached l_env.item ("SP_ECHO_CHILD") as l_set then
+				create Result.make_from_string_general (l_set)
+			else
+				create Result.make_from_string_general (l_env.current_working_path.name)
+				if {PLATFORM}.is_windows then
+					Result.append ({STRING_32} "\EIFGENs\simple_process_echo\F_code\sp_echo_child.exe")
+				else
+					Result.append ({STRING_32} "/EIFGENs/simple_process_echo/F_code/sp_echo_child")
+				end
+			end
 		end
 
 	c_pid_alive (a_pid: NATURAL_32; a_wait_ms: INTEGER): INTEGER
 			-- 1 if process `a_pid' is still running after waiting up to `a_wait_ms' for it to end.
 		external
-			"C blocking inline use <windows.h>"
+			"C blocking inline use %"sp_test_support.h%""
 		alias
-			"[
-				HANDLE l_h = OpenProcess (SYNCHRONIZE, FALSE, (DWORD) $a_pid);
-				DWORD l_r;
-				if (!l_h) return 0;
-				l_r = WaitForSingleObject (l_h, (DWORD) $a_wait_ms);
-				CloseHandle (l_h);
-				return (l_r == WAIT_TIMEOUT) ? 1 : 0;
-			]"
+			"return spt_pid_alive ((unsigned int) $a_pid, (int) $a_wait_ms);"
 		end
 
 	c_kill_pid (a_pid: NATURAL_32)
 			-- End process `a_pid'.
 		external
-			"C inline use <windows.h>"
+			"C inline use %"sp_test_support.h%""
 		alias
-			"[
-				HANDLE l_h = OpenProcess (PROCESS_TERMINATE, FALSE, (DWORD) $a_pid);
-				if (l_h) { TerminateProcess (l_h, 1); CloseHandle (l_h); }
-			]"
+			"spt_kill_pid ((unsigned int) $a_pid);"
 		end
 
 	echo_command (a_arguments: READABLE_STRING_GENERAL): STRING_32
@@ -746,10 +745,12 @@ feature {NONE} -- Sample data
 		do
 			if attached (create {EXECUTION_ENVIRONMENT}).item ("TEMP") as l_temp then
 				create Result.make_from_string_general (l_temp)
+			elseif attached (create {EXECUTION_ENVIRONMENT}).item ("TMPDIR") as l_temp then
+				create Result.make_from_string_general (l_temp)
 			else
 				create Result.make_from_string_general (".")
 			end
-			Result.append_character ('\')
+			Result.append_character ({OPERATING_ENVIRONMENT}.directory_separator)
 			Result.append (a_name)
 			create l_file.make_with_name (Result)
 			l_file.create_read_write
