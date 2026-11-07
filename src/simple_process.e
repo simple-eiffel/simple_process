@@ -38,11 +38,13 @@ note
 		its stdin instead - any size, with no pipe deadlock.
 
 		ANY COMMAND LINE (1.1.0). Commands and directories may hold any
-		characters: they reach CreateProcessW as UTF-16. Before 1.1.0 a
+		characters: they reach the system as UTF-16 on Windows, UTF-8 elsewhere. Before 1.1.0 a
 		character above U+00FF violated a `to_string_8' precondition.
 
-		Windows only: elsewhere every execution fails with a
-		`last_error' that says so.
+		EVERY PLATFORM. Windows, macOS and Linux. A command runs directly,
+		with no shell, on all three: to get one, ask for it (cmd /c ... on
+		Windows, sh -c "..." elsewhere). Off Windows the command line is
+		split by the Windows rules and is UTF-8.
 	]"
 	author: "Larry Rix"
 	date: "$Date$"
@@ -328,8 +330,8 @@ feature -- Query
 	is_in_path,
 	command_exists,
 	has_command (a_filename: READABLE_STRING_GENERAL): BOOLEAN
-			-- Does `a_filename' exist in system PATH? (".exe" is tried when it
-			-- has no extension; any characters, since 1.1.0.)
+			-- Does `a_filename' exist in system PATH? (On Windows ".exe" is tried
+			-- when it has no extension; any characters, since 1.1.0.)
 		require
 			filename_not_empty: not a_filename.is_empty
 		local
@@ -415,7 +417,7 @@ feature {NONE} -- Model Implementation
 feature {NONE} -- C externals
 
 	c_file_in_path (a_filename: POINTER): INTEGER
-			-- Is `a_filename' (UTF-16) on the search path?
+			-- Is `a_filename' (a NATIVE_STRING) on the search path?
 			--
 			-- BLOCKING. SearchPathW walks the application directory, the system
 			-- and Windows directories and then every entry of PATH; one dead

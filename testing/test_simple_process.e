@@ -32,7 +32,7 @@ feature -- Tests
 		local
 			l_output: STRING_32
 		do
-			l_output := helper.output_of_command ("cmd /c echo Hello World", Void)
+			l_output := helper.output_of_command (shell.shell_command ("echo Hello World"), Void)
 			assert ("has output", not l_output.is_empty)
 			assert ("contains hello", l_output.has_substring ("Hello"))
 		end
@@ -44,7 +44,7 @@ feature -- Tests
 		local
 			l_output: STRING_32
 		do
-			l_output := helper.output_of_command ("cmd /c dir", Void)
+			l_output := helper.output_of_command (shell.listing_command, Void)
 			assert ("has output", not l_output.is_empty)
 			-- dir output should have something
 			assert ("has content", l_output.count > 10)
@@ -55,7 +55,7 @@ feature -- Tests
 		note
 			testing: "execution/isolated"
 		do
-			assert ("cmd.exe in path", helper.has_file_in_path ("cmd.exe"))
+			assert ("cmd.exe in path", helper.has_file_in_path (shell.shell_program))
 		end
 
 	test_has_file_in_path_nonexistent
@@ -77,10 +77,10 @@ feature -- Tests
 		local
 			l_output: STRING_32
 		do
-			l_output := helper.output_of_command ("cmd /c dir", "C:\")
+			l_output := helper.output_of_command (shell.listing_command, shell.root_folder)
 			assert ("has output", not l_output.is_empty)
 			-- C:\ dir should have Program Files or Windows
-			assert ("has expected content", l_output.has_substring ("Program") or l_output.has_substring ("Windows"))
+			assert ("has expected content", l_output.has_substring ("Program") or l_output.has_substring ("Windows") or l_output.has_substring ("usr"))
 		end
 
 	test_show_process_toggle
@@ -115,7 +115,7 @@ feature -- Tests
 			l_output: STRING_32
 		do
 			-- Test that where command can execute (output may vary by env)
-			l_output := helper.output_of_command ("cmd /c echo test_where", Void)
+			l_output := helper.output_of_command (shell.shell_command ("echo test_where"), Void)
 			-- Just verify we can run commands through cmd
 			assert ("can run cmd", l_output.has_substring ("test_where"))
 		end
@@ -127,7 +127,7 @@ feature -- Tests
 		local
 			l_output: STRING_32
 		do
-			l_output := helper.output_of_command ("cmd /c echo one two three", Void)
+			l_output := helper.output_of_command (shell.shell_command ("echo one two three"), Void)
 			assert ("has output", not l_output.is_empty)
 			assert ("has one", l_output.has_substring ("one"))
 			assert ("has two", l_output.has_substring ("two"))
@@ -135,6 +135,12 @@ feature -- Tests
 		end
 
 feature {NONE} -- Implementation
+
+	shell: SP_TEST_COMMANDS
+			-- Commands for this platform.
+		once
+			create Result
+		end
 
 	helper: SIMPLE_PROCESS_HELPER
 			-- Helper under test

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <system xmlns="http://www.eiffel.com/developers/xml/configuration-1-23-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-23-0 http://www.eiffel.com/developers/xml/configuration-1-23-0.xsd" name="simple_process" uuid="B8F2C3A1-7D4E-4F9B-A5C6-8E1D2F3A4B5C" library_target="simple_process">
-	<description>Simple Process Library - SCOOP-compatible process execution using Win32 API</description>
+	<description>Simple Process Library - SCOOP-compatible process execution on Windows, macOS and Linux</description>
 	<target name="simple_process">
 		<root all_classes="true"/>
 		<file_rule>
@@ -17,6 +17,11 @@
 			<void_safety support="all"/>
 		</capability>
 		<external_include location="$(SIMPLE_EIFFEL)/simple_process/Clib"/>
+		<external_linker_flag value="-lpthread">
+			<condition>
+				<platform excluded_value="windows"/>
+			</condition>
+		</external_linker_flag>
 		<library name="base" location="$ISE_LIBRARY\library\base\base.ecf"/>
 		<library name="simple_datetime" location="$SIMPLE_EIFFEL/simple_datetime/simple_datetime.ecf"/>
 		<library name="simple_mml" location="$SIMPLE_EIFFEL/simple_mml/simple_mml.ecf"/>

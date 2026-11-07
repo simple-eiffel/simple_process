@@ -232,7 +232,7 @@ feature -- Basic operations
 
 feature -- Constants
 
-	Slow_command: STRING_8 = "powershell -NoProfile -NonInteractive -Command Start-Sleep -Seconds 3; Write-Output slept"
+	Slow_command: STRING_8
 			-- A child that lives about three seconds and then prints one
 			-- word, so the run can be told from a failure to start.
 			--
@@ -240,6 +240,14 @@ feature -- Constants
 			-- its directory is on the default PATH, which `ping -n 4' cannot
 			-- claim on a machine whose PATH has been trimmed, and `timeout
 			-- /t' cannot claim at all with stdout redirected.
+			-- Elsewhere a POSIX shell does the same.
+		once
+			if {PLATFORM}.is_windows then
+				Result := "powershell -NoProfile -NonInteractive -Command Start-Sleep -Seconds 3; Write-Output slept"
+			else
+				Result := "sh -c %"sleep 3; echo slept%""
+			end
+		end
 
 	Child_life_ms: INTEGER = 3_000
 			-- How long the child sleeps. Its startup adds a little more,

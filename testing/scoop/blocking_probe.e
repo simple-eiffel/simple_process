@@ -124,17 +124,17 @@ feature {NONE} -- Externals
 	c_sleep_unmarked (a_milliseconds: INTEGER)
 			-- Block this thread in C where the runtime cannot see it.
 		external
-			"C inline use <windows.h>"
+			"C inline use %"sp_test_support.h%""
 		alias
-			"Sleep((DWORD) $a_milliseconds);"
+			"spt_sleep_ms ((int) $a_milliseconds);"
 		end
 
 	c_sleep_blocking (a_milliseconds: INTEGER)
 			-- Block this thread in C, having told the runtime so.
 		external
-			"C blocking inline use <windows.h>"
+			"C blocking inline use %"sp_test_support.h%""
 		alias
-			"Sleep((DWORD) $a_milliseconds);"
+			"spt_sleep_ms ((int) $a_milliseconds);"
 		end
 
 invariant
