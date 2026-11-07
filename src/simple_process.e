@@ -126,6 +126,13 @@ feature -- Access
 			-- Did the last execution's output pass `output_limit', so the
 			-- rest was dropped?
 
+feature -- Constants
+
+	Start_failed_exit_code: INTEGER = 127
+			-- `last_exit_code' when the command could not be started at all:
+			-- the POSIX shell's code for "command not found". `was_successful'
+			-- is then False and `last_error' says why.
+
 feature -- Settings
 
 	show_window: BOOLEAN
@@ -409,8 +416,10 @@ feature {NONE} -- Implementation
 				last_output := utf_8.text (l_child.pending_output)
 				was_successful := True
 			elseif attached l_child.last_error as l_reason then
+				last_exit_code := Start_failed_exit_code
 				last_error := l_reason
 			else
+				last_exit_code := Start_failed_exit_code
 				last_error := {STRING_32} "Failed to execute command"
 			end
 
@@ -421,6 +430,7 @@ feature {NONE} -- Implementation
 			command_recorded: attached last_command as lc and then lc.same_string (a_command)
 			success_has_output: was_successful implies attached last_output
 			failure_has_reason: not was_successful implies attached last_error
+			start_failure_has_its_code: not was_successful implies last_exit_code = Start_failed_exit_code
 			cut_only_with_limit: was_output_truncated implies output_limit > 0
 		end
 

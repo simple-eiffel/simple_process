@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- A command that cannot be started at all now reports `last_exit_code` 127
+  (`Start_failed_exit_code`, the POSIX shell's "command not found"), not 0.
+  `was_successful` stays False and `last_error` says why, as before.
+
 ### Added
 - macOS and Linux: real POSIX child processes in simple_process_pipe.h, replacing the stub that failed every start. Same contract as Windows: no shell, pump threads, owner-bound children.
 
