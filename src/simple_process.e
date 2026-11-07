@@ -72,34 +72,55 @@ feature {NONE} -- Initialization
 
 feature -- Access
 
-	last_output,
+	last_output: detachable STRING_32
+			-- Output from last command execution, decoded as UTF-8.
+
 	output,
 	stdout,
 	result_text,
 	captured_output: detachable STRING_32
-			-- Output from last command execution, decoded as UTF-8.
+			-- `last_output' by another name.
+		do
+			Result := last_output
+		end
 
 	last_output_bytes: detachable STRING_8
 			-- The raw bytes behind `last_output', as the child wrote them.
 
-	last_exit_code,
+	last_exit_code: INTEGER
+			-- Exit code from last command execution
+
 	exit_code,
 	return_code,
 	status_code: INTEGER
-			-- Exit code from last command execution
+			-- `last_exit_code' by another name.
+		do
+			Result := last_exit_code
+		end
 
-	last_error,
+	last_error: detachable STRING_32
+			-- Error message if execution failed
+
 	error_message,
 	stderr,
 	failure_reason: detachable STRING_32
-			-- Error message if execution failed
+			-- `last_error' by another name.
+		do
+			Result := last_error
+		end
 
-	was_successful,
+	was_successful: BOOLEAN
+			-- Did the last execution run? True whatever its exit code.
+
 	succeeded,
 	ok,
 	passed,
 	completed_ok: BOOLEAN
-			-- Was last execution successful?
+			-- Did the last execution run and exit with 0? `was_successful' alone
+			-- says only that it ran, whatever its exit code.
+		do
+			Result := was_successful and last_exit_code = 0
+		end
 
 	was_output_truncated: BOOLEAN
 			-- Did the last execution's output pass `output_limit', so the
