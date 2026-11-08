@@ -13,6 +13,9 @@
   <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT">
   <img src="https://img.shields.io/badge/Eiffel-25.02-purple.svg" alt="Eiffel 25.02">
   <img src="https://img.shields.io/badge/DBC-Contracts-green.svg" alt="Design by Contract">
+  <img src="https://img.shields.io/badge/Windows-tests%20pass-0078D6?logo=windows&logoColor=white" alt="Windows: tests pass">
+  <img src="https://img.shields.io/badge/Linux-tests%20pass-FCC624?logo=linux&logoColor=black" alt="Linux: tests pass">
+  <img src="https://img.shields.io/badge/macOS-tests%20pass-000000?logo=apple&logoColor=white" alt="macOS: tests pass">
 </p>
 
 **SCOOP-compatible process execution for Eiffel** — Win32 API wrapper with output capture. Part of the [Simple Eiffel](https://github.com/simple-eiffel) ecosystem.
