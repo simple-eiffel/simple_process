@@ -158,6 +158,22 @@ feature -- Settings
 			set: ends_with_owner = a_value
 		end
 
+	suppresses_console: BOOLEAN
+			-- Does a console child get no console window even when
+			-- `show_window'? (What SIMPLE_PROCESS has always done; a
+			-- console helper shown the ordinary way, so a dialog of its own is not
+			-- started hidden, wants both.)
+
+	set_suppresses_console (a_value: BOOLEAN)
+			-- Set `suppresses_console' to `a_value'.
+		require
+			not_started: not is_started
+		do
+			suppresses_console := a_value
+		ensure
+			set: suppresses_console = a_value
+		end
+
 feature {SIMPLE_PROCESS, SIMPLE_ASYNC_PROCESS} -- Settings for the classes built on this one
 
 	inherits_standard_input: BOOLEAN
@@ -172,20 +188,6 @@ feature {SIMPLE_PROCESS, SIMPLE_ASYNC_PROCESS} -- Settings for the classes built
 			inherits_standard_input := a_value
 		ensure
 			set: inherits_standard_input = a_value
-		end
-
-	suppresses_console: BOOLEAN
-			-- Does a console child get no console window even when
-			-- `show_window'? (What SIMPLE_PROCESS has always done.)
-
-	set_suppresses_console (a_value: BOOLEAN)
-			-- Set `suppresses_console' to `a_value'.
-		require
-			not_started: not is_started
-		do
-			suppresses_console := a_value
-		ensure
-			set: suppresses_console = a_value
 		end
 
 feature -- Status report
