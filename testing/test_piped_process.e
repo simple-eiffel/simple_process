@@ -774,7 +774,9 @@ feature {NONE} -- Sample data
 		end
 
 	temporary_file_named (a_name: READABLE_STRING_32; a_bytes: STRING_8): STRING_32
-			-- Write `a_bytes' to `a_name' in the temporary directory; its full path.
+			-- Write `a_bytes' to `a_name' in the temporary directory; its full path. Never the
+			-- working directory: on Linux and macOS, with neither TEMP nor TMPDIR set, the
+			-- files went into the checkout the tests ran from.
 		local
 			l_file: RAW_FILE
 		do
@@ -782,8 +784,10 @@ feature {NONE} -- Sample data
 				create Result.make_from_string_general (l_temp)
 			elseif attached (create {EXECUTION_ENVIRONMENT}).item ("TMPDIR") as l_temp then
 				create Result.make_from_string_general (l_temp)
+			elseif {PLATFORM}.is_windows then
+				create Result.make_from_string_general ("C:\Windows\Temp")
 			else
-				create Result.make_from_string_general (".")
+				create Result.make_from_string_general ("/tmp")
 			end
 			Result.append_character ({OPERATING_ENVIRONMENT}.directory_separator)
 			Result.append (a_name)
