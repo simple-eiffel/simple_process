@@ -18,26 +18,26 @@
   <img src="https://img.shields.io/badge/macOS-tests%20pass-000000?logo=apple&logoColor=white" alt="macOS: tests pass">
 </p>
 
-**SCOOP-compatible process execution for Eiffel** — Win32 API wrapper with output capture. Part of the [Simple Eiffel](https://github.com/simple-eiffel) ecosystem.
+**SCOOP-compatible process execution for Eiffel** — native process calls (Win32, or POSIX on macOS and Linux) with output capture. Part of the [Simple Eiffel](https://github.com/simple-eiffel) ecosystem.
 
 ## Status
 
 ✅ **Production Ready** — v1.2.0
-- 41 tests passing, plus a 7-test SCOOP freeze assault
+- 44 tests passing, plus a 7-test SCOOP freeze assault
 - **A child gets an empty stdin**, output is **never silently cut**, and commands may hold **any characters** (1.1.0)
 - **Write to a child's stdin** without pipe deadlock, any size (1.1.0)
-- **A child can end with its owner**: `set_ends_with_owner (True)` and Windows ends it if this program crashes or is killed (1.2.0)
+- **A child can end with its owner**: `set_ends_with_owner (True)` and the child ends if this program crashes or is killed, on every platform (1.2.0)
 - **Output is UTF-8 decoded**; raw bytes kept (1.1.0, see CHANGELOG for what changed)
 - **A running child never stops another processor's allocator** (see CHANGELOG 1.0.1)
 - SCOOP-compatible (no thread dependency)
-- Direct Win32 API wrapper
+- Direct system calls: Win32 on Windows, fork/exec on macOS and Linux
 - Full Design by Contract coverage
 
 ## Overview
 
-SIMPLE_PROCESS provides SCOOP-compatible process execution for Eiffel applications. It wraps Win32 Process APIs through a clean C interface, enabling command execution with output capture without threading complications.
+SIMPLE_PROCESS provides SCOOP-compatible process execution for Eiffel applications. It wraps the system process calls through a clean C interface, enabling command execution with output capture without threading complications.
 
-**Important:** This library has **no dependency on the EiffelStudio process library**. It uses direct Win32 API calls through a custom C wrapper, making it fully SCOOP-compatible.
+**Important:** This library has **no dependency on the EiffelStudio process library**. It uses direct system calls through a custom C wrapper, making it fully SCOOP-compatible.
 
 ---
 
@@ -45,14 +45,14 @@ SIMPLE_PROCESS provides SCOOP-compatible process execution for Eiffel applicatio
 
 ### Process Operations
 
-- **Execute Commands** - Run shell commands and capture output
+- **Execute Commands** - Run programs and capture output (no shell: use `cmd /c` or `sh -c`)
 - **Working Directory** - Execute in specific directories
 - **Output Capture** - Get stdout as STRING_32, UTF-8 decoded (raw bytes in `last_output_bytes`)
 - **Standard Input** - Run with input (`execute_with_input`), or talk to a running child line by line (`SIMPLE_PIPED_PROCESS`)
 - **Exit Codes** - Access process exit codes
 - **Error Handling** - Detailed error messages on failure
 - **PATH Lookup** - Check if executables exist in PATH
-- **Window Visibility** - Show/hide process windows
+- **Window Visibility** - Show/hide process windows (Windows only; ignored elsewhere)
 
 ---
 
@@ -70,7 +70,11 @@ git clone https://github.com/simple-eiffel/simple_process.git
 
 3. Set the environment variable (one-time setup for all simple_* libraries):
 ```bash
+# Windows
 set SIMPLE_EIFFEL=D:\prod
+
+# macOS/Linux
+export SIMPLE_EIFFEL=$HOME/simple_eiffel
 ```
 
 4. Add to your ECF file:
@@ -211,7 +215,7 @@ Also `write_bytes`, `write_text`, `receive_output`, `await_output`,
 `_text` forms, `set_merge_error_output (False)` to keep stderr out of a
 protocol on stdout, `kill`, `exit_code`. Each output stream is drained by its
 own C thread from the moment the child starts, so a write never deadlocks
-against the child's output. Windows only.
+against the child's output. Windows, macOS and Linux.
 
 #### Settings
 
@@ -260,10 +264,15 @@ ec -config simple_process.ecf -target simple_process -c_compile
 ```bash
 /d/prod/ec.sh test -config simple_process.ecf -target simple_process_echo    # the test child, first
 /d/prod/ec.sh test -config simple_process.ecf -target simple_process_tests
-./EIFGENs/simple_process_tests/F_code/simple_process.exe
+./EIFGENs/simple_process_tests/F_code/simple_process.exe   # no `.exe` on macOS/Linux
 ```
 
-**Test Results:** 41 tests passing, including 1000/1000 Hebrew-and-Greek
+The tests need the child program, so build `simple_process_echo` first. On
+macOS and Linux, when builds go outside the repo folder, set `SP_ECHO_CHILD`
+to the built `sp_echo_child`; without it 22 of 44 tests fail. The tests write their
+temporary files to the system's temp folder (`/tmp`, or `%TEMP%` on Windows), not the checkout.
+
+**Test Results:** 44 tests passing, including 1000/1000 Hebrew-and-Greek
 lines intact through every capture path and 1.5 MB each way through stdin
 and stdout
 
@@ -271,7 +280,7 @@ and stdout
 
 ```bash
 /d/prod/ec.sh test -config simple_process.ecf -target simple_process_scoop_tests
-./EIFGENs/simple_process_scoop_tests/F_code/simple_process.exe
+./EIFGENs/simple_process_scoop_tests/F_code/simple_process.exe   # no `.exe` on macOS/Linux
 ```
 
 Seven tests on two processors. A real three-second child runs through
@@ -332,7 +341,7 @@ If you were using the previous version that depended on the EiffelStudio process
 
 ### New (SCOOP-compatible)
 ```eiffel
--- Uses direct Win32 API calls
+-- Uses direct system calls
 -- No thread dependencies
 -- Cleaner, simpler API
 local
@@ -347,9 +356,9 @@ end
 
 ## Dependencies
 
-- **Windows OS** - Process API is Windows-specific
+- **Windows, macOS or Linux**
 - **EiffelStudio 23.09+** - Development environment
-- **Visual Studio C++ Build Tools** - For compiling C wrapper
+- **A C compiler** - Visual Studio Build Tools on Windows; Xcode tools or gcc elsewhere
 
 **No EiffelStudio process library dependency** - This library uses its own C wrapper for all process operations.
 
@@ -357,7 +366,7 @@ end
 
 ## SCOOP Compatibility
 
-SIMPLE_PROCESS is fully SCOOP-compatible. The C wrapper handles all Win32 API calls synchronously without threading dependencies, making it safe for use in concurrent Eiffel applications.
+SIMPLE_PROCESS is fully SCOOP-compatible. The C wrapper makes all system calls synchronously without threading dependencies, making it safe for use in concurrent Eiffel applications.
 
 This is a key improvement over the previous version which required thread concurrency mode due to its dependency on the EiffelStudio process library.
 
