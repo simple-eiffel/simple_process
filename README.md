@@ -269,7 +269,8 @@ ec -config simple_process.ecf -target simple_process -c_compile
 
 The tests need the child program, so build `simple_process_echo` first. On
 macOS and Linux, when builds go outside the repo folder, set `SP_ECHO_CHILD`
-to the built `sp_echo_child`; without it 22 of 44 tests fail.
+to the built `sp_echo_child`; without it 22 of 44 tests fail. The tests write their
+temporary files to the system's temp folder (`/tmp`, or `%TEMP%` on Windows), not the checkout.
 
 **Test Results:** 44 tests passing, including 1000/1000 Hebrew-and-Greek
 lines intact through every capture path and 1.5 MB each way through stdin
